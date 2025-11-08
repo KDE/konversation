@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-04-19 00:41+0000\n"
-"PO-Revision-Date: 2025-11-04 15:06+0200\n"
+"PO-Revision-Date: 2025-11-06 14:07+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -4688,22 +4688,22 @@ msgstr ""
 #: src/irc/channel.cpp:1596
 #, kde-format
 msgid "You take the permission to talk from yourself."
-msgstr ""
+msgstr "הפקעת מעצמך את ההרשאה לשוחח."
 
 #: src/irc/channel.cpp:1597
 #, kde-format
 msgid "You take the permission to talk from %1."
-msgstr ""
+msgstr "הפקעת מ־%1 את ההרשאה לשוחח."
 
 #: src/irc/channel.cpp:1601
 #, kde-format
 msgid "%1 takes the permission to talk from you."
-msgstr ""
+msgstr "ההרשאות לשוחח הופקעו ממך על ידי %1."
 
 #: src/irc/channel.cpp:1602
 #, kde-format
 msgid "%1 takes the permission to talk from %2."
-msgstr ""
+msgstr "ההרשאות לשוחח הופקעו מ־%2 על ידי %1."
 
 #: src/irc/channel.cpp:1614
 #, kde-format
@@ -4748,22 +4748,22 @@ msgstr ""
 #: src/irc/channel.cpp:1641
 #, kde-format
 msgid "You set the channel mode to 'moderated'."
-msgstr ""
+msgstr "קבעת את מצב החדר לכדי ‚עם פיקוח’."
 
 #: src/irc/channel.cpp:1642
 #, kde-format
 msgid "%1 sets the channel mode to 'moderated'."
-msgstr ""
+msgstr "מצב החדר נקבע על ידי %1 לכדי ‚עם פיקוח’."
 
 #: src/irc/channel.cpp:1646
 #, kde-format
 msgid "You set the channel mode to 'unmoderated'."
-msgstr ""
+msgstr "קבעת את מצב החדר לכדי ‚ללא פיקוח’."
 
 #: src/irc/channel.cpp:1647
 #, kde-format
 msgid "%1 sets the channel mode to 'unmoderated'."
-msgstr ""
+msgstr "מצב החדר נקבע על ידי %1 לכדי ‚ללא פיקוח’."
 
 #: src/irc/channel.cpp:1655
 #, kde-format
