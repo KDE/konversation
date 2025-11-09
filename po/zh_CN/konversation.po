@@ -1214,12 +1214,14 @@ msgid ""
 "\", which will cause it to become visible in tray implementations that only "
 "offer access \"active\" icons."
 msgstr ""
+"当 Konversation 窗口关闭时，系统托盘图标将被设为“活跃”状态，这会使它在那些仅"
+"显示“活跃”图标的托盘实现中可见。"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_TrayActivateNoWindow)
 #: src/config/generalbehavior_configui.ui:78
 #, kde-format
 msgid "Tray icon becomes \"active\" when the window is closed"
-msgstr ""
+msgstr "窗口关闭时，托盘图标变为“活跃”状态"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_HideToTrayOnStartup)
 #: src/config/generalbehavior_configui.ui:85
@@ -4202,6 +4204,8 @@ msgid ""
 "your computer is not running an IDENT server, this response is sent by "
 "Konversation. No spaces are allowed."
 msgstr ""
+"当您进行连接时，许多服务器会向您的电脑请求一个 IDENT 应答。如果您的电脑不是"
+"以 IDENT 服务器运行，此应答会由 Konversation 代为发送。此处不允许留空。"
 
 #. i18n: ectx: property (text), widget (QLabel, quitLabel)
 #: src/identitydialog.ui:595
@@ -5218,6 +5222,10 @@ msgid ""
 "by clicking on it. Right click on the channel to get a list of all web "
 "addresses mentioned in the channel's topic.</p>"
 msgstr ""
+"<p>这里显示的是过滤后的频道列表，请注意如果您不使用正则表达式，Konversation "
+"只会列出在名称里包含您所输入的过滤字符串的频道，这些频道的名称不一定以您输入"
+"的字符串为起始。</p><p>您点击任一一个频道即可加入它，鼠标右击频道名可以获取频"
+"道话题中提及到的所有 Web 地址的列表。</p>"
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_channelBox)
 #: src/irc/channellistpanelui.ui:92
