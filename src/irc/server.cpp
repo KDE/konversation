@@ -107,6 +107,8 @@ Server::Server(QObject* parent, ConnectionSettings& settings) : QObject(parent)
     m_serverNickPrefixes = QStringLiteral("@+%");
     m_banAddressListModes = QLatin1Char('b'); // {RFC-1459, draft-brocklesby-irc-isupport} -> pick one
     m_channelPrefixes = QStringLiteral("#&");
+    rebuildTargetPrefixMatcher();
+
     m_modesCount = 3;
     m_sslErrorLock = false;
     m_topicLength = -1;
