@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-17 11:52+0000\n"
-"PO-Revision-Date: 2025-11-06 14:07+0200\n"
+"PO-Revision-Date: 2025-11-17 09:51+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
 "n % 10 == 0) ? 2 : 3));\n"
-"X-Generator: Lokalize 25.08.2\n"
+"X-Generator: Lokalize 25.08.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -125,7 +125,7 @@ msgstr "שימוש:"
 
 #: data/scripts/media:304
 msgid "\"/media\" - report what the first player found is playing."
-msgstr ""
+msgstr "‏„‎/media” - לדווח מה מנגן הנגן הראשון שנמצא."
 
 #: data/scripts/media:305
 msgid ""
@@ -1069,7 +1069,7 @@ msgstr "לקבל הצעת צ׳אט העברה ישירה (DCC) אוטומטית"
 #: src/config/dcc_configui.ui:115
 #, kde-format
 msgid "Enable UPnP for NAT traversal"
-msgstr ""
+msgstr "הפעלת UPnP ל־NAT חציה (traversal)"
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, kcfg_DccIPv4Fallback)
 #: src/config/dcc_configui.ui:124
@@ -4936,22 +4936,22 @@ msgstr "%1 הסיר/ה את חריגת החסימה מעל %2."
 #: src/irc/channel.cpp:1771
 #, kde-format
 msgid "You set invitation mask %1."
-msgstr ""
+msgstr "הגדרת מסכת הזמנה %1."
 
 #: src/irc/channel.cpp:1772
 #, kde-format
 msgid "%1 sets invitation mask %2."
-msgstr ""
+msgstr "מסכת ההזמנה %2 הוגדרה על ידי %1."
 
 #: src/irc/channel.cpp:1776
 #, kde-format
 msgid "You remove the invitation mask %1."
-msgstr ""
+msgstr "הסרת את מסכת ההזמנה %1."
 
 #: src/irc/channel.cpp:1777
 #, kde-format
 msgid "%1 removes the invitation mask %2."
-msgstr ""
+msgstr "מסכת ההזמנה %2 הוסרה על ידי %1."
 
 #: src/irc/channel.cpp:1785
 #, kde-format
