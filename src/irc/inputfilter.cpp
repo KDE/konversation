@@ -839,7 +839,12 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             }
             else if (command == QLatin1String("ls") || command == QLatin1String("list"))
             {
-                m_server->appendStatusMessage(i18n("Capabilities"), trailing, messageTags);
+                QString capsOffered(trailing);
+                // Note: even if there aren't any caps offered, we have to exit via Server::capInitiateNegotiation
+                // to correctly exit caps negotiation
+                if (capsOffered.isEmpty())
+                    capsOffered = i18nc("We asked the server for available capabilities and got an empty list. This isn't an error, and isn't permanent", "No configurable server capabilities are currently available.");
+                m_server->appendStatusMessage(i18n("Capabilities"), capsOffered, messageTags);
 
                 if (getAutomaticRequest(QStringLiteral("CAP LS"), QString()) != 0)
                 {
