@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-17 14:40+0000\n"
-"PO-Revision-Date: 2025-11-17 09:51+0200\n"
+"PO-Revision-Date: 2025-11-24 22:06+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -109,11 +109,11 @@ msgstr "יש בעיה בביטוי הרגולרי שצוין ב־REGEX_FIXUP."
 
 #: data/scripts/media:266
 msgid "%1 did not report the metadata needed to output a message."
-msgstr ""
+msgstr "%1 לא דיווח על נתוני העל שנחוצים להודעת הפלט."
 
 #: data/scripts/media:282
 msgid "There is a problem in the output format configuration."
-msgstr ""
+msgstr "יש בעיה בהגדרות תבנית הפלט."
 
 #: data/scripts/media:302
 msgid "media v%1 for Konversation."
@@ -377,7 +377,7 @@ msgstr "הצגת &תאריכים"
 #: src/config/chatwindowappearance_config.ui:69
 #, kde-format
 msgid "Show date marker when date changes"
-msgstr ""
+msgstr "הצגת סמן תאריך כשהתאריך משתנה"
 
 #. i18n: ectx: property (title), widget (QGroupBox, kcfg_ShowBacklog)
 #: src/config/chatwindowappearance_config.ui:79
@@ -4738,12 +4738,12 @@ msgstr ""
 #: src/irc/channel.cpp:1632
 #, kde-format
 msgid "You remove the 'invite only' mode from the channel."
-msgstr ""
+msgstr "הסרת את מצב ‚בהזמנה בלבד’ מהערוץ."
 
 #: src/irc/channel.cpp:1633
 #, kde-format
 msgid "%1 removes the 'invite only' mode from the channel."
-msgstr ""
+msgstr "המצב ‚בהזמנה בלבד’ הוסר מהערוץ על ידי %1."
 
 #: src/irc/channel.cpp:1641
 #, kde-format
@@ -4768,22 +4768,22 @@ msgstr "מצב החדר נקבע על ידי %1 לכדי ‚ללא פיקוח’
 #: src/irc/channel.cpp:1655
 #, kde-format
 msgid "You set the channel mode to 'no messages from outside'."
-msgstr ""
+msgstr "הגדרת את החדר למצב ‚ללא הודעות מבחוץ’."
 
 #: src/irc/channel.cpp:1656
 #, kde-format
 msgid "%1 sets the channel mode to 'no messages from outside'."
-msgstr ""
+msgstr "החדר הוגדר למצב ‚ללא הודעות מבחוץ’ על ידי %1."
 
 #: src/irc/channel.cpp:1660
 #, kde-format
 msgid "You set the channel mode to 'allow messages from outside'."
-msgstr ""
+msgstr "הגדרת את החדר למצב ‚להרשות הודעות מבחוץ’."
 
 #: src/irc/channel.cpp:1661
 #, kde-format
 msgid "%1 sets the channel mode to 'allow messages from outside'."
-msgstr ""
+msgstr "החדר הוגדר למצב ‚להרשות הודעות מבחוץ’ על ידי %1."
 
 #: src/irc/channel.cpp:1669
 #, kde-format
@@ -4858,7 +4858,7 @@ msgstr "המשתמש %1 קבע את מפתח החדר אל \"%2\"."
 #: src/irc/channel.cpp:1720
 #, kde-format
 msgid "You remove the channel key."
-msgstr "אתה הסרת את מפתח החדר."
+msgstr "הסרת את מפתח החדר."
 
 #: src/irc/channel.cpp:1721
 #, kde-format
@@ -4886,7 +4886,7 @@ msgstr[3] ""
 #: src/irc/channel.cpp:1734
 #, kde-format
 msgid "You remove the channel limit."
-msgstr "אתה מסיר את הגבלת הערוץ."
+msgstr "הסרת את ההגבלה מהחדר."
 
 #: src/irc/channel.cpp:1735
 #, kde-format
@@ -4956,7 +4956,7 @@ msgstr "מסכת ההזמנה %2 הוסרה על ידי %1."
 #: src/irc/channel.cpp:1785
 #, kde-format
 msgid "You set the channel mode '%1'."
-msgstr "אתה קבעת את מצב החדר אל \"%1\"."
+msgstr "הגדרת את מצב החדר אל ‚%1’."
 
 #: src/irc/channel.cpp:1786
 #, kde-format
@@ -4966,7 +4966,7 @@ msgstr "המשתמש %1 קבע את מצב החדר אל \"%2\"."
 #: src/irc/channel.cpp:1790
 #, kde-format
 msgid "You set channel mode +%1"
-msgstr "אתה קבעת את מצב החדר אל +%1"
+msgstr "הגדרת את מצב החדר אל ‎+%1"
 
 #: src/irc/channel.cpp:1791
 #, kde-format
@@ -4976,7 +4976,7 @@ msgstr "המשתמש %1 קבעת את מצב החדר אל +%2"
 #: src/irc/channel.cpp:1798
 #, kde-format
 msgid "You remove the channel mode '%1'."
-msgstr "אתה מסיר את מצב החדר \"%1\"."
+msgstr "הסרת את מצב החדר ‚%1’."
 
 #: src/irc/channel.cpp:1799
 #, kde-format
@@ -4986,7 +4986,7 @@ msgstr "המשתמש %1 מסיר את מצב החדר \"%2\"."
 #: src/irc/channel.cpp:1803
 #, kde-format
 msgid "You set channel mode -%1"
-msgstr "אתה קבעת את מצב החדר אל -%1"
+msgstr "הגדרת את מצב החדר אל ‎-%1"
 
 #: src/irc/channel.cpp:1804
 #, kde-format
@@ -5386,7 +5386,7 @@ msgstr "יכולות"
 #: src/irc/inputfilter.cpp:895
 #, kde-format
 msgid "You have set personal modes: %1"
-msgstr "אתה קבעת מצב פרטי: %1"
+msgstr "הגדרת מצב פרטי: %1"
 
 #: src/irc/inputfilter.cpp:899
 #, kde-format
@@ -5554,7 +5554,7 @@ msgstr "כינוי שגוי. הוא ישתנה לכינוי %1."
 #: src/irc/inputfilter.cpp:1621
 #, kde-format
 msgid "You are not on %1."
-msgstr "אתה לא נמצא ב־%1."
+msgstr "אינך ב־%1."
 
 #: src/irc/inputfilter.cpp:1632 src/irc/inputfilter.cpp:1641
 #: src/irc/inputfilter.cpp:1650 src/viewer/ircview.cpp:806
@@ -5580,7 +5580,7 @@ msgstr "עליך להיות אופ ב־%1 כדי לבצע את זה."
 #: src/irc/inputfilter.cpp:1682
 #, kde-format
 msgid "You are now an IRC operator on this server."
-msgstr "אתה כעת אופ בשרת IRC זה."
+msgstr "הוגדרת כאופ בשרת IRC זה."
 
 #: src/irc/inputfilter.cpp:1690
 #, kde-format
@@ -6949,12 +6949,12 @@ msgstr "אתה כעת מסומן בתור מרוחק."
 #: src/irc/server.cpp:4120
 #, kde-format
 msgid "You are no longer marked as being away."
-msgstr "אתה כבר לא מסומן כמרוחק."
+msgstr "הסימון כמרוחק כבר לא חל."
 
 #: src/irc/server.cpp:4130
 #, kde-format
 msgid "You are not marked as being away."
-msgstr "אתה לא מסומן בתור מרוחק."
+msgstr "אין לך סימון מרוחק."
 
 #: src/irc/server.cpp:4276
 #, kde-format
@@ -8254,7 +8254,7 @@ msgstr "אישור יציאה"
 #: src/mainwindow.cpp:623
 #, kde-format
 msgid "<qt>Are you sure you want to quit <b>Konversation</b>?</qt>"
-msgstr "<qt> האם אתה בטוח כי ברצונך לצאת מ־<b>konversation</b>? </qt> "
+msgstr "<qt>לצאת מ־<b>Konversation</b>? </qt>"
 
 #: src/mainwindow.cpp:660
 #, kde-format
