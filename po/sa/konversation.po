@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-17 14:40+0000\n"
+"POT-Creation-Date: 2025-11-28 02:33+0000\n"
 "PO-Revision-Date: 2024-12-25 19:45+0530\n"
 "Last-Translator: kali <shreekantkalwar@gmail.com>\n"
 "Language-Team: Sanskrit <kde-i18n-doc@kde.org>\n"
@@ -141,8 +141,8 @@ msgid ""
 msgstr ""
 "\"/media { Player }\" - निर्दिष्टे प्लेयर् मध्ये किं क्रीडति यदि लभ्यते तर्हि निवेदयन्तु ।"
 
-#: src/application.cpp:384 src/irc/server.cpp:1812 src/irc/server.cpp:3845
-#: src/irc/server.cpp:3850
+#: src/application.cpp:384 src/irc/server.cpp:1814 src/irc/server.cpp:3847
+#: src/irc/server.cpp:3852
 #, kde-format
 msgid "D-Bus"
 msgstr "डी-बस"
@@ -213,7 +213,7 @@ msgstr "वैयक्तिक"
 msgid "moderated"
 msgstr "संचालितः"
 
-#: src/common.cpp:31 src/irc/inputfilter.cpp:1325
+#: src/common.cpp:31 src/irc/inputfilter.cpp:1330
 #, kde-format
 msgid "password protected"
 msgstr "गुप्तशब्दः सुरक्षितः"
@@ -1480,8 +1480,8 @@ msgid "CTCP"
 msgstr "जेएससी"
 
 #. i18n: ectx: property (text), widget (QCheckBox, chkChannel)
-#: src/config/ignore_configui.ui:90 src/irc/inputfilter.cpp:2364
-#: src/irc/inputfilter.cpp:2368 src/irc/invitedialog.cpp:170
+#: src/config/ignore_configui.ui:90 src/irc/inputfilter.cpp:2373
+#: src/irc/inputfilter.cpp:2377 src/irc/invitedialog.cpp:170
 #: src/viewer/ignorelistviewitem.cpp:35
 #, kde-format
 msgid "Channel"
@@ -1493,10 +1493,10 @@ msgstr "चैनल"
 #: src/dcc/chatcontainer.cpp:130 src/irc/inputfilter.cpp:349
 #: src/irc/inputfilter.cpp:365 src/irc/inputfilter.cpp:381
 #: src/irc/inputfilter.cpp:410 src/irc/inputfilter.cpp:418
-#: src/irc/server.cpp:2381 src/irc/server.cpp:2511 src/irc/server.cpp:2523
-#: src/irc/server.cpp:2535 src/irc/server.cpp:2670 src/irc/server.cpp:2726
-#: src/irc/server.cpp:2797 src/irc/server.cpp:2802 src/irc/server.cpp:2814
-#: src/irc/server.cpp:2817 src/irc/server.cpp:2831 src/irc/server.cpp:2838
+#: src/irc/server.cpp:2383 src/irc/server.cpp:2513 src/irc/server.cpp:2525
+#: src/irc/server.cpp:2537 src/irc/server.cpp:2672 src/irc/server.cpp:2728
+#: src/irc/server.cpp:2799 src/irc/server.cpp:2804 src/irc/server.cpp:2816
+#: src/irc/server.cpp:2819 src/irc/server.cpp:2833 src/irc/server.cpp:2840
 #: src/viewer/ignorelistviewitem.cpp:39
 #, kde-format
 msgid "DCC"
@@ -1506,8 +1506,8 @@ msgstr "डीसीसी"
 #: src/config/ignore_configui.ui:104 src/irc/inputfilter.cpp:488
 #: src/irc/inputfilter.cpp:553 src/irc/inputfilter.cpp:558
 #: src/irc/inputfilter.cpp:564 src/irc/inputfilter.cpp:783
-#: src/irc/inputfilter.cpp:1682 src/irc/outputfilter.cpp:659
-#: src/irc/outputfilter.cpp:894 src/irc/server.cpp:4318 src/irc/server.cpp:4347
+#: src/irc/inputfilter.cpp:1687 src/irc/outputfilter.cpp:659
+#: src/irc/outputfilter.cpp:894 src/irc/server.cpp:4320 src/irc/server.cpp:4349
 #: src/viewer/ignorelistviewitem.cpp:37
 #, kde-format
 msgid "Notice"
@@ -1521,7 +1521,7 @@ msgstr "उत्प्रेक्षा"
 
 #. i18n: ectx: property (text), widget (QCheckBox, chkInvite)
 #: src/config/ignore_configui.ui:118 src/irc/inputfilter.cpp:680
-#: src/irc/inputfilter.cpp:1751 src/viewer/ignorelistviewitem.cpp:40
+#: src/irc/inputfilter.cpp:1756 src/viewer/ignorelistviewitem.cpp:40
 #, kde-format
 msgid "Invite"
 msgstr "समाह्वे"
@@ -1770,9 +1770,9 @@ msgstr "(निक् क्रमाङ्कनक्रमं ड्रैग
 
 #. i18n: ectx: property (text), widget (QTreeWidget, sortOrder)
 #: src/config/nicklistbehavior_configui.ui:98 src/irc/channel.cpp:1820
-#: src/irc/channelnick.cpp:196 src/irc/inputfilter.cpp:903
-#: src/irc/inputfilter.cpp:956 src/irc/inputfilter.cpp:1344
-#: src/irc/inputfilter.cpp:1348 src/viewer/channeloptionsdialog.cpp:313
+#: src/irc/channelnick.cpp:196 src/irc/inputfilter.cpp:908
+#: src/irc/inputfilter.cpp:961 src/irc/inputfilter.cpp:1349
+#: src/irc/inputfilter.cpp:1353 src/viewer/channeloptionsdialog.cpp:313
 #, kde-format
 msgid "Mode"
 msgstr "मोड्"
@@ -2576,13 +2576,13 @@ msgstr "&अद्यतनान्तरम् :"
 
 #. i18n, and in preShellCommandExited and preShellCommandError
 #: src/connectionmanager.cpp:217 src/connectionmanager.cpp:250
-#: src/connectionmanager.cpp:260 src/irc/inputfilter.cpp:1573
-#: src/irc/inputfilter.cpp:1690 src/irc/inputfilter.cpp:2482
-#: src/irc/inputfilter.cpp:2490 src/irc/inputfilter.cpp:2512
-#: src/irc/outputfilter.cpp:2011 src/irc/server.cpp:263 src/irc/server.cpp:411
-#: src/irc/server.cpp:474 src/irc/server.cpp:691 src/irc/server.cpp:726
-#: src/irc/server.cpp:790 src/irc/server.cpp:807 src/irc/server.cpp:825
-#: src/irc/server.cpp:1149 src/irc/server.cpp:1179
+#: src/connectionmanager.cpp:260 src/irc/inputfilter.cpp:1578
+#: src/irc/inputfilter.cpp:1695 src/irc/inputfilter.cpp:2491
+#: src/irc/inputfilter.cpp:2499 src/irc/inputfilter.cpp:2521
+#: src/irc/outputfilter.cpp:2011 src/irc/server.cpp:265 src/irc/server.cpp:413
+#: src/irc/server.cpp:476 src/irc/server.cpp:693 src/irc/server.cpp:728
+#: src/irc/server.cpp:792 src/irc/server.cpp:809 src/irc/server.cpp:827
+#: src/irc/server.cpp:1151 src/irc/server.cpp:1181
 #, kde-format
 msgid "Info"
 msgstr "Info"
@@ -2607,20 +2607,20 @@ msgstr[0] "1 सेकेण्ड् मध्ये %2 (port %3) इत्य�
 msgstr[1] "%1 सेकण्ड् मध्ये %2 (port %3) इत्यनेन सह पुनः संयोजितुं प्रयतमानोऽस्मि ।"
 
 #: src/connectionmanager.cpp:275 src/dcc/chatcontainer.cpp:264
-#: src/irc/inputfilter.cpp:1530 src/irc/inputfilter.cpp:1534
-#: src/irc/inputfilter.cpp:1547 src/irc/inputfilter.cpp:1621
-#: src/irc/inputfilter.cpp:1674 src/irc/inputfilter.cpp:1808
-#: src/irc/inputfilter.cpp:2388 src/irc/inputfilter.cpp:2398
-#: src/irc/inputfilter.cpp:2435 src/irc/inputfilter.cpp:2443
-#: src/irc/inputfilter.cpp:2451 src/irc/inputfilter.cpp:2475
-#: src/irc/inputfilter.cpp:2503 src/irc/outputfilter.cpp:2020
-#: src/irc/outputfilterresolvejob.cpp:68 src/irc/server.cpp:769
-#: src/irc/server.cpp:815 src/irc/server.cpp:838 src/irc/server.cpp:964
-#: src/irc/server.cpp:2349 src/irc/server.cpp:2420 src/irc/server.cpp:2593
-#: src/irc/server.cpp:2629 src/irc/server.cpp:2680 src/irc/server.cpp:2748
-#: src/irc/server.cpp:2767 src/irc/server.cpp:2783 src/irc/server.cpp:4276
-#: src/irc/server.cpp:4288 src/irc/server.cpp:4312 src/irc/server.cpp:4335
-#: src/irc/server.cpp:4351
+#: src/irc/inputfilter.cpp:1535 src/irc/inputfilter.cpp:1539
+#: src/irc/inputfilter.cpp:1552 src/irc/inputfilter.cpp:1626
+#: src/irc/inputfilter.cpp:1679 src/irc/inputfilter.cpp:1813
+#: src/irc/inputfilter.cpp:2397 src/irc/inputfilter.cpp:2407
+#: src/irc/inputfilter.cpp:2444 src/irc/inputfilter.cpp:2452
+#: src/irc/inputfilter.cpp:2460 src/irc/inputfilter.cpp:2484
+#: src/irc/inputfilter.cpp:2512 src/irc/outputfilter.cpp:2020
+#: src/irc/outputfilterresolvejob.cpp:68 src/irc/server.cpp:771
+#: src/irc/server.cpp:817 src/irc/server.cpp:840 src/irc/server.cpp:966
+#: src/irc/server.cpp:2351 src/irc/server.cpp:2422 src/irc/server.cpp:2595
+#: src/irc/server.cpp:2631 src/irc/server.cpp:2682 src/irc/server.cpp:2750
+#: src/irc/server.cpp:2769 src/irc/server.cpp:2785 src/irc/server.cpp:4278
+#: src/irc/server.cpp:4290 src/irc/server.cpp:4314 src/irc/server.cpp:4337
+#: src/irc/server.cpp:4353
 #, kde-format
 msgid "Error"
 msgstr "त्रुटि"
@@ -4388,9 +4388,9 @@ msgid "Enter the new user limit for the channel:"
 msgstr "चैनलस्य कृते नूतनं उपयोक्तृसीमा प्रविशतु:"
 
 #: src/irc/channel.cpp:1057 src/irc/channel.cpp:1062
-#: src/irc/inputfilter.cpp:1560 src/irc/inputfilter.cpp:1581
-#: src/irc/inputfilter.cpp:1595 src/irc/inputfilter.cpp:1610
-#: src/irc/inputfilter.cpp:2410 src/irc/query.cpp:163
+#: src/irc/inputfilter.cpp:1565 src/irc/inputfilter.cpp:1586
+#: src/irc/inputfilter.cpp:1600 src/irc/inputfilter.cpp:1615
+#: src/irc/inputfilter.cpp:2419 src/irc/query.cpp:163
 #, kde-format
 msgid "Nick"
 msgstr "निकः"
@@ -4551,8 +4551,8 @@ msgstr[0] " (%1 उपरि)"
 msgstr[1] " (%1 ऑप्स)"
 
 #: src/irc/channel.cpp:1359 src/irc/channel.cpp:1373 src/irc/channel.cpp:1375
-#: src/irc/inputfilter.cpp:1474 src/irc/inputfilter.cpp:1490
-#: src/irc/inputfilter.cpp:1499
+#: src/irc/inputfilter.cpp:1479 src/irc/inputfilter.cpp:1495
+#: src/irc/inputfilter.cpp:1504
 #, kde-format
 msgid "Topic"
 msgstr "विषय"
@@ -5160,8 +5160,8 @@ msgstr "सी&व्यापारः :"
 msgid "Channel Name"
 msgstr "चैनल नाम"
 
-#: src/irc/channellistpanel.cpp:80 src/irc/inputfilter.cpp:1700
-#: src/irc/inputfilter.cpp:1710 src/irc/inputfilter.cpp:2427
+#: src/irc/channellistpanel.cpp:80 src/irc/inputfilter.cpp:1705
+#: src/irc/inputfilter.cpp:1715 src/irc/inputfilter.cpp:2436
 #, kde-format
 msgid "Users"
 msgstr "उपयोक्तारः"
@@ -5471,161 +5471,169 @@ msgstr "-%1- %2"
 msgid "%1 invited you to channel %2."
 msgstr "%1 भवन्तं %2 चैनले आमन्त्रितवान् ।"
 
-#: src/irc/inputfilter.cpp:842
+#: src/irc/inputfilter.cpp:846
+#, kde-format
+msgctxt ""
+"We asked the server for available capabilities and got an empty list. This "
+"isn't an error, and isn't permanent"
+msgid "No configurable server capabilities are currently available."
+msgstr ""
+
+#: src/irc/inputfilter.cpp:847
 #, kde-format
 msgid "Capabilities"
 msgstr "क्षमता"
 
-#: src/irc/inputfilter.cpp:895
+#: src/irc/inputfilter.cpp:900
 #, kde-format
 msgid "You have set personal modes: %1"
 msgstr "भवता व्यक्तिगतगुणाः सेट् कृताः: %1"
 
-#: src/irc/inputfilter.cpp:899
+#: src/irc/inputfilter.cpp:904
 #, kde-format
 msgid "%1 has changed your personal modes: %2"
 msgstr "%1 इत्यनेन भवतः व्यक्तिगतगुणाः परिवर्तिताः: %2"
 
-#: src/irc/inputfilter.cpp:918
+#: src/irc/inputfilter.cpp:923
 #, kde-format
 msgid "%1 sets mode: %2"
 msgstr "%1 मोड् सेट् करोति: %2"
 
-#: src/irc/inputfilter.cpp:1167 src/irc/inputfilter.cpp:1175
+#: src/irc/inputfilter.cpp:1172 src/irc/inputfilter.cpp:1180
 #, kde-format
 msgid "Welcome"
 msgstr "स्वागतम्‌"
 
-#: src/irc/inputfilter.cpp:1176
+#: src/irc/inputfilter.cpp:1181
 #, kde-format
 msgid "Server %1 (Version %2), User modes: %3, Channel modes: %4"
 msgstr "सर्वर %1 (संस्करणं %2), उपयोक्तृविधानानि: %3, चैनलविधानानि: %4"
 
-#: src/irc/inputfilter.cpp:1200
+#: src/irc/inputfilter.cpp:1205
 #, kde-format
 msgid "Support"
 msgstr "समर्थनम्‌"
 
-#: src/irc/inputfilter.cpp:1300
+#: src/irc/inputfilter.cpp:1305
 #, kde-format
 msgid "Your personal modes are:"
 msgstr "भवतः व्यक्तिगतगुणाः सन्ति :"
 
-#: src/irc/inputfilter.cpp:1312 src/irc/inputfilter.cpp:1349
+#: src/irc/inputfilter.cpp:1317 src/irc/inputfilter.cpp:1354
 #, kde-format
 msgid "Channel modes: "
 msgstr "चैनल् मोड्स् : "
 
-#: src/irc/inputfilter.cpp:1330
+#: src/irc/inputfilter.cpp:1335
 #, kde-format
 msgid "limited to %1 user"
 msgid_plural "limited to %1 users"
 msgstr[0] "%1 उपयोक्तृपर्यन्तं सीमितम्"
 msgstr[1] "%1 उपयोक्तृभ्यः सीमितम्"
 
-#: src/irc/inputfilter.cpp:1358 src/urlcatcher.cpp:170
+#: src/irc/inputfilter.cpp:1363 src/urlcatcher.cpp:170
 #, kde-format
 msgid "URL"
 msgstr "URL"
 
-#: src/irc/inputfilter.cpp:1359
+#: src/irc/inputfilter.cpp:1364
 #, kde-format
 msgid "Channel URL: %1"
 msgstr "चैनल URL: %1"
 
-#: src/irc/inputfilter.cpp:1369
+#: src/irc/inputfilter.cpp:1374
 #, kde-format
 msgid "Created"
 msgstr "निर्मितम्"
 
-#: src/irc/inputfilter.cpp:1370
+#: src/irc/inputfilter.cpp:1375
 #, kde-format
 msgid "This channel was created on %1."
 msgstr "एतत् चॅनेल् %1 इत्यत्र निर्मितम् ।"
 
 #. i18n("Whois"),parameterList.join(" ").section(QLatin1Char(' '),1)+' '+trailing);
 #. The above line works fine, but can't be i18n'ised. So use the below instead.. I hope this is okay.
-#: src/irc/inputfilter.cpp:1389 src/irc/inputfilter.cpp:1517
-#: src/irc/inputfilter.cpp:1783 src/irc/inputfilter.cpp:1839
-#: src/irc/inputfilter.cpp:1849 src/irc/inputfilter.cpp:1998
-#: src/irc/inputfilter.cpp:2005 src/irc/inputfilter.cpp:2011
-#: src/irc/inputfilter.cpp:2017 src/irc/inputfilter.cpp:2023
-#: src/irc/inputfilter.cpp:2029 src/irc/inputfilter.cpp:2055
-#: src/irc/inputfilter.cpp:2070 src/irc/inputfilter.cpp:2086
-#: src/irc/inputfilter.cpp:2088 src/irc/inputfilter.cpp:2131
-#: src/irc/inputfilter.cpp:2143 src/irc/inputfilter.cpp:2153
-#: src/irc/inputfilter.cpp:2160 src/irc/inputfilter.cpp:2166
-#: src/irc/inputfilter.cpp:2184
+#: src/irc/inputfilter.cpp:1394 src/irc/inputfilter.cpp:1522
+#: src/irc/inputfilter.cpp:1788 src/irc/inputfilter.cpp:1844
+#: src/irc/inputfilter.cpp:1854 src/irc/inputfilter.cpp:2007
+#: src/irc/inputfilter.cpp:2014 src/irc/inputfilter.cpp:2020
+#: src/irc/inputfilter.cpp:2026 src/irc/inputfilter.cpp:2032
+#: src/irc/inputfilter.cpp:2038 src/irc/inputfilter.cpp:2064
+#: src/irc/inputfilter.cpp:2079 src/irc/inputfilter.cpp:2095
+#: src/irc/inputfilter.cpp:2097 src/irc/inputfilter.cpp:2140
+#: src/irc/inputfilter.cpp:2152 src/irc/inputfilter.cpp:2162
+#: src/irc/inputfilter.cpp:2169 src/irc/inputfilter.cpp:2175
+#: src/irc/inputfilter.cpp:2193
 #, kde-format
 msgid "Whois"
 msgstr "को अस्ति"
 
-#: src/irc/inputfilter.cpp:1389
+#: src/irc/inputfilter.cpp:1394
 #, kde-format
 msgid "%1 is logged in as %2."
 msgstr "%1 %2 इति रूपेण प्रवेशितः अस्ति ।"
 
-#: src/irc/inputfilter.cpp:1423 src/irc/inputfilter.cpp:1440
+#: src/irc/inputfilter.cpp:1428 src/irc/inputfilter.cpp:1445
 #, kde-format
 msgid "Names"
 msgstr "नामानि"
 
-#: src/irc/inputfilter.cpp:1440
+#: src/irc/inputfilter.cpp:1445
 #, kde-format
 msgid "End of NAMES list."
 msgstr "NAMES सूचीयाः समाप्तिः ।"
 
-#: src/irc/inputfilter.cpp:1453
+#: src/irc/inputfilter.cpp:1458
 #, kde-format
 msgid "TOPIC"
 msgstr "विषय"
 
-#: src/irc/inputfilter.cpp:1453
+#: src/irc/inputfilter.cpp:1458
 #, kde-format
 msgid "The channel %1 has no topic set."
 msgstr "%1 इति चॅनेल् इत्यस्य विषयः नास्ति ।"
 
-#: src/irc/inputfilter.cpp:1474
+#: src/irc/inputfilter.cpp:1479
 #, kde-format
 msgid "The channel topic for %1 is: \"%2\""
 msgstr "%1 कृते चॅनेल् विषयः अस्ति: \"%2\"."
 
-#: src/irc/inputfilter.cpp:1491
+#: src/irc/inputfilter.cpp:1496
 #, kde-format
 msgid "The topic was set by %1 on %2."
 msgstr "विषयः %2 इत्यत्र %1 इत्यनेन सेट् कृतः ।"
 
-#: src/irc/inputfilter.cpp:1499
+#: src/irc/inputfilter.cpp:1504
 #, kde-format
 msgid "The topic for %1 was set by %2 on %3."
 msgstr "%1 इत्यस्य विषयः %3 इत्यत्र %2 इत्यनेन सेट् कृतः ।"
 
-#: src/irc/inputfilter.cpp:1517
+#: src/irc/inputfilter.cpp:1522
 #, kde-format
 msgid "%1 is actually using the host %2."
 msgstr "%1 वस्तुतः होस्ट् %2 इत्यस्य उपयोगं करोति ।"
 
-#: src/irc/inputfilter.cpp:1530
+#: src/irc/inputfilter.cpp:1535
 #, kde-format
 msgid "%1: No such nick/channel."
 msgstr "%1: एतादृशः निक/चैनलः नास्ति।"
 
-#: src/irc/inputfilter.cpp:1534
+#: src/irc/inputfilter.cpp:1539
 #, kde-format
 msgid "No such nick: %1."
 msgstr "न तादृशः निकः: %1."
 
-#: src/irc/inputfilter.cpp:1547
+#: src/irc/inputfilter.cpp:1552
 #, kde-format
 msgid "%1: No such channel."
 msgstr "%1: एतादृशं चैनलं नास्ति।"
 
-#: src/irc/inputfilter.cpp:1560
+#: src/irc/inputfilter.cpp:1565
 #, kde-format
 msgid "Nickname already in use, try a different one."
 msgstr "उपनाम पूर्वमेव प्रयुक्तं, भिन्नं प्रयतस्व।"
 
-#: src/irc/inputfilter.cpp:1573
+#: src/irc/inputfilter.cpp:1578
 #, kde-format
 msgid ""
 "The nickname %1 was already in use, but the connection failed before you "
@@ -5633,187 +5641,187 @@ msgid ""
 msgstr ""
 "%1 इति उपनाम पूर्वमेव प्रयुक्तम् आसीत्, परन्तु भवता प्रतिक्रियायाः पूर्वं संयोजनं विफलम् अभवत् ।"
 
-#: src/irc/inputfilter.cpp:1581
+#: src/irc/inputfilter.cpp:1586
 #, kde-format
 msgid "Nickname already in use. Trying %1."
 msgstr "उपनाम पूर्वमेव प्रचलति। %1 इत्यस्य प्रयासः ।"
 
-#: src/irc/inputfilter.cpp:1610
+#: src/irc/inputfilter.cpp:1615
 #, kde-format
 msgid "Erroneous nickname. Changing nick to %1."
 msgstr "त्रुटिपूर्ण उपनाम। %1 इति निकं परिवर्तयन् ।"
 
-#: src/irc/inputfilter.cpp:1621
+#: src/irc/inputfilter.cpp:1626
 #, kde-format
 msgid "You are not on %1."
 msgstr "भवान् %1 इत्यत्र नास्ति ।"
 
-#: src/irc/inputfilter.cpp:1632 src/irc/inputfilter.cpp:1641
-#: src/irc/inputfilter.cpp:1650 src/viewer/ircview.cpp:806
+#: src/irc/inputfilter.cpp:1637 src/irc/inputfilter.cpp:1646
+#: src/irc/inputfilter.cpp:1655 src/viewer/ircview.cpp:806
 #, kde-format
 msgid "MOTD"
 msgstr "एमओटीडी"
 
-#: src/irc/inputfilter.cpp:1632
+#: src/irc/inputfilter.cpp:1637
 #, kde-format
 msgid "Message of the day:"
 msgstr "दिवसस्य सन्देशः :"
 
-#: src/irc/inputfilter.cpp:1650
+#: src/irc/inputfilter.cpp:1655
 #, kde-format
 msgid "End of message of the day"
 msgstr "दिवसस्य सन्देशस्य समाप्तिः"
 
-#: src/irc/inputfilter.cpp:1674
+#: src/irc/inputfilter.cpp:1679
 #, kde-format
 msgid "You need to be a channel operator in %1 to do that."
 msgstr "तत् कर्तुं भवता %1 मध्ये चैनल् ऑपरेटर् भवितुम् आवश्यकम् ।"
 
-#: src/irc/inputfilter.cpp:1682
+#: src/irc/inputfilter.cpp:1687
 #, kde-format
 msgid "You are now an IRC operator on this server."
 msgstr "अधुना भवान् अस्मिन् सर्वरे IRC-सञ्चालकः अस्ति ।"
 
-#: src/irc/inputfilter.cpp:1690
+#: src/irc/inputfilter.cpp:1695
 #, kde-format
 msgid "'%1' is now your hidden host (set by services)."
 msgstr "'%1' इदानीं भवतः गुप्तहोस्ट् (सेवाभिः सेट्) अस्ति ।"
 
-#: src/irc/inputfilter.cpp:1700
+#: src/irc/inputfilter.cpp:1705
 #, kde-format
 msgid "Current users on the network: %1"
 msgstr "संजाले वर्तमानाः उपयोक्तारः: %1"
 
-#: src/irc/inputfilter.cpp:1710
+#: src/irc/inputfilter.cpp:1715
 #, kde-format
 msgid "Current users on %1: %2."
 msgstr "%1: %2 इत्यत्र वर्तमानप्रयोक्तारः ।"
 
-#: src/irc/inputfilter.cpp:1740 src/irc/nicksonline.cpp:207
-#: src/irc/server.cpp:4092 src/irc/server.cpp:4094 src/irc/server.cpp:4120
-#: src/irc/server.cpp:4130
+#: src/irc/inputfilter.cpp:1745 src/irc/nicksonline.cpp:207
+#: src/irc/server.cpp:4094 src/irc/server.cpp:4096 src/irc/server.cpp:4122
+#: src/irc/server.cpp:4132
 #, kde-format
 msgid "Away"
 msgstr "दुरे"
 
-#: src/irc/inputfilter.cpp:1741
+#: src/irc/inputfilter.cpp:1746
 #, kde-format
 msgid "%1 is away: %2"
 msgstr "%1 दूरम् अस्ति: %2"
 
-#: src/irc/inputfilter.cpp:1752
+#: src/irc/inputfilter.cpp:1757
 #, kde-format
 msgid "You invited %1 to channel %2."
 msgstr "भवान् %1 इत्यस्मै %2 चैनले आमन्त्रितवान् ।"
 
-#: src/irc/inputfilter.cpp:1774 src/irc/inputfilter.cpp:1872
+#: src/irc/inputfilter.cpp:1779 src/irc/inputfilter.cpp:1877
 #, kde-format
 msgid "%1@%2"
 msgstr "%1@%2"
 
-#: src/irc/inputfilter.cpp:1784
+#: src/irc/inputfilter.cpp:1789
 #, kde-format
 msgid "%1 is %2@%3 (%4)"
 msgstr "%1 इति %2@%3 (%4)"
 
-#: src/irc/inputfilter.cpp:1799 src/irc/outputfilterresolvejob.cpp:66
+#: src/irc/inputfilter.cpp:1804 src/irc/outputfilterresolvejob.cpp:66
 #, kde-format
 msgid "DNS"
 msgstr "DNS"
 
-#: src/irc/inputfilter.cpp:1800
+#: src/irc/inputfilter.cpp:1805
 #, kde-format
 msgid "Resolved %1 (%2) to address: %3"
 msgstr "%1 (%2) इत्यस्य सम्बोधनार्थं समाधानं कृतम्: %3"
 
-#: src/irc/inputfilter.cpp:1809
+#: src/irc/inputfilter.cpp:1814
 #, kde-format
 msgid "Unable to resolve address for %1 (%2)"
 msgstr "%1 (%2) कृते पता समाधानं कर्तुं असमर्थः ।"
 
-#: src/irc/inputfilter.cpp:1839
+#: src/irc/inputfilter.cpp:1844
 #, kde-format
 msgid "%1 is an identified user."
 msgstr "%1 एकः चिह्नितः उपयोक्ता अस्ति ।"
 
-#: src/irc/inputfilter.cpp:1849
+#: src/irc/inputfilter.cpp:1854
 #, kde-format
 msgid "%1 is using a secure connection."
 msgstr "%1 सुरक्षितं संयोजनं प्रयुङ्क्ते ।"
 
-#: src/irc/inputfilter.cpp:1890 src/irc/inputfilter.cpp:1915
+#: src/irc/inputfilter.cpp:1899 src/irc/inputfilter.cpp:1924
 #, kde-format
 msgid "Who"
 msgstr "कः"
 
-#: src/irc/inputfilter.cpp:1891
+#: src/irc/inputfilter.cpp:1900
 #, kde-format
 msgid "%1 is %2@%3 (%4)%5"
 msgstr "%1 %2@%3 (%4)%5 अस्ति"
 
-#: src/irc/inputfilter.cpp:1895
+#: src/irc/inputfilter.cpp:1904
 #, kde-format
 msgid " (Away)"
 msgstr " (दुरे)"
 
-#: src/irc/inputfilter.cpp:1916
+#: src/irc/inputfilter.cpp:1925
 #, kde-format
 msgid "End of /WHO list for %1"
 msgstr "%1 कृते /WHO सूचीयाः समाप्तिः"
 
-#: src/irc/inputfilter.cpp:1999
+#: src/irc/inputfilter.cpp:2008
 #, kde-format
 msgid "%1 is a user on channels: %2"
 msgstr "%1 चैनलेषु उपयोक्ता अस्ति: %2"
 
-#: src/irc/inputfilter.cpp:2006
+#: src/irc/inputfilter.cpp:2015
 #, kde-format
 msgid "%1 has voice on channels: %2"
 msgstr "%1 इत्यस्य चैनलेषु स्वरः अस्ति: %2"
 
-#: src/irc/inputfilter.cpp:2012
+#: src/irc/inputfilter.cpp:2021
 #, kde-format
 msgid "%1 is a halfop on channels: %2"
 msgstr "%1 चॅनेल्स् इत्यत्र हाफऑप् अस्ति: %2"
 
-#: src/irc/inputfilter.cpp:2018
+#: src/irc/inputfilter.cpp:2027
 #, kde-format
 msgid "%1 is an operator on channels: %2"
 msgstr "%1 चैनलेषु एकः संचालकः अस्ति: %2"
 
-#: src/irc/inputfilter.cpp:2024
+#: src/irc/inputfilter.cpp:2033
 #, kde-format
 msgid "%1 is owner of channels: %2"
 msgstr "%1 चैनल्स् इत्यस्य स्वामी अस्ति: %2"
 
-#: src/irc/inputfilter.cpp:2030
+#: src/irc/inputfilter.cpp:2039
 #, kde-format
 msgid "%1 is admin on channels: %2"
 msgstr "%1 चैनलेषु व्यवस्थापकः अस्ति: %2"
 
-#: src/irc/inputfilter.cpp:2056
+#: src/irc/inputfilter.cpp:2065
 #, kde-format
 msgid "%1 is online via %2 (%3)."
 msgstr "%1 %2 (%3) मार्गेण ऑनलाइन अस्ति ।"
 
-#: src/irc/inputfilter.cpp:2071
+#: src/irc/inputfilter.cpp:2080
 #, kde-format
 msgid "%1 is available for help."
 msgstr "%1 साहाय्यार्थं उपलभ्यते ।"
 
-#: src/irc/inputfilter.cpp:2086
+#: src/irc/inputfilter.cpp:2095
 #, kde-format
 msgid "%1 is an IRC Operator."
 msgstr "%1 एकः IRC संचालकः अस्ति ।"
 
-#: src/irc/inputfilter.cpp:2126 src/statusbar.cpp:177
+#: src/irc/inputfilter.cpp:2135 src/statusbar.cpp:177
 #, kde-format
 msgid "1 day"
 msgid_plural "%1 days"
 msgstr[0] "१ दिवसे"
 msgstr[1] "%1 दिवसाः"
 
-#: src/irc/inputfilter.cpp:2127 src/irc/inputfilter.cpp:2140
+#: src/irc/inputfilter.cpp:2136 src/irc/inputfilter.cpp:2149
 #: src/statusbar.cpp:178 src/statusbar.cpp:186
 #, kde-format
 msgid "1 hour"
@@ -5821,8 +5829,8 @@ msgid_plural "%1 hours"
 msgstr[0] "१ घण्टा"
 msgstr[1] "%1 घण्टा"
 
-#: src/irc/inputfilter.cpp:2128 src/irc/inputfilter.cpp:2141
-#: src/irc/inputfilter.cpp:2151 src/statusbar.cpp:179 src/statusbar.cpp:187
+#: src/irc/inputfilter.cpp:2137 src/irc/inputfilter.cpp:2150
+#: src/irc/inputfilter.cpp:2160 src/statusbar.cpp:179 src/statusbar.cpp:187
 #: src/statusbar.cpp:194
 #, kde-format
 msgid "1 minute"
@@ -5830,8 +5838,8 @@ msgid_plural "%1 minutes"
 msgstr[0] "१ मिनिट्"
 msgstr[1] "%1 निमेषाः"
 
-#: src/irc/inputfilter.cpp:2129 src/irc/inputfilter.cpp:2142
-#: src/irc/inputfilter.cpp:2152 src/statusbar.cpp:180 src/statusbar.cpp:188
+#: src/irc/inputfilter.cpp:2138 src/irc/inputfilter.cpp:2151
+#: src/irc/inputfilter.cpp:2161 src/statusbar.cpp:180 src/statusbar.cpp:188
 #: src/statusbar.cpp:195
 #, kde-format
 msgid "1 second"
@@ -5839,7 +5847,7 @@ msgid_plural "%1 seconds"
 msgstr[0] "१ द्वितीयम्"
 msgstr[1] "%1 सेकण्ड्"
 
-#: src/irc/inputfilter.cpp:2133
+#: src/irc/inputfilter.cpp:2142
 #, kde-format
 msgctxt ""
 "%1 = name of person, %2 = (x days), %3 = (x hours), %4 = (x minutes), %5 = "
@@ -5847,81 +5855,81 @@ msgctxt ""
 msgid "%1 has been idle for %2, %3, %4, and %5."
 msgstr "%1 %2, %3, %4, %5 च कृते निष्क्रियः अभवत् ।"
 
-#: src/irc/inputfilter.cpp:2145
+#: src/irc/inputfilter.cpp:2154
 #, kde-format
 msgctxt ""
 "%1 = name of person, %2 = (x hours), %3 = (x minutes), %4 = (x seconds)"
 msgid "%1 has been idle for %2, %3, and %4."
 msgstr "%1 %2, %3, %4 च कृते निष्क्रियः अभवत् ।"
 
-#: src/irc/inputfilter.cpp:2155
+#: src/irc/inputfilter.cpp:2164
 #, kde-format
 msgctxt "%1 = name of person, %2 = (x minutes), %3 = (x seconds)"
 msgid "%1 has been idle for %2 and %3."
 msgstr "%1 %2 तथा %3 कृते निष्क्रियः अभवत् ।"
 
-#: src/irc/inputfilter.cpp:2161
+#: src/irc/inputfilter.cpp:2170
 #, kde-format
 msgid "%2 has been idle for 1 second."
 msgid_plural "%2 has been idle for %1 seconds."
 msgstr[0] "%2 १ सेकण्ड् यावत् निष्क्रियः अस्ति ।"
 msgstr[1] "%2 %1 सेकण्ड् यावत् निष्क्रियः अस्ति ।"
 
-#: src/irc/inputfilter.cpp:2167
+#: src/irc/inputfilter.cpp:2176
 #, kde-format
 msgid "%1 has been online since %2."
 msgstr "%1 %2 तः ऑनलाइन अस्ति ।"
 
-#: src/irc/inputfilter.cpp:2184
+#: src/irc/inputfilter.cpp:2193
 #, kde-format
 msgid "End of WHOIS list."
 msgstr "WHOIS सूचीयाः समाप्तिः ।"
 
-#: src/irc/inputfilter.cpp:2223
+#: src/irc/inputfilter.cpp:2232
 #, kde-format
 msgid "Userhost"
 msgstr "उपयोक्तृहोस्ट्"
 
-#: src/irc/inputfilter.cpp:2224
+#: src/irc/inputfilter.cpp:2233
 #, kde-format
 msgctxt "%1 = nick, %2 = shows if nick is op, %3 = hostmask, %4 = shows away"
 msgid "%1%2 is %3%4."
 msgstr "%1%2 %3%4 अस्ति ।"
 
-#: src/irc/inputfilter.cpp:2226
+#: src/irc/inputfilter.cpp:2235
 #, kde-format
 msgid " (IRC Operator)"
 msgstr " (IRC संचालक)"
 
-#: src/irc/inputfilter.cpp:2228
+#: src/irc/inputfilter.cpp:2237
 #, kde-format
 msgid " (away)"
 msgstr " (दुरे)"
 
-#: src/irc/inputfilter.cpp:2246 src/irc/inputfilter.cpp:2259
-#: src/irc/inputfilter.cpp:2275
+#: src/irc/inputfilter.cpp:2255 src/irc/inputfilter.cpp:2268
+#: src/irc/inputfilter.cpp:2284
 #, kde-format
 msgid "List"
 msgstr "सूची"
 
-#: src/irc/inputfilter.cpp:2246
+#: src/irc/inputfilter.cpp:2255
 #, kde-format
 msgid "List of channels:"
 msgstr "चैनलानां सूचीः"
 
-#: src/irc/inputfilter.cpp:2258
+#: src/irc/inputfilter.cpp:2267
 #, kde-format
 msgid "%2 (%1 user): %3"
 msgid_plural "%2 (%1 users): %3"
 msgstr[0] "%2 (%1 उपयोक्ता): %3"
 msgstr[1] "%2 (%1 उपयोक्तारः): %3"
 
-#: src/irc/inputfilter.cpp:2275
+#: src/irc/inputfilter.cpp:2284
 #, kde-format
 msgid "End of channel list."
 msgstr "चैनलसूचिकायाः समाप्तिः ।"
 
-#: src/irc/inputfilter.cpp:2332
+#: src/irc/inputfilter.cpp:2341
 #, kde-format
 msgctxt ""
 "The server didn't respond with the identity of the ban creator, so we say "
@@ -5929,53 +5937,53 @@ msgctxt ""
 msgid "(unknown)"
 msgstr "(अज्ञात)"
 
-#: src/irc/inputfilter.cpp:2334 src/irc/inputfilter.cpp:2352
+#: src/irc/inputfilter.cpp:2343 src/irc/inputfilter.cpp:2361
 #, kde-format
 msgid "BanList:%1"
 msgstr "BanList:%1"
 
-#: src/irc/inputfilter.cpp:2335
+#: src/irc/inputfilter.cpp:2344
 #, kde-format
 msgctxt "BanList message: e.g. *!*@aol.com set by MrGrim on <date>"
 msgid "%1 set by %2 on %3"
 msgstr "%1 %3 इत्यत्र %2 इत्यनेन सेट् कृतम्"
 
-#: src/irc/inputfilter.cpp:2352
+#: src/irc/inputfilter.cpp:2361
 #, kde-format
 msgid "End of Ban List."
 msgstr "प्रतिबन्धसूची समाप्त।"
 
-#: src/irc/inputfilter.cpp:2388
+#: src/irc/inputfilter.cpp:2397
 #, kde-format
 msgid "No such server: %1."
 msgstr "एतादृशः सर्वरः नास्ति: %1."
 
-#: src/irc/inputfilter.cpp:2398
+#: src/irc/inputfilter.cpp:2407
 #, kde-format
 msgid "%1 is currently unavailable."
 msgstr "%1 सम्प्रति अनुपलब्धम् अस्ति ।"
 
-#: src/irc/inputfilter.cpp:2411
+#: src/irc/inputfilter.cpp:2420
 #, kde-format
 msgid "Nickname %1 is unavailable. Trying %2."
 msgstr "उपनाम %1 अनुपलब्धम् अस्ति । %2 इत्यस्य प्रयासः ।"
 
-#: src/irc/inputfilter.cpp:2435
+#: src/irc/inputfilter.cpp:2444
 #, kde-format
 msgid "%1: Unknown command."
 msgstr "%1: अज्ञातः आदेशः ।"
 
-#: src/irc/inputfilter.cpp:2443
+#: src/irc/inputfilter.cpp:2452
 #, kde-format
 msgid "Not registered."
 msgstr "पञ्जीकृतः नास्ति।"
 
-#: src/irc/inputfilter.cpp:2451
+#: src/irc/inputfilter.cpp:2460
 #, kde-format
 msgid "%1: This command requires more parameters."
 msgstr "%1: अस्य आदेशस्य अधिकानि मापदण्डानि आवश्यकानि सन्ति ।"
 
-#: src/irc/inputfilter.cpp:2475
+#: src/irc/inputfilter.cpp:2484
 #, kde-format
 msgid ""
 "Cannot join %1: The channel is password-protected and either a wrong or no "
@@ -5984,22 +5992,22 @@ msgstr ""
 "%1 सम्मिलितुं न शक्यते: चैनलः गुप्तशब्द-संरक्षितः अस्ति तथा च गलतः अथवा कोऽपि गुप्तशब्दः न "
 "दत्तः ।"
 
-#: src/irc/inputfilter.cpp:2482
+#: src/irc/inputfilter.cpp:2491
 #, kde-format
 msgid "You are now logged in as %1."
 msgstr "इदानीं भवान् %1 इति रूपेण प्रवेशितः अस्ति ।"
 
-#: src/irc/inputfilter.cpp:2490
+#: src/irc/inputfilter.cpp:2499
 #, kde-format
 msgid "SASL authentication successful."
 msgstr "SASL प्रमाणीकरणं सफलम्।"
 
-#: src/irc/inputfilter.cpp:2503
+#: src/irc/inputfilter.cpp:2512
 #, kde-format
 msgid "SASL authentication attempt failed."
 msgstr "SASL प्रमाणीकरणस्य प्रयासः असफलः अभवत् ।"
 
-#: src/irc/inputfilter.cpp:2512
+#: src/irc/inputfilter.cpp:2521
 #, kde-format
 msgid "SASL authentication aborted."
 msgstr "SASL प्रमाणीकरणं निरस्तम्।"
@@ -6490,8 +6498,8 @@ msgctxt "%1 = Comma-separated list of nicknames"
 msgid "Current notify list: %1."
 msgstr "वर्तमानसूचनासूची: %1."
 
-#: src/irc/outputfilter.cpp:1315 src/irc/server.cpp:3168
-#: src/irc/server.cpp:3182
+#: src/irc/outputfilter.cpp:1315 src/irc/server.cpp:3170
+#: src/irc/server.cpp:3184
 #, kde-format
 msgctxt "Message type"
 msgid "Notify"
@@ -6751,44 +6759,44 @@ msgctxt "%1 = nick, %2 = hostmask, %3 = reason"
 msgid "%1 (%2) has left this server (%3)."
 msgstr "%1 (%2) इत्यनेन एतत् सर्वरं (%3) त्यक्तम् ।"
 
-#: src/irc/server.cpp:263
+#: src/irc/server.cpp:265
 #, kde-format
 msgctxt "The command mentioned is executed in a shell prior to connecting."
 msgid "Running pre-connect shell command..."
 msgstr "पूर्व-संयोजन-शेल्-आदेशं चालयन्..."
 
-#: src/irc/server.cpp:411
+#: src/irc/server.cpp:413
 #, kde-format
 msgid "Pre-shell command executed successfully!"
 msgstr "पूर्व-शेल् आदेशः सफलतया निष्पादितः!"
 
-#: src/irc/server.cpp:414 src/irc/server.cpp:426
+#: src/irc/server.cpp:416 src/irc/server.cpp:428
 #, kde-format
 msgctxt "An error message from KDE or Qt is appended."
 msgid "There was a problem while executing the command: "
 msgstr "आदेशस्य निष्पादनकाले समस्या आसीत् : "
 
-#: src/irc/server.cpp:415 src/irc/server.cpp:427
+#: src/irc/server.cpp:417 src/irc/server.cpp:429
 #, kde-format
 msgid "Warning"
 msgstr "चेतवानी"
 
-#: src/irc/server.cpp:474
+#: src/irc/server.cpp:476
 #, kde-format
 msgid "Looking for server %1 (port %2)..."
 msgstr "सर्वर %1 (पोर्ट %2) अन्विष्यते..."
 
-#: src/irc/server.cpp:691
+#: src/irc/server.cpp:693
 #, kde-format
 msgid "Server found, connecting..."
 msgstr "सर्वरः प्राप्तः, संयोजयति..."
 
-#: src/irc/server.cpp:726
+#: src/irc/server.cpp:728
 #, kde-format
 msgid "Negotiating capabilities with server..."
 msgstr "सर्वरेण सह क्षमतानां वार्तालापः..."
 
-#: src/irc/server.cpp:769
+#: src/irc/server.cpp:771
 #, kde-format
 msgid ""
 "Server does not support %1 as SASL authentication mechanism, skipping SASL "
@@ -6796,38 +6804,38 @@ msgid ""
 msgstr ""
 "सर्वरः %1 इत्यस्य समर्थनं SASL प्रमाणीकरणतन्त्ररूपेण न करोति, SASL प्रमाणीकरणं त्यक्त्वा ।"
 
-#: src/irc/server.cpp:790
+#: src/irc/server.cpp:792
 #, kde-format
 msgid "Requesting capabilities: %1"
 msgstr "क्षमतानां अनुरोधः : %1"
 
-#: src/irc/server.cpp:807
+#: src/irc/server.cpp:809
 #, kde-format
 msgid "Closing capabilities negotiation."
 msgstr "समापन क्षमता वार्ता।"
 
-#: src/irc/server.cpp:815
+#: src/irc/server.cpp:817
 #, kde-format
 msgid "Capabilities negotiation failed: Appears not supported by server."
 msgstr "क्षमतावार्ता विफलम्: सर्वरेण समर्थितं न दृश्यते।"
 
-#: src/irc/server.cpp:825
+#: src/irc/server.cpp:827
 #, kde-format
 msgid ""
 "SASL capability acknowledged by server, attempting SASL %1 authentication..."
 msgstr "SASL क्षमता सर्वरेण स्वीकृता, SASL %1 प्रमाणीकरणस्य प्रयासः..."
 
-#: src/irc/server.cpp:838
+#: src/irc/server.cpp:840
 #, kde-format
 msgid "SASL capability denied or not supported by server."
 msgstr "SASL क्षमता सर्वरेण अङ्गीकृता अथवा समर्थिता नास्ति।"
 
-#: src/irc/server.cpp:938 src/irc/server.cpp:1046
+#: src/irc/server.cpp:940 src/irc/server.cpp:1048
 #, kde-format
 msgid "SSL Connection Error"
 msgstr "SSL संयोजनदोषः"
 
-#: src/irc/server.cpp:939
+#: src/irc/server.cpp:941
 #, kde-format
 msgid ""
 "Connection to server %1 (port %2) lost while waiting for user response to an "
@@ -6836,24 +6844,24 @@ msgstr ""
 "SSL त्रुटिं प्रति उपयोक्तृप्रतिक्रियायाः प्रतीक्षया सर्वर %1 (पोर्ट् %2) इत्यनेन सह संयोजनं "
 "नष्टम् । यदि त्रुटिः उपेक्षिता भवति तर्हि स्वयमेव पुनः संयोजयिष्यति।"
 
-#: src/irc/server.cpp:959
+#: src/irc/server.cpp:961
 #, kde-format
 msgid "Connection to server %1 (port %2) lost: %3."
 msgstr "सर्वर %1 (पोर्ट् %2) इत्यनेन सह संयोजनं नष्टम्: %3."
 
-#: src/irc/server.cpp:1008
+#: src/irc/server.cpp:1010
 #, kde-format
 msgid ""
 "The SSL certificate for the server %1 (port %2) failed the authenticity "
 "check."
 msgstr "सर्वर %1 (पोर्ट् %2) कृते SSL प्रमाणपत्रं प्रामाणिकतापरीक्षां विफलं जातम् ।"
 
-#: src/irc/server.cpp:1012
+#: src/irc/server.cpp:1014
 #, kde-format
 msgid "SSL Connection Warning"
 msgstr "SSL संयोजन चेतावनी"
 
-#: src/irc/server.cpp:1041
+#: src/irc/server.cpp:1043
 #, kde-format
 msgid ""
 "Could not connect to %1 (port %2) using SSL encryption. Either the server "
@@ -6863,17 +6871,17 @@ msgstr ""
 "SSL एन्क्रिप्शनस्य उपयोगेन %1 (port %2) इत्यनेन सह सम्बद्धं कर्तुं न शक्तम् । सर्वरः SSL "
 "समर्थयति न (किं भवान् सम्यक् पोर्ट् उपयुज्यते?) अथवा भवान् प्रमाणपत्रं अङ्गीकृतवान् । %3"
 
-#: src/irc/server.cpp:1149
+#: src/irc/server.cpp:1151
 #, kde-format
 msgid "Delayed connect aborted."
 msgstr "विलम्बितं संयोजनं निरस्तम्।"
 
-#: src/irc/server.cpp:1179
+#: src/irc/server.cpp:1181
 #, kde-format
 msgid "Disconnected from %1 (port %2)."
 msgstr "%1 (पोर्ट् %2) तः विच्छिन्नम् ।"
 
-#: src/irc/server.cpp:1337
+#: src/irc/server.cpp:1339
 #, kde-format
 msgid ""
 "No nicknames from the \"%1\" identity were accepted by the connection "
@@ -6883,69 +6891,69 @@ msgstr ""
 "\"%1\" परिचयात् कोऽपि उपनाम \"%2\" इति संयोजनेन स्वीकृतः नासीत् ।\n"
 "कृपया नूतनं प्रविशतु अथवा Cancel नुदन्तु विच्छेदं कर्तुं:"
 
-#: src/irc/server.cpp:1338
+#: src/irc/server.cpp:1340
 #, kde-format
 msgid "Nickname error"
 msgstr "उपनाम त्रुटि"
 
-#: src/irc/server.cpp:2181
+#: src/irc/server.cpp:2183
 #, kde-format
 msgid "Select File(s) to Send to %1"
 msgstr "%1 प्रति प्रेषयितुं File(s) चिनोतु"
 
-#: src/irc/server.cpp:2350
+#: src/irc/server.cpp:2352
 #, kde-format
 msgctxt "%1=nickname"
 msgid "Received invalid DCC SEND request from %1."
 msgstr "%1 तः अमान्यं DCC SEND अनुरोधं प्राप्तम् ।"
 
-#: src/irc/server.cpp:2382
+#: src/irc/server.cpp:2384
 #, kde-format
 msgid "%1 offers to send you \"%2\" (%3)..."
 msgstr "%1 भवन्तं \"%2\" (%3) प्रेषयितुं प्रस्तावति..."
 
-#: src/irc/server.cpp:2385 src/irc/server.cpp:2515 src/irc/server.cpp:2527
-#: src/irc/server.cpp:2676 src/irc/server.cpp:2732 src/irc/server.cpp:2841
+#: src/irc/server.cpp:2387 src/irc/server.cpp:2517 src/irc/server.cpp:2529
+#: src/irc/server.cpp:2678 src/irc/server.cpp:2734 src/irc/server.cpp:2843
 #, kde-format
 msgid "unknown size"
 msgstr "अज्ञात आकारः"
 
-#: src/irc/server.cpp:2421
+#: src/irc/server.cpp:2423
 #, kde-format
 msgctxt "%1=nickname"
 msgid "Received invalid DCC CHAT request from %1."
 msgstr "%1 तः अमान्यं DCC CHAT अनुरोधं प्राप्तम् ।"
 
-#: src/irc/server.cpp:2512
+#: src/irc/server.cpp:2514
 #, kde-format
 msgid "Asking %1 to accept upload of \"%2\" (%3)..."
 msgstr "%1 इत्यनेन \"%2\" (%3) इत्यस्य अपलोड् स्वीकुर्वन्तु इति पृच्छन्..."
 
-#: src/irc/server.cpp:2524
+#: src/irc/server.cpp:2526
 #, kde-format
 msgid "Asking %1 to accept passive upload of \"%2\" (%3)..."
 msgstr "%1 इत्यनेन \"%2\" (%3) इत्यस्य निष्क्रियं अपलोड् स्वीकुर्वन्तु इति पृच्छति..."
 
-#: src/irc/server.cpp:2536
+#: src/irc/server.cpp:2538
 #, kde-format
 msgctxt "%1=name, %2=dcc extension, chat or wboard for example"
 msgid "Asking %1 to accept %2..."
 msgstr "%1 इत्यस्मै %2 स्वीकुर्वन्तु इति पृच्छन्..."
 
-#: src/irc/server.cpp:2595
+#: src/irc/server.cpp:2597
 #, kde-format
 msgctxt "%1 = nickname"
 msgid "Received invalid passive DCC chat acceptance message from %1."
 msgstr "%1 तः अमान्यः निष्क्रियः DCC गपशपस्वीकारसन्देशः प्राप्तः ।"
 
-#: src/irc/server.cpp:2631
+#: src/irc/server.cpp:2633
 #, kde-format
 msgctxt "%1 = file name, %2 = nickname"
 msgid ""
 "Received invalid passive DCC send acceptance message for \"%1\" from %2."
 msgstr "अमान्यं निष्क्रियं DCC %2 तः \"%1\" कृते स्वीकृतिसन्देशं प्रेषयति ।"
 
-#: src/irc/server.cpp:2672
+#: src/irc/server.cpp:2674
 #, kde-format
 msgctxt ""
 "%1 = file name, %2 = nickname of sender, %3 = percentage of file size, %4 = "
@@ -6953,13 +6961,13 @@ msgctxt ""
 msgid "Resuming download of \"%1\" from %2 starting at %3% of %4..."
 msgstr "%4 तः %3% तः आरभ्य %2 तः \"%1\" इत्यस्य पुनः डाउनलोड् आरभ्यते..."
 
-#: src/irc/server.cpp:2682
+#: src/irc/server.cpp:2684
 #, kde-format
 msgctxt "%1 = file name, %2 = nickname"
 msgid "Received invalid resume acceptance message for \"%1\" from %2."
 msgstr "%2 तः \"%1\" कृते अमान्यः पुनरारम्भस्वीकारसन्देशः प्राप्तः ।"
 
-#: src/irc/server.cpp:2728
+#: src/irc/server.cpp:2730
 #, kde-format
 msgctxt ""
 "%1 = file name, %2 = nickname of recipient, %3 = percentage of file size, %4 "
@@ -6967,121 +6975,121 @@ msgctxt ""
 msgid "Resuming upload of \"%1\" to %2 starting at %3% of %4..."
 msgstr "%4 तः %3% तः आरभ्य %2 मध्ये \"%1\" इत्यस्य अपलोड् पुनः आरभ्यते..."
 
-#: src/irc/server.cpp:2750
+#: src/irc/server.cpp:2752
 #, kde-format
 msgctxt "%1 = file name, %2 = nickname"
 msgid "Received invalid resume request for \"%1\" from %2."
 msgstr "%2 तः \"%1\" कृते अमान्यः पुनरारम्भ-अनुरोधः प्राप्तः ।"
 
-#: src/irc/server.cpp:2769
+#: src/irc/server.cpp:2771
 #, kde-format
 msgctxt "%1 = file name, %2 = nickname"
 msgid "Received invalid reject request for \"%1\" from %2."
 msgstr "%2 तः \"%1\" इत्यस्य अमान्यं अस्वीकारानुरोधः प्राप्तः ।"
 
-#: src/irc/server.cpp:2785
+#: src/irc/server.cpp:2787
 #, kde-format
 msgctxt "%1 = nickname"
 msgid "Received invalid reject request from %1."
 msgstr "%1 तः अमान्यं अस्वीकारानुरोधं प्राप्तम् ।"
 
-#: src/irc/server.cpp:2798
+#: src/irc/server.cpp:2800
 #, kde-format
 msgctxt "%1 = file name, %2 = nickname of sender"
 msgid "Download of \"%1\" from %2 finished."
 msgstr "%2 तः \"%1\" इत्यस्य डाउनलोड् समाप्तम् ।"
 
-#: src/irc/server.cpp:2803
+#: src/irc/server.cpp:2805
 #, kde-format
 msgctxt "%1 = file name, %2 = nickname of sender"
 msgid "Download of \"%1\" from %2 failed. Reason: %3."
 msgstr "%2 तः \"%1\" इत्यस्य डाउनलोड् विफलम् । कारणम् : %3."
 
-#: src/irc/server.cpp:2815
+#: src/irc/server.cpp:2817
 #, kde-format
 msgctxt "%1 = file name, %2 = nickname of recipient"
 msgid "Upload of \"%1\" to %2 finished."
 msgstr "\"%1\" इत्यस्य %2 मध्ये अपलोड् समाप्तम् ।"
 
-#: src/irc/server.cpp:2818
+#: src/irc/server.cpp:2820
 #, kde-format
 msgctxt "%1 = file name, %2 = nickname of recipient"
 msgid "Upload of \"%1\" to %2 failed. Reason: %3."
 msgstr "\"%1\" इत्यस्य %2 मध्ये अपलोड् विफलम् । कारणम् : %3."
 
-#: src/irc/server.cpp:2832
+#: src/irc/server.cpp:2834
 #, kde-format
 msgctxt "%1 = file name, %2 nickname of recipient"
 msgid "Sending \"%1\" to %2..."
 msgstr "%2 - मध्ये \"%1\" प्रेषयन्..."
 
-#: src/irc/server.cpp:2839
+#: src/irc/server.cpp:2841
 #, kde-format
 msgctxt "%1 = file name, %2 = file size, %3 = nickname of sender"
 msgid "Downloading \"%1\" (%2) from %3..."
 msgstr "%3 तः \"%1\" (%2) डाउनलोड् करणम्..."
 
-#: src/irc/server.cpp:3168 src/notificationhandler.cpp:348
+#: src/irc/server.cpp:3170 src/notificationhandler.cpp:348
 #, kde-format
 msgid "%1 is online (%2)."
 msgstr "%1 ऑनलाइन अस्ति (%2)।"
 
-#: src/irc/server.cpp:3182 src/notificationhandler.cpp:363
+#: src/irc/server.cpp:3184 src/notificationhandler.cpp:363
 #, kde-format
 msgid "%1 went offline (%2)."
 msgstr "%1 अफलाइन (%2) अभवत् ।"
 
-#: src/irc/server.cpp:3845
+#: src/irc/server.cpp:3847
 #, kde-format
 msgid "Error: Could not find script \"%1\"."
 msgstr "त्रुटिः: \"%1\" इति स्क्रिप्ट् न लब्धम् ।"
 
-#: src/irc/server.cpp:3850
+#: src/irc/server.cpp:3852
 #, kde-format
 msgid "Error: Could not execute script \"%1\". Check file permissions."
 msgstr "त्रुटिः: \"%1\" इति स्क्रिप्ट् निष्पादयितुं न शक्यते । सञ्चिकायाः अनुमतिः पश्यन्तु ।"
 
-#: src/irc/server.cpp:4061
+#: src/irc/server.cpp:4063
 #, kde-format
 msgid "Gone away for now"
 msgstr "इदानीं कृते दूरं गतः"
 
-#: src/irc/server.cpp:4092
+#: src/irc/server.cpp:4094
 #, kde-format
 msgid "You are now marked as being away (reason: %1)."
 msgstr "इदानीं भवान् दूरम् इति चिह्नितः (कारणं: %1) ।"
 
-#: src/irc/server.cpp:4094
+#: src/irc/server.cpp:4096
 #, kde-format
 msgid "You are now marked as being away."
 msgstr "त्वं इदानीं दूरस्थः इति चिह्नितः असि।"
 
-#: src/irc/server.cpp:4120
+#: src/irc/server.cpp:4122
 #, kde-format
 msgid "You are no longer marked as being away."
 msgstr "त्वं दूरस्थः इति न पुनः चिह्नितः।"
 
-#: src/irc/server.cpp:4130
+#: src/irc/server.cpp:4132
 #, kde-format
 msgid "You are not marked as being away."
 msgstr "त्वं दूरस्थः इति न चिह्नितः।"
 
-#: src/irc/server.cpp:4276
+#: src/irc/server.cpp:4278
 #, kde-format
 msgid "Failed to initiate key exchange with %1."
 msgstr "%1 इत्यनेन सह कुञ्जीविनिमयस्य आरम्भं कर्तुं असफलम् ।"
 
-#: src/irc/server.cpp:4288
+#: src/irc/server.cpp:4290
 #, kde-format
 msgid "Unable to perform key exchange with %1."
 msgstr "%1 इत्यनेन सह कीलविनिमयं कर्तुं असमर्थः ।"
 
-#: src/irc/server.cpp:4312
+#: src/irc/server.cpp:4314
 #, kde-format
 msgid "Failed to parse the DH1080_INIT of %1. Key exchange failed."
 msgstr "%1 इत्यस्य DH1080_INIT इत्यस्य विश्लेषणं कर्तुं असफलम् । कीलविनिमयः विफलः अभवत्।"
 
-#: src/irc/server.cpp:4318
+#: src/irc/server.cpp:4320
 #, kde-format
 msgid ""
 "Your key is set and your messages will now be encrypted, sending "
@@ -7090,12 +7098,12 @@ msgstr ""
 "भवतः कुञ्जी सेट् कृता अस्ति तथा च भवतः सन्देशाः इदानीं एन्क्रिप्टेड् भविष्यन्ति, "
 "DH1080_FINISH %1 प्रति प्रेषयन् ।"
 
-#: src/irc/server.cpp:4335
+#: src/irc/server.cpp:4337
 #, kde-format
 msgid "Unable to complete key exchange with %1."
 msgstr "%1 इत्यनेन सह कुञ्जीविनिमयं पूर्णं कर्तुं असमर्थः ।"
 
-#: src/irc/server.cpp:4347
+#: src/irc/server.cpp:4349
 #, kde-format
 msgid ""
 "Successfully parsed DH1080_FINISH sent by %1. Your key is set and your "
@@ -7104,7 +7112,7 @@ msgstr ""
 "%1 द्वारा प्रेषित DH1080_FINISH सफलतया विश्लेषणं कृतम् । भवतः कुञ्जी सेट् अस्ति, भवतः "
 "सन्देशाः इदानीं एन्क्रिप्टेड् भविष्यन्ति ।"
 
-#: src/irc/server.cpp:4351
+#: src/irc/server.cpp:4353
 #, kde-format
 msgid "Failed to parse DH1080_FINISH sent by %1. Key exchange failed."
 msgstr "%1 द्वारा प्रेषितं DH1080_FINISH विश्लेषणं कर्तुं असफलम् । कीलविनिमयः विफलः अभवत्।"
