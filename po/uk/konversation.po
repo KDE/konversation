@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-28 02:33+0000\n"
-"PO-Revision-Date: 2025-04-19 18:55+0300\n"
+"PO-Revision-Date: 2025-11-28 22:33+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -5617,7 +5617,7 @@ msgctxt ""
 "We asked the server for available capabilities and got an empty list. This "
 "isn't an error, and isn't permanent"
 msgid "No configurable server capabilities are currently available."
-msgstr ""
+msgstr "Зараз немає придатних до налаштовування можливостей сервера."
 
 #: src/irc/inputfilter.cpp:847
 #, kde-format
