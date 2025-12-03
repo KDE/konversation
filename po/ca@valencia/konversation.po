@@ -12,14 +12,14 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-28 02:33+0000\n"
-"PO-Revision-Date: 2025-07-23 23:10+0200\n"
+"PO-Revision-Date: 2025-11-28 14:13+0100\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca@valencia\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 25.04.3\n"
+"X-Generator: Lokalize 25.04.0\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Accelerator-Marker: &\n"
 
@@ -65,8 +65,8 @@ msgstr "L'script multimèdia requerix Python %1 o superior."
 #: data/scripts/media:133
 msgid "An error occurred while trying to list the running media players."
 msgstr ""
-"S'ha produït un error en intentar llistar els reproductors multimèdia en "
-"execució."
+"S'ha produït un error mentre s'intentaven llistar els reproductors "
+"multimèdia en execució."
 
 #: data/scripts/media:177
 msgid "No running audio players found."
@@ -106,7 +106,7 @@ msgstr "Els reproductors multimèdia en execució (%1) no reproduïxen res."
 #: data/scripts/media:219
 msgid "An error occurred while trying to retrieve media metadata from %1."
 msgstr ""
-"S'ha trobat un error en intentar recuperar les metadades del fitxer "
+"S'ha trobat un error mentre s'intentaven recuperar les metadades del fitxer "
 "multimèdia de %1."
 
 #: data/scripts/media:257
@@ -2249,7 +2249,7 @@ msgstr "S'ha produït un error desconegut (0)"
 #: src/config/theme_config.cpp:210
 #, kde-format
 msgid "Failed to Download Theme"
-msgstr "ha fallat en baixar el tema"
+msgstr "ha fallat mentre es baixava el tema"
 
 #: src/config/theme_config.cpp:235 src/config/theme_config.cpp:265
 #, kde-format
@@ -3571,7 +3571,7 @@ msgstr "No s'ha pogut acceptar la connexió (error de sòcol)."
 #: src/dcc/transferrecv.cpp:788
 #, kde-format
 msgid "Transfer error"
-msgstr "S'ha produït un error en la transferència"
+msgstr "S'ha produït un error durant la transferència"
 
 #: src/dcc/transferrecv.cpp:804
 #, kde-format
@@ -4446,7 +4446,7 @@ msgid ""
 msgstr ""
 "<qt><p>Este és el límit d'usuaris del canal -el nombre màxim d'usuaris que "
 "poden estar alhora en el canal-. Si sou un operador, ho podeu configurar. El "
-"mode de canal <b>T</b>ema (botó a l'esquerra) s'establirà automàticament si "
+"mode de canal <b>T</b>eme (botó a l'esquerra) s'establirà automàticament si "
 "es definix açò.</p></qt>"
 
 #: src/irc/channel.cpp:230 src/viewer/statuspanel.cpp:48
@@ -5581,7 +5581,7 @@ msgctxt ""
 "We asked the server for available capabilities and got an empty list. This "
 "isn't an error, and isn't permanent"
 msgid "No configurable server capabilities are currently available."
-msgstr ""
+msgstr "Actualment no hi ha capacitats configurables del servidor."
 
 #: src/irc/inputfilter.cpp:847
 #, kde-format
@@ -6959,7 +6959,7 @@ msgstr "Funcionalitat SASL.denegada o no admesa pel servidor."
 #: src/irc/server.cpp:940 src/irc/server.cpp:1048
 #, kde-format
 msgid "SSL Connection Error"
-msgstr "S'ha produït un error en la connexió SSL"
+msgstr "S'ha produït un error durant la connexió SSL"
 
 #: src/irc/server.cpp:941
 #, kde-format
@@ -7215,7 +7215,7 @@ msgstr "No esteu marcat com absent."
 #: src/irc/server.cpp:4278
 #, kde-format
 msgid "Failed to initiate key exchange with %1."
-msgstr "No s'ha pogut iniciar l'intercanvi de claus amb %1."
+msgstr "Ha fallat mentre s'iniciava l'intercanvi de claus amb %1."
 
 #: src/irc/server.cpp:4290
 #, kde-format
@@ -7226,8 +7226,8 @@ msgstr "No s'ha pogut efectuar l'intercanvi de claus amb %1."
 #, kde-format
 msgid "Failed to parse the DH1080_INIT of %1. Key exchange failed."
 msgstr ""
-"No s'ha pogut analitzar DH1080_INIT de %1. No s'ha pogut fer l'intercanvi de "
-"claus."
+"Ha fallat durant l'anàlisi de DH1080_INIT de %1. No s'ha pogut fer "
+"l'intercanvi de claus."
 
 #: src/irc/server.cpp:4320
 #, kde-format
@@ -7256,8 +7256,8 @@ msgstr ""
 #, kde-format
 msgid "Failed to parse DH1080_FINISH sent by %1. Key exchange failed."
 msgstr ""
-"No s'ha pogut analitzar l'enviament DH1080_FINISH de %1. No s'ha pogut fer "
-"l'intercanvi de claus."
+"Ha fallat durant l'anàlisi l'enviament DH1080_FINISH de %1. No s'ha pogut "
+"fer l'intercanvi de claus."
 
 #. i18n: ectx: property (text), widget (QLabel, serverLbl)
 #: src/irc/serverdialogui.ui:26
@@ -8693,7 +8693,7 @@ msgstr "%1 vol enviar-vos un fitxer"
 #: src/notificationhandler.cpp:283
 #, kde-format
 msgid "An error has occurred in a DCC transfer: %1"
-msgstr "Ha ocorregut un error en una transferència DCC: %1"
+msgstr "Ha ocorregut un error durant una transferència DCC: %1"
 
 #: src/notificationhandler.cpp:296 src/notificationhandler.cpp:301
 #, kde-format
@@ -9038,14 +9038,12 @@ msgstr[1] "Sense resposta del servidor %2 durant més de %1 segons."
 #: src/upnp/upnprouter.cpp:123
 #, kde-format
 msgid "Failed to download %1: %2"
-msgstr "No s'ha pogut baixar %1: %2"
+msgstr "Ha fallat mentre es baixava %1: %2"
 
 #: src/upnp/upnprouter.cpp:134
 #, kde-format
 msgid "Error parsing router description."
-msgstr ""
-"S'ha produït un error en l'anàlisi sintàctica de la descripció de "
-"l'encaminador."
+msgstr "S'ha produït un error durant l'anàlisi la descripció de l'encaminador."
 
 #: src/urlcatcher.cpp:69 src/viewer/viewcontainer.cpp:2618
 #, kde-format
@@ -9282,7 +9280,7 @@ msgid ""
 "operator can change the topic for the channel.</p></qt>"
 msgstr ""
 "<qt><p>Controla el <em>mode</em> del canal. Açò només ho pot canviar un "
-"operador.</p><p>El mode <b>T</b>ema vol dir que només un operador pot "
+"operador.</p><p>El mode <b>T</b>eme vol dir que només un operador pot "
 "canviar el tema del canal.</p></qt>"
 
 #: src/viewer/channeloptionsdialog.cpp:611
