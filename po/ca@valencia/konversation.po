@@ -2783,7 +2783,8 @@ msgstr "getNickname: No s'ha trobat el servidor %1."
 msgctxt "%1=dcc extension like Chat or Whiteboard"
 msgid "Could not send a DCC %1 request to the partner via the IRC server."
 msgstr ""
-"No es pot enviar cap petició de %1 DCC al company mitjançant el servidor IRC."
+"No es pot enviar cap petició de %1 DCC al company mitjançant el servidor "
+"d'IRC."
 
 #: src/dcc/chat.cpp:119 src/dcc/transfersend.cpp:374
 #, kde-format
@@ -2832,7 +2833,7 @@ msgid ""
 "server."
 msgstr ""
 "No es pot enviar el reconeixement de %1 DCC revers al company mitjançant el "
-"servidor IRC."
+"servidor d'IRC."
 
 #: src/dcc/chat.cpp:303 src/dcc/chat.cpp:335 src/dcc/transferrecv.cpp:589
 #: src/dcc/transfersend.cpp:396
@@ -2851,7 +2852,7 @@ msgid ""
 "server."
 msgstr ""
 "No es pot enviar el reconeixement de %1 DCC revers al company mitjançant el "
-"servidor IRC."
+"servidor d'IRC."
 
 #: src/dcc/chat.cpp:359
 #, kde-format
@@ -3539,7 +3540,7 @@ msgid ""
 "server."
 msgstr ""
 "No es pot enviar el reconeixement de SEND DCC revers al company mitjançant "
-"el servidor IRC."
+"el servidor d'IRC."
 
 #: src/dcc/transferrecv.cpp:593
 #, kde-format
@@ -3549,7 +3550,7 @@ msgstr "S'està esperant la connexió"
 #: src/dcc/transferrecv.cpp:602
 #, kde-format
 msgid "Waiting for remote host's acceptance"
-msgstr "S'està esperant que la màquina remota accepte"
+msgstr "S'està esperant que l'amfitrió remot accepte"
 
 #: src/dcc/transferrecv.cpp:612
 #, kde-format
@@ -3561,7 +3562,7 @@ msgstr ""
 #: src/dcc/transferrecv.cpp:637
 #, kde-format
 msgid "Unexpected response from remote host"
-msgstr "Resposta no esperada de la màquina remota"
+msgstr "Resposta no esperada de l'amfitrió remot"
 
 #: src/dcc/transferrecv.cpp:697 src/dcc/transfersend.cpp:455
 #, kde-format
@@ -3638,7 +3639,8 @@ msgstr "La petició d'enviament DCC ha sigut rebutjada"
 #, kde-format
 msgid "Could not send a DCC SEND request to the partner via the IRC server."
 msgstr ""
-"No es pot enviar cap petició DCC SEND al company mitjançant el servidor IRC."
+"No es pot enviar cap petició DCC SEND al company mitjançant el servidor "
+"d'IRC."
 
 #: src/dcc/transfersend.cpp:602
 #, kde-format
@@ -5715,7 +5717,7 @@ msgstr "El tema de %1 va ser establit per %2 el %3."
 #: src/irc/inputfilter.cpp:1522
 #, kde-format
 msgid "%1 is actually using the host %2."
-msgstr "%1 està utilitzant la màquina %2."
+msgstr "%1 està utilitzant l'amfitrió %2."
 
 #: src/irc/inputfilter.cpp:1535
 #, kde-format
@@ -5790,7 +5792,7 @@ msgstr "Ara sou un operador d'IRC en este servidor."
 #: src/irc/inputfilter.cpp:1695
 #, kde-format
 msgid "'%1' is now your hidden host (set by services)."
-msgstr "Ara «%1» és la vostra màquina oculta (establida per als serveis)."
+msgstr "Ara «%1» és el vostre amfitrió ocult (establida per als serveis)."
 
 #: src/irc/inputfilter.cpp:1705
 #, kde-format
@@ -8100,7 +8102,7 @@ msgstr "Implementació de KStatusNotifierItem, KIdleTime i altres millores"
 #: src/main.cpp:84
 #, kde-format
 msgid "irc:// URL or server hostname"
-msgstr "irc:// URL o nom de la màquina servidor"
+msgstr "irc:// URL o nom d'amfitrió del servidor"
 
 #: src/main.cpp:85
 #, kde-format
@@ -8911,12 +8913,12 @@ msgstr "Connexió ràpida"
 #: src/quickconnectdialog.cpp:44
 #, kde-format
 msgid "&Server host:"
-msgstr "&Servidor:"
+msgstr "Amfitrió del &servidor:"
 
 #: src/quickconnectdialog.cpp:45
 #, kde-format
 msgid "Enter the host of the network here."
-msgstr "Introduïu ací la màquina de la xarxa."
+msgstr "Introduïu ací l'amfitrió de la xarxa."
 
 #: src/quickconnectdialog.cpp:53
 #, kde-format
@@ -9340,7 +9342,7 @@ msgstr ""
 "<qt><p>Controla el <em>mode del canal</em>. Açò només ho pot canviar un "
 "operador.</p><p>Un canal <b>P</b>rivat es mostra en la llista de tots els "
 "canals, però no es mostra el tema. Un <em>WHOIS</em> d'un usuari pot mostrar "
-"o no que està en un canal privat depenent del servidor IRC.</p></qt>"
+"o no que està en un canal privat depenent del servidor d'IRC.</p></qt>"
 
 #: src/viewer/channeloptionsdialog.cpp:619
 #, kde-format
@@ -9761,7 +9763,7 @@ msgstr "Veta sobrenom"
 #: src/viewer/irccontextmenus.cpp:406
 #, kde-format
 msgid "Ban *!*@*.host"
-msgstr "Veta *!*@*.màquina"
+msgstr "Veta *!*@*.amfitrió"
 
 # skip-rule: t-ad_sp
 #: src/viewer/irccontextmenus.cpp:407
@@ -9773,7 +9775,7 @@ msgstr "Veta *!*@domini"
 #: src/viewer/irccontextmenus.cpp:408
 #, kde-format
 msgid "Ban *!user@*.host"
-msgstr "Veta *!usuari@*.màquina"
+msgstr "Veta *!usuari@*.amfitrió"
 
 # skip-rule: t-ad_sp
 #: src/viewer/irccontextmenus.cpp:409
@@ -9785,7 +9787,7 @@ msgstr "Veta *!usuari@domini"
 #: src/viewer/irccontextmenus.cpp:411
 #, kde-format
 msgid "Kickban *!*@*.host"
-msgstr "Expulsa i veta *!*@*.màquina"
+msgstr "Expulsa i veta *!*@*.amfitrió"
 
 # skip-rule: t-ad_sp
 #: src/viewer/irccontextmenus.cpp:412
@@ -9797,7 +9799,7 @@ msgstr "Expulsa i veta *!*@domini"
 #: src/viewer/irccontextmenus.cpp:413
 #, kde-format
 msgid "Kickban *!user@*.host"
-msgstr "Expulsa i veta *!usuari@*.màquina"
+msgstr "Expulsa i veta *!usuari@*.amfitrió"
 
 # skip-rule: t-ad_sp
 #: src/viewer/irccontextmenus.cpp:414
