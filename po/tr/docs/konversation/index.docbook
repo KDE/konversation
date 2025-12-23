@@ -1,0 +1,6097 @@
+<?xml version="1.0" ?>
+<!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
+  <!-- Define an entity for your application if it is not part of KDE
+       CVS -->
+  <!ENTITY irc "<acronym
+>IRC</acronym
+>">
+  <!ENTITY CTCP "<acronym
+>CTCP</acronym
+>">
+  <!ENTITY i18n-nickname "<acronym
+>takma ad</acronym
+>">
+  <!ENTITY i18n-Nickname "<acronym
+>Takma ad</acronym
+>">
+  <!ENTITY led "<acronym
+>LED</acronym
+>">
+  <!ENTITY osd "<acronym
+>OSD</acronym
+>">
+  <!ENTITY konviwebsite "https://konversation.kde.org">
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % Turkish "INCLUDE"
+> <!-- ONLY If you are writing non-English
+                                     original documentation, change
+                                     the language here -->
+
+  <!-- Do not define any other entities; instead, use the entities
+       from entities/general.entities and $LANG/user.entities. -->
+]>
+
+
+<!-- ................................................................ -->
+
+<!-- The language must NOT be changed here. -->
+<!-- If you are writing original documentation in a language other -->
+<!-- than English, change the language above ONLY, not here -->
+<book id="konversation" lang="&language;">
+
+<!-- This header contains all of the meta-information for the document such
+as Authors, publish date, the abstract, and Keywords -->
+
+<bookinfo>
+<title
+>&konversation; El Kitabı</title>
+
+<authorgroup>
+<author
+><personname
+> <firstname
+>Gary</firstname
+> <othername
+>R.</othername
+> <surname
+>Cramblitt</surname
+> </personname
+> <email
+>garycramblitt@comcast.net</email
+> </author>
+<othercredit role="translator"
+><firstname
+>İşbaran</firstname
+><surname
+>Akçayır</surname
+><affiliation
+><address
+><email
+>isbaran@gmail.com</email
+></address
+></affiliation
+><contrib
+>Çeviri</contrib
+></othercredit
+> <othercredit role="translator"
+><firstname
+>Emir</firstname
+><surname
+>SARI</surname
+><affiliation
+><address
+><email
+>emir_sari@icloud.com</email
+></address
+></affiliation
+><contrib
+>Çeviri</contrib
+></othercredit
+> 
+</authorgroup>
+
+<!-- Note to Translators:
+	This document contains a number of screen images with callouts.  Because the stylesheets do not currently
+	support merging callout images with screen images, the "areaspec" elements herein are dummy entries
+	used to satisfy the "callout" elements.
+
+	-grc
+-->
+
+<copyright>
+<year
+>2003-2005</year>
+<holder
+>Gary R. Cramblitt</holder>
+</copyright>
+
+<!-- Translators: put here the copyright notice of the translation -->
+<!-- Put here the FDL notice.  Read the explanation in fdl-notice.docbook
+     and in the FDL itself on how to use it. -->
+<legalnotice
+>&FDLNotice;</legalnotice>
+
+<!-- Date and version information of the documentation
+Don't forget to include this last date and this last revision number, we
+need them for translation coordination !
+Please respect the format of the date (YYYY-MM-DD) and of the version
+(V.MM.LL), it could be used by automation scripts.
+Do NOT change these in the translation. -->
+
+<date
+>2016‒11‒29</date>
+<releaseinfo
+>&konversation; 1.6</releaseinfo>
+
+<!-- Abstract about this handbook -->
+
+<abstract>
+<para
+>&konversation;, &Qt; ve &kf5-full; üzerine yapılı, kullanıcı dostu bir &irc; istemcisidir. </para>
+</abstract>
+
+<!-- This is a set of Keywords for indexing by search engines.
+Please at least include KDE, the KDE package it is in, the name
+ of your application, and a few relevant keywords. -->
+
+<keywordset>
+<keyword
+>KDE</keyword>
+<keyword
+>extragear</keyword>
+<keyword
+>Konversation</keyword>
+<keyword
+>irc</keyword>
+<keyword
+>internet relay chat</keyword>
+<keyword
+>sohbet</keyword>
+<keyword
+>iletişim</keyword>
+</keywordset>
+
+</bookinfo>
+
+<!-- The contents of the documentation begin here.  Label
+each chapter so with the id attribute. This is necessary for two reasons: it
+allows you to easily reference the chapter from other chapters of your
+document, and if there is no ID, the name of the generated HTML files will vary
+from time to time making it hard to manage for maintainers and for the CVS
+system. Any chapter labelled (OPTIONAL) may be left out at the author's
+discretion. Other chapters should not be left out in order to maintain a
+consistent documentation style across all KDE apps. -->
+
+<!-- CODE SNIPPETS
+The following are useful snippets for cross-referencing to sections of this document.
+If using the snippets plugin, copy them to your snippets.
+Please keep synced with id attributes.
+
+See <link linkend="irc-basics"
+>If you haven't used &irc; before...</link
+> for more information
+See <link linkend="identity"
+>Setting your identity</link
+> for more information
+See <link linkend="identity-away"
+>Setting your identity</link
+> for more information
+See <link linkend="identity-advanced"
+>Setting your identity</link
+> for more information
+See <link linkend="serverlist"
+>Defining new networks, servers and auto join channels</link
+> for more information
+See <link linkend="serverlist-addnetwork"
+>Defining new networks, servers and auto join channels</link
+> for more information
+See <link linkend="serverlist-addserver"
+>Defining new networks, servers and auto join channels</link
+> for more information
+See <link linkend="serverlist-addchannel"
+>Defining new networks, servers and auto join channels</link
+> for more information
+See <link linkend="list-channels"
+>Listing available channels</link
+> for more information
+See <link linkend="channel-screen-tour"
+>A tour of the main screen</link
+> for more information
+See <link linkend="quickconnect"
+>Quick Connect</link
+> for more information
+See <link linkend="irc-cmds"
+>Frequently-used &irc; commands</link
+> for more information
+See <link linkend="query"
+>Private conversations (queries)</link
+> for more information
+See <link linkend="cfg-notifications"
+>Setting notifications</link
+> for more information
+See <link linkend="nicksonline"
+>Monitoring who is online</link
+> for more information
+See <link linkend="highlighting"
+>Message highlighting</link
+> for more information
+See <link linkend="cfg-osd"
+>Configuring On Screen Display (&osd;)</link
+> for more information
+See <link linkend="color-msgs"
+>Sending colorful messages</link
+> for more information
+See <link linkend="nickthemes"
+>Configuring &i18n-nickname; themes</link
+> for more information.
+See <link linkend="quick-buttons"
+>Configuring Quick Buttons</link
+> for more information
+See <link linkend="dcc"
+>Sending and receiving files</link
+> for more information
+See <link linkend="urlcatcher"
+>Capturing &URL;s from messages.</link
+> for more information
+See <link linkend="webbrowser"
+>Setting your preferred web browser.</link
+> for more information
+See <link linkend="rememberlines"
+>Marking Channel and Query Logs</link
+> for more information
+See <link linkend="logging"
+>Logging</link
+> for more information
+See <link linkend="konvi-cmds"
+>&konversation; commands</link
+> for more information
+See <link linkend="scripting"
+>Scripting</link
+> for more information
+See <link linkend="kapp-mainwindow"
+>The main &konversation; window</link
+> for more information
+See <link linkend="getting-kapp"
+>How to obtain &konversation;</link
+> for more information
+See <link linkend="requirements"
+>Requirements</link
+> for more information
+
+-->
+
+<chapter id="introduction">
+<title
+>Giriş</title>
+
+<!-- The introduction chapter contains a brief introduction for the
+application that explains what it does and where to report
+problems. Basically a long version of the abstract.  Don't include a
+revision history. (see installation appendix comment) -->
+
+<para
+>&konversation;, &Qt; ve &kf5-full; üzerine yapılı bir &irc; istemcisidir. Aşağıdaki özellikleri sunar: </para>
+
+<para>
+<itemizedlist>
+<listitem
+><para
+>SSL desteği.</para
+></listitem>
+<listitem
+><para
+>Kullanıcı dostu sekmeli arabirim.</para
+></listitem>
+<listitem
+><para
+>Sık kullanılan komutlar için özelleştirilebilir Tez Düğmeler.</para
+></listitem>
+<listitem
+><para
+>Kendiliğinden yeniden bağlanma ve katılma.</para
+></listitem>
+<listitem
+><para
+>DCC ile gönder/al.</para
+></listitem>
+<listitem
+><para
+>Takma ad izleme listesi.</para
+></listitem>
+<listitem
+><para
+>Takma adınızı içeren iletiler veya izleme listenizdeki takma adların çevrimiçi veya çevrimdışı olması gibi çok çeşitli olaylar için görsel ve işitsel bildirimler. </para
+></listitem>
+<listitem
+><para
+>İletilerin takma ad veya düzenli ifade dizgisine göre özelleştirilebilir şekilde vurgulanması.</para
+></listitem>
+<listitem
+><para
+>Takma ad tamamlaması.</para
+></listitem>
+<listitem
+><para
+>İletilerinizde görülen tüm &URL;’lerin yakalanıp kaydedilmesi.</para
+></listitem>
+<listitem
+><para
+>Küçültülmüş olsalar bile iletilerinizin ekranda görüntülenmesi.</para
+></listitem>
+<listitem
+><para
+>Takma ad yok sayma listesi.</para
+></listitem>
+<listitem
+><para
+>Kendiliğinden oturum açma ve oturum yönetimi.</para
+></listitem>
+<listitem
+><para
+>Günlüklerde satırların imlenmesi.</para
+></listitem>
+<listitem
+><para
+>Betik yazımı desteği.</para
+></listitem>
+</itemizedlist>
+</para>
+
+<para
+>&konversation; web sitesi <ulink url="&konviwebsite;"
+>&konviwebsite;</ulink
+> adresindedir. SSS veya ipuçları gibi ek bilgileri <ulink url="https://userbase.kde.org/Konversation"
+>&konversation; UserBase</ulink
+> sayfasında bulabilirsiniz. </para>
+
+<para
+>&konversation; geliştiricilerine genelde &irc; üzerinde <ulink url="irc://irc.libera.chat/konversation"
+>irc.libera.chat sunucusunun #konversation kanalında</ulink
+> ulaşabilirsiniz. </para>
+
+</chapter>
+
+<chapter id="using-kapp">
+<title
+>&konversation; Kullanımı</title>
+
+<!-- =================================================================== -->
+
+<sect1 id="irc-basics">
+<title
+>Daha önce hiç &irc; kullanmadıysanız…</title>
+
+<para
+>Basitçe söylemek gerekirse &irc;, resmi İnternet standartları tarafından tanımlanan ve hayatınızın birçok saatini çalabilecek bir sohbet protokolüdür. &irc;’yi kullanmak için yalnızca bir sunucuya bağlanmanız gerekir. Ardından bir kanala (sohbet odasına eşdeğer) katılabilir veya başkalarıyla doğrudan konuşabilirsiniz.</para>
+
+<para
+>Bir sunucuya ve kanala katılmak için &konversation;’u açın. <guilabel
+>Sunucu Listesi</guilabel
+> ekranı görünür.</para>
+
+<para>
+<screenshot>
+<screeninfo
+>Sunucu Listesi</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-first-serverlist-1" coords="1 1"/>
+				<area id="pt-first-serverlist-2" coords="1 1"/>
+				<area id="pt-first-serverlist-3" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="first_serverlist_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Sunucu Listesi</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+<callout arearefs="pt-first-serverlist-1"
+><para
+>Yapılandırılmış &irc; <guilabel
+>ağları</guilabel
+> burada listelenir. Bir &irc; ağı, gerekli koşulları yerine getiren bir sunucular topluluğudur. Tüm &irc; ağına bağlanabilmek için yalnızca ağdaki sunuculardan birine bağlanmanız yeterlidir. Bağlandıktan sonra &konversation; kendiliğinden gösterilen <guilabel
+>kanallara</guilabel
+> katılır. &konversation; ilk kez başlatıldığında, <userinput
+><replaceable
+>Libera</replaceable
+></userinput
+> ağı ve <userinput
+><replaceable
+>#kde</replaceable
+></userinput
+> kanalı sizin için önceden girilmiştir. Kendisini seçmek için bir ağa tıklayın.</para
+></callout>
+<callout arearefs="pt-first-serverlist-2"
+><para
+>Bağlanılacak sunucuyu içeren yeni bir <guilabel
+>ağ</guilabel
+> tanımlamak ve <guilabel
+>kanallara</guilabel
+> bağlandıktan sonra kendiliğinden katılmak için buraya tıklayın. Daha fazla bilgi için <link linkend="serverlist"
+>Yeni ağlar, sunucular ve kendiliğinden katılınacak kanallar tanımlamak</link
+> bölümüne bakın.</para
+></callout>
+<callout arearefs="pt-first-serverlist-3"
+><para
+>Seçili &irc; ağına ve kanalına bağlanmak için buraya tıklayın.</para
+></callout>
+</calloutlist>
+</para>
+
+<note>
+<para
+>&konversation;’u ilk kez açıp <guibutton
+>Bağlan</guibutton
+> düğmesine tıkladığınızda, öntanımlı <guilabel
+>kimliğinizin</guilabel
+> doğru ayarlanmadığını gösteren bir iletiyle karşılaşabilirsiniz.</para>
+
+<para>
+<screenshot>
+	<screeninfo
+>Kimlikleri Denetle</screeninfo>
+	<mediaobject>
+		<imageobject>
+			<imagedata fileref="checkidentities.png" format="PNG"/>
+		</imageobject>
+		<textobject>
+			<phrase
+>Kimlikleri Denetle</phrase>
+		</textobject>
+	</mediaobject>
+</screenshot>
+</para>
+
+<para
+>&konversation;’u ilk kez açtığınızda, işletim sisteminizden geçerli kullanıcı hakkında bilgiler toplar ve kimliğiniz için olacak öntanımlıları doldurur. Sistem kullanıcısı hakkında işletim sisteminde yeterli bilgi yoksa; örneğin, tam adınız belirtilmemişse yukarıdaki iletiyi görebilirsiniz. Bu sorunu düzeltmek için <guibutton
+>Kimliği Düzenle…</guibutton
+> düğmesine tıklayın ve daha fazla bilgi için <link linkend="identity"
+>Kimliğinizi ayarlamak</link
+> bölümüne bakın.</para>
+</note>
+
+<para
+><interface
+>Ana</interface
+> ekranda, sunucu tarafından istemciye gönderilen iletileri görebilirsiniz (&konversation; sunucuya bağlanamazsa <link linkend="faq"
+>Sorular ve Yanıtlar</link
+> bölümüne bakın). Sunucu iletileri gönderilmesi bittiğinde &konversation;, seçili kanala veya kanallara katılır. </para>
+
+<para>
+<screenshot>
+<screeninfo
+>Kanal.</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-first-channel-1" coords="1 1"/>
+				<area id="pt-first-channel-2" coords="1 1"/>
+				<area id="pt-first-channel-3" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="first_channel_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Kanal</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-first-channel-1"
+><para
+>Buna <interface
+>Giriş Satırı</interface
+> denir. Kanaldaki herkese bir ileti göndermek için iletinizi buraya yazın ve &Enter; düğmesine basın. İletiniz ve diğer herkesin iletileri yukarıdaki kanal geçmişinde görünür. Her iletinin önünde saat ve kullanıcının takma adı bulunur.</para
+></callout>
+
+<callout arearefs="pt-first-channel-2"
+><para
+>Başka kanallara ve sunuculara da katılabilirsiniz. Her bir sunucu, kanal, kanal listesi ve başka bir olası ekran kendi sekmesine iyedir. Kullanılabilir kanalların bir listesini görmek için <link linkend="list-channels"
+>Kullanılabilir kanalları listelemek</link
+> bölümüne bakın. Bir kanala katılmak için giriş satırına <userinput
+><command
+>/join</command
+> <replaceable
+>#kanaladı</replaceable
+></userinput
+> yazın (<userinput
+>#</userinput
+> gereklidir). <userinput
+><command
+>/join</command
+></userinput
+> komutunun kısaltılmış bir hali olarak <userinput
+><command
+>/j</command
+></userinput
+> de yazabilirsiniz. Bir kanaldan ayrılmak için yalnızca <userinput
+><command
+>/part</command
+></userinput
+> yazın. Görüntüyü başka bir sunucuya veya kanala değiştirmek için ilgili sekmeye tıklayın. </para
+></callout>
+
+<callout arearefs="pt-first-channel-3"
+><para
+>Buna <interface
+>Takma Ad Paneli</interface
+> denir. Sizi de içerecek biçimde, kanala katılan tüm kullanıcıların takma adlarını listeler.</para
+></callout>
+
+</calloutlist>
+</para>
+
+<para
+>Bunlar temel bilgilerdir; daha ayrıntılı bilgi için okumayı sürdürün…</para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="identity">
+<title
+>Kimliğinizi ayarlamak</title>
+
+<para
+>&konversation;’u düzenli olarak kullanmaya başlamadan önce, ağ üzerinde nasıl tanımlanacağınızı ayarlamalısınız.</para>
+
+<para
+>Ana menüden <menuchoice
+> <guisubmenu
+>Ayarlar</guisubmenu
+> <guisubmenu
+>Kimlikler</guisubmenu
+> </menuchoice
+> bölümüne tıklayın. <action
+><guilabel
+>Kimlikler</guilabel
+> ekranı görünür. Ayrıca, <guilabel
+>Kimlikler</guilabel
+> ekranını <guilabel
+>Ağı Düzenle</guilabel
+> veya <guilabel
+>Yeni Ağ</guilabel
+> ekranındaki <guibutton
+>Düzenle</guibutton
+> düğmesini kullanarak da çağırabilirsiniz.</action
+> </para>
+
+<para>
+<screenshot>
+<screeninfo
+>Kimlikler (Genel Sekme)</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-identity-gen-1" coords="1 1"/>
+				<area id="pt-identity-gen-2" coords="1 1"/>
+				<area id="pt-identity-gen-3" coords="1 1"/>
+				<area id="pt-identity-gen-4" coords="1 1"/>
+				<area id="pt-identity-gen-5" coords="1 1"/>
+				<area id="pt-identity-gen-6" coords="1 1"/>
+				<area id="pt-identity-gen-7" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="identities_gen_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Kimlikler (Genel Sekme)</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+<callout arearefs="pt-identity-gen-1"
+><para
+>Düzenlemek üzere bir <guilabel
+>kimlik</guilabel
+> seçmek için buraya tıklayın.</para
+></callout>
+<callout arearefs="pt-identity-gen-2"
+><para
+>Bir <guilabel
+>kimlik</guilabel
+> <guibutton
+>eklemek</guibutton
+>, <guibutton
+>çoğaltmak</guibutton
+>, <guibutton
+>yeniden adlandırmak</guibutton
+> veya <guibutton
+>kaldırmak</guibutton
+> için bu düğmeleri kullanın.</para
+></callout>
+<callout arearefs="pt-identity-gen-3"
+><para
+>Buraya gerçek adınızı girin. &irc; sizi arkadaşlarınızdan veya düşmanlarınızdan gizlemek için tasarlanmamıştır. Kötü niyetli davranmak isterseniz bunu aklınızda bulundurun. Sahte bir “gerçek ad”, cinsiyetinizi dışarıdaki tüm ineklerden gizlemek için iyi bir yol olabilir; ancak kullandığınız bilgisayar her zaman izlenebilir, bu nedenle asla gerçekten anonim olmayacaksınız.</para
+></callout>
+<callout arearefs="pt-identity-gen-4"
+><para
+>Bir takma ad <guibutton
+>eklemek</guibutton
+> veya <guibutton
+>kaldırmak</guibutton
+> için bu düğmeleri kullanın.</para
+></callout>
+<callout arearefs="pt-identity-gen-5"
+><para
+>Bu, sizin takma adlar listenizdir. Bir takma ad, sizi başkalarının tanımak için kullanacağı addır. İstediğiniz herhangi bir adı kullanabilirsiniz. İlk karakter bir harf olmalıdır. Diğer karakterler harfler, sayılar veya <literal
+>-[]\`_^{}|</literal
+> özel karakterleri olabilir.</para>
+
+<para
+>Takma adların tüm &irc; ağında benzersiz olması gerektiğinden, istediğiniz ad, o adı başkası kullandığından dolayı sunucu tarafından reddedilebilir. Bu durumda başka alternatif takma adlar deneyin. İlk denemeniz sunucu tarafından reddedilirse &konversation;, sizin için alternatif takma adlar dener. </para>
+
+<para
+>RFC 2812’ye göre, en çok takma ad uzunluğu 9’dur; ancak bu aslında sunucu tarafından belirlenir. Bir sunucu için en büyük uzunluğu belirlemek için sunucuya bağlanın. <interface
+>Sunucu İletileri</interface
+> sekmesinde, bir <computeroutput
+>[Support]</computeroutput
+> iletisi arayın. Örneğin:</para>
+
+<para>
+<computeroutput
+>[18:51] *Eisfuchs* [21:45] [Support] Eisfuchs MODES=4 MAXCHANNELS=20 NICKLEN=16 USERLEN=10 HOSTLEN=63 TOPICLEN=450 KICKLEN=450 CHANNELLEN=30 KEYLEN=23 CHANTYPES=# PREFIX=@+ CASEMAPPING=ascii CAPAB IRCD=dancer </computeroutput>
+</para>
+
+<para
+><computeroutput
+>NICKLEN</computeroutput
+> parametresi, en büyük takma ad uzunluğunu belirtir. </para>
+</callout>
+
+<callout arearefs="pt-identity-gen-6"
+><para
+>Takma adların sırasını değiştirmek için bu düğmeleri kullanın. Önce takma ad, sonra bir sonraki takma ad denenir ve bu böyle sürer.</para
+></callout>
+<callout arearefs="pt-identity-gen-7"
+><para
+>Takma adınızı &irc; ağında kaydettiyseniz kimlik doğrulama için hizmet ve parolanızı girin. &konversation; bağlandığında, <userinput
+><command
+>/msg</command
+> <replaceable
+>hizmet</replaceable
+> <command
+>IDENTIFY</command
+> <replaceable
+>parola</replaceable
+></userinput
+> komutunu sunucuya gönderir. Bunun ne olduğunu bilmiyorsanız boş bırakın.</para
+></callout>
+</calloutlist>
+</para>
+
+<anchor id="identity-away"/>
+
+<para
+><guilabel
+>Uzakta</guilabel
+> sekmesine tıklayın.</para>
+
+<para>
+	<screenshot>
+		<screeninfo
+>Kimlikler (Uzakta Sekmesi)</screeninfo>
+		<mediaobjectco>
+			<imageobjectco>
+				<areaspec units="calspair">
+					<area id="pt-identity-away-1" coords="1 1"/>
+					<area id="pt-identity-away-2" coords="1 1"/>
+					<area id="pt-identity-away-3" coords="1 1"/>
+				</areaspec>
+				<imageobject>
+					<imagedata fileref="identities_away_co.png" format="PNG"/>
+				</imageobject>
+			</imageobjectco>
+			<textobject>
+				<phrase
+>Kimlikler (Uzakta Sekmesi)</phrase>
+			</textobject>
+		</mediaobjectco>
+	</screenshot>
+</para>
+<!-- Automatik Away group missing
+If you check this box, Konversation will automatically set all connections
+using this Identity away when the screensaver starts or after a period of
+user inactivity configured below.
+-->
+<para>
+<calloutlist>
+<callout arearefs="pt-identity-away-1"
+><para
+>Sizin uzakta olduğunuzu belirten bir takma ad girin. Bu <guilabel
+>kimlikle</guilabel
+> bağlandığınız herhangi bir kanalda <userinput
+><command
+>/away </command
+><replaceable
+>ileti</replaceable
+></userinput
+> komutu girdiğinizde, &konversation; takma adınızı kendiliğinden <guilabel
+>Uzakta Takma Ad</guilabel
+> olarak değiştirir. Diğer kullanıcılar artık sizin bilgisayarınızdan uzakta olduğunuzu anlayabileceklerdir. Uzakta olduğunuz herhangi bir kanalda <userinput
+><command
+>/away</command
+></userinput
+> komutunu girdiğinizde, &konversation; takma adınızı özgün haline geri döndürecektir. Uzağa giderken takma adınızı kendiliğinden değiştirmek istemiyorsanız bunu boş bırakın.</para
+></callout>
+<callout arearefs="pt-identity-away-2"
+><para
+>Bu kutuyu işaretlerseniz her <userinput
+><command
+>/away</command
+></userinput
+> komutu verdiğinizde, kanalda uzaklaştığınız noktayı işaretleyen yatay bir çizgi belirecektir. Diğer &irc; kullanıcıları bu yatay çizgiyi görmez. </para
+></callout>
+<callout arearefs="pt-identity-away-3"
+><para
+>Bu kutuyu işaretlerseniz &konversation;, bu <guilabel
+>kimlikle</guilabel
+> bağlandığınız tüm kanallara kendiliğinden <guilabel
+>uzakta komutunu</guilabel
+> gönderir. <userinput
+><replaceable
+>%s</replaceable
+></userinput
+>, <userinput
+><replaceable
+>msg</replaceable
+></userinput
+> ile değiştirilir. Ne zaman bir <userinput
+><command
+>/away</command
+></userinput
+> komutunu verirseniz bu <guilabel
+>kimlikle</guilabel
+> bağlandığınız tüm kanallarda <guilabel
+>dönüş</guilabel
+> komutu görüntülenir.</para>
+
+<note
+><para
+>Uzakta iletileri genellikle diğer kullanıcılar tarafından rahatsız edici olarak değerlendirilir. Bu seçeneği diğer &irc; kullanıcılarını düşünerek dikkatli bir şekilde kullanın. </para
+></note>
+</callout>
+</calloutlist>
+</para>
+
+<anchor id="identity-advanced"/>
+
+<para
+><guilabel
+>Gelişmiş</guilabel
+> sekmesine tıklayın.</para>
+
+<para>
+	<screenshot>
+		<screeninfo
+>Kimlikler (Gelişmiş Sekmesi)</screeninfo>
+		<mediaobjectco>
+			<imageobjectco>
+				<areaspec units="calspair">
+					<area id="pt-identity-adv-1" coords="1 1"/>
+					<area id="pt-identity-adv-2" coords="1 1"/>
+					<area id="pt-identity-adv-3" coords="1 1"/>
+					<area id="pt-identity-adv-4" coords="1 1"/>
+					<area id="pt-identity-adv-5" coords="1 1"/>
+					<area id="pt-identity-adv-6" coords="1 1"/>
+				</areaspec>
+				<imageobject>
+					<imagedata fileref="identities_adv_co.png" format="PNG"/>
+				</imageobject>
+			</imageobjectco>
+			<textobject>
+				<phrase
+>Kimlikler (Gelişmiş Sekmesi)</phrase>
+			</textobject>
+		</mediaobjectco>
+	</screenshot>
+</para>
+<!-- Quit reason missing Whenever you leave a server this message is shown to others-->
+<para>
+<calloutlist>
+<callout arearefs="pt-identity-adv-1"
+><para
+>Buraya sunucuya bağlanmadan önce yürütülecek bir komut girebilirsiniz. Bu kimlik birden fazla sunucu için kullanılıyorsa komut her sunucu için yürütülecektir.</para
+></callout>
+<callout arearefs="pt-identity-adv-2"
+><para
+>Bu ayar, yazdığınız karakterlerin sunucuya gönderilmek üzere nasıl kodlanacağını ve iletilerin nasıl görüntüleneceğini etkiler. &konversation;’u ilk açtığınızda, bu ayarı işletim sisteminden kendiliğinden alır. Diğer kullanıcıların iletilerini doğru şekilde görmekte sorun yaşıyorsanız bu ayarı değiştirmeyi deneyin.</para
+></callout>
+<callout arearefs="pt-identity-adv-3"
+><para
+>Bağlandığınızda, birçok sunucu IDENT yanıtı için bilgisayarınızı sorgular. Bilgisayarınız bir IDENT sunucusu çalıştırmıyorsa bu yanıt &konversation; tarafından gönderilir. Boşluğa izin verilmez. İlk adınız önerilmektedir.</para
+></callout>
+<callout arearefs="pt-identity-adv-4"
+><para
+>Bir kanaldan her ayrıldığınızda, bu ileti kanala gönderilir.</para
+></callout>
+<callout arearefs="pt-identity-adv-5"
+><para
+>Bir kanaldan kovulduğunuzda (genellikle bir &irc; operatörü tarafından), bu ileti kanala gönderilir.</para
+></callout>
+<callout arearefs="pt-identity-adv-6"
+><para
+>Değişikliklerinizi uygulamak için tıklayın. Tüm değişikliklerin etkili olması için sunucuyla bağlantınızı kesmeli ve yeniden bağlanmalısınız. Bunu yapmanın en kolay yolu &konversation;’dan çıkmak ve yeniden başlatmaktır.</para
+></callout>
+</calloutlist>
+</para>
+
+<!--
+<para
+>TODO:
+<itemizedlist>
+
+<listitem
+><para>
+The characters allowed in a nick given above comes from RFC 2812.  Any special Konversation considerations?
+</para
+></listitem>
+
+<listitem
+><para>
+Limits on Real Name and Ident?
+</para
+></listitem>
+
+</itemizedlist>
+</para>
+-->
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="serverlist">
+<title
+>Yeni ağlar, sunucular ve kendiliğinden katılım kanalları tanımlamak</title>
+
+<para
+>&konversation; programını açtığınızda <guilabel
+>Sunucu Listesi</guilabel
+> ekranı görünür. Ayrıca ana menüden <menuchoice
+><guisubmenu
+>Dosya</guisubmenu
+> <guisubmenu
+>Sunucu Listesi</guisubmenu
+></menuchoice
+> ile de açabilirsiniz. <action
+><guilabel
+>Sunucu Listesi</guilabel
+></action
+> ekranı, sizin halihazırda tanımlı &irc; <guilabel
+>ağlarınızı</guilabel
+> gruba göre listeli olarak listeler. Bir &irc; ağı, birbiriyle işbirliğinde bulunan bir sunucular koleksiyonudur. Bir ağdaki herhangi bir sunucuya bağlandığınızda, ağdaki tüm kanallara erişiminiz olur. &irc; ağlarına örnek olarak <userinput
+><replaceable
+>Libera</replaceable
+></userinput
+> ve <userinput
+><replaceable
+>Undernet</replaceable
+></userinput
+> verilebilir. </para>
+
+<para>
+<screenshot>
+	<screeninfo
+>Sunucu Listesi</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-serverlist-1" coords="1 1"/>
+				<area id="pt-serverlist-2" coords="1 1"/>
+				<area id="pt-serverlist-3" coords="1 1"/>
+				<area id="pt-serverlist-4" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="serverlist_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Sunucu Listesi</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+<callout arearefs="pt-serverlist-1"
+><para
+>Sizin halihazırda tanımlı <guilabel
+>ağlarınız</guilabel
+>, ağa bağlanmak için kullandığınız <guilabel
+>kimlik</guilabel
+> ile burada listelenir; buna, bağlandığınızda kendiliğinden katılınılan <guilabel
+>kanallar</guilabel
+> da dahildir. Ağlarınız için bir grup belirlediyseniz ağlar grubun altında girintili olarak listelenir. Seçmek için bir ağın üzerine tıklayın. </para
+></callout>
+<callout arearefs="pt-serverlist-2"
+><para
+>Bir ağ <guibutton
+>eklemek</guibutton
+>, vurgulanan bir ağı <guibutton
+>düzenlemek</guibutton
+> veya <guibutton
+>silmek</guibutton
+> için bu düğmeleri kullanın. </para
+></callout>
+<callout arearefs="pt-serverlist-3"
+><para
+>Vurgulanan <guilabel
+>ağa</guilabel
+> bağlanmak ve <guilabel
+>Sunucu Listesi</guilabel
+> ekranını kapatmak için bu düğmeye tıklayın. İsterseniz birden fazla ağı vurgulayabilirsiniz; bu durumda vurgulanan tüm ağlara bağlanılacaktır.</para
+></callout>
+<callout arearefs="pt-serverlist-4"
+><para
+>Bu düğmeye tıklamak yaptığınız değişiklikleri iptal etmez. Yalnızca şu anda herhangi bir ağa bağlanmak istemediğiniz anlamına gelir.</para
+></callout>
+</calloutlist>
+</para>
+
+<anchor id="serverlist-addnetwork"/>
+
+<para
+><guibutton
+>Yeni</guibutton
+> düğmesine tıkladığınızda, <guilabel
+>Yeni Ağ</guilabel
+> ekranı görüntülenir.</para>
+
+<para>
+<screenshot>
+	<screeninfo
+>Yeni Ağ</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-addnetwork-1" coords="1 1"/>
+				<area id="pt-addnetwork-2" coords="1 1"/>
+				<area id="pt-addnetwork-3" coords="1 1"/>
+				<area id="pt-addnetwork-4" coords="1 1"/>
+				<area id="pt-addnetwork-5" coords="1 1"/>
+				<area id="pt-addnetwork-6" coords="1 1"/>
+				<area id="pt-addnetwork-7" coords="1 1"/>
+				<area id="pt-addnetwork-8" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="addnetwork_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Yeni Ağ</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+<callout arearefs="pt-addnetwork-1"
+><para
+><guilabel
+>Ağ adını</guilabel
+> buraya girin. <guilabel
+>Sunucu Listesi</guilabel
+> ekranında aynı <guilabel
+>Ağ</guilabel
+> ile istediğiniz kadar girdi oluşturabilirsiniz.</para
+></callout>
+<!--callout arearefs="pt-addnetwork-2"
+><para
+>Optional.  If you enter something
+here, all the <guilabel
+>Network</guilabel
+>s with the same
+<guilabel
+>Group</guilabel
+> will be listed together in the
+<guilabel
+>Server List</guilabel
+> screen.</para
+></callout-->
+<callout arearefs="pt-addnetwork-2"
+><para
+>Var ola bir <guilabel
+>Kimlik</guilabel
+> seçin veya yeni bir kimlik eklemek veya var olan bir kimliği düzenlemek için <guibutton
+>Düzenle</guibutton
+> düğmesine tıklayın. <guilabel
+>Kimlik</guilabel
+> sizi tanımlar ve ağa bağlandığınızda takma adınızı belirleyecektir.</para
+></callout>
+<callout arearefs="pt-addnetwork-3"
+><para
+>İsteğe bağlı. Bu komut bağlandıktan sonra sunucuya gönderilecektir. Örnek: <userinput
+>/msg NickServ IDENTIFY <replaceable
+>konvirocks</replaceable
+></userinput
+>. Bu örnek, kullanıcıların bağlanırken takma adlarını bir parola ile kaydetmelerini ve giriş yapmalarını gerektiren Libera ağı içindir. <userinput
+><replaceable
+>konvirocks</replaceable
+></userinput
+>, <guilabel
+>kimlik</guilabel
+> içinde verilen takma adın parolasıdır. Noktalı virgülle ayırarak birden fazla komut girebilirsiniz.</para
+></callout>
+<callout arearefs="pt-addnetwork-4"
+><para
+>&konversation;’u her açtığınızda &konversation;’ın kendiliğinden bu ağa bağlanmasını istiyorsanız burayı işaretleyin.</para
+></callout>
+<callout arearefs="pt-addnetwork-5"
+><para
+>Bu, ağdaki &irc; <guilabel
+>Sunucular</guilabel
+>’ın bir listesidir. Ağa bağlanırken, &konversation; önce en üstteki sunucuya bağlanmayı deneyecektir. Eğer bu başarısız olursa ikinci sunucuyu deneyecektir. Bu başarısız olursa üçüncüyü deneyecek ve bu böyle sürecektir. En az bir sunucu belirtilmelidir. Vurgulamak için bir sunucuya tıklayın.</para
+></callout>
+<callout arearefs="pt-addnetwork-6"
+><para
+>Bir sunucu <guibutton
+>eklemek</guibutton
+>, vurgulanan bir sunucuyu <guibutton
+>düzenlemek</guibutton
+> veya <guibutton
+>silmek</guibutton
+> için bu düğmeleri kullanın. Sunucu listesinin sırasını ve dolayısıyla bağlantı denemelerinin sırasını da ayarlayabilirsiniz.</para
+></callout>
+<callout arearefs="pt-addnetwork-7"
+><para
+>İsteğe bağlı. Bu, &konversation; bir sunucuya bağlandığında kendiliğinden katılacak kanalların bir listesidir. Herhangi bir kanala kendiliğinden katılmak istemiyorsanız bunu boş bırakabilirsiniz.</para
+></callout>
+<callout arearefs="pt-addnetwork-8"
+><para
+>Bir kanal <guibutton
+>eklemek</guibutton
+>, vurgulanan bir kanalı <guibutton
+>düzenlemek</guibutton
+> veya <guibutton
+>silmek</guibutton
+> için bu düğmeleri kullanın. Kanallara katılma sırasını da değiştirebilirsiniz. </para
+></callout>
+</calloutlist>
+</para>
+
+<note
+><para
+>Farklı &irc; <guilabel
+>ağlarındaki</guilabel
+> sunucuları aynı <guilabel
+>ağ</guilabel
+> altında karıştırmaktan kaçının. Aynı sunucuya iki farklı ağ altında girmekten kaçının. Aksi takdirde, çevrimiçi <link linkend="nicksonline"
+>takma adların izlenmesi</link
+> düzgün çalışmayacaktır.</para>
+</note>
+
+<anchor id="serverlist-addserver"/>
+
+<para
+><guilabel
+>Servers</guilabel
+> çerçevesindeki <guibutton
+>Ekle</guibutton
+> düğmesine tıkladığınızda, <guilabel
+>Sunucu Ekle</guilabel
+> ekranı görünür.</para>
+
+<para>
+<screenshot>
+	<screeninfo
+>Sunucu Ekle</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-addserver-1" coords="1 1"/>
+				<area id="pt-addserver-2" coords="1 1"/>
+				<area id="pt-addserver-3" coords="1 1"/>
+				<area id="pt-addserver-4" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="addserver_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Sunucu Ekle</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+<callout arearefs="pt-addserver-1"
+><para
+>Sunucunun adı veya IP adresi. irchelp.org, sunucuların bir <ulink url="https://www.irchelp.org/networks/"
+>listesini</ulink
+> tutar.</para
+></callout>
+<callout arearefs="pt-addserver-2"
+><para
+>Sunucuya bağlanmak için gereken kapı numarasını girin. Çoğu sunucu için bu <userinput
+>6667</userinput
+> olmalıdır.</para
+></callout>
+<callout arearefs="pt-addserver-3"
+><para
+>Sunucu bağlanmak için bir parola gerektiriyorsa parolayı buraya girin, aksi takdirde boş bırakın.</para
+></callout>
+<callout arearefs="pt-addserver-4"
+><para
+>Sunucu ile iletişim kurmak için Güvenli Yuva Katmanı (SSL) protokolünü kullanmak isteyip istemediğinizi denetleyin. Bu, bilgisayarınız ve &irc; sunucusu arasındaki iletişiminizin gizliliğini korur. Bunun çalışması için sunucunun SSL protokolünü desteklemesi gerekir. Çoğu durumda, sunucu SSL’yi desteklemiyorsa bağlantı başarısız olur.</para
+></callout>
+</calloutlist>
+</para>
+
+<anchor id="serverlist-addchannel"/>
+
+<para
+><guilabel
+>Kanallara kendiliğinden katıl</guilabel
+> çerçevesindeki <guibutton
+>Ekle</guibutton
+> düğmesine tıkladığınızda <guilabel
+>Kanal Ekle</guilabel
+> ekranı görünür.</para>
+
+<para>
+<screenshot>
+	<screeninfo
+>Kanal Ekle</screeninfo>
+	<mediaobject>
+		<imageobject>
+			<imagedata fileref="addchannel.png" format="PNG"/>
+		</imageobject>
+		<textobject>
+			<phrase
+>Kanal Ekle</phrase>
+		</textobject>
+	</mediaobject>
+</screenshot>
+</para>
+
+<para
+>Bir kanal adı girin. Başına <userinput
+><replaceable
+>#</replaceable
+></userinput
+> koymayı unutmayın. Kanala katılmak için bir parola gerekiyorsa parolayı girin, aksi takdirde boş bırakın. </para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="list-channels">
+<title
+>Kullanılabilir kanalları listelemek</title>
+
+<para
+>Kullanılabilir kanalların bir listesini görüntülemek için ana menüden <menuchoice
+><guisubmenu
+>Pencere</guisubmenu
+> <guisubmenu
+>Kanal Listesi</guisubmenu
+></menuchoice
+> yolunu izleyin. <action
+>Bir uyarı ekranı sonrası, <guilabel
+>Kanal Listesi</guilabel
+> adında yeni bir sekme oluşturulur.</action
+> </para>
+
+<para>
+<screenshot>
+<screeninfo
+>Kanal Listesi sekmesi</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-channellist-1" coords="1 1"/>
+				<area id="pt-channellist-2" coords="1 1"/>
+				<area id="pt-channellist-3" coords="1 1"/>
+				<area id="pt-channellist-4" coords="1 1"/>
+				<area id="pt-channellist-5" coords="1 1"/>
+				<area id="pt-channellist-6" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="channellist_screen_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Kanal Listesi sekmesi</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-channellist-1"
+><para
+>Buraya bir süzgeç dizisi girin.</para
+></callout>
+
+<callout arearefs="pt-channellist-2"
+><para
+>Burada kanal listesini en az veya en çok kullanıcı sayısına sahip kanallarla sınırlayabilirsiniz. <guilabel
+>Sınırsız</guilabel
+> seçimi, ilgili kriterleri devre dışı bırakır.</para
+></callout>
+
+<callout arearefs="pt-channellist-3"
+><para
+>Kanal listesini sunucudan almak ve süzgeci uygulamak için buraya tıklayın.</para
+></callout>
+
+<callout arearefs="pt-channellist-4"
+><para
+>Süzülmüş kanal listesi burada görüntülenir. Düzenli ifadeler kullanmazsanız &konversation;’un adını girdiğiniz süzgeç dizisini içeren tüm kanalları listelediğine dikkat edin. Kanal adının girdiğiniz diziyle başlaması gerekmez.</para
+></callout>
+
+<callout arearefs="pt-channellist-5"
+><para
+>Katılmak istediğiniz kanalı üzerine tıklayarak seçin. Kanalın başlığında belirtilen tüm web adreslerinin bir listesini almak için kanala sağ tıklayın.</para
+></callout>
+
+<callout arearefs="pt-channellist-6"
+><para
+>Kanala katılmak için buraya tıklayın. Kanal için yeni bir sekme oluşturulur.</para
+></callout>
+
+</calloutlist>
+</para>
+<!--
+<para
+>You should avoid clicking the <guibutton
+>Refresh List</guibutton
+> button.  Most servers have thousands
+of channels, and performing this puts a high load on the server.  Besides, it can require several minutes to complete,
+depending upon your network bandwidth.  If your client is too slow, the server may even disconnect you.
+</para>
+-->
+<para
+>Bazen sunucularda “gizli” kanallar olabilir. Bu tür kanallar <guilabel
+>Kanal Listesi</guilabel
+>’nde listelenmez. Adlarını biliyorsanız bu kanallara yine de katılabilirsiniz. Herhangi bir <interface
+>giriş satırında</interface
+> şunu yazın: <userinput
+><command
+>/join</command
+> <replaceable
+>#kanaladı</replaceable
+></userinput
+>. (<userinput
+>#</userinput
+> gereklidir.) Kanal için yeni bir sekme oluşturulur. Bir kanala katılırsanız ve takma ad panelinde yalnızca takma adınız listelenirse bu kanalın daha önce var olmadığı anlamına gelir. Kanalı sunucu oluşturmuştur ve siz de operatörsünüzdür. Bu durumda, büyük olasılıkla şunu yazarak kanalı kapatmak istersiniz: <userinput
+><command
+>/part</command
+></userinput
+>. </para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="channel-screen-tour">
+<title
+>Ana pencerede bir gezinti</title>
+
+<para
+><interface
+>Ana</interface
+> ekran hakkında daha fazla bilgi edinelim. Ekran aşağıda bir kanal sekmesi seçili olarak gösterilmektedir.</para>
+
+<para>
+<screenshot>
+<screeninfo
+>Ana ekran.</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-channeltour-1" coords="1 1"/>
+				<area id="pt-channeltour-2" coords="1 1"/>
+				<area id="pt-channeltour-3" coords="1 1"/>
+				<area id="pt-channeltour-4" coords="1 1"/>
+				<area id="pt-channeltour-5" coords="1 1"/>
+				<area id="pt-channeltour-6" coords="1 1"/>
+				<area id="pt-channeltour-7" coords="1 1"/>
+				<area id="pt-channeltour-8" coords="1 1"/>
+				<area id="pt-channeltour-9" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="channel_screen_tour_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Ana ekran</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-channeltour-1"
+><para
+>Buna <interface
+>Giriş Satırı</interface
+> denir. Yalnızca geçerli sekme bir kanal ise görünür. Kanaldaki herkese bir ileti göndermek için iletiyi buraya yazın ve &Enter; düğmesine basın. İletiniz ve diğer herkesin iletileri yukarıdaki kanal geçmişinde görünür. Her iletinin önünde saat ve kullanıcının takma adı yer alır.</para>
+
+ <para
+>Panodan da metin yapıştırabilirsiniz. Yapıştırılan metinde birden fazla satır (yenisatır) varsa bir iletişim kutusu görüntülenir. Metni istediğiniz gibi düzenleyin ve <guibutton
+>Tamam</guibutton
+>’a tıklayın. </para>
+
+ <para
+>Yapıştırılan metin 256 karakterden uzunsa veya birden fazla satır içeriyorsa büyük gönderilerin bağlantı sıfırlamalarına ve taşmaya neden olabileceğini bildiren bir uyarı iletisi görüntülenir. Yine de girişi sürdürebilirsiniz; ancak bunu yapmak kötü bir fikirdir; çünkü taşma kanaldaki diğer kullanıcıları rahatsız eder veya sunucuyla bağlantınız kesilebilir. İletiyi daha kısa parçalar halinde göndermek daha iyidir.</para>
+
+ <!-- Uncomment when this is implemented.
+ &konversation; will automatically split messages that exceed the 510 character RFC limit into multiple messages.
+ I this implemented now?
+ -->
+
+ <para
+>Birçok kanalda kullanılan bir gelenek, bir kullanıcıya yönelik iletilerin önüne takma adlarının eklenmesidir. &konversation;, kullanışlı bir takma ad tamamlama özelliği sağlar. Kullanıcının takma adını yazmaya başlayın ve ardından &Tab; düğmesine basın. &konversation; kullanıcının takma adının geri kalanını ve ardından iki nokta üst üste işaretini tamamlayacaktır. Tamamlama özelliğini özelleştirmek için ana menüden <menuchoice
+><guisubmenu
+>Ayarlar</guisubmenu
+> <guisubmenu
+>Konversation Uygulamasını Yapılandır…</guisubmenu
+></menuchoice
+> yolunu izleyin; <guilabel
+>Davranış</guilabel
+>, <guilabel
+>Genel</guilabel
+> sayfasından bir <guilabel
+>Tamamlama kipi</guilabel
+> seçin. </para>
+
+ <para
+>Burada ayrıca <userinput
+><command
+>/</command
+></userinput
+> yazıp ardından bir &irc; komutu koyarak &irc; komutlarını yürütebilirsiniz. <link linkend="irc-cmds"
+>Sıkça kullanılan &irc; komutları</link
+> bölümüne bakın. Bazı sunucularda kullanılabilir komutların bir listesi için <userinput
+><command
+>/help</command
+></userinput
+> yazabilir veya belirli bir komut üzerine yardım için <userinput
+><command
+>/help </command
+><replaceable
+>komut</replaceable
+></userinput
+> yapabilirsiniz. </para
+></callout>
+
+<callout arearefs="pt-channeltour-2">
+
+<para
+>Ek sunuculara ve kanallara katılabilirsiniz. Her sunucu ve her kanal burada ayrı bir sekme alır. Kullanılabilir kanalların bir listesini görüntülemek için <link linkend="list-channels"
+>Kullanılabilir kanalları listelemek</link
+> bölümüne bakın. Bir kanala katılmak için giriş satırında şunu yazın: <userinput
+><command
+>/join</command
+> <replaceable
+>#kanaladı</replaceable
+></userinput
+> (<userinput
+>#</userinput
+> gereklidir). Bir kanaldan ayrılmak için yalnızca <userinput
+><command
+>/part</command
+></userinput
+> yazın. Sekmeler; bir <link linkend="list-channels"
+>Kanal Listesi</link
+> açar, <link linkend="query"
+>özel bir konuşmaya (sorguya)</link
+> katılır, <link linkend="urlcatcher"
+>&URL; Yakalayıcısı</link
+>’nı veya bir veya birden çok <guilabel
+>Konsole</guilabel
+>’u açarsanız burada görünürler. Ekranı farklı bir ekrana geçirmek için ilgili sekmeye tıklayın veya sekmeler arasında geçiş yapmak için fare tekerleğini kullanın. </para>
+
+<para
+>Sekmeler için başka seçeneklere bakmak üzere ana menüden <menuchoice
+> <guisubmenu
+>Ayarlar</guisubmenu
+> <guisubmenu
+>Konversation Uygulamasını Yapılandır…</guisubmenu
+></menuchoice
+> yolunu izleyip <guilabel
+>Arayüz</guilabel
+>, <guilabel
+>Sekmeler</guilabel
+> sayfasına gidin veya <guilabel
+>Bildirimler</guilabel
+>’i seçip <guilabel
+>Sekmeler</guilabel
+>’e tıklayın. </para>
+
+</callout>
+<!--
+Settings->Configure Konversation->Notifications->Tabs->Use colored LEDs needs to be activated
+-->
+<callout arearefs="pt-channeltour-3"
+><para
+>Bu &led;’ler, o sekmede görmediğiniz bir şey olduğunda yanıp sönecektir. Görülmeyen tek ileti <command
+>join</command
+>, <command
+>part</command
+>, <command
+>quit</command
+> komutları veya takma ad değişiklikleri olduğunda &led; daha yavaş yanıp sönecektir. Görünmeyen normal iletiler varsa daha hızlı yanıp sönerler. Renkler aşağıdaki gibidir: <itemizedlist>
+<listitem>
+<para
+><inlinemediaobject
+><imageobject
+><imagedata fileref="led_green_on.png" format="PNG"/></imageobject
+></inlinemediaobject
+> Kanal </para>
+</listitem>
+<listitem>
+<para
+><inlinemediaobject
+><imageobject
+><imagedata fileref="led_blue_on.png" format="PNG"/></imageobject
+></inlinemediaobject
+> <interface
+>Sunucu İletileri</interface
+>, <link linkend="list-channels"
+>Kanal Listesi</link
+> veya <link linkend="urlcatcher"
+>&URL; Yakalayıcısı</link
+>. </para>
+</listitem>
+<listitem>
+<para
+><inlinemediaobject
+><imageobject
+><imagedata fileref="led_yellow_on.png" format="PNG"/></imageobject
+></inlinemediaobject
+> <guilabel
+>Konsole</guilabel
+> veya <link linkend="dcc"
+>DCC Durumu</link
+>. </para>
+</listitem>
+<listitem>
+<para
+><inlinemediaobject
+><imageobject
+><imagedata fileref="led_red_on.png" format="PNG"/></imageobject
+></inlinemediaobject
+> <link linkend="query"
+>Özel İleti (Sorgu)</link
+>. </para>
+</listitem>
+</itemizedlist>
+</para
+></callout>
+
+<callout arearefs="pt-channeltour-4"
+><para
+>Geçerli sekmeyi kapatmak için buraya tıklayın. Bir <interface
+>Kanal</interface
+> sekmesinin kapatılması kanalı terk edecektir. Bir <interface
+>Sunucu İletileri</interface
+> sekmesini kapatmak, katıldığınız tüm kanallardan ayrılacak, o sunucudaki tüm açık sorguları kapatacak ve sunucuyla bağlantıyı kesecektir.</para
+></callout>
+
+<callout arearefs="pt-channeltour-5"
+><para
+>Kendi takma adınızı değiştirmek için bu düğmeye tıklayın. Yalnızca geçerli sekme bir kanal ise görünür. Bu düğmeyi gizlemek için ana menüden <menuchoice
+><guisubmenu
+>Ayarlar</guisubmenu
+> <guisubmenu
+>Konversation Uygulamasını Yapılandır…</guisubmenu
+></menuchoice
+> yolunu izleyin; <guilabel
+>Arayüz</guilabel
+>, <guilabel
+>Sohbet Penceresi</guilabel
+> sayfasında <guilabel
+>Kendi takma adını değiştirmek için kutu göster</guilabel
+> kutusunun işaretini kaldırın. </para
+></callout>
+
+<callout arearefs="pt-channeltour-6"
+><para
+>Kanal konusu burada görüntülenir. Uzun konuları görmek için fareyi konunun üzerine getirin. Konunun solundaki düğmeye tıklayarak konuyu değiştirebilirsiniz. Kanal konularını gizlemek için ana menüden <menuchoice
+> <guisubmenu
+>Ayarlar</guisubmenu
+> <guisubmenu
+>Konversation Uygulamasını Yapılandır…</guisubmenu
+></menuchoice
+> yolunu izleyin; <guilabel
+>Arayüz</guilabel
+>, <guilabel
+>Sohbet Penceresi</guilabel
+> sayfasında <guilabel
+>Kanal konusunu göster</guilabel
+> kutusunun işaretini kaldırın. </para
+></callout>
+
+<callout arearefs="pt-channeltour-7"
+><para
+>Bu düğmeler kanal kiplerinin geçerli durumunu gösterir. Bir düğme, o kip açıksa aşağıdadır. Doğru ayrıcalıklara sahipseniz bu düğmelere tıklayarak veya konunun solundaki düğmeye tıklayarak da kanal kiplerini değiştirebilirsiniz. Kanal kipi düğmelerini gizlemek için ana menüden <menuchoice
+><guisubmenu
+>Ayarlar</guisubmenu
+> <guisubmenu
+>Konversation Uygulamasını Yapılandır…</guisubmenu
+></menuchoice
+> yolunu izleyin ve <guilabel
+>Arayüz</guilabel
+>, <guilabel
+>Sohbet Penceresi</guilabel
+> sayfasında <guilabel
+>Kanal kipi düğmelerini göster</guilabel
+> kutusunun işaretini kaldırın. </para
+></callout>
+
+<callout arearefs="pt-channeltour-8">
+<para
+>Buna <interface
+>Takma Ad Paneli</interface
+> adı verilir. Geçerli sekme bir kanal olduğunda görüntülenir. Kendiniz de içerilmek üzere kanala katılan tüm kullanıcıların takma adlarını listeler. Kullanıcı hakkında ek bilgi görüntülemek için fare imlecini bir takma adın üzerine getirin. Takma ad simgesi temasını değiştirerek her takma adın yanında simgelerin nasıl görüntüleneceğini değiştirebilirsiniz. Daha fazla bilgi için <link linkend="nickthemes"
+>Takma ad temalarını yapılandırmak</link
+> bölümüne bakın. Yukarıdaki ekranda gösterildiği gibi <guilabel
+>Öntanımlı tema</guilabel
+>, aşağıdaki simgeleri kullanır: <itemizedlist>
+<listitem>
+<para
+><inlinemediaobject
+><imageobject
+><imagedata fileref="irc_normal.png" format="PNG"/></imageobject
+></inlinemediaobject
+> normal kullanıcı </para>
+</listitem>
+
+<listitem>
+<para
+><inlinemediaobject
+><imageobject
+><imagedata fileref="irc_voice.png" format="PNG"/></imageobject
+></inlinemediaobject
+> sesli kullanıcı. Kullanıcı, modere edilen bir kanalde konuşabilir. </para>
+</listitem>
+
+<listitem>
+<para
+><inlinemediaobject
+><imageobject
+><imagedata fileref="irc_halfop.png" format="PNG"/></imageobject
+></inlinemediaobject
+> kanal yarı operatörü </para>
+</listitem>
+
+<listitem>
+<para
+><inlinemediaobject
+><imageobject
+><imagedata fileref="irc_op.png" format="PNG"/></imageobject
+></inlinemediaobject
+> kanal operatörü </para>
+</listitem>
+
+<listitem>
+<para
+><inlinemediaobject
+><imageobject
+><imagedata fileref="irc_owner.png" format="PNG"/></imageobject
+></inlinemediaobject
+> kanal sahibi </para>
+</listitem>
+
+<listitem>
+<para
+><inlinemediaobject
+><imageobject
+><imagedata fileref="irc_admin.png" format="PNG"/></imageobject
+></inlinemediaobject
+> kanal yöneticisi </para>
+</listitem>
+
+</itemizedlist>
+</para>
+
+<para
+>Ayrıca bir kullanıcı uzaktaysa simgenin köşesine küçük bir saat çizilecektir. <inlinemediaobject
+><imageobject
+><imagedata fileref="irc_away.png" format="PNG"/></imageobject
+></inlinemediaobject
+></para>
+
+<para
+>Herhangi bir takma ada &RMB; ile tıklayarak o takma adla gerçekleştirebileceğiniz işlemlerin bağlam menüsünü görüntüleyin. Örneğin, takma ada bir <link linkend="dcc"
+>dosya</link
+> gönderebilirsiniz. </para>
+
+<para
+><interface
+>Takma Ad Paneli</interface
+>’ni gizlemek için ana menüden <menuchoice
+><guisubmenu
+>Ayarlar</guisubmenu
+> <guisubmenu
+>Takma Ad Listesini Göster</guisubmenu
+></menuchoice
+>’i seçin. </para>
+
+</callout>
+
+<callout arearefs="pt-channeltour-9"
+><para
+>Bunlar, <interface
+>Tez Düğmeler</interface
+> olarak adlandırılır. Öntanımlı olarak gösterilmezler. Bunları görüntülemek için <link linkend="quick-buttons"
+>Tez düğmeleri yapılandırmak</link
+> bölümüne bakın. Tanımlarını istediğiniz komutlara göre özelleştirebilirsiniz.</para
+></callout>
+
+</calloutlist>
+</para>
+
+<note>
+<para
+>Kanal ve sorgu sekmelerinin geçmişinde iletilerin nasıl görüntüleneceğini denetleyebilirsiniz. Örneğin, iletilerin rengini değiştirebilir, bir diziyi içeren bir ileti alındığında bir ses çalabilir veya iletileri kendiliğinden yanıtlayabilirsiniz. Daha fazla bilgi için <link linkend="highlighting"
+>İletileri vurgulamak</link
+> bölümüne bakın. </para>
+</note>
+
+<note>
+<para
+>Kanal adları bazen <userinput
+>&amp;</userinput
+>, <userinput
+>&plus;</userinput
+> veya <userinput
+>!</userinput
+> ile başlar. Bir kanal adının ilk karakteri kanalın türünü (RFC 2811) aşağıdaki gibi belirler: <itemizedlist
+> <listitem
+><para
+> <userinput
+>#</userinput
+> — Normal kanallar. </para
+></listitem
+> <listitem
+><para
+> <userinput
+>!</userinput
+> — Düzenli kanallar. </para
+></listitem
+> <listitem
+><para
+> <userinput
+>&amp;</userinput
+> — Yerel. Yalnızca kanalı barındıran sunucudan katılabilen kanallar. Diğer tüm kanallara ağdaki herhangi bir sunucudan katılınabilir. </para
+></listitem
+> <listitem
+><para
+> <userinput
+>&plus;</userinput
+> — Kanal kiplerini desteklemeyen kanallar. Bu, ayarlanmış olan “t” kanal bayrağı dışında tüm kiplerin ayarlanmadığı anlamına gelir.</para
+></listitem
+></itemizedlist
+> Kanal adları en fazla 50 karakter uzunluğundadır ve boşluk, virgül ve Kontrol-G (^G veya ASCII 7) dışında herhangi bir karakter içerebilir. </para>
+</note>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="quickconnect">
+<title
+>Tez Bağlan</title>
+
+<para
+><link linkend="serverlist"
+>Sunucu Listesi</link
+> içinde bir sunucu oluşturma derdine katlanmadan tez bir sunucuya bağlanmak istersiniz. </para>
+
+<para
+>Ana menüden <menuchoice
+> <guisubmenu
+>Dosya</guisubmenu
+> <guisubmenu
+>Tez Bağlan</guisubmenu
+> </menuchoice
+> ögesini seçin. <action
+><guilabel
+>Tez Bağlan</guilabel
+> ekranı görünür.</action
+> </para>
+
+<para>
+<screenshot>
+<screeninfo
+>Tez Bağlan ekranı.</screeninfo>
+	<mediaobject>
+		<imageobject>
+			<imagedata fileref="quickconnect_screen.png" format="PNG"/>
+		</imageobject>
+		<textobject>
+			<phrase
+>Tez Bağlan ekranı</phrase>
+		</textobject>
+	</mediaobject>
+</screenshot>
+</para>
+
+<para
+><guilabel
+>Sunucu makine</guilabel
+> kutusuna sunucu adresini ve <guilabel
+>Takma ad</guilabel
+> kutusuna istediğiniz takma adı girip <guibutton
+>Bağlan</guibutton
+> düğmesine tıklayın. &konversation; sunucuya bağlandığında bir kanala bağlanmak için <userinput
+><command
+>/join</command
+> <replaceable
+>#kanaladı</replaceable
+></userinput
+> komutunu girin. </para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="irc-cmds">
+<title
+>Sıkça kullanılan &irc; komutları</title>
+
+<para
+>Aşağıda sık kullanılan &irc; komutlarının kısa bir listesi bulunmaktadır. Tüm komutların bir listesi için <ulink url="http://www.faqs.org/rfcs/rfc2812.html"
+>RFC 2812</ulink
+> veya <ulink url="https://www.irchelp.org/"
+>irchelp.org</ulink
+> sayfasına bakın. &konversation; tarafından özel olarak davranılan komutların bir listesi için <link linkend="konvi-cmds"
+>&konversation; komutları</link
+> sayfasına bakın. </para>
+
+<para>
+<variablelist>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/help</command
+></userinput
+></term>
+<listitem
+><para
+>Geçerli sunucuda bulunan komutları listeler. Tüm sunucular tarafından desteklenmez.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/help </command
+><replaceable
+>komut</replaceable
+></userinput
+></term>
+<listitem
+><para
+><userinput
+><replaceable
+>komut</replaceable
+></userinput
+> için yardım sağlar. Tüm sunucular tarafından desteklenmez.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/join <replaceable
+>#kanal</replaceable
+></command
+></userinput
+></term>
+<listitem
+><para
+><userinput
+><replaceable
+>#kanal</replaceable
+></userinput
+>’a katılır. Kanal halihazırda yoksa oluşturulur ve kanal operatörü siz olursunuz.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/part</command
+></userinput
+></term>
+<listitem
+><para
+><interface
+>Kanal</interface
+> sekmesini kapatır ve geçerli kanaldan çıkar.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/part </command
+> <replaceable
+>#kanal</replaceable
+></userinput
+></term>
+<listitem
+><para
+><userinput
+><replaceable
+>#kanal</replaceable
+></userinput
+>’dan ayrılır ve ilgili<interface
+>kanal</interface
+> sekmesini kapatır. <userinput
+><command
+>/leave</command
+></userinput
+> ile eşanlamlıdır.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/me </command
+><replaceable
+>ileti</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Önüne takma adınız gelecek biçimde kanala <userinput
+><replaceable
+>ileti</replaceable
+></userinput
+> gönderir. Örneğin, takma adınız <userinput
+><replaceable
+>Tux</replaceable
+></userinput
+> ise <userinput
+><replaceable
+>/me çay demliyor.</replaceable
+></userinput
+> yazarsanız <interface
+>Tux çay demliyor.</interface
+> olarak görünür. Özellikle engellenmediği sürece tüm kullanıcılar bu iletileri görürler. Bu tür iletiler genellikle sözlü olmayan bilgiyi aktarmak için kullanılır; örneğin, şu anki duygu durumunuz veya fiziksel olarak ne yaptığınız. İş istasyonunuzdan kısa bir süreliğine ayrılıyorsanız bunun yerine <userinput
+><command
+>/away</command
+></userinput
+> komutunu kullanın.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/away </command
+> <replaceable
+>ileti</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Herhangi biri size özel ileti göndermeye veya sizi bir kanala davet etmeye çalışırsa iş istasyonunuzdan uzakta olduğunuz <userinput
+><replaceable
+>ileti</replaceable
+></userinput
+> ile bildirilecektir.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/away</command
+></userinput
+></term>
+<listitem
+><para
+><userinput
+><command
+>/away </command
+> <replaceable
+>ileti</replaceable
+></userinput
+> komutunu iptal eder.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/query </command
+><replaceable
+>takma ad</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Genellikle &irc;’de <link linkend="query"
+>sorgu</link
+> olarak bilinen özel sohbet için kullanıcının <userinput
+><replaceable
+>takma adı</replaceable
+></userinput
+> ile yeni bir sekme oluşturur. Burada yazılan her şey yalnızca siz ve sorgu ortağınız tarafından görülebilir.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/msg </command
+><replaceable
+>takma ad</replaceable
+> <replaceable
+>ileti</replaceable
+></userinput
+></term>
+<listitem
+><para
+><userinput
+><replaceable
+>takma adlı</replaceable
+></userinput
+> kullanıcıya <userinput
+><replaceable
+>ileti</replaceable
+></userinput
+> gönderir. Yalnızca <userinput
+><replaceable
+>takma ad</replaceable
+></userinput
+> iletiyi görür. Daha uzun konuşmalar için <userinput
+><command
+>/query</command
+></userinput
+> komutunu kullanın.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/invite </command
+><replaceable
+>takma ad</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Şu <userinput
+><replaceable
+>takma adlı</replaceable
+></userinput
+> kullanıcıyı bir kanala katılmaya davet eder. Bu komut özellikle kanal yalnızca davetliyse kullanışlıdır.</para
+></listitem>
+</varlistentry>
+
+</variablelist>
+</para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="query">
+<title
+>Özel Sohbetler (Sorgular)</title>
+
+<para
+>Özel bir sohbet, yalnızca sizin ve bir başkasının görebileceği bir görüşmedir. Özel sohbetler, &konversation; içinde “sorgular” olarak bilinirler. Özel bir sohbet başlatmak için lütfen herhangi bir giriş satırında <userinput
+><command
+>/query </command
+><replaceable
+>takma ad</replaceable
+></userinput
+> girin; burada <replaceable
+>takma ad</replaceable
+>, konuşmak istediğiniz kişinin takma adıdır. Ayrıca bu kişinin <interface
+>takma ad panelindeki</interface
+> adına &RMB; ile tıklayabilir ve <menuchoice
+><guisubmenu
+>Sorgu Aç</guisubmenu
+></menuchoice
+> da diyebilirsiniz. <action
+>Yeni bir sekme oluşturulur.</action
+> Bir ileti göndererek kendinizi tanıtın. </para>
+
+<para
+>Sorgular tıpkı kanallar gibidir; ancak kanala yalnızca siz ve diğer kişi katılabilirsiniz.</para>
+
+<para
+>Sorgudan çıkmak için sekmeyi kapatmanız yeterlidir. Ancak, diğer kişi sorguda size başka bir ileti gönderirse sekmenin yeniden açılacağını unutmayın.</para>
+
+<para
+>Tüm sorgulardan ayrılmak için ana menüden <menuchoice
+><guisubmenu
+>Pencere</guisubmenu
+> <guisubmenu
+>Tüm Açık Sorguları Kapat</guisubmenu
+></menuchoice
+> yapın veya <keycap
+>F11</keycap
+> düğmesine basın.</para>
+
+<para
+>Başka biri sizinle bir sorgu başlattığında, &konversation; bu kişinin takma adıyla yeni bir sekme oluşturur. Eğer bu kişiyle konuşmak istemiyorsanız sekmeyi kapatın. </para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="cfg-notifications">
+<title
+>Bildirim ayarları</title>
+
+<para
+><guilabel
+>Bildirimler</guilabel
+>, bir olay meydana geldiğinde &konversation;’un gerçekleştireceği eylemlerdir. Diyelim ki &konversation; çalışıyor; ancak masaüstünüzdeki diğer uygulama pencerelerinin arkasına gizlenmiş veya simge durumuna küçültülmüş durumda. Birisi sizinle iletişim kurmak isterse veya arkadaşınız bir kanala katılırsa uyarılmak istersiniz. Bildirimler bunu gerçekleştirecektir. </para>
+
+<para
+>Bildirimleri yapılandırmak için ana menüden <menuchoice
+><guisubmenu
+>Ayarlar</guisubmenu
+> <guisubmenu
+>Bildirimleri Yapılandır</guisubmenu
+></menuchoice
+> yolunu izleyin. <action
+><guilabel
+>Bildirim Ayarları</guilabel
+> ekranı görünür olur.</action
+> </para>
+
+<para>
+<screenshot>
+<screeninfo
+>Bildirim Ayarları ekranı.</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-notification-1" coords="1 1"/>
+				<area id="pt-notification-2" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="notification_screen_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Bildirim Ayarları ekranı</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-notification-1"
+><para
+>Bir olay seçmek için buraya tıklayın.</para
+></callout>
+
+<callout arearefs="pt-notification-2"
+><para
+>Olay gerçekleştiğinde olmasını istediğiniz bildirim türlerini işaretleyin (<guilabel
+>Görev çubuğu girdisini imle</guilabel
+>, olay gerçekleştiğinde görev çubuğundaki girdinin yanıp sönmesine neden olur).</para
+></callout>
+
+</calloutlist>
+</para>
+
+<para
+>Başka bir olay seçerek ve istediğiniz bildirimleri denetleyerek yineleyin. İstediğiniz tüm bildirimleri yapılandırdığınızda <guibutton
+>Tamam</guibutton
+> düğmesine tıklayın.</para>
+
+<para
+>Bildirimlerinizi ayarladıktan sonra, ana menüdeki <menuchoice
+><guisubmenu
+>Pencere</guisubmenu
+> <guisubmenu
+>Bildirimleri Etkinleştir</guisubmenu
+></menuchoice
+> seçeneğini kullanarak tüm bildirimleri etkinleştirebilir veya devre dışı bırakabilirsiniz. </para>
+
+<tip
+><para
+>Ayrıca &konversation;’un <link linkend="highlighting"
+>vurgulama özelliğini</link
+> kullanarak bir iletide takma adınızdan söz edildiğinde kendinizi uyarabilirsiniz.</para
+></tip>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="nicksonline">
+<title
+>Kimin çevrimiçi olduğunu izlemek</title>
+
+<para
+>&konversation;, arkadaşlarınız &irc; ağına bağlı olduğunda veya olmadığında sizi bilgilendirecektir. </para>
+
+<para
+>Takma adlar tek bir &irc; ağında benzersiz olduğu için &irc; ağı kaydedilir. İki farklı &irc; ağındaki takma adın aynı kişi olması gerekmez, ancak aynı &irc; ağı içindeki iki farklı sunucudaki aynı takma ad genellikle aynı kişidir.</para>
+
+<note
+><para
+>Bu nedenle, aynı &irc; ağındaki tüm sunucular için <link linkend="serverlist"
+>ağları, sunucuları ve kendiliğinden katılınacak kanalları tanımlarken</link
+> aynı <guilabel
+>ağı</guilabel
+> kullanmak çok önemlidir.</para
+></note>
+
+<para
+>Takma ad izleme özelliğini etkinleştirmek için ana menüden <menuchoice
+><guisubmenu
+>Pencere</guisubmenu
+> <guisubmenu
+>İzlenen Takma Adlar</guisubmenu
+></menuchoice
+> özelliğini etkinleştirin. <action
+><guilabel
+>İzlenen Takma Adlar</guilabel
+> ekranı görünür.</action
+> </para>
+
+<para>
+<screenshot>
+	<screeninfo
+>İzlenen Takma Adlar.</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-nicksonline-1" coords="1 1"/>
+				<area id="pt-nicksonline-2" coords="1 1"/>
+				<area id="pt-nicksonline-3" coords="1 1"/>
+				<area id="pt-nicksonline-4" coords="1 1"/>
+				<area id="pt-nicksonline-5" coords="1 1"/>
+				<area id="pt-nicksonline-6" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="nicksonline_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>İzlenen Takma Adlar</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+<callout arearefs="pt-nicksonline-1"
+><para
+>İzleme listenizdeki takma adlar burada; ilişkili &irc; ağlarının altında listelenir. Hiçbir takma ad listelenmiyorsa izlemek için herhangi bir takma ad belirtmemişsinizdir veya takma ad izleme özelliğini etkinleştirmeniz gerekir (aşağıya bakın). Takma adın katıldığı kanalların bir listesini görmek için her bir çevrimiçi takma adı genişletin. Her kanalın yanındaki simgeler, <link linkend="channel-screen-tour"
+>kanal</link
+> ekranlarındaki <interface
+>Takma Ad Paneli</interface
+>’nde görünen simgelerle aynıdır. </para
+></callout>
+<callout arearefs="pt-nicksonline-2"
+><para
+>Takma ad hakkında bilinen bilgiler burada görüntülenir. <guilabel
+>İzlenen Takma Adlar</guilabel
+> ekranı ilk görüntülendiğinde bu bilgiler seyrektir. Her 20 saniyede bir, bir <userinput
+><command
+>WHOIS</command
+></userinput
+> komutu kendiliğinden sunucuya gönderilir ve herhangi bir bilgisi olmayan takma adlar için bilgi istenir. Bu, tüm takma adlar hakkında bilgi sahibi olunana kadar sürer. </para
+></callout>
+<!--callout arearefs="pt-nicksonline-3"
+><para
+>Nicknames that are not connected to any
+of the &irc; networks you are connected to are listed in the <guilabel
+>Offline</guilabel>
+part of the listing.
+</para
+></callout-->
+</calloutlist>
+</para>
+
+<para
+>İzlemek için tek bir takma ad eklemek üzere, <guilabel
+>Takma Ad Listesinde</guilabel
+> bir takma ada &RMB; ile tıklayın ve <guilabel
+>İzlenen Takma Adlara Ekle</guilabel
+> yapın. Birkaç tane takma ad eklemek istiyorsanız ana menüden <menuchoice
+><guisubmenu
+>Ayarlar</guisubmenu
+> <guisubmenu
+>Konversation Uygulamasını Yapılandır…</guisubmenu
+></menuchoice
+> yolunu izleyip <guilabel
+>Bildirimler</guilabel
+>, <guilabel
+>İzlenen Takma Adlar</guilabel
+> seçimini yapın. <guilabel
+>İzlenen Takma Adlar</guilabel
+> ekranı görünür. </para>
+
+<para>
+<screenshot>
+<screeninfo
+>İzlenen Takma Adlar</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-notifylist-1" coords="1 1"/>
+				<area id="pt-notifylist-2" coords="1 1"/>
+				<area id="pt-notifylist-3" coords="1 1"/>
+				<area id="pt-notifylist-4" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="notifylist_screen_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>İzlenen Takma Adlar</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-notifylist-1"
+><para
+>Takma ad izleyicisi özelliğini etkinleştirmek için bu kutuyu işaretleyin.</para
+></callout>
+
+<callout arearefs="pt-notifylist-2"
+><para
+>&konversation; açıldığında <guilabel
+>İzlenen Takma Adlar</guilabel
+> ekranının kendiliğinden görüntülenmesini istiyorsanız bu kutuyu işaretleyin.</para
+></callout>
+
+<callout arearefs="pt-notifylist-3"
+><para
+><guilabel
+>İzlenen Takma Adlar</guilabel
+> ekranında herhangi bir takma ad üzerinde çift tıklayın ve bu komut sunucuya gönderilir. <userinput
+><command
+>%u</command
+></userinput
+>, takma ad ile değiştirilecektir. Komutun sonuna <userinput
+><command
+>%n</command
+></userinput
+> eklenmesi gerekir.</para
+></callout>
+
+<callout arearefs="pt-notifylist-4"
+><para
+><guilabel
+>İzlenen Takma Adlar</guilabel
+> özelliği, sunucuyu periyodik olarak yoklayarak çalışır. Bu kutu bunun ne sıklıkta gerçekleşeceğini ayarlar. Sunucuya aşırı yük bindirdiği için 20 saniyeden daha az sayılardan kaçının.</para
+></callout>
+
+</calloutlist>
+</para>
+
+<para
+>Takma adlar eklemeyi veya kaldırmayı bitirdiğinizde <guibutton
+>Tamam</guibutton
+> düğmesine tıklayın.</para>
+
+<para
+><emphasis
+>Not: </emphasis
+><guilabel
+>İzlenen Takma Adlar</guilabel
+> ekranını her görüntülediğinizde, &konversation; sunucuyu yoklamayı bitirene dek herhangi bir takma adın görüntülenmesi biraz zaman alabilir. Siz <guilabel
+>İzlenen Takma Adlar</guilabel
+> ekranını açık bırakın. </para>
+
+<para
+>&konversation;, ayrıca <guilabel
+>İzlenen Takma Adlar</guilabel
+> listenizdeki bir kullanıcı sunucuya bağlandığında veya sunucudan ayrıldığında tüm kanallarda bir ileti görüntüler. İleti aşağıdaki gibi görünür: </para>
+
+<para
+><computeroutput
+>[17:52] [Notify] psn çevrimiçi (irc.kde.org).</computeroutput
+></para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="highlighting">
+<title
+>İletileri vurgulamak</title>
+
+<para
+>İletilerin kanal ve sorgu ekranlarında nasıl görüntüleneceğini denetleyebilirsiniz.</para>
+
+<para
+>Vurgulama özelliğini etkinleştirmek için ana menüden <menuchoice
+><guisubmenu
+>Ayarlar</guisubmenu
+> <guisubmenu
+>&konversation; Uygulamasını Yapılandır…</guisubmenu
+></menuchoice
+> yolunu izleyin. <action
+><guilabel
+>Yapılandır</guilabel
+> ekranı görünür.</action
+> </para>
+
+<para>
+<screenshot>
+<screeninfo
+>Vurgulama ekranı.</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-highlight-1" coords="1 1"/>
+				<area id="pt-highlight-2" coords="1 1"/>
+				<area id="pt-highlight-3" coords="1 1"/>
+				<area id="pt-highlight-4" coords="1 1"/>
+				<area id="pt-highlight-5" coords="1 1"/>
+				<area id="pt-highlight-6" coords="1 1"/>
+				<area id="pt-highlight-7" coords="1 1"/>
+				<area id="pt-highlight-8" coords="1 1"/>
+				<area id="pt-highlight-9" coords="1 1"/>
+				<area id="pt-highlight-10" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="highlighting_screen_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Vurgulama ekranı</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-highlight-1"
+><para
+><guilabel
+>Vurgu</guilabel
+> ekranını seçmek için buraya tıklayın.</para
+></callout>
+<callout arearefs="pt-highlight-2"
+><para
+><guilabel
+>Vurgu listesine</guilabel
+> yeni bir öge eklemek için buraya tıklayın. Listedeki bir öge seçildiğinde, aşağıdaki panelde onu düzenleyebilirsiniz.</para
+></callout>
+<callout arearefs="pt-highlight-3"
+><para
+>Buraya bir dizi dizgisi girin. İletinin herhangi bir yerinde bu kalıpla eşleşen herhangi bir ileti alındığında, iletiyi vurgulama etkinleştirilecektir. </para
+></callout>
+<callout arearefs="pt-highlight-4"
+><para
+>Dizgi bir iletide bulunursa iletinin tümü burada seçtiğiniz renkte görüntülenecektir.</para
+></callout>
+<callout arearefs="pt-highlight-5"
+><para
+>İsterseniz &konversation;, dizgi eşleştiğinde bir ses çalabilir. Çalınacak bir ses dosyası seçmek için düğmeye tıklayın. Sesi duymak için sınama düğmesine tıklayın.</para
+></callout>
+<callout arearefs="pt-highlight-6"
+><para
+>Eğer &konversation;’un dizgi eşleştiğinde kendiliğinden bir yanıt göndermesini istiyorsanız iletiyi buraya girin. Dikkatli olmazsanız &irc; kullanıcılarını çok fazla gevezelikle rahatsız edebileceğiniz için bu özelliği dikkatli kullanın. Ayrıca &irc; veya &konversation; komutlarını da buraya girebilirsiniz.</para
+></callout>
+<callout arearefs="pt-highlight-8"
+><para
+>Vurgularınızdan herhangi biri için ses yapılandırdıysanız bu kutunun işaretini kaldırarak hepsini devre dışı bırakabilirsiniz.</para
+></callout>
+<callout arearefs="pt-highlight-7"
+><para
+>Bu vurgu yalnızca burada ada göre listelenen sohbet pencerelerinde veya alan boş bırakılırsa tüm sohbet pencerelerinde aranacaktır. Birden fazla ad virgülle ayrılmalıdır.</para
+></callout>
+<callout arearefs="pt-highlight-9"
+><para
+>Bu kutuyu işaretlerseniz birisi bir iletide takma adınızdan söz ettiğinde ileti, sağ tarafta seçtiğiniz renkte görüntülenecektir.</para
+></callout>
+<callout arearefs="pt-highlight-10"
+><para
+>Normalde, vurgulama yazdığınız iletiler için geçerli değildir. Yazdığınız iletileri vurgulamak istiyorsanız bu kutuyu işaretleyin ve sağ taraftan bir renk seçin.</para
+></callout>
+
+</calloutlist>
+</para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="cfg-osd">
+<title
+>Ekran Üzeri Görüntü’yü yapılandırmak (&osd;)</title>
+
+<para
+><acronym
+>Ekran Üzeri Görüntü</acronym
+> (&osd;), &konversation;’un benzersiz özelliklerinden biridir. &osd; açıkken, &konversation; simge durumuna küçültülmüş olsa bile kanal iletileri masaüstünüzde görünür. Burada &osd; çalışırken bir örneğini görebilirsiniz. Ekranın sol üst köşesindeki ileti, sistem tepsisine küçültülmüş olarak çalışmayı sürdüren &konversation;’a aittir.</para>
+
+<para>
+<screenshot>
+<screeninfo
+>Ekran Üzeri Görüntü Örneği</screeninfo>
+	<mediaobject>
+		<imageobject>
+			<imagedata fileref="osd_demo.png" format="PNG"/><!--new screenshot -->
+		</imageobject>
+		<textobject>
+			<phrase
+>Ekran Üzeri Görüntü Örneği</phrase>
+		</textobject>
+	</mediaobject>
+</screenshot>
+</para>
+
+<para
+>Ekran Üzeri Görüntü’yü (&osd;) etkinleştirmek için ana menüden <menuchoice
+><guisubmenu
+>Ayarlar</guisubmenu
+> <guisubmenu
+>&konversation; Uygulamasını Yapılandır…</guisubmenu
+></menuchoice
+> yolunu izleyin. <action
+><guilabel
+>Yapılandır</guilabel
+> ekranı görünür.</action
+> </para>
+
+<para>
+<screenshot>
+<screeninfo
+>Ekran Üzeri Görüntü ekranı.</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-osd-1" coords="1 1"/>
+				<area id="pt-osd-2" coords="1 1"/>
+				<area id="pt-osd-3" coords="1 1"/>
+				<area id="pt-osd-4" coords="1 1"/>
+				<area id="pt-osd-5" coords="1 1"/>
+				<area id="pt-osd-6" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="osd_screen_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Ekran Üzeri Görüntü ekranı</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-osd-1"
+><para
+><guilabel
+>Bildirim</guilabel
+> ögesini genişletmek için buraya tıklayın.</para
+></callout>
+
+<callout arearefs="pt-osd-2"
+><para
+><guilabel
+>Ekran Üzeri Görüntü</guilabel
+> ekranını seçmek için buraya tıklayın.</para
+></callout>
+
+<callout arearefs="pt-osd-3"
+><para
+>&osd;’yi etkinleştirmek için bu kutuyu işaretleyin.</para
+></callout>
+
+<callout arearefs="pt-osd-4"
+><para
+>&osd; için bir yazıtipi seçmek üzere bu düğmeye tıklayın (<emphasis
+>Not: </emphasis
+> Tüm yazıtipleri çalışmaz. Luxi Sans 22 ve Impact 22 çalıştığı bilinen yazıtiplerindendir).</para
+></callout>
+
+<callout arearefs="pt-osd-5"
+><para
+>Ekranda görünmesini istediğiniz ileti türlerini seçmek için buradaki kutuları işaretleyin.</para
+></callout>
+
+<callout arearefs="pt-osd-6"
+><para
+><interface
+>Ekran Üzeri Görüntü Önizlemesi</interface
+> ögesini arzu ettiğiniz konuma sürükleyin, sonrasında <guibutton
+>Uygula</guibutton
+> düğmesine tıklayın.</para
+></callout>
+
+</calloutlist>
+</para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="color-msgs">
+<title
+>Renkli iletiler göndermek</title>
+
+<para
+>Herhangi bir kanalda gönderdiğiniz iletilere renk ekleyebilirsiniz. Herhangi bir kanalın <interface
+>Giriş Satırı</interface
+>’nda iletinizi yazmaya başlayın. <inlinemediaobject
+> <imageobject
+> <imagedata fileref="format-text-color.png" format="PNG"/> </imageobject
+> <textobject
+> <phrase
+>IRC Rengi Ekle…</phrase
+> </textobject
+> </inlinemediaobject
+> <guibutton
+>&irc; Rengi</guibutton
+> düğmesine tıklayın veya ana menüden <menuchoice
+><guisubmenu
+>Ekle</guisubmenu
+> <guisubmenu
+>IRC Rengi…</guisubmenu
+></menuchoice
+> seçimini yapın. <action
+><guilabel
+>&irc; Rengi Seçicisi</guilabel
+> ekranı görünür.</action
+> </para>
+
+<para>
+<screenshot>
+<screeninfo
+>&irc; Rengi Seçicisi ekranı.</screeninfo>
+	<mediaobject>
+		<imageobject>
+			<imagedata fileref="colorchooser_screen.png" format="PNG"/>
+		</imageobject>
+		<textobject>
+			<phrase
+>&irc; Rengi Seçicisi ekranı.</phrase>
+		</textobject>
+	</mediaobject>
+</screenshot>
+</para>
+
+<para
+>Bir renk seçin ve <guibutton
+>Tamam</guibutton
+> düğmesine tıklayın. <interface
+>Giriş Satırı</interface
+>’nda iletinizi yazmayı sürdürün. Rengi değiştirmek için <guibutton
+>&irc; Rengi…</guibutton
+> düğmesine tıklayın. Başka bir renk seçip <guibutton
+>Tamam</guibutton
+> ile sürdürün. </para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="nickthemes">
+<title
+>Takma ad temalarını yapılandırmak</title>
+
+<para
+>Kanal sekmelerinin <interface
+>Takma Ad Paneli</interface
+>’nde takma adların yanında görüntülenen simgeleri değiştirebilirsiniz. Takma ad temasını değiştirmek için ana menüden <menuchoice
+><guisubmenu
+>Settings</guisubmenu
+> <guisubmenu
+>Konversation Uygulamasını Yapılandır…</guisubmenu
+></menuchoice
+> seçimini yapın. <action
+><guilabel
+>Yapılandır</guilabel
+> ekranı görünecektir.</action
+> <guilabel
+>Arayüz</guilabel
+> sayfasına tıklayın ve <guilabel
+>Takma Ad Listesi Temaları</guilabel
+> ekranını görüntülemek için <guilabel
+>Takma Ad Listesi Temaları</guilabel
+>’nı kullanın. </para>
+
+<para>
+<screenshot>
+<screeninfo
+>Temalar ekranı.</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-themes-1" coords="1 1"/>
+				<area id="pt-themes-2" coords="1 1"/>
+				<area id="pt-themes-3" coords="1 1"/>
+				<area id="pt-themes-4" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="nickthemes_screen_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Temalar ekranı</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-themes-1"
+><para
+><guilabel
+>Takma Ad Temaları</guilabel
+> ekranını seçmek için buraya tıklayın.</para
+></callout>
+<callout arearefs="pt-themes-2"
+><para
+>Bir tema seçin.</para
+></callout>
+<callout arearefs="pt-themes-3"
+><para
+>Örnek simgeler burada seçilen temada görüntülenir.</para
+></callout>
+<callout arearefs="pt-themes-4"
+><para
+>Başka bir yerden bir takma ad teması indirdiyseniz, kurmak için tıklayın.</para
+></callout>
+
+</calloutlist>
+</para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="quick-buttons">
+<title
+>Tez Düğmeler’i yapılandırmak</title>
+
+<para
+><link linkend="channel-screen-tour"
+>Ana</link
+> ekranda <interface
+>Tez Düğmeler</interface
+>’i görüntülemek üzere bir özelliği etkinleştirebilirsiniz; sonrasında sekiz adet <interface
+>Tez Düğme</interface
+> görünür. Tez Düğmeler’i görüntülemek için ana menüden <menuchoice
+><guisubmenu
+>Ayarlar</guisubmenu
+> <guisubmenu
+>Konversation Uygulamasını Yapılandır…</guisubmenu
+></menuchoice
+> yolunu izleyin. <action
+><guilabel
+>Yapılandır</guilabel
+> ekranı görünür.</action
+> <guilabel
+>Arayüz</guilabel
+>, <guilabel
+>Sohbet Penceresi</guilabel
+> sayfasına geçin. <guilabel
+>Tez düğmeleri göster</guilabel
+> kutusunu işaretleyip <guibutton
+>Tamam</guibutton
+> düğmesine basın. </para>
+
+<para
+>Düğmeler, sık kullanılan &irc; komutlarına atanmak üzere isteğinize göre özelleştirilebilir. <interface
+>Tez Düğmeler</interface
+>’i özelleştirmek için ana menüden <menuchoice
+><guisubmenu
+>Ayarlar</guisubmenu
+> <guisubmenu
+>Konversation Uygulamasını Yapılandır…</guisubmenu
+></menuchoice
+> yolunu izleyin. <action
+><guilabel
+>Yapılandır</guilabel
+> ekranı görünür.</action
+> <guilabel
+>Arayüz</guilabel
+> sayfasına tıklayın ve <guilabel
+>Tez Düğmeler</guilabel
+> ekranını görüntülemek için <guilabel
+>Tez Düğmeler</guilabel
+>’e tıklayın. </para>
+
+<para>
+<screenshot>
+<screeninfo
+>Tez Düğmeler ekranı</screeninfo>
+	<mediaobject>
+		<imageobject>
+			<imagedata fileref="quickbuttons_screen.png" format="PNG"/>
+		</imageobject>
+		<textobject>
+			<phrase
+>Tez Düğmeler ekranı</phrase>
+		</textobject>
+	</mediaobject>
+</screenshot>
+</para>
+
+<para
+>Öntanımlı olarak sekiz adet <interface
+>Tez Düğme</interface
+> vardır. Onu değiştirmek için bir girdiye tıklayın veya <interface
+>Tez Düğme</interface
+> eklemek için listenin sağındaki düğmeleri kullanın. <guilabel
+>Düğme Adı</guilabel
+> sütunu, <link linkend="channel-screen-tour"
+>Ana</link
+> ekrandaki düğmede görünecek addır. Adları kısa tutun. <guilabel
+>Düğme Eylemi</guilabel
+> ise, <interface
+>Tez Düğme</interface
+>’ye tıkladığınızda yürütülecek eylemin kendisidir. Eylem yaratma ipuçları ekranda verilir. </para>
+
+<para
+>Değişiklikleri tamamlamak için <guibutton
+>Tamam</guibutton
+> düğmesine tıklayın. </para>
+
+<para
+>Örnek:</para>
+
+<para>
+<variablelist>
+	<varlistentry>
+		<term
+><guilabel
+>Düğme adı</guilabel
+>: <userinput
+><replaceable
+>İleti</replaceable
+></userinput
+> </term>
+		<listitem>
+			<para
+><guilabel
+>Düğme eylemi</guilabel
+>: <userinput
+><replaceable
+>Msg %u </replaceable
+></userinput
+> (<userinput
+><replaceable
+>%u</replaceable
+></userinput
+> sonrası bir boşluk var) </para>
+		</listitem>
+	</varlistentry>
+</variablelist>
+</para>
+
+<para
+><link linkend="channel-screen-tour"
+>Ana</link
+> ekranda bu düğmeyi kullanmak için <interface
+>Takma Ad Paneli</interface
+>’ndeki bir takma ada tıklayın ve sonrasında düğmeye basın. <interface
+>Giriş Satırı</interface
+>’nda <computeroutput
+>/MSG </computeroutput
+> ve ardından seçili takma ad görünür. Bu kişiye göndermek istediğiniz iletiyi yazın ve &Enter; düğmesine basın. İleti, kullanıcıya gönderilecektir. İletiyi sadece o kullanıcı görür. </para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="dcc">
+<title
+>Dosya göndermek ve almak</title>
+
+<para
+>Çevrimiçi olarak diğer kullanıcılara &irc; aracılığıyla dosya gönderebilirsiniz veya onlar size dosya gönderebilir. </para>
+
+<para>
+<emphasis
+>UYARI: Güvenilir bir kaynak olmadığı sürece birinin size gönderdiği bir dosyayı asla açmayın. Virüs olabilir.</emphasis>
+</para>
+
+<para
+>Kanaldaki birisine bir dosya göndermek için <link linkend="channel-screen-tour"
+>Ana</link
+> ekranın <interface
+>Takma Ad Paneli</interface
+> görünümünde bir takma adın üzerine &RMB; ile tıklayın. <menuchoice
+><guisubmenu
+>Dosya Gönder</guisubmenu
+></menuchoice
+> ögesini seçin. <action
+>Göndermek istediğiniz dosyayı seçmenizi söyleyen bir iletişim kutusu görünür.</action
+> Sonrasında, yeni bir <guilabel
+>DCC Durumu</guilabel
+> sekmesi ortaya çıkar. </para>
+
+<para>
+<screenshot>
+<screeninfo
+>DCC Durumu sekmesi</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-dccstatus-1" coords="1 1"/>
+				<area id="pt-dccstatus-2" coords="1 1"/>
+				<area id="pt-dccstatus-3" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="dccstatus_screen_co.png" format="PNG"/><!--new screenshot -->
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>DCC Durumu sekmesi</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-dccstatus-1"
+><para
+>Alıcının takma adı ve dosya adı burada görünür.</para
+></callout>
+
+<callout arearefs="pt-dccstatus-2">
+<para
+><guilabel
+>Durum</guilabel
+> sütunu, dosya gönderme veya alma durumunu aşağıdaki gibi gösterir:</para>
+
+<para>
+<variablelist>
+	<varlistentry>
+		<term>
+			<guilabel
+>Hazırlanıyor</guilabel>
+		</term>
+		<listitem>
+			<para
+>Bir alıcı aktarımı sürdürülebilir dosyaları denetliyor veya bir gönderici aktarımı gönderilecek verileri alıyor. </para>
+		</listitem>
+	</varlistentry>
+	<varlistentry>
+		<term>
+			<guilabel
+>Bağlanılıyor</guilabel>
+		</term>
+		<listitem>
+			<para
+>&konversation; diğer uç ile bağlantı kurmaya çalışıyor. </para>
+		</listitem>
+	</varlistentry>
+	<varlistentry>
+		<term>
+			<guilabel
+>Gönderiliyor</guilabel>
+		</term>
+		<listitem>
+			<para
+>&konversation; dosyayı diğer uca gönderiyor. </para>
+		</listitem>
+	</varlistentry>
+	<varlistentry>
+		<term>
+			<guilabel
+>Alınıyor</guilabel>
+		</term>
+		<listitem>
+			<para
+>&konversation; dosyayı diğer uçtan alıyor. </para>
+		</listitem>
+	</varlistentry>
+	<varlistentry>
+		<term>
+			<guilabel
+>Tamamlandı</guilabel>
+		</term>
+		<listitem>
+			<para
+>Dosya başarıyla aktarıldı. </para>
+		</listitem>
+	</varlistentry>
+	<varlistentry>
+		<term>
+			<guilabel
+>Beklemede</guilabel>
+		</term>
+		<listitem>
+			<para
+>Aktarım, ortağın kabul etmesini veya reddetmesini bekliyor. </para>
+		</listitem>
+	</varlistentry>
+	<varlistentry>
+		<term>
+			<guilabel
+>İptal Edildi</guilabel>
+		</term>
+		<listitem>
+			<para
+>Ya siz <guibutton
+>İptal Et</guibutton
+> düğmesine tıkladınız ya da diğer kişi aktarımı iptal etti. </para>
+		</listitem>
+	</varlistentry>
+	<varlistentry>
+		<term>
+			<guilabel
+>Başarısız</guilabel>
+		</term>
+		<listitem>
+			<para
+>Bir hata oluştu ve aktarım başarılı olmadı. </para>
+		</listitem>
+	</varlistentry>
+	<varlistentry>
+		<term>
+			<guilabel
+>Kuyrukta</guilabel>
+		</term>
+		<listitem>
+			<para
+>Aktarım, kabul etmeniz veya reddetmeniz için sizi bekliyor. </para>
+		</listitem>
+	</varlistentry>
+	<!--varlistentry>
+		<term>
+			<guilabel
+>Lookup</guilabel>
+		</term>
+		<listitem>
+			<para
+>&konversation; is trying to get the IP number of the sender.
+			</para>
+		</listitem>
+	</varlistentry-->
+	<varlistentry>
+		<term>
+			<guilabel
+>Sürdürülüyor</guilabel>
+		</term>
+		<listitem>
+			<para
+>Bir aktarım başladığında; ancak dosya kullanıcının sisteminde halihazırda varsa kullanıcıya <interface
+>Dosya halihazırda var. Aktarım sürdürülsün mü?</interface
+> iletisi gösterilir. Bu durum, kullanıcının aktarımı sürdürdüğünü gösterir. </para>
+		</listitem>
+	</varlistentry>
+</variablelist>
+</para>
+
+</callout>
+
+<callout arearefs="pt-dccstatus-3">
+<para
+>Birisi size bir dosya göndermek istediğinde, <guilabel
+>DCC Durumu</guilabel
+> sekmesi oluşturulacaktır (henüz oluşturulmamışsa). Görüntülemek için <guilabel
+>DCC Durumu</guilabel
+> sekmesine tıklayın. Seçmek için dosyaya tıklayın, ardından dosyayı kabul etmek için bu düğmeye tıklayın ve aktarım başlayacaktır. <emphasis
+>Not: </emphasis
+>&konversation;’un kendiliğinden başkalarından gelen dosyaları kabul etmesini istiyorsanız ana menüden <menuchoice
+><guisubmenu
+>Ayarlar</guisubmenu
+> <guisubmenu
+>Konversation Uygulamasını Yapılandır…</guisubmenu
+></menuchoice
+> seçimini yapın. <guilabel
+>Davranış</guilabel
+>, <guilabel
+>DCC</guilabel
+> sayfasından <guilabel
+>DCC</guilabel
+> ekranına geçin. </para>
+</callout>
+
+</calloutlist>
+</para>
+
+<para
+>Dosya gönderme veya alma konusunda sorun yaşıyorsanız güvenlik duvarınız veya yönlendiriciniz DCC kapılarını engelliyor olabilir. <link linkend="faq"
+>Sorular ve Yanıtlar</link
+> bölümüne bakın. </para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="urlcatcher">
+<title
+>İletilerdeki &URL;’leri yakalamak</title>
+
+<para
+>Herhangi bir <link linkend="channel-screen-tour"
+>kanalda</link
+>, kullanıcılar web üzerindeki ilginç web sitelerinin veya başka özkaynakların &URL;’lerini gönderirler. Herhangi bir &URL;’nın üzerine çift tıklayın ve &konversation; &URL; ile ilişkilendirilmiş uygulamayı açacaktır. Başlatılacak uygulama, &URL;’nin &MIME; türü ile doğrudan ilişkilidir. Örneğin, <interface
+>https:</interface
+> ile başlayan bir &URL;, öntanımlı web tarayıcısını etkinleştirir ve web sayfasını görüntüler (Ayrıca, kullanılacak <link linkend="webbrowser"
+>web tarayıcısını</link
+> da belirtebilirsiniz). &URL; ekranın dışına çıkarsa onu bulmada zorluk çekebilirsiniz. &konversation; sizin için gönderilen tüm &URL;’lerin bir listesini tutar. Bu özelliği etkinleştirmek için ana menüden <menuchoice
+><guisubmenu
+>Pencere</guisubmenu
+> <guisubmenu
+>&URL; Yakalayıcısı</guisubmenu
+></menuchoice
+> seçimini yapın. <action
+><guilabel
+>&URL; Yakalayıcısı</guilabel
+> sekmesi oluşturulur.</action
+> </para>
+
+<para>
+<screenshot>
+<screeninfo
+>&URL; Yakalayıcısı sekmesi.</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-urlcatcher-1" coords="1 1"/>
+				<area id="pt-urlcatcher-2" coords="1 1"/>
+				<area id="pt-urlcatcher-3" coords="1 1"/>
+				<area id="pt-urlcatcher-4" coords="1 1"/>
+				<area id="pt-urlcatcher-5" coords="1 1"/>
+				<area id="pt-urlcatcher-6" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="urlcatcher_screen_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>&URL; Yakalayıcısı sekmesi.</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-urlcatcher-1"
+><para
+>Bu, &konversation; başlatıldığından bu yana görülen &URL;’lerin listesidir. <guilabel
+>Kimden</guilabel
+> sütunu, &URL;’yi gönderen kişinin takma adı veya &URL;’nin gönderildiği kanalın veya sunucunun adıdır (katılma ve ayrılma iletilerinde görünen &URL;’ler listelenmez). Seçmek için bir &URL;’ye tıklayın.</para
+></callout>
+
+<callout arearefs="pt-urlcatcher-2"
+><para
+>Seçili &URL; ile ilişkili uygulamayı etkinleştirmek için buraya tıklayın. Başlatılan uygulama &URL;’nin &MIME; türüne bağlıdır. Örneğin, <interface
+>https:</interface
+> ile başlayan bir &URL;, öntanımlı web tarayıcınızı etkinleştirecek ve web sayfasını görüntüleyecektir. Web sayfaları için kullanılacak <link linkend="webbrowser"
+>web tarayıcısını</link
+> da belirtebilirsiniz.</para
+></callout>
+
+<callout arearefs="pt-urlcatcher-3"
+><para
+>Seçili &URL;’yi panoya kopyalamak için buraya tıklayın.</para
+></callout>
+
+<callout arearefs="pt-urlcatcher-4"
+><para
+>Seçili &URL;’yi listeden silmek için buraya tıklayın.</para
+></callout>
+
+<callout arearefs="pt-urlcatcher-5"
+><para
+>&URL; listesini dosyaya kaydetmek için buraya tıklayın.</para
+></callout>
+
+<callout arearefs="pt-urlcatcher-6"
+><para
+>Listeyi temizlemek için buraya tıklayın.</para
+></callout>
+
+</calloutlist>
+</para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="webbrowser">
+<title
+>Tercih edilen web tarayıcısını ayarlamak</title>
+
+<para
+>&konversation;’da herhangi bir yerde vurgulanmış bir &URL;’ye tıkladığınızda, &URL;’nin &MIME; türüyle ilişkili öntanımlı uygulama başlatılacaktır. Örneğin, <interface
+>https</interface
+> ile başlayan bir &URL;’ye tıklandığında, web sayfasını görüntülemek için &konqueror; açılır. &systemsettings;’nın <guilabel
+>Öntanımlı Uygulamalar</guilabel
+> modülünde tanımlı uygulamadan bir başkasını belirtebilirsiniz. Örneğin, bunların yerine <application
+>Firefox</application
+> kullanabilirsiniz. </para>
+
+<para
+>&konversation; içinden başka bir web tarayıcısı seçmek için ana menüden <menuchoice
+> <guisubmenu
+>Ayarlar</guisubmenu
+><guisubmenu
+>&konversation; Uygulamasını Yapılandır…</guisubmenu
+></menuchoice
+> seçimini yapın. <action
+><guilabel
+>Yapılandır</guilabel
+> ekranı görünür.</action
+> </para>
+
+ <para>
+<screenshot>
+<screeninfo
+>Genel ekranı.</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-webbrowser-1" coords="1 1"/>
+				<area id="pt-webbrowser-2" coords="1 1"/>
+				<area id="pt-webbrowser-3" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="webbrowser_screen_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Genel ekranı</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-webbrowser-1"
+><para
+><guilabel
+>Genel</guilabel
+> ekranını görüntülemek için buraya tıklayın.</para
+></callout>
+
+<callout arearefs="pt-webbrowser-2"
+><para
+>Özel bir web tarayıcısı kullanmak istediğinizi belirtmek için buraya tıklayın.</para
+></callout>
+
+<callout arearefs="pt-webbrowser-3"
+><para
+>İstediğiniz web tarayıcısını başlatmak için komutu girin. &URL;’ye tıkladığınızda, <userinput
+><replaceable
+>%u</replaceable
+></userinput
+>, &URL; ile değiştirilir.</para
+></callout>
+
+</calloutlist>
+</para>
+
+<para
+><emphasis
+>Not: </emphasis
+>Web tarayıcısı ayarı, <interface
+>mailto:</interface
+> &URL;’leri için geçerli değildir. <interface
+>mailto:</interface
+> &URL;’leri, her zaman öntanımlı postalayıcı ile açılır. </para>
+
+<para
+>Değişikliklerinizi kaydetmek için <guibutton
+>Uygula</guibutton
+>’ya tıklayın. Değişikliklerin etkili olması için her sunucuya ve kanala yeniden bağlanmanız gerekir. Bunu yapmanın en kolay yolu, &konversation;’dan çıkmak ve onu yeniden açmaktır. </para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="rememberlines">
+<title
+>Kanal ve sorgu günlüklerini imlemek</title>
+
+<para
+>Tez bir biçimde bilgiye erişmek için <link linkend="channel-screen-tour"
+>kanallara</link
+> ve <link linkend="query"
+>sorgulara</link
+> imleyiciler ekleyebilirsiniz. Bunu yapmak için ana menüden <menuchoice
+><guisubmenu
+>Ekle</guisubmenu
+> <guisubmenu
+>İmleyici Satır</guisubmenu
+></menuchoice
+> seçimini yapın veya <keycombo action="simul"
+>&Ctrl;<keycap
+>R</keycap
+></keycombo
+> kısayolunu kullanın. <action
+>Ekrandaki metnin altında bir çizgi belirecektir. Bu çizgi, ekrandaki metnin geri kalanıyla birlikte sarılır.</action
+> </para>
+
+<para
+><interface
+>İmleyici Çizgi</interface
+>’nin tüm kanallara ve sorgulara aynı anda eklenmesi için ana menüden <menuchoice
+><guisubmenu
+>Ayarlar</guisubmenu
+> <guisubmenu
+>Konversation Uygulamasını Yapılandır…</guisubmenu
+> </menuchoice
+> seçimini yapın; <guilabel
+>Davranış</guilabel
+>, <guilabel
+>Sohbet Penceresi</guilabel
+> sayfasında <guilabel
+>Elle girilen çizgileri tüm sohbet pencerelerinde göster</guilabel
+> kutusunu işaretleyin. </para>
+
+<para
+>&konversation;’un her <userinput
+><command
+>/away</command
+> <replaceable
+>ileti</replaceable
+></userinput
+> yaptığınızda kendiliğinden bir <interface
+>İmleyici Çizgi</interface
+> eklemesini istiyorsanız <link linkend="identity-away"
+>Kimliğinizi ayarlamak</link
+> bölümüne bakın. </para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="logging">
+<title
+>Günlükleme</title>
+
+<para
+>Günlükleme etkinleştirilmişse &konversation;, her bir <interface
+>Sunucu</interface
+>, <link linkend="channel-screen-tour"
+>Kanal</link
+> ve <link linkend="query"
+>Özel Konuşma (Sorgu)</link
+> oturumunun bir günlüğünü tutar. Her bir oturum, diskteki bir günlük dosyasında depolanır. Aynı oturumu yeniden açtığınızda &konversation;, günlüğe eklemeyi sürdürür. </para>
+
+<para
+>Bir oturumu yeniden açtığınızda, önceki oturumun yaklaşık son 1024 karakteri günlüğün kuyruğundan okunur ve ekranda gösterilir. </para>
+
+<para
+>Oturumunuz sürerken, iletiler ekranın üst kısmından kayar. Bu iletileri görüntülemek için geriye doğru sarabilirsiniz. Sonunda, belleği korumak için en eski iletiler sarmadan atılır. Buna <guilabel
+>Geri sarma sınırı</guilabel
+> denir. <guilabel
+>Geri sarma sınırı</guilabel
+> nedeniyle ekrandan kaybolan iletiler, günlük kaydı etkinleştirilmişse günlük dosyasında hâlâ bulunur.</para>
+
+<para
+>Bir oturum için olan günlük dosyasını görüntülemek üzere, bakmak istediğiniz oturum sekmesine tıklayıp onu etkin sekme yapın ve ana menüden <menuchoice
+><guisubmenu
+>Pencere</guisubmenu
+> <guisubmenu
+>Günlük Dosyasını Aç</guisubmenu
+></menuchoice
+> seçimini yapın. Günlük dosyasını görüntüleyen <action
+>yeni bir sekme</action
+> açılır. </para>
+
+<para>
+<screenshot>
+<screeninfo
+>Günlük Dosyası</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-logviewer-1" coords="1 1"/>
+				<area id="pt-logviewer-2" coords="1 1"/>
+				<area id="pt-logviewer-3" coords="1 1"/>
+				<area id="pt-logviewer-4" coords="1 1"/>
+				<area id="pt-logviewer-5" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="logviewer_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Günlük Dosyası</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+<callout arearefs="pt-logviewer-1"
+><para
+>Günlük dosyasındaki iletiler burada görüntülenir. En eski iletiler en üstte ve en yenileri en altta yer alır.</para
+></callout>
+<callout arearefs="pt-logviewer-2"
+><para
+>Günlük dosyasını başka bir dosyaya kaydetmek için bu düğmeye tıklayın.</para
+></callout>
+<callout arearefs="pt-logviewer-3"
+><para
+>Günlük dosyası görüntüsünü yenilemek için tıklayın. Siz bir günlük dosyasını görüntülerken, ilgili oturumdaki yeni iletiler kendiliğinden günlük dosyası ekranına eklenmez. En son iletileri görüntülemek için bu düğmeyi kullanın.</para
+></callout>
+<callout arearefs="pt-logviewer-4"
+><para
+>Günlük dosyası görüntüsünü ve diskteki günlük dosyasını silmek için tıklayın.</para
+></callout>
+<callout arearefs="pt-logviewer-5"
+><para
+>En büyük sarma boyutunu ayarlamak için bu kutuyu kullanın. Bu ayar yalnızca yeni açılan günlük sekmeleri için geçerli olur. Sarma boyutunun son değiştirilen değeri &konversation;’un bir sonraki başlangıcında kullanılacaktır. Her günlük dosyası ayrı bir ayara sahip olabilir.</para
+></callout>
+</calloutlist>
+</para>
+
+<para
+><guilabel
+>Geri sarma sınırı</guilabel
+> ayarını değiştirmek için ana menüden <menuchoice
+><guisubmenu
+>Ayarlar</guisubmenu
+> <guisubmenu
+>&konversation; Uygulamasını Yapılandır…</guisubmenu
+></menuchoice
+> seçimini yapın, sonrasında <guilabel
+>Davranış</guilabel
+>, <guilabel
+>Sohbet Penceresi</guilabel
+> sayfasına tıklayın. <guilabel
+>Geri sarma sınırı</guilabel
+> kutusu ekranda görünür. <guilabel
+>Sınırsız</guilabel
+> (&ie; sıfır) olarak ayarlarsanız iletiler sarma ekranından atılmaz. </para>
+
+<para
+>Ana menüden <menuchoice
+><guisubmenu
+>Ayarlar</guisubmenu
+> <guisubmenu
+>&konversation; Uygulamasını Yapılandır…</guisubmenu
+></menuchoice
+> seçimini yapıp <guilabel
+>Davranış</guilabel
+>, <guilabel
+>Günlükleme</guilabel
+> sayfasından günlüklemeyi etkinleştirebilir/devre dışı bırakabilir ve başka günlükleme seçeneklerini ayarlayabilirsiniz. </para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="konvi-cmds">
+<title
+>&konversation; komutları</title>
+<!--FIXME commands in src/irc/outputfilter.[h|cpp]-->
+<para
+>Aşağıdaki komutlar &konversation; tarafından yorumlanır ve standart &irc; komutlarından farklı olabilir. Köşeli parantez içindeki öğeler isteğe bağlıdır. Çubuk (|) ile ayrılmış ögeler komutun alternatif biçimleridir. Burada listelenmeyen komutlar girildiği gibi sunucuya gönderilir. </para>
+
+<para>
+<variablelist>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/me</command
+> <replaceable
+>ileti</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Önüne takma adınız gelecek biçimde kanala <userinput
+><replaceable
+>ileti</replaceable
+></userinput
+> gönderir. Örneğin, takma adınız <userinput
+><replaceable
+>Tux</replaceable
+></userinput
+> ise <userinput
+><replaceable
+>/me çay demliyor.</replaceable
+></userinput
+> yazarsanız <interface
+>Tux çay demliyor.</interface
+> olarak görünür. Özellikle engellenmediği sürece tüm kullanıcılar bu iletileri görürler. Bu tür iletiler genellikle sözlü olmayan bilgiyi aktarmak için kullanılır; örneğin, şu anki duygu durumunuz veya fiziksel olarak ne yaptığınız. İş istasyonunuzdan kısa bir süreliğine ayrılıyorsanız bunun yerine <userinput
+><command
+>/away</command
+></userinput
+> komutunu kullanın.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/ame</command
+> <replaceable
+>ileti</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Yukarıdaki <userinput
+><command
+>/me</command
+></userinput
+> komutu gibidir; ancak ileti &konversation; içinde bağlandığınız tüm sunucularda açık olan tüm kanallara ve sorgulara gönderilir.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/join</command
+> <replaceable
+>kanal</replaceable
+> <replaceable
+>[parola]</replaceable
+></userinput
+></term>
+<listitem
+><para
+><userinput
+><replaceable
+>Kanala</replaceable
+></userinput
+> katılır. Sunucu izin veriyorsa ve kanal halihazırda yoksa kanal oluşturulur ve siz de kanal operatörü olursunuz. Kanala katılmak için bir parola gerekiyorsa <userinput
+><replaceable
+>parola</replaceable
+></userinput
+> olarak belirtin. Çoğu kanal adı <userinput
+><replaceable
+>#</replaceable
+></userinput
+> ile başlar.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/j</command
+> <replaceable
+>kanal</replaceable
+> <replaceable
+>[parola]</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Üstteki <userinput
+><command
+>/join</command
+></userinput
+> ile aynıdır.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/part</command
+> <replaceable
+>[kanal]</replaceable
+> <replaceable
+>[gerekçe]</replaceable
+></userinput
+></term>
+<listitem
+><para
+><userinput
+><replaceable
+>Kanaldan</replaceable
+></userinput
+> <userinput
+><replaceable
+>gerekçe</replaceable
+></userinput
+> ile çıkar ve ilgili <interface
+>kanal</interface
+> sekmesini kapatır. Bir &konversation; kanalında veya sorgu sekmesinde <userinput
+><command
+>/part</command
+></userinput
+> girerseniz o sekme, <link linkend="identity"
+>Ayarlar</link
+>’da belirlediğiniz öntanımlı gerekçe ile kapatılır.</para
+></listitem>
+</varlistentry>
+
+<varlistentry
+><term
+><userinput
+><command
+>/leave</command
+> <replaceable
+>[kanal]</replaceable
+> <replaceable
+>[gerekçe]</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Üstteki <userinput
+><command
+>/part</command
+></userinput
+> ile aynıdır.</para
+></listitem>
+</varlistentry>
+
+<varlistentry
+><term
+><userinput
+><command
+>/quit</command
+></userinput
+></term>
+<listitem
+><para
+>Herhangi bir kanal, sorgu veya DCC sekmesine girildiğinde, ilgili sunucuyla bağlantıyı keser ve bu sunucuda açık olan tüm kanal, sorgu veya DCC sekmelerini kapatır.</para
+></listitem>
+</varlistentry>
+
+<varlistentry
+><term
+><userinput
+><command
+>/notice</command
+> <replaceable
+>takma ad|kanal</replaceable
+> <replaceable
+>ileti</replaceable
+></userinput
+></term>
+<listitem
+><para
+><userinput
+><replaceable
+>takma ad</replaceable
+></userinput
+> takma adlı kullanıcıya veya <userinput
+><replaceable
+>kanaldaki</replaceable
+></userinput
+> herkese <userinput
+><replaceable
+>ileti</replaceable
+></userinput
+> gönderir. Aşağıda, kanal sekmesinde size görünenlere bir örnek verilmiştir</para>
+
+<para
+><computeroutput
+>[17:14] [Notice] “Her şey tamam” duyurusu şuraya gönderiliyor: #konversation.</computeroutput
+></para>
+
+<para
+>Alıcılar şöyle görür:</para>
+
+<para
+><computeroutput
+>[17:15] [Notice] -Eisfuchs- Her şey tamam</computeroutput
+></para>
+
+</listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/query </command
+><replaceable
+>takma ad</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Genellikle &irc;’de <link linkend="query"
+>Sorgu</link
+> olarak bilinen özel sohbet için kullanıcının <userinput
+><replaceable
+>takma adı</replaceable
+></userinput
+> ile yeni bir sekme oluşturur. Burada yazılan her şey yalnızca siz ve sorgu ortağınız tarafından görülebilir. Boşluklarla ayrılmış birden fazla takma ad girebilirsiniz ve her takma ad için bir sorgu sekmesi açılır. Bu tür her sorgu sekmesi siz ve sorgu ortağı arasında özel olacaktır.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/msg </command
+><replaceable
+>takma ad|kanal</replaceable
+></userinput
+> <userinput
+><replaceable
+>ileti</replaceable
+></userinput
+></term>
+<listitem
+><para
+><userinput
+><replaceable
+>Takma ad</replaceable
+></userinput
+> adına sahip kullanıcıya veya <userinput
+><replaceable
+>kanaldaki</replaceable
+></userinput
+> tüm kullanıcılara bir özel ileti gönderir. <userinput
+><command
+>/query</command
+></userinput
+>’den farklı olarak yeni bir sekme açmaz. <userinput
+><replaceable
+>İleti</replaceable
+></userinput
+> <userinput
+><command
+>/me</command
+></userinput
+> ile başlıyorsa ileti, <userinput
+><command
+>/me</command
+></userinput
+> komutu ile aynı olarak biçimlendirilir.</para>
+
+<para
+>Örnekler</para>
+
+<para
+><userinput
+><replaceable
+>/msg Eisfuchs msg komutu ile ilgili yardım gerek</replaceable
+></userinput
+></para>
+
+<para
+><userinput
+><replaceable
+>/msg #konversation Konvi’nin yeni sürümü çıktı!</replaceable
+></userinput
+></para>
+
+<para
+><userinput
+><replaceable
+>/msg Eisfuchs /me şimdi El Kitabı’nı derliyor.</replaceable
+></userinput
+></para>
+
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/smsg </command
+><replaceable
+>takma ad|kanal</replaceable
+></userinput
+> <userinput
+><replaceable
+>ileti</replaceable
+></userinput
+></term>
+<listitem
+><para
+><userinput
+><command
+>/msg</command
+></userinput
+> aynıdır; ancak ileti ekranınızda görüntülenmez. Bu, parola gibi hassas bilgilerin ekranınızda kalmasını veya günlüklenmesini önler.</para>
+</listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/amsg </command
+><replaceable
+>takma ad|kanal</replaceable
+></userinput
+> <userinput
+><replaceable
+>ileti</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Yukarıdaki <userinput
+><command
+>/msg</command
+></userinput
+> komutu gibidir; ancak ileti, &konversation;’da açık olan tüm sunuculara, kanallara ve sorgulara gönderilir.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/op </command
+> <replaceable
+>takma ad</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Bir kanal sekmesine girildiğinde, kanal için <userinput
+><replaceable
+>takma ad</replaceable
+></userinput
+> kullanıcısına operatör ayrıcalığı vermeye çalışır. Kanalda yeterli ayrıcalığa sahip değilseniz çalışmayabilir (kendiniz bir kanal operatörü olmalısınız). Boşluklarla ayrılmış birden fazla takma ad girebilirsiniz.</para>
+</listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/deop </command
+><replaceable
+>takma ad</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Bir kanal sekmesine girildiğinde, <userinput
+><replaceable
+>takma ad</replaceable
+></userinput
+> kullanıcısından kanal operatörü ayrıcalığını alır. Boşluklarla ayrılmış birden fazla takma ad girebilirsiniz.</para>
+</listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/oper </command
+><replaceable
+>[takma ad]</replaceable
+></userinput
+></term>
+<listitem
+><para
+><userinput
+><replaceable
+>Takma ad</replaceable
+></userinput
+> kullanıcısına &irc;-Op (Yönetici) ayrıcalığı tanır. Bu yalnızca, takma ad sunucunun O: satırında giriliyse çalışır. &irc;-Op’ları, kullanıcı adlarını <userinput
+><command
+>/kill</command
+></userinput
+>, sunucuları &irc; ağına <userinput
+><command
+>/connect</command
+></userinput
+> ve çok daha fazlasını yapabilir. <userinput
+><replaceable
+>Takma ad</replaceable
+></userinput
+> girilmezse kendinize &irc;-Op ayrıcalığı verilmeye çalışılır. Her iki durumda da &irc;-Op kullanıcı adınız ve parolanız sorulacaktır.</para>
+</listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/voice </command
+> <replaceable
+>takma ad</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Kimi kanallarda kullanıcılar (+m bayrağı ile), ses ayrıcalıkları olmadan ileti gönderemezler. Bu komut, <userinput
+><replaceable
+>takma ad</replaceable
+></userinput
+> kullanıcısına ses ayrıcalığı vermeye çalışır. Bu komutu yürütmek için operatör ayrıcalığınızın olması gerekir. Bu komut en çok yönetilen bir kanalda operatörseniz kullanılır.</para>
+</listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/unvoice </command
+> <replaceable
+>takma ad</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Kanalda <userinput
+><replaceable
+>takma ad</replaceable
+></userinput
+> kullanıcısından ses ayrıcalığını alır.</para>
+</listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/topic </command
+><replaceable
+>[kanal]</replaceable
+> <replaceable
+>[ileti]</replaceable
+></userinput
+></term>
+<listitem
+><para
+><userinput
+><replaceable
+>Kanal</replaceable
+></userinput
+> konusunu <userinput
+><replaceable
+>ileti</replaceable
+></userinput
+> olarak ayarlamaya çalışır. Bir kanal sekmesinde girildiğinde <userinput
+><replaceable
+>kanal</replaceable
+></userinput
+> girilmesi gerekmez ve sekmede etkin olan kanal öntanımlı olarak kullanılır. <userinput
+><replaceable
+>İleti</replaceable
+></userinput
+> boş bırakılırsa kanalın şu anki konusunu görüntüler. Yeterli ayrıcalığınız yoksa kanal konusunu değiştiremeyebilirsiniz.</para>
+</listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/away </command
+> <replaceable
+>gerekçe</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Herhangi biri size özel ileti göndermeye veya sizi bir kanala davet etmeye çalışırsa onlara <userinput
+><replaceable
+>gerekçe</replaceable
+></userinput
+> nedeniyle iş istasyonunuzdan uzakta olduğunuz söylenecektir. Durumunuzu normale geri döndürmek için bir <userinput
+><replaceable
+>gerekçe</replaceable
+></userinput
+> olmadan <userinput
+><command
+>/away</command
+></userinput
+> yazın.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/aaway </command
+><replaceable
+>gerekçe</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Yukarıdaki <userinput
+><command
+>/away</command
+></userinput
+> komutu gibidir; ancak &konversation;’da bağlı olduğunuz tüm sunuculara gönderilir.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/invite </command
+><replaceable
+>takma ad</replaceable
+> <replaceable
+>[kanal]</replaceable
+></userinput
+></term>
+<listitem
+><para
+><userinput
+><replaceable
+>Takma ad</replaceable
+></userinput
+> kullanıcısını, <userinput
+><replaceable
+>kanalına</replaceable
+></userinput
+> katılması için davet eder. Bu komut, kanala yalnızca davetle girilebiliyorsa yararlıdır. Bir kanal sekmesinde giriliyorsa <userinput
+><replaceable
+>kanal</replaceable
+></userinput
+> boş bırakılabilir.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/exec </command
+><replaceable
+>betik</replaceable
+> <replaceable
+>[parametreler]</replaceable
+></userinput
+></term>
+<listitem
+><para
+>&konversation; ile uyumlu olan <userinput
+><replaceable
+>betik</replaceable
+></userinput
+> betiğini çalıştırır, ona <userinput
+><replaceable
+>parametreler</replaceable
+></userinput
+> geçirir. Betik yazımı ve kullanımı hakkında ayrıntılı bilgi için <link linkend="scripting"
+>Betik yazımı</link
+> bölümüne bakın.</para>
+<para
+>Örnekler:</para>
+
+<para
+><userinput
+><replaceable
+>/sayversion</replaceable
+></userinput
+></para>
+
+<para
+>Sisteminizin &konversation;, &Qt;, &kde-frameworks; ve &plasma; sürüm numaralarını kanala gönderir.</para>
+
+<para
+><userinput
+><replaceable
+>/exec cmd uname -a</replaceable
+></userinput
+></para>
+
+<para
+>&Linux; sürümünüzün dizisini (<quote
+>uname -a</quote
+> çıktısı) kanala gönderir.</para>
+
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/notify </command
+><replaceable
+>[takma ad]</replaceable
+></userinput
+></term>
+<listitem
+><para
+><link linkend="nicksonline"
+>İzlenen Takma Adlar</link
+> listenize <userinput
+><replaceable
+>takma ad</replaceable
+></userinput
+> ekler veya var olanları kaldırır. Takma ad halihazırda listedeyse kaldırılır. Listede değilse eklenir. <userinput
+><replaceable
+>Takma ad</replaceable
+></userinput
+> boş bırakılırsa geçerli izlenen takma adlar listesi görüntülenir.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/kick </command
+><replaceable
+>takma ad</replaceable
+> <replaceable
+>gerekçe</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Bir kanal sekmesinde girildiğinde <userinput
+><replaceable
+>takma ad</replaceable
+></userinput
+> kullanıcısını <userinput
+><replaceable
+>gerekçe</replaceable
+></userinput
+> ile kovmaya çalışır. <userinput
+><replaceable
+>Gerekçe</replaceable
+></userinput
+> girilmemişse <link linkend="identity"
+>Ayarlar</link
+>’da belirlediğiniz öntanımlı gerekçe kullanılır. Bu komut yalnızca bir kanal sekmesinde kullanılabilir.</para>
+</listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/ban </command
+> [<command
+>-host</command
+>|<command
+>-domain</command
+>| <command
+>-userhost</command
+>|<command
+>-userdomain</command
+>] <replaceable
+>[kanal]</replaceable
+> <replaceable
+>kullanıcı</replaceable
+>|<replaceable
+>maske</replaceable
+></userinput
+></term>
+<listitem
+><para
+><userinput
+><replaceable
+>Kanaldan</replaceable
+></userinput
+> <userinput
+><replaceable
+>kullanıcıyı</replaceable
+></userinput
+> veya <userinput
+><replaceable
+>maskeyi</replaceable
+></userinput
+> yasaklamaya çalışır. Bir kanal sekmesinde girildiğinde <userinput
+><replaceable
+>kanal</replaceable
+></userinput
+> boş bırakılabilir. Makineler, etki alanları ve maskeler hakkında daha fazla bilgi için <ulink url="https://www.irchelp.org/"
+>irchelp.org</ulink
+> adresindeki belgelere bakın. Bir kanal için geçerli yasak listesini almak için <userinput
+><command
+>/mode </command
+><replaceable
+>kanal</replaceable
+> <command
+>b</command
+></userinput
+> girin. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/unban </command
+> <replaceable
+>[kanal]</replaceable
+> <replaceable
+>dizgi</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Kanaldan bir önceki yasaklamayı geri alır. Bir kanal sekmesinde girildiğinde <userinput
+><replaceable
+>kanal</replaceable
+></userinput
+> boş bırakılabilir. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/ignore </command
+> [<command
+>-all</command
+>] <replaceable
+>takma ad</replaceable
+> </userinput
+></term>
+<listitem
+><para
+><userinput
+><replaceable
+>Takma adı</replaceable
+></userinput
+> yok sayma listesine ekler. Boşluklarla ayrılmış olarak birden çok takma ad belirtebilirsiniz. Yok sayma listesindeki kullanıcılardan olan kanal listeleri görüntülenmez. Ek olarak, <userinput
+><command
+>-all</command
+></userinput
+> girerseniz kullanıcıdan olan tüm ileti türleri (sorgular, duyurular, &CTCP;, DCC ve istisnalar) ve kanal iletileri yok sayılır. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/quote </command
+> <replaceable
+>komut</replaceable
+></userinput
+></term>
+<listitem
+><para
+><userinput
+><replaceable
+>Komutu</replaceable
+></userinput
+> sunucuya gönderir. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/say </command
+> <replaceable
+>ileti</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Bir kanal sekmesinde girildiğinde, <userinput
+><replaceable
+>iletiyi</replaceable
+></userinput
+> kanala gönderir. Bu, kanal <interface
+>Giriş Satırı</interface
+>’na <userinput
+><replaceable
+>iletiyi</replaceable
+></userinput
+> girmekle aynıdır. Komutu yürütmeden &irc; komutları girmek istediğiniz zaman yararlıdır. İki adet komut karakterini (//) ard arda girmek de <userinput
+><command
+>/say</command
+></userinput
+> ile aynı şeydir. Ayrıca <link linkend="scripting"
+>betiklerle</link
+> iletiler göndermek için kullanılır. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/raw </command
+> [<command
+>open</command
+>|<command
+>close</command
+>]</userinput
+></term>
+<listitem
+><para
+>Sunucu günlüğünü ham kipe sokar (<command
+>open</command
+>) veya çıkarır (<command
+>close</command
+>). Ne <command
+>open</command
+> ne de <command
+>close</command
+> girilmemişse <command
+>open</command
+> komutuna geri döner. Ham kipte günlük, sunucudan alınan her iletiyi yerel &irc; biçiminde görüntüler. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/konsole </command
+></userinput
+></term>
+<listitem
+><para
+>&konsole; çalıştıran bir sekme açar. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/server </command
+> <replaceable
+>[url]</replaceable
+> <replaceable
+>[parola]</replaceable
+></userinput
+></term>
+<listitem
+><para
+><userinput
+><replaceable
+>url</replaceable
+></userinput
+> adresindeki sunucuya bağlanır. <userinput
+><replaceable
+>url</replaceable
+></userinput
+> boş bırakılmışsa komutu girdiğiniz sekme ile ilişkili sunucuya bağlanır. Bu, bağlantı kesildiğinde bir sunucuya yeniden bağlanmak için yararlıdır. Sunucuya bağlanmak için bir parola gerekiyorsa onu <userinput
+><replaceable
+>parola</replaceable
+></userinput
+> yerine girin. Sunucu öntanımlıdan farklı bir kapı numarası gerektiriyorsa <userinput
+><replaceable
+>url</replaceable
+></userinput
+>’yi şöyle girin: <replaceable
+>irc.kde.org:6665</replaceable
+>. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/dcc </command
+> <command
+>SEND </command
+><replaceable
+>takma ad</replaceable
+> <replaceable
+>[dosya adı]</replaceable
+></userinput
+></term>
+<listitem
+><para
+><userinput
+><replaceable
+>Dosya adını</replaceable
+></userinput
+> <userinput
+><replaceable
+>takma adlı</replaceable
+></userinput
+> kullanıcıya gönderir. <userinput
+><replaceable
+>Dosya adı</replaceable
+></userinput
+> boş bırakılmışsa bir dosya seçmeniz için bir iletişim kutusu ortaya çıkar. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/dcc </command
+></userinput
+></term>
+<listitem
+><para
+><guilabel
+>DCC Durumu</guilabel
+> sekmesini açar. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/ctcp </command
+><replaceable
+>takma ad|kanal</replaceable
+> <command
+>ping</command
+></userinput
+></term>
+<listitem
+><para
+><userinput
+><replaceable
+>Takma ada</replaceable
+></userinput
+> veya <userinput
+><replaceable
+>kanala</replaceable
+></userinput
+> PING iletisi çeker. Bu, konuştuğunuz birinin yüksek bir ağ gecikmesine sahip olup olmadığını veya sisteminizin yüksek bir gecikmeye sahip olup olmadığını (bir kanala gönderildiğinde) belirlemek için kullanışlıdır. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/ctcp </command
+><replaceable
+>takma ad|kanal</replaceable
+> <replaceable
+>ileti</replaceable
+></userinput
+></term>
+<listitem
+><para
+><userinput
+><replaceable
+>Takma ad</replaceable
+></userinput
+> kullanıcısına veya <userinput
+><replaceable
+>kanaldaki</replaceable
+></userinput
+> tüm kullanıcılara bir ileti gönderir. Bu, yukarıdaki <userinput
+><command
+>/msg</command
+></userinput
+> komutuna benzerdir, yalnızca ileti &CTCP; protokolü kullanılarak gönderilir. Diğer uçtaki yanıt, kullanılan &irc; istemcisi programına bağlıdır. Örneğin, başka bir &konversation; kullanıcıyla konuşuyorsanız <userinput
+><replaceable
+>/ctcp Eisfuchs TIME</replaceable
+></userinput
+>, Eisfuch’un bilgisayarındaki sistem zamanını döndürür. <userinput
+><replaceable
+>/ctcp Eisfuchs VERSION</replaceable
+></userinput
+>, Eisfuchs’un bilgisayarındaki &konversation; sürüm numarasını yazdırır. </para
+></listitem>
+</varlistentry>
+
+</variablelist>
+</para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="scripting">
+<title
+>Betik yazma</title>
+
+<para
+>&konversation;, programdan çalıştırabileceğiniz bazı kullanışlı betiklerle birlikte gelir. Bir betiği kanal, sorgu, DCC veya sunucu sekmesinde çalıştırmak için formun bir komutunu yazın</para>
+
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>betik</replaceable
+> [<replaceable
+>parametreler</replaceable
+>]</userinput
+></para>
+
+<para
+>Bu, <userinput
+><replaceable
+>betik</replaceable
+></userinput
+>’i çalıştırır ve isteğe bağlı olarak <userinput
+><replaceable
+>parametreler</replaceable
+></userinput
+> geçirir.</para>
+
+<para
+>Örneğin, aşağıdaki komutu bir kanal sekmesine yazın:</para>
+
+<para
+><userinput
+><replaceable
+>/sayversion</replaceable
+></userinput
+></para>
+
+<para
+>Bu, &konversation;, &Qt;, &kde-frameworks; ve &plasma; sürüm numaralarını kanala yazdırır.</para>
+
+<para
+><userinput
+><replaceable
+>/exec cmd uname -a</replaceable
+></userinput
+></para>
+
+<para
+>Bu, <userinput
+><replaceable
+>komut</replaceable
+></userinput
+> betiğini yürütür, ona <userinput
+><replaceable
+>uname -a</replaceable
+></userinput
+> geçirir. Bu komut ile, &Linux; sürümünüz kanala yazdırılır.</para>
+
+<para
+>&konversation; ile kurulu gelen betikler hakkkında daha fazla öğrenmek için lütfen <link linkend="scripts_ref"
+>Betik başvuru kılavuzu</link
+>’na bakın.</para>
+
+<para
+>Kullanılabilir tüm betik dosyalarının listesini almak için aşağıdaki komutu &konversation; ekranına girin.</para>
+
+<para
+><userinput
+>/exec --showpath media</userinput
+></para>
+
+<para
+>Listeyi görmek için çıktıdaki klasöre bir göz atın.</para>
+
+<para
+>Kendi betiklerinizi de yazabilirsiniz. Betikler kabukta çalışırlar ve Bash, Perl veya Python gibi herhangi bir kabuk dilinde yazılabilirler. &konversation; ne zaman bir betik çalıştırsa betiğe gönderilen ilk iki parametreler şunlardır.</para>
+
+<itemizedlist>
+
+<listitem
+><para
+>Sunucunun adresi.</para
+></listitem>
+
+<listitem
+><para
+>Kanal adı.</para
+></listitem>
+
+</itemizedlist>
+
+<para
+>Örnek bir kabuk betiği (cmd).</para>
+
+<para>
+<programlisting
+>#!/bin/sh
+
+# Bir komut yürütür ve çıktıyı Konversation’a yazdırır.
+
+SERVER=$1;
+TARGET=$2;
+shift;shift;
+
+$@ | while read line; do qdbus org.kde.konversation /irc say $SERVER "$TARGET" "$@: $line"; done
+</programlisting>
+</para>
+
+<para
+>&konversation;’un betikle iletişim kurmak için qdbus kullandığına dikkat edin. <computeroutput
+>say</computeroutput
+> komutu, çıktının kanala normal bir ileti gibi gönderilmesine neden olur. Diğer kullanıcılara göndermeden sekmede bir şeyler görüntülemek için <computeroutput
+>info</computeroutput
+> komutunu kullanın. Ek betik yazımı örnekleri için var olan betik dosyalarına bakın.</para>
+
+<para
+>Yazdığınız bir betiği çalıştırabilmek için onu öncelikle <filename class="directory"
+>$(qtpaths --paths GenericDataLocation)/konversation/scripts</filename
+> konumuna kopyalayarak kurmalısınız. Ayrıca dosyanın yürütülebilir olması gerekir; örneğin, <userinput
+><replaceable
+>chmod a+x betiğim</replaceable
+></userinput
+> komutu ile.</para>
+
+</sect1>
+
+<sect1 id="scripts_ref">
+<title
+>Betik başvuru kılavuzu</title>
+
+<para
+>&konversation; birkaç betik öntanımlı olarak kurulu halde gelir. Onları kullanmayı öğrenmek için bu kılavuzu okumayı sürdürün.</para>
+<!--FIXME in data/scripts-->
+<variablelist>
+<varlistentry>
+<term
+><userinput
+><command
+>/exec </command
+> <replaceable
+>bug</replaceable
+> [<replaceable
+>hata numarası|arama dizisi</replaceable
+>]</userinput
+></term>
+<listitem>
+  <para
+>Bu betik ile, verilen diziyi veya hata numarasını <ulink url="https://bugs.kde.org/"
+>&kde;’nin Bugzilla’sında</ulink
+> arayabilirsiniz.</para>
+<para
+>Örnek: 123456 numaralı hata kaydına tarayıcınızda gidin.</para>
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>bug 123456</replaceable
+></userinput
+></para>
+<para
+>Örnek eylem: &systemsettings;’nızdaki öntanımlı tarayıcı, <replaceable
+>https://bugs.kde.org/show_bug.cgi?id=123456</replaceable
+> URL’sini açmalıdır.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/exec </command
+> <replaceable
+>cmd</replaceable
+> [<replaceable
+>komut satırı argümanları</replaceable
+>]</userinput>
+</term>
+<listitem>
+<para
+>Bu betik, geçerli kanalınıza yazılacak komut satırı argümanlarının çıktısına sahip olmak için kullanılır.</para>
+<para
+>Örnek: Geçerli kanaldaki herkese bilgisayarınızda &konversation;’un hangi sürümünün kurulu olduğunu gösterin.</para>
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>cmd konversation --version</replaceable
+></userinput
+></para>
+<para
+>Örnek çıktı: <replaceable
+>Konversation: 1.6</replaceable
+></para>
+<para
+>UYARI! Tüm komutun çıktısı, geçerli kanal sekmesindeki herkese gönderilir! Lütfen dikkatli kullanın.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/exec </command
+> <replaceable
+>fortune</replaceable
+></userinput>
+</term>
+<listitem>
+<para
+>Bu betik, falınıza bakar.</para>
+<para
+>Örnek: Geçerli kanal sekmenizde falınıza bakın.</para>
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>fortune</replaceable
+></userinput
+></para>
+<para
+>Örnek çıktı: <replaceable
+>Random Fortune: Never make any mistakes. -- Anonymous, in a mail discussion about to a kernel bug report</replaceable
+></para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/exec </command
+> <replaceable
+>gauge</replaceable
+> [<replaceable
+>yüzde</replaceable
+>]</userinput>
+</term>
+<listitem>
+<para
+>Bu betik, verilen yüzde için basit bir metin tabanlı ilerleme çubuğu gösterir.</para>
+<para
+>Örnek: Geçerli kanal sekmesine %​50 tamamlanmış bir ilerleme çubuğu çıktısı almak için.</para>
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>gauge 50</replaceable
+></userinput
+></para>
+<para
+>Örnek çıktı: <replaceable
+>Bira dolumu [ | ] 50%</replaceable
+></para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><userinput
+><command
+>/exec </command
+> <replaceable
+>media</replaceable
+> [<replaceable
+>ses|video|{oynatıcı/çalar}</replaceable
+>]</userinput>
+</term>
+<listitem>
+<para
+>Bu, çeşitli ortam oynatıcıları/çalarlar için “Şimdi Çalınıyor/Oynatılıyor” betiğidir. Ayrıca, yalnızca ses çalarlar veya video oynatıcıları için bu bilgiyi sunma olanağı da tanır. <replaceable
+>Ses</replaceable
+> ve <replaceable
+>video</replaceable
+> argümanlarıyla bunu belirtebilirsiniz. Ayrıca yeğlediğiniz programı da belirtmeniz olanaklıdır.</para>
+<para
+>Aşağıdaki yazılımlar desteklenir: Amarok (ses), JuK (ses), Kaffeine (video, ses), KMPlayer (video, ses), KPlayer (video, ses), kdetv (video), Yammi (ses), Audacious (ses), MPD (ses).</para>
+<para
+>Örnek: Amarok’ta şu anda çalınan şarkıyı çıktılayın.</para>
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>media amarok</replaceable
+></userinput
+></para>
+<para
+>Örnek çıktı: <replaceable
+>* user is listening to Haliç’te Gün Batışı by Moğollar on Anadolu Pop [Amarok]</replaceable
+></para>
+</listitem>
+</varlistentry>
+<!--FIXME Error: Unable to retrieve clipboard contents from Klipper.
+<varlistentry>
+<term
+><userinput
+><command
+>/exec </command
+> <replaceable
+>sayclip</replaceable
+> [<replaceable
+>Optional Delay</replaceable
+>]</userinput>
+</term>
+<listitem>
+<para
+>This script outputs the contents of klipper to the current channel tab with a delay to provide flood protection.</para>
+<para
+>Example: To output the contents of klipper with a 1 second delay.</para>
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>sayclip 1s</replaceable
+></userinput
+></para>
+<para
+>Sample output: <replaceable
+>Konversation sure is awesome!</replaceable
+></para>
+</listitem>
+</varlistentry>
+-->
+<varlistentry>
+<term
+><userinput
+><command
+>/exec </command
+> <replaceable
+>sysinfo</replaceable
+></userinput>
+</term>
+<listitem>
+<para
+>Bu betik, birkaç komutun çıktılarını birleştirerek ve bunları uygun şekilde biçimlendirerek sisteminiz hakkında bazı ayrıntılı bilgiler verir.</para>
+<para
+>Örnek: Sisteminizle ilgili bazı bilgileri geçerli kanal sekmesine vermek için.</para>
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>sysinfo</replaceable
+></userinput
+></para>
+<para
+>Örnek çıktı: <replaceable
+>Sysinfo for 'user-desktop': Running inside KDE Plasma 5.6.5 on Ubuntu 16.04.1 LTS (Xenial Xerus) powered by Linux 4.4.0-47-generic, CPU: Intel(R) Core(TM) i7-4910MQ CPU @ 2.90GHz at 2996-3338/3900 MHz, RAM: 15795/15967 MB, Storage: 1591/2281 GB, 406 procs, 47.59h up</replaceable
+></para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/exec </command
+> <replaceable
+>tinyurl</replaceable
+> [<replaceable
+>bağlantı adresi</replaceable
+>]</userinput>
+</term>
+<listitem>
+<para
+>Bu betik, verilen bağlantıyı daha sonra geçerli kanal sekmesine gönderilen bir kısa URL’ye dönüştürmek için Tinyurl’un API’sini kullanır.</para>
+<para
+>Örnek: Birisine https://konversation.kde.org adresine kısa bir bağlantı vermek için.</para>
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>tinyurl https://konversation.kde.org</replaceable
+></userinput
+></para>
+<para
+>Örnek çıktı: <replaceable
+>https://tinyurl.com/y4rk8wa3</replaceable
+></para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/exec </command
+> <replaceable
+>uptime</replaceable
+></userinput>
+</term>
+<listitem>
+<para
+>Bu betik, “uptime” komutunun sonucunu çıkarır ve uygunca biçimlendirir.</para>
+<para
+>Örnek: 98 günlük kesintisiz çalışma sürenizi göstermek için.</para>
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>uptime</replaceable
+></userinput
+></para>
+<para
+>Örnek çıktı: <replaceable
+>Uptime: 98 days, 15 hours and 2 minutes</replaceable
+></para>
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+<para
+>Tüm bu betiklerin önceden tanımlanmış komut armaları vardır. Bunları görüntülemek, yeni eklemek veya var olanları kaldırmak/düzenlemek için &konversation; ayarları iletişim kutusunda <menuchoice
+><guimenu
+>Davranış</guimenu
+> <guimenuitem
+>Komut Armaları</guimenuitem
+></menuchoice
+> yolunu izleyin. </para>
+
+<para
+>Betik yazımı üzerine daha fazla bilgi almak için <ulink url="https://userbase.kde.org/Konversation/Scripts/Scripting_guide"
+>Userbase Scripting guide</ulink
+> sayfasına bir göz atın. </para>
+
+</sect1>
+
+</chapter>
+
+<!-- =================================================================== -->
+
+<chapter id="commands">
+<title
+>Komut başvuruları</title>
+
+<!-- (OPTIONAL, BUT RECOMMENDED) This chapter should list all of the
+application windows and their menubar and toolbar commands for easy reference.
+Also include any keys that have a special function but have no equivalent in the
+menus or toolbars. This may not be necessary for small apps or apps with no tool
+or menu bars. -->
+
+<!-- =================================================================== -->
+
+<sect1 id="kapp-mainwindow">
+<title
+>Ana &konversation; penceresi</title>
+
+<sect2>
+<title
+>Dosya Menüsü</title>
+<para>
+<variablelist>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycap
+>F2</keycap
+> </shortcut
+> <guimenu
+>Dosya</guimenu
+> <guimenuitem
+>Sunucu Listesi</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para
+><action
+><link linkend="irc-basics"
+>Sunucuların ve kanalların bir listesini</link
+> görüntüler. </action
+></para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycap
+>F7</keycap
+> </shortcut
+> <guimenu
+>Dosya</guimenu
+> <guimenuitem
+>Tez Bağlan</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para
+><action
+>Bir sunucuya bağlanmak için <link linkend="quickconnect"
+>Tez Bağlan</link
+> ekranını görüntüler. </action
+></para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><guimenu
+>Dosya</guimenu
+> <guimenuitem
+>Bağlantıyı Kes</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para
+><action
+>Tüm sunucuların bağlantısını keser. </action
+></para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><guimenu
+>Dosya</guimenu
+> <guimenuitem
+>Yeniden Bağlan</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para
+><action
+>Bir ağ hatası veya başka bir sorun nedeniyle bağlantısı kesilen tüm sunuculara yeniden bağlanır. </action
+></para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>J</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Dosya</guimenu
+> <guimenuitem
+>Kanala Katıl</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para
+><action
+>Katılmak için bir kanalın adını girmeniz için bir iletişim kutusu görüntüler. Bir kanal veya sunucu sekmesinde <command
+>/join <userinput
+>#kanaladı</userinput
+></command
+> girmekle eşdeğerdir.</action
+></para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl; &Shift;<keycap
+>A</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Dosya</guimenu
+> <guimenuitem
+>Her Yerde Uzakta</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para
+><action
+>Takma adınızın durumunu tüm kanallarda uzakta yapar. </action
+></para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>Q</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Dosya</guimenu
+> <guimenuitem
+>Çık</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para
+>&konversation;’dan <action
+>çıkar</action
+>.</para
+></listitem>
+	</varlistentry>
+</variablelist>
+</para>
+</sect2>
+
+<sect2>
+<title
+>Düzen Menüsü</title>
+<para>
+<variablelist>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>F</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Düzen</guimenu
+> <guimenuitem
+>Metin Bul…</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Geçerli ekranda metin dizileri arar.</action>
+			</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycap
+>F3</keycap
+> </shortcut
+> <guimenu
+>Düzen</guimenu
+> <guimenuitem
+>Sonrakini Bul</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Önceki arama dizisini kullanarak geçerli ekranda yeniden metin dizileri arar.</action>
+			</para
+></listitem>
+	</varlistentry>
+<!-- missing
+Find Previous Shift F3
+Clear Marker Lines Ctrl Shift R
+Enlarge Font Size Ctrl++
+Shrink Font Size Ctrl+-
+Reset Font Size Ctrl+O
+-->
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>L</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Düzen</guimenu
+> <guimenuitem
+>Pencereyi Temizle</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Geçerli ekranı temizler.</action>
+			</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl; &Shift;<keycap
+>L</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Düzen</guimenu
+> <guimenuitem
+>Tüm Pencereleri Temizle</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Tüm ekranları temizler.</action>
+			</para
+></listitem>
+	</varlistentry>
+</variablelist>
+</para>
+</sect2>
+
+<sect2>
+<title
+>Ekleme Menüsü</title>
+<para>
+<variablelist>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>K</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Ekleme</guimenu
+> <guimenuitem
+>&irc; Rengi…</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+			<action
+><link linkend="color-msgs"
+>Renkli iletiler göndermek</link
+> bölümüne göz atın.</action>
+		</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>R</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Ekleme</guimenu
+> <guimenuitem
+>İmleyici Çizgi</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+><link linkend="rememberlines"
+>Kanal ve sorgu günlüklerini imlemek</link
+> bölümüne bir göz atın.</action>
+			</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Alt; &Shift;<keycap
+>C</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Ekleme</guimenu
+> <guimenuitem
+>Özel Karakter…</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Yabancı dillerdeki karakterler gibi özel karakterler girmek için kullanılır.</action>
+			</para
+></listitem>
+	</varlistentry>
+</variablelist>
+</para>
+</sect2>
+
+<sect2>
+<title
+>Yer İmleri Menüsü</title
+><!--FIXME Copy to fundamentals + link?-->
+<para>
+<variablelist>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>B</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Yer İmleri</guimenu
+> <guimenuitem
+>Yer İmi Koy</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+		    <action
+>Geçerli ağa ve kanala yer imi koyar.</action>
+		</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><guimenu
+>Yer İmleri</guimenu
+> <guimenuitem
+>Sekmelere Klasör Olarak Yer İmi Koy…</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para
+>Yer imleri menüsünün sonuna, tüm kanalları yeni bir menü ögesi olarak <action
+>ekler</action
+>. </para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><guimenu
+>Yer İmleri</guimenu
+><guimenuitem
+>Yeni Yer İmi Klasörü…</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Yeni bir yer imi klasörü oluşturur.</action>
+			</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><guimenu
+>Yer İmleri</guimenu
+> <guimenuitem
+>Yer İmlerini Düzenle…</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Yer imi düzenleyicisini açar.</action>
+			</para
+></listitem>
+	</varlistentry>
+</variablelist>
+</para>
+</sect2>
+
+<sect2>
+<title
+>Ayarlar Menüsü</title>
+<para>
+<variablelist>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>H</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Ayarlar</guimenu
+> <guimenuitem
+>Takma Ad Listesini Göster</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Kanal sekmelerindeki takma adlar panelini gizler veya görüntüler. </action>
+			</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+><keycap
+>F8</keycap
+></shortcut
+> <guimenu
+>Ayarlar</guimenu
+> <guimenuitem
+>Kimlikler…</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para
+><action
+>Kimlik bilginizi girebilmeniz için <link linkend="identity"
+>Kimlikler</link
+> ekranını görüntüler. </action
+></para
+></listitem>
+	</varlistentry>
+</variablelist>
+</para>
+</sect2>
+
+<sect2>
+<title
+>Pencere Menüsü</title>
+<para>
+<variablelist>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>,</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Pencere</guimenu
+> <guimenuitem
+>Önceki Sekme</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Önceki sekmeye karşılık gelen ekranı görüntüler.</action>
+			</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>.</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Pencere</guimenu
+> <guimenuitem
+>Sonraki Sekme</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Sonraki sekmeye karşılık gelen ekranı görüntüler.</action>
+			</para
+></listitem>
+	</varlistentry>
+<!--
+Next Active Tab Ctrl Alt Space
+Move Tab Left Alt Shift Left
+Move Tab Right Alt Shift Right
+  -->
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>W</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Pencere</guimenu
+> <guimenuitem
+>Sekmeyi Kapat</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Geçerli ekranı kapatır. Bir kanal kapatılıyorsa o kanaldan ayrılır. <interface
+>Sunucu İletileri</interface
+> sekmesini kapatmak, o sunucudaki tüm açık kanalları kapatır ve sunucu bağlantısını keser. </action>
+			</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycap
+>F11</keycap
+> </shortcut
+> <guimenu
+>Pencere</guimenu
+> <guimenuitem
+>Tüm Açık Sohbetleri Kapat</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Tüm <link linkend="query"
+>özel konuşmaları (sorguları)</link
+> kapatır. </action>
+			</para
+></listitem>
+	</varlistentry>
+<!--
+Enable Notifications
+Set Encoding
+  -->
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycap
+>F4</keycap
+> </shortcut
+> <guimenu
+>Pencere</guimenu
+> <guimenuitem
+>İzlenen Takma Adlar</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+			<action
+><guilabel
+>İzlenen Takma Adlar</guilabel
+> ekranını görüntüler. <link linkend="nicksonline"
+>Kimin çevrimiçi olduğunu izlemek</link
+> bölümüne bir göz atın.</action>
+		</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycap
+>F6</keycap
+> </shortcut
+> <guimenu
+>Pencere</guimenu
+> <guimenuitem
+>&URL; Yakalayıcısı</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+			<action
+><link linkend="urlcatcher"
+>&URL; Yakalayıcısı</link
+> ekranını görüntüler.</action>
+		</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycap
+>F9</keycap
+> </shortcut
+> <guimenu
+>Pencere</guimenu
+> <guimenuitem
+>DCC Durumu</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+			<action
+><link linkend="dcc"
+>DCC Durumu</link
+> sekmesini, dosya aktarımları bilgisiyle birlikte gösterir.</action>
+		</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><guimenu
+>Pencere</guimenu
+> <guimenuitem
+>Yeni Konsole</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+			<action
+>Bir uçbirim ekranı görüntüler. İstediğiniz sayıda <guilabel
+>Konsole</guilabel
+> sekmesi açabilirsiniz.</action>
+		</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycap
+>F5</keycap
+> </shortcut
+> <guimenu
+>Pencere</guimenu
+> <guimenuitem
+>… Kanalları Listesi</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+			<action
+>Sunucuda bulunabilecek <link linkend="list-channels"
+>kanalların listesini</link
+> görüntüler.</action>
+		</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>O</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Pencere</guimenu
+> <guimenuitem
+>… Günlük Dosyasını Aç</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+			<action
+>Geçerli sekmeden günlük iletileri olan bir ekram görüntüler. Yalnızca <interface
+>kanal</interface
+>, <interface
+>sunucu iletileri</interface
+> ve <interface
+>sohbet</interface
+> sekmelerinde çalışır. Günlükleme davranışı, ana menüden <menuchoice
+> <guisubmenu
+>Ayarlar</guisubmenu
+> <guisubmenu
+>Konversation Uygulamasını Yapılandır…</guisubmenu
+> <guisubmenu
+>Davranış</guisubmenu
+> <guisubmenu
+>Günlükleme</guisubmenu
+> </menuchoice
+> sayfasından değiştirilebilir. </action>
+		</para
+></listitem>
+	</varlistentry>
+<!-- Channel Settings -->
+</variablelist>
+</para>
+</sect2>
+
+<sect2>
+<title
+>Yardım Menüsü</title>
+
+<para
+>&konversation;, ortak &kde; <guimenu
+>Yardım</guimenu
+> menü ögesini kullanır, daha fazla bilgi için &kde; Temelleri’nin <ulink url="help:/fundamentals/menus.html#menus-help"
+>Yardım Menüsü</ulink
+> bölümüne bakın. </para>
+
+</sect2>
+
+</sect1>
+</chapter>
+
+<!-- =================================================================== -->
+
+<chapter id="faq">
+<title
+>Sorular ve Yanıtlar</title>
+
+<!-- (OPTIONAL but recommended) This chapter should include all of the silly
+(and not-so-silly) newbie questions that fill up your mailbox. This chapter
+should be reserved for BRIEF questions and answers! If one question uses more
+than a page or so then it should probably be part of the
+"Using this Application" chapter instead. You should use links to
+cross-reference questions to the parts of your documentation that answer them.
+This is also a great place to provide pointers to other FAQ's if your users
+must do some complicated configuration on other programs in order for your
+application work. -->
+
+<qandaset id="faqlist">
+    <!--FIXME https://userbase.kde.org/Konversation/FAQ -->
+<qandaentry>
+<question>
+<para
+>&konversation;’u başlattığımda herhangi bir kanala bağlanmadan kendiliğinden bir sunucuya bağlanmak istiyorum. Bunu nasıl yaparım?</para>
+</question>
+<answer>
+<para
+><link linkend="serverlist-addnetwork"
+>Sunucuyu Düzenle</link
+> ekranında <guilabel
+>Kanallar</guilabel
+> çerçevesini boş bırakın.</para>
+</answer>
+</qandaentry>
+
+<qandaentry>
+<question>
+<para
+>&konversation; hiçbir sunucuya bağlanamıyor. Sorun nedir?</para>
+</question>
+<answer>
+<para
+>Yanlış gidebilecek birçok şey vardır.</para>
+<orderedlist>
+<listitem>
+<para
+><link linkend="serverlist-addserver"
+>Sunucu Ekle</link
+> ekranında doğru <guilabel
+>sunucu adını</guilabel
+> ve doğru <guilabel
+>kapı</guilabel
+> numarasını girdiğinizden emin olun. </para>
+</listitem>
+<listitem>
+<para
+><link linkend="channel-screen-tour"
+>Sunucu İletileri</link
+> ekranında herhangi bir hata iletisi var mı diye bakın. Sunucu kötü bir parola nedeniyle mi bağlantıyı reddetti? Sunucu, <acronym
+>IDENTD</acronym
+> gerektirdiği ve bilgisayarınız <acronym
+>IDENT</acronym
+> isteğine yanıt vermediği için mi bağlantıyı reddetti? SSL protokol kutusunu denetlediniz; ancak sunucu SSL’yi desteklemiyor mu? </para>
+</listitem>
+<listitem>
+<para
+>Bir güvenlik duvarı arkasındaysanız lütfen doğru kapıların açık olduğundan emin olun. &konversation;’a aşağıdaki kapılar gerekir: </para>
+
+<para>
+<itemizedlist>
+<listitem
+><para
+>Giden TCP 6667 (veya bağlandığınız sunucunun kapısı)</para
+></listitem>
+<listitem
+><para
+>Gelen TCP 113 (IDENTD gerektiriyorsa)</para
+></listitem>
+<!-- <listitem
+><para
+>TODO (Incoming port numbers?)</para
+></listitem
+> -->
+</itemizedlist>
+</para>
+
+<para
+>&irc; bağlantı sorunları için <ulink url="https://github.com/irchelp/wio/blob/gh-pages/networks/connectprob.md"
+>irchelp.org</ulink
+> adresine bir bakın. </para>
+
+</listitem>
+
+</orderedlist>
+</answer>
+</qandaentry>
+
+<qandaentry>
+<question>
+<para
+><menuchoice
+> <guimenu
+>Pencere</guimenu
+> <guisubmenu
+>Kanal Listesi</guisubmenu
+> </menuchoice
+> ögesine gittiğimde onu seçemiyorum. Neden ki?</para>
+</question>
+<answer>
+<para
+><menuchoice
+> <guimenu
+>Pencere</guimenu
+> <guisubmenu
+>Kanal Listesi</guisubmenu
+> </menuchoice
+> menü girdisi, şu anda kanal olmayan bir pencere görüntüleniyorsa devre dışı olacaktır; örneğin, <guilabel
+>İzlenen Takma Adlar</guilabel
+> gibi. Onu yeniden seçilebilir yapmak için bir kanal veya sunucu sekmesine geri gitmeniz yeterlidir. </para>
+</answer>
+</qandaentry>
+
+<qandaentry>
+<question
+><para
+>Belirli bir süre hareketsiz kaldıktan sonra &konversation;’un beni kendiliğinden uzakta olarak imlemesini nasıl sağlarım? </para>
+</question>
+<answer
+><para
+>Kendiliğinden uzakta iletileri, kimliğe bağlı olarak yapılandırılır. Kendiliğinden uzakta işlevini etkinleştirmek için <menuchoice
+><guimenu
+>Ayarlar</guimenu
+><guimenuitem
+>Kimlikler</guimenuitem
+></menuchoice
+> sayfasına gidin. Kendiliğinden uzakta işlevini etkinleştirmek için kullandığınız kimliği seçin ve <guilabel
+>Uzakta</guilabel
+> sekmesine gidin. <guilabel
+>Kendiliğinden uzakta</guilabel
+> kutusunu işaretleyin. </para
+></answer>
+</qandaentry>
+
+<qandaentry>
+<question>
+<para
+><interface
+>Giriş Satırı</interface
+>’nın <guilabel
+>kendiliğinden değiştir</guilabel
+> özelliğini nasıl kapatırım?</para>
+</question>
+<answer
+><para
+>Ayarlar’dan <menuchoice
+><guimenu
+>Davranış</guimenu
+> <guimenuitem
+>Kendiliğinden Değiştir</guimenuitem
+></menuchoice
+> sayfasındaki ayarlara göre yalnızca &Enter; yerine <keycombo action="simul"
+>&Ctrl;&Enter;</keycombo
+> kullanarak <interface
+>Giriş Satırı</interface
+>’ndaki metnin kendiliğinden ayrıştırılıp bir değiştirme uygulanmasını engelleyebilirsiniz. </para
+></answer>
+</qandaentry>
+
+<qandaentry>
+<question>
+<para
+>&konversation; ile gelen betikler nerede?</para>
+</question>
+<answer>
+<para
+>Bu komutu &konversation;’ın giriş satırında çalıştırın (&konversation;’da geldiği için ortam betiğini örnek olarak kullanarak): </para>
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>--showpath media</replaceable
+></userinput
+></para>
+<para
+>Örnek çıktı: <replaceable
+>The script file 'media' was found at: /usr/share/konversation/scripts/media</replaceable
+></para>
+</answer>
+</qandaentry>
+
+<qandaentry>
+<question>
+<para
+>Metini nasıl kalın/yatık/altı çizgili yapabilirim?</para>
+</question>
+<answer>
+<para
+>Örnek: <userinput
+> Bu %Bsözcük%B kalın.</userinput
+></para>
+<para
+>Çıktı: <inlinemediaobject
+> <imageobject
+><imagedata fileref="bold-text.png" format="PNG"/></imageobject>
+</inlinemediaobject>
+</para>
+<para
+>Örnek: <userinput
+> Bu %Isözcük%I yatık.</userinput
+></para>
+<para
+>Çıktı: <inlinemediaobject
+> <imageobject
+><imagedata fileref="italic-text.png" format="PNG"/></imageobject>
+</inlinemediaobject>
+</para>
+<para
+>Örnek: <userinput
+> Bu %Usözcüğün%U altı çizili.</userinput
+></para>
+<para
+>Çıktı: <inlinemediaobject
+> <imageobject
+><imagedata fileref="underline-text.png" format="PNG"/></imageobject>
+</inlinemediaobject>
+</para>
+<para
+>Örnek: <userinput
+> Bu %Ssözcüğün%S üzeri çizili.</userinput
+></para>
+<para
+>Çıktı: <inlinemediaobject
+> <imageobject
+><imagedata fileref="struck-out-text.png" format="PNG"/></imageobject>
+</inlinemediaobject>
+</para>
+<para
+>Örnek: <userinput
+> Bu %Msözcüğün%M yazıtipi eş aralıklı.</userinput
+></para>
+<para
+>Çıktı: <inlinemediaobject
+> <imageobject
+><imagedata fileref="monospace-text.png" format="PNG"/></imageobject>
+</inlinemediaobject>
+</para>
+</answer>
+</qandaentry>
+
+</qandaset>
+</chapter>
+
+<chapter id="credits">
+
+<!-- Include credits for the programmers, documentation writers, and
+contributors here. The license for your software should then be included below
+the credits with a reference to the appropriate license file included in the KDE
+distribution. -->
+
+<title
+>Emeği Geçenler ve Lisans</title>
+
+<para
+>&konversation; </para>
+<para
+>Program telif hakkı &konversation; takımı, 2002–2005. </para>
+<para
+><ulink url="&konviwebsite;"
+>&konviwebsite;</ulink>
+</para>
+<para
+>Katkıcılar: <itemizedlist>
+<listitem
+><para
+>Dario Abatianni <email
+>eisfuchs@tigress.com</email
+></para
+></listitem>
+<listitem
+><para
+>Peter Simonsson <email
+>psn@linux.se</email
+></para
+></listitem>
+<listitem
+><para
+>Christian Muehlhaeuser <email
+>chris@chris.de</email
+></para
+></listitem>
+<listitem
+><para
+>John Tapsel <email
+>john@geola.geo.uk</email
+></para
+></listitem>
+<listitem
+><para
+>İsmail Dönmez <email
+>ismail.donmez@boun.edu.tr</email
+></para
+></listitem>
+<listitem
+><para
+>Shintaro Matsuoka <email
+>shin@shoegazed.org</email
+></para
+></listitem>
+<listitem
+><para
+>Gary Cramblitt <email
+>garycramblitt@comcast.net</email
+></para
+></listitem>
+<listitem
+><para
+>Matthias Gierlings <email
+>gismore@users.sourceforge.net</email
+></para
+></listitem>
+<listitem
+><para
+>&Alex.Zepeda; <email
+>garbanzo@hooked.net</email
+></para
+></listitem>
+<listitem
+><para
+>Stanislav Karchebny <email
+>berkus@users.sourceforge.net</email
+></para
+></listitem>
+<listitem
+><para
+>Mickael Marchand <email
+>marchand@kde.org</email
+></para
+></listitem>
+</itemizedlist>
+</para>
+
+<para
+>Teşekkürler: <itemizedlist>
+<listitem
+><para
+>Michael Goettsche <email
+>michael.goettsche@kdemail.net</email
+></para
+></listitem>
+<listitem
+><para
+>Benjamin Meyer <email
+>ben+konversation@kdemail.net</email
+></para
+></listitem>
+<listitem
+><para
+>Jacub Stachowski <email
+>qbast@go2.pl</email
+></para
+></listitem>
+<listitem
+><para
+>Sabastian Sariego <email
+>segfault@kde.cl</email
+></para
+></listitem>
+<listitem
+><para
+>Olivier Bedard <email
+>www.konversation.org hosting</email
+></para
+></listitem>
+<listitem
+><para
+>Frauke Oster <email
+>frauke@frsv.de</email
+></para
+></listitem>
+<listitem
+><para
+>Lucijan Busch <email
+>lucijan@kde.org</email
+></para
+></listitem>
+<listitem
+><para
+>Sascha Cunz <email
+>mail@sacu.de</email
+></para
+></listitem>
+<listitem
+><para
+>Steve Wollkind <email
+>steve@njord.org</email
+></para
+></listitem>
+<listitem
+><para
+>Thomas Nagy <email
+>thomas.nagy@eleve.emn.fr</email
+></para
+></listitem>
+<listitem
+><para
+>Tobias Olry <email
+>tobias.olry@web.de</email
+></para
+></listitem>
+<listitem
+><para
+>Ruud Nabben <email
+>r.nabben@gawab.com</email
+></para
+></listitem>
+</itemizedlist>
+</para>
+
+<para
+>Belgelendirme telif hakkı &copy; 2003–2005 Gary R. Cramblitt <email
+>garycramblitt@comcast.net</email
+> </para>
+
+<para
+>Çeviri: Kaan Özdinçer<email
+>kaanozdincer@gmail.com</email
+></para
+> <para
+>Çeviri: Emir SARI <email
+>emir_sari@icloud.com</email
+></para
+> &underFDL; &underGPL; </chapter>
+
+&documentation.index;
+</book>
+
+<!--
+Local Variables:
+mode: xml
+sgml-minimize-attributes:nil
+sgml-general-insert-case:lower
+sgml-indent-step:0
+sgml-indent-data:nil
+End:
+
+vim:tabstop=2:shiftwidth=2:expandtab
+-->
