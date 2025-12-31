@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-28 02:33+0000\n"
-"PO-Revision-Date: 2025-11-24 22:06+0200\n"
+"PO-Revision-Date: 2025-12-30 09:43+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
 "n % 10 == 0) ? 2 : 3));\n"
-"X-Generator: Lokalize 25.08.3\n"
+"X-Generator: Lokalize 25.12.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -7207,6 +7207,9 @@ msgid ""
 "attempt the third, and so on. At least one server must be specified. Click a "
 "server to highlight it."
 msgstr ""
+"זאת רשימת שרתי IRC ברשת. בעת התחברות לרשת, Konversation ינסה להתחבר לשרת "
+"העליון ברשימה. אם זה לא מצליח אז השרת השני. אם זה ייכשל אז השלישי וכן הלאה. "
+"יש לציין לפחות שרת אחד. יש ללחוץ על שרת כדי להדגיש אותו."
 
 #. i18n: ectx: property (text), widget (QPushButton, m_addServerButton)
 #: src/irc/servergroupdialogui.ui:151
@@ -8689,6 +8692,9 @@ msgid ""
 "The delay is the time it takes for messages from you to reach the server, "
 "and from the server back to you.</qt>"
 msgstr ""
+"<qt>שורת המצב מציגה מגוון הודעות, כולל תקלות התחברות לשרת. בקצה השמאלי מופיע "
+"העיכוב בחיבור לשרת. העיכוב הוא הזמן שלוקח להודעות להגיע ממך לשרת ומהשרת "
+"בחזרה אליך או אלייך.</qt>"
 
 #: src/statusbar.cpp:147
 #, kde-format
@@ -9270,6 +9276,11 @@ msgid ""
 "ignore your color changes.</b>\n"
 "</qt>"
 msgstr ""
+"<qt>זאת תצוגה מקדימה של איך הקוראים שלך יראו את ההודעה שלך אם הצבעים האלו "
+"נבחרו.<br>\n"
+"<b>לתשומת ליבך: לא כל תוכניות הלקוח תומכות בזה, וחלק מהמשתמשים בחרו להתעלם "
+"משינויי הצבע שלך.</b>\n"
+"</qt>"
 
 #. i18n: ectx: property (text), widget (QLabel, m_previewLbl)
 #: src/viewer/irccolorchooserui.ui:31
