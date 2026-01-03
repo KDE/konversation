@@ -133,6 +133,7 @@ protected:
 private:
     bool   m_dragging;
     QPoint m_dragOffset;
+    bool wayland;
 
     Q_DISABLE_COPY(OSDPreviewWidget)
 };

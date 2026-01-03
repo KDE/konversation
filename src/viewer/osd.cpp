@@ -22,7 +22,7 @@
 #include <QTimer>
 #include <QScreen>
 #include <QApplication>
-
+#include <QWindow>
 
 namespace ShadowEngine
 {
@@ -48,6 +48,7 @@ OSDWidget::OSDWidget(const QString &appName, QWidget *parent, const QString &nam
     flags |= Qt::Tool;
     #else
     flags |= Qt::Window | Qt::X11BypassWindowManagerHint;
+    setWindowTitle(QStringLiteral("Konversation OSD"));
     #endif
     setWindowFlags( flags );
     setObjectName( name );
@@ -329,11 +330,18 @@ OSDPreviewWidget::OSDPreviewWidget(const QString &appName, QWidget *parent)
     QFont f = font();
     f.setPointSize( 16 );
     setFont( f );
+    wayland = qApp->platformName().startsWith(QStringLiteral("wayland"), Qt::CaseInsensitive);
     //setTranslucent( AmarokConfig::osdUseTranslucency() );
 }
 
 void OSDPreviewWidget::mousePressEvent( QMouseEvent *event )
 {
+    if (wayland)
+    {
+        windowHandle()->startSystemMove();
+        return;
+    }
+
     m_dragOffset = event->pos();
 
     if( event->button() == Qt::LeftButton && !m_dragging )
