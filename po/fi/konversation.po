@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-28 00:42+0000\n"
+"POT-Creation-Date: 2026-01-04 00:44+0000\n"
 "PO-Revision-Date: 2025-05-25 16:55+0300\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
@@ -9999,7 +9999,7 @@ msgstr "Tallenna lokitiedosto"
 msgid "Choose Destination Folder"
 msgstr "Valitse kohdekansio"
 
-#: src/viewer/osd.cpp:325
+#: src/viewer/osd.cpp:326
 #, kde-format
 msgid "OSD Preview - drag to reposition"
 msgstr "Kuvaruutunäytön esikatselu – sijoita vetämällä ja pudottamalla"

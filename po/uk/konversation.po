@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-28 00:42+0000\n"
+"POT-Creation-Date: 2026-01-04 00:44+0000\n"
 "PO-Revision-Date: 2025-11-28 09:54+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
@@ -10110,7 +10110,7 @@ msgstr "Зберегти файл журналу"
 msgid "Choose Destination Folder"
 msgstr "Вибір теки призначення"
 
-#: src/viewer/osd.cpp:325
+#: src/viewer/osd.cpp:326
 #, kde-format
 msgid "OSD Preview - drag to reposition"
 msgstr "Вигляд екранної панелі — перетягніть мишкою, щоб змінити розташування"

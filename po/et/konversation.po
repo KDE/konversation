@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-28 00:42+0000\n"
+"POT-Creation-Date: 2026-01-04 00:44+0000\n"
 "PO-Revision-Date: 2020-10-25 17:37+0100\n"
 "Last-Translator: Mihkel Tõnnov <mihhkel@gmail.com>\n"
 "Language-Team: Estonian <>\n"
@@ -9937,7 +9937,7 @@ msgstr "Salvesta logifail"
 msgid "Choose Destination Folder"
 msgstr "Vali sihtkataloog"
 
-#: src/viewer/osd.cpp:325
+#: src/viewer/osd.cpp:326
 #, kde-format
 msgid "OSD Preview - drag to reposition"
 msgstr "OSD eelvaatlus - lohista asukoha muutmiseks"

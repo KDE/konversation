@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: konversation 3.4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-28 00:42+0000\n"
+"POT-Creation-Date: 2026-01-04 00:44+0000\n"
 "PO-Revision-Date: 2005-05-25 18:43-0600\n"
 "Last-Translator: Steve Murphy <murf@e-tools.com>\n"
 "Language-Team: Kinyarwanda <translation-team-rw@lists.sourceforge.net>\n"
@@ -9750,7 +9750,7 @@ msgstr "Kubika "
 msgid "Choose Destination Folder"
 msgstr "Ububiko bw'Ishyika"
 
-#: src/viewer/osd.cpp:325
+#: src/viewer/osd.cpp:326
 #, fuzzy, kde-format
 msgid "OSD Preview - drag to reposition"
 msgstr "- Kurura Kuri "

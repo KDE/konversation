@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-28 00:42+0000\n"
+"POT-Creation-Date: 2026-01-04 00:44+0000\n"
 "PO-Revision-Date: 2025-04-26 22:23+0200\n"
 "Last-Translator: Kristof Kiszel <ulysses@fsf.hu>\n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
@@ -9956,7 +9956,7 @@ msgstr "Naplófájl mentése"
 msgid "Choose Destination Folder"
 msgstr "Célmappa kiválasztása"
 
-#: src/viewer/osd.cpp:325
+#: src/viewer/osd.cpp:326
 #, kde-format
 msgid "OSD Preview - drag to reposition"
 msgstr "OSD előnézet - húzza a kívánt pozícióra"
