@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-28 02:33+0000\n"
+"POT-Creation-Date: 2026-01-04 02:54+0000\n"
 "PO-Revision-Date: 2024-04-22 15:59\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
@@ -9656,7 +9656,7 @@ msgstr "保存日志文件"
 msgid "Choose Destination Folder"
 msgstr "选择目标文件夹"
 
-#: src/viewer/osd.cpp:325
+#: src/viewer/osd.cpp:326
 #, kde-format
 msgid "OSD Preview - drag to reposition"
 msgstr "OSD 预览 - 拖曳可重新定位"

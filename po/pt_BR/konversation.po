@@ -19,7 +19,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-28 02:33+0000\n"
+"POT-Creation-Date: 2026-01-04 02:54+0000\n"
 "PO-Revision-Date: 2025-11-28 07:10-0300\n"
 "Last-Translator: Marcus Gama <marcus.gama@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <kde-i18n-pt_BR@kde.org>\n"
@@ -10017,7 +10017,7 @@ msgstr "Salvar arquivo de registro"
 msgid "Choose Destination Folder"
 msgstr "Escolher pasta de destino"
 
-#: src/viewer/osd.cpp:325
+#: src/viewer/osd.cpp:326
 #, kde-format
 msgid "OSD Preview - drag to reposition"
 msgstr "Pré-visualizar - arraste para reposicionar"

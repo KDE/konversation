@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-28 02:33+0000\n"
+"POT-Creation-Date: 2026-01-04 02:54+0000\n"
 "PO-Revision-Date: 2025-11-30 17:42+0100\n"
 "Last-Translator: Luigi Toscano <luigi.toscano@tiscali.it>\n"
 "Language-Team: Italian <kde-i18n-it@kde.org>\n"
@@ -10014,7 +10014,7 @@ msgstr "Salva verbale"
 msgid "Choose Destination Folder"
 msgstr "Scegli cartella di destinazione"
 
-#: src/viewer/osd.cpp:325
+#: src/viewer/osd.cpp:326
 #, kde-format
 msgid "OSD Preview - drag to reposition"
 msgstr "Anteprima OSD - Trascina per riposizionare"

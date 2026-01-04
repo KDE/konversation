@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-28 02:33+0000\n"
+"POT-Creation-Date: 2026-01-04 02:54+0000\n"
 "PO-Revision-Date: 2025-11-28 11:54+0100\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
@@ -10040,7 +10040,7 @@ msgstr "Logbestand opslaan"
 msgid "Choose Destination Folder"
 msgstr "Bestemmingsmap kiezen"
 
-#: src/viewer/osd.cpp:325
+#: src/viewer/osd.cpp:326
 #, kde-format
 msgid "OSD Preview - drag to reposition"
 msgstr "OSD-voorbeeld - slepen om te verplaatsen"
