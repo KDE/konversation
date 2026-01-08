@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-01-04 00:44+0000\n"
-"PO-Revision-Date: 2026-01-01 14:13+0200\n"
+"PO-Revision-Date: 2026-01-07 13:49+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -3876,14 +3876,14 @@ msgstr "זהות (Ident) לא יכולה להכיל רווחים."
 #: src/identitydialog.cpp:464
 #, kde-format
 msgid "NickServ may not function with auto join;  SASL is recommended."
-msgstr ""
+msgstr "יכול להיות ש־NickServ לא יתפקד עם הצטרפות אוטומטית, עדיף SASL."
 
 #: src/identitydialog.cpp:471
 #, kde-format
 msgid ""
 "The password entered here will override the one set in the server settings, "
 "if any."
-msgstr ""
+msgstr "הסיסמה שמילאת כאן תדרוס את זאת שהוגדרה בהגדרות השרת, אם הוגדרה."
 
 #: src/identitydialog.cpp:482
 #, kde-format
@@ -3896,7 +3896,7 @@ msgstr "(רשות)"
 msgid ""
 "Certificate-based authentication forces SSL to be enabled for a connection, "
 "overriding any server settings."
-msgstr ""
+msgstr "אימות מבוסס אישורים מאלץ הפעלת SSL לחיבור, מה שדורס הגדרות שרת כלשהן."
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: src/identitydialog.ui:37
@@ -3938,6 +3938,10 @@ msgid ""
 "all the nerds out there, but the PC you use can always be traced so you will "
 "never be truly anonymous."
 msgstr ""
+"כאן אפשר למלא את השם האמיתי שלך. IRC לא יועד לשמור על חיסיון מפני חברים או "
+"אויבים. חשוב מאוד לזכור את זה אם התפתית להתנהג באופן פוגעני. „שם אמיתי” "
+"מזויף יכולה להיות דרך מצוינת למסך את המגדר שלך מכל החננות ברחבי הרשת, אבל "
+"המחשב שמשמש אותך תמיד חשוף למעקב כך שאין שום הבטחה לאלמוניות אמיתית."
 
 #. i18n: ectx: property (title), widget (QGroupBox, nickGroupBox)
 #: src/identitydialog.ui:218 src/irc/invitedialog.cpp:172
@@ -4478,7 +4482,7 @@ msgstr "נושא החדר הוא \"%1\"‏."
 #: src/irc/channel.cpp:1373
 #, kde-format
 msgid "You set the channel topic to \"%1\"."
-msgstr "אתה קבעת את נושא החדר אל \"%1\"‏."
+msgstr "קבעת את נושא החדר כך שיהיה „%1”."
 
 #: src/irc/channel.cpp:1375
 #, kde-format
@@ -4493,7 +4497,7 @@ msgstr "אתה נמצא במצב שקט ב־%1."
 #: src/irc/channel.cpp:1430
 #, kde-format
 msgid "%1 sets a quiet on %2."
-msgstr "המשתמש %1 קבעת את מצב החדר שקט ב־%2."
+msgstr "החדר הוגדר למצב שקט ב־%2 על ידי %1."
 
 #: src/irc/channel.cpp:1434
 #, kde-format
@@ -4668,22 +4672,22 @@ msgstr ""
 #: src/irc/channel.cpp:1583
 #, kde-format
 msgid "You give yourself permission to talk."
-msgstr ""
+msgstr "הענקת לעצמך הרשאה לדבר."
 
 #: src/irc/channel.cpp:1584
 #, kde-format
 msgid "You give %1 permission to talk."
-msgstr ""
+msgstr "הענקת ל־%1 הרשאה לדבר."
 
 #: src/irc/channel.cpp:1588
 #, kde-format
 msgid "%1 gives you permission to talk."
-msgstr ""
+msgstr "קיבלת מ־%1 הרשאה לדבר."
 
 #: src/irc/channel.cpp:1589
 #, kde-format
 msgid "%1 gives %2 permission to talk."
-msgstr ""
+msgstr "הרשאה לדבר הוענקה ל־%2 על ידי %1."
 
 #: src/irc/channel.cpp:1596
 #, kde-format
@@ -4708,7 +4712,7 @@ msgstr "ההרשאות לשוחח הופקעו מ־%2 על ידי %1."
 #: src/irc/channel.cpp:1614
 #, kde-format
 msgid "You set the channel mode to 'no colors allowed'."
-msgstr "אתה קבעת את מצב החדר אל \"צבעים אסורים\"."
+msgstr "קבעת את מצב החדר ל„אסור צבעים”."
 
 #: src/irc/channel.cpp:1615
 #, kde-format
@@ -4728,12 +4732,12 @@ msgstr "המשתמש %1 ביטל את המצב \"אפשר קודי צבעים\".
 #: src/irc/channel.cpp:1627
 #, kde-format
 msgid "You set the channel mode to 'invite only'."
-msgstr ""
+msgstr "הגדרת את מצב החדר ל‚הזמנה בלבד’."
 
 #: src/irc/channel.cpp:1628
 #, kde-format
 msgid "%1 sets the channel mode to 'invite only'."
-msgstr ""
+msgstr "מצב החדר הוגדר ל‚הזמנה בלבד’ על ידי %1."
 
 #: src/irc/channel.cpp:1632
 #, kde-format
@@ -4788,17 +4792,17 @@ msgstr "החדר הוגדר למצב ‚להרשות הודעות מבחוץ’ 
 #: src/irc/channel.cpp:1669
 #, kde-format
 msgid "You set the channel mode to 'private'."
-msgstr ""
+msgstr "הגדרת את מצב החדר ל‚פרטי’."
 
 #: src/irc/channel.cpp:1670
 #, kde-format
 msgid "%1 sets the channel mode to 'private'."
-msgstr ""
+msgstr "מצב החדר הוגדר ל‚פרטי’ על ידי %1."
 
 #: src/irc/channel.cpp:1674
 #, kde-format
 msgid "You set the channel mode to 'public'."
-msgstr ""
+msgstr "הגדרת את מצב החדר ל‚ציבורי’."
 
 #: src/irc/channel.cpp:1675
 #, kde-format
@@ -4848,7 +4852,7 @@ msgstr "המשתמש %1 ביטל את \"הגנת הנושא\"."
 #: src/irc/channel.cpp:1715
 #, kde-format
 msgid "You set the channel key to '%1'."
-msgstr "אתה קבעת את מפתח החדר אל \"%1\"."
+msgstr "קבעת את מפתח החדר בתור „%1”."
 
 #: src/irc/channel.cpp:1716
 #, kde-format
@@ -4971,7 +4975,7 @@ msgstr "הגדרת את מצב החדר אל ‎+%1"
 #: src/irc/channel.cpp:1791
 #, kde-format
 msgid "%1 sets channel mode +%2"
-msgstr "המשתמש %1 קבעת את מצב החדר אל +%2"
+msgstr "מצב החדר הוגדר ל־‎+%2 על ידי %1"
 
 #: src/irc/channel.cpp:1798
 #, kde-format
@@ -4991,7 +4995,7 @@ msgstr "הגדרת את מצב החדר אל ‎-%1"
 #: src/irc/channel.cpp:1804
 #, kde-format
 msgid "%1 sets channel mode -%2"
-msgstr "המשתמש %1 קבעת את מצב החדר אל -%2"
+msgstr "מצב החדר הוגדר ל־‎-%2 על ידי %1"
 
 #: src/irc/channel.cpp:2203
 #, kde-format
