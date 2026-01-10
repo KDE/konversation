@@ -1,17 +1,19 @@
+# SPDX-FileCopyrightText: 2026 Charlotte <altronic25@protonmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: kdeextragear-2/konversation.po\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-01-04 02:54+0000\n"
-"PO-Revision-Date: 2004-12-03 14:52-0500\n"
-"Last-Translator: Kevin Patrick Scannell <scannell@SLU.EDU>\n"
-"Language-Team: ga <LL@li.org>\n"
+"PO-Revision-Date: 2026-01-09 21:26+0000\n"
+"Last-Translator: Charlotte <altronic25@protonmail.com>\n"
+"Language-Team: Irish\n"
 "Language: ga\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=5; plural=n==1 ? 0 : n==2 ? 1 : n<7 ? 2 : n < 11 ? "
 "3 : 4\n"
+"X-Generator: Lokalize 25.12.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -64,7 +66,7 @@ msgstr ""
 
 #: data/scripts/media:181
 msgid "\"%1\" is not running."
-msgstr ""
+msgstr "Níl \"%1\" ag rith."
 
 #: data/scripts/media:183
 msgid "No running media players found."
@@ -135,7 +137,7 @@ msgstr ""
 #: src/irc/server.cpp:3852
 #, kde-format
 msgid "D-Bus"
-msgstr ""
+msgstr "D-Bus"
 
 #: src/cipher.cpp:477
 #, kde-format
@@ -2824,22 +2826,17 @@ msgid "Connection closed."
 msgstr "Dúnadh an ceangal."
 
 #: src/dcc/chatcontainer.cpp:110
-#, fuzzy, kde-format
-#| msgctxt "%1=extension like Chat or Whiteboard, %2=partnerNick, %3=port"
-#| msgid "DCC %1 with %2 on port <numid>%3</numid>."
+#, kde-format
 msgctxt "%1=extension like Chat or Whiteboard, %2=partnerNick, %3=port"
 msgid "DCC %1 with %2 on port %3."
-msgstr "DCC %1 le %2 ar phort <numid>%3</numid>."
+msgstr "DCC %1 le %2 ar phort %3."
 
 #: src/dcc/chatcontainer.cpp:117
-#, fuzzy, kde-format
-#| msgctxt ""
-#| "%1=extension like Chat or Whiteboard, %2 = nickname, %3 = IP, %4 = port"
-#| msgid "DCC %1 with %2 on %3:<numid>%4</numid>."
+#, kde-format
 msgctxt ""
 "%1=extension like Chat or Whiteboard, %2 = nickname, %3 = IP, %4 = port"
 msgid "DCC %1 with %2 on %3:%4."
-msgstr "DCC %1 le %2 ar %3:<numid>%4</numid>."
+msgstr "DCC %1 le %2 ar %3:%4."
 
 #: src/dcc/chatcontainer.cpp:139 src/dcc/transferrecv.cpp:589
 #: src/dcc/transfersend.cpp:396
@@ -2993,7 +2990,7 @@ msgstr "Freastalaí anaithnid"
 #, kde-format
 msgctxt "%1=partnerNick, %2=IRC Servername, %3=partnerIP, %4=partnerPort"
 msgid "%1 on %2, %3 (port %4)"
-msgstr ""
+msgstr "%1 ar %2, %3 (port %4)"
 
 #: src/dcc/transferdetailedinfopanel.cpp:162
 #, kde-format
@@ -3002,24 +2999,22 @@ msgid "%1 on %2"
 msgstr "%1 ar %2"
 
 #: src/dcc/transferdetailedinfopanel.cpp:169
-#, fuzzy, kde-format
-#| msgctxt "network (nickname)"
-#| msgid "%1 (%2)"
+#, kde-format
 msgctxt "%1=ownIP, %2=ownPort"
 msgid "%1 (port %2)"
-msgstr "%1 (%2)"
+msgstr "%1 (port %2)"
 
 #: src/dcc/transferdetailedinfopanel.cpp:177
 #, kde-format
 msgctxt "%1=Transferstartposition"
 msgid "Yes, %1"
-msgstr ""
+msgstr "Tá, %1"
 
 #: src/dcc/transferdetailedinfopanel.cpp:179
 #, kde-format
 msgctxt "no - not a resumed transfer"
 msgid "No"
-msgstr ""
+msgstr "Níl"
 
 #: src/dcc/transferdetailedinfopanel.cpp:245
 #, kde-format
@@ -4043,7 +4038,7 @@ msgstr "&Focal Faire:"
 #: src/identitydialog.ui:313
 #, kde-format
 msgid "PEM file:"
-msgstr ""
+msgstr "Comhad PEM:"
 
 #. i18n: ectx: attribute (title), widget (QWidget, awayWidget)
 #: src/identitydialog.ui:327
@@ -4395,7 +4390,7 @@ msgstr "Scoir"
 #: src/irc/channel.cpp:1138
 #, kde-format
 msgid "You (%1) have left this server."
-msgstr ""
+msgstr "D'fhág tú (%1) an freastalaí seo."
 
 #: src/irc/channel.cpp:1140
 #, kde-format
@@ -5869,7 +5864,7 @@ msgstr ""
 #, kde-format
 msgctxt "%1 = nick, %2 = shows if nick is op, %3 = hostmask, %4 = shows away"
 msgid "%1%2 is %3%4."
-msgstr ""
+msgstr "Is %1%2 %3%4."
 
 #: src/irc/inputfilter.cpp:2235
 #, kde-format
@@ -6392,7 +6387,7 @@ msgstr ""
 #: src/irc/outputfilter.cpp:1206
 #, kde-format
 msgid "%1 is not a channel."
-msgstr ""
+msgstr "Níl %1 an cainéal."
 
 #: src/irc/outputfilter.cpp:1218
 #, kde-format
@@ -6942,7 +6937,7 @@ msgstr ""
 #, kde-format
 msgctxt "%1 = file name, %2 = nickname of recipient"
 msgid "Upload of \"%1\" to %2 finished."
-msgstr ""
+msgstr "Tá an uasluchtú de \"%1\" do %2 ag críochnaithe."
 
 #: src/irc/server.cpp:2820
 #, kde-format
@@ -6965,7 +6960,7 @@ msgstr ""
 #: src/irc/server.cpp:3170 src/notificationhandler.cpp:348
 #, kde-format
 msgid "%1 is online (%2)."
-msgstr ""
+msgstr "Tá %1 ar líne (%2)."
 
 #: src/irc/server.cpp:3184 src/notificationhandler.cpp:363
 #, kde-format
@@ -7314,6 +7309,9 @@ msgid ""
 "\n"
 "The network %2 needs to have at least one server."
 msgstr ""
+"Ní féidir leat %1 a scriosadh.\n"
+"\n"
+"Caithfidh an líonra %2 aon freastalaí ar a laghad."
 
 #: src/irc/serverlistdialog.cpp:203
 #, kde-format
@@ -7830,18 +7828,17 @@ msgstr ""
 #: src/main.cpp:84
 #, kde-format
 msgid "irc:// URL or server hostname"
-msgstr ""
+msgstr "URL irc:// nó óstainm freastalaí"
 
 #: src/main.cpp:85
 #, kde-format
 msgid "Server to connect"
-msgstr ""
+msgstr "Freastalaí a nasc"
 
 #: src/main.cpp:85
-#, fuzzy, kde-format
-#| msgid "Server:"
+#, kde-format
 msgid "server"
-msgstr "Freastalaí:"
+msgstr "freastalaí"
 
 #: src/main.cpp:86
 #, kde-format
@@ -7849,10 +7846,9 @@ msgid "Port to use"
 msgstr "Port le húsáid"
 
 #: src/main.cpp:86
-#, fuzzy, kde-format
-#| msgid "Support"
+#, kde-format
 msgid "port"
-msgstr "Tacaíocht"
+msgstr "port"
 
 #: src/main.cpp:87
 #, kde-format
@@ -7906,7 +7902,7 @@ msgstr ""
 #: src/main.cpp:92
 #, kde-format
 msgid "msec"
-msgstr ""
+msgstr "msoic"
 
 #: src/main.cpp:93
 #, kde-format
@@ -8354,23 +8350,20 @@ msgid "New message from %1 in %2"
 msgstr ""
 
 #: src/notificationhandler.cpp:103
-#, fuzzy, kde-format
-#| msgid "You are kicked by %1 from %2"
+#, kde-format
 msgctxt "Notification title; see Event/nick in konversation.notifyrc"
 msgid "Your nick was mentioned by %1 in %2"
-msgstr "Bhí tú ciceáilte amach as %2 ag %1"
+msgstr "Luaigh %1 do leasainm i %2"
 
 #: src/notificationhandler.cpp:114
-#, fuzzy, kde-format
-#| msgid "[HighLight] (%1) *** %2"
+#, kde-format
 msgid "[HighLight] (%1) <%2>"
-msgstr "[Aibhsiú] (%1) *** %2"
+msgstr "[Aibhsiú] (%1) <%2>"
 
 #: src/notificationhandler.cpp:128 src/notificationhandler.cpp:433
-#, fuzzy, kde-format
-#| msgid "[HighLight] (%1) &lt;%2&gt; %3"
+#, kde-format
 msgid "[HighLight] (%1) <%2> %3"
-msgstr "[Aibhsiú] (%1) &lt;%2&gt; %3"
+msgstr "[Aibhsiú] (%1) <%2> %3"
 
 #: src/notificationhandler.cpp:153
 #, fuzzy, kde-format
@@ -8380,16 +8373,14 @@ msgid "New query message from %1"
 msgstr "Cuir teachtaireacht nua neamhláithreachta isteach"
 
 #: src/notificationhandler.cpp:164
-#, fuzzy, kde-format
-#| msgid "[Query] &lt;%1&gt;"
+#, kde-format
 msgid "[Query] <%1>"
-msgstr "[Iarratas] &lt;%1&gt;"
+msgstr "[Iarratas] <%1>"
 
 #: src/notificationhandler.cpp:178
-#, fuzzy, kde-format
-#| msgid "[Query] &lt;%1&gt; %2"
+#, kde-format
 msgid "[Query] <%1> %2"
-msgstr "[Iarratas] &lt;%1&gt; %2"
+msgstr "[Iarratas] <%1> %2"
 
 #: src/notificationhandler.cpp:212 src/notificationhandler.cpp:219
 #, kde-format
@@ -8553,7 +8544,7 @@ msgstr "Bearta"
 #: src/queuetunerbase.ui:682 src/queuetunerbase.ui:692
 #, kde-format
 msgid "888"
-msgstr ""
+msgstr "888"
 
 #. i18n: ectx: property (text), widget (QLabel, m_textLabel3_2)
 #. i18n: ectx: property (text), widget (QLabel, m_textLabel3_2_3)
@@ -8627,7 +8618,7 @@ msgstr "Bearta:"
 #: src/queuetunerbase.ui:672
 #, kde-format
 msgid "Bytes (Encoded):"
-msgstr ""
+msgstr "Bearta (Ionchódaithe):"
 
 #: src/quickconnectdialog.cpp:36
 #, kde-format
