@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-01-04 02:54+0000\n"
-"PO-Revision-Date: 2026-01-07 13:49+0200\n"
+"PO-Revision-Date: 2026-01-07 15:41+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -2519,7 +2519,7 @@ msgstr ""
 msgid ""
 "Konversation will check the status of the nicknames listed below at this "
 "interval."
-msgstr ""
+msgstr "Konvesation יבדוק את מצב הכינויים שמופיעים להלן בהפרש כזה."
 
 #. i18n: ectx: property (text), widget (QLabel, notifyDelayLabel)
 #: src/config/watchednicknames_configui.ui:112
@@ -2546,13 +2546,13 @@ msgid "Network is down, will reconnect automatically when it is back up."
 msgstr "הרשת לא פעילה. יתחבר באופן אוטומטי כאשר החיבור יחודש."
 
 #: src/connectionmanager.cpp:252
-#, fuzzy, kde-format
+#, kde-format
 msgid "Trying to connect to %2 (port %3) in 1 second."
 msgid_plural "Trying to connect to %2 (port %3) in %1 seconds."
-msgstr[0] "מנסה להתחבר אל %2 (יציאה <numid>%3</numid>) בתוך שנייה אחת."
-msgstr[1] "מנסה להתחבר אל %2 (יציאה <numid>%3</numid>) בתוך %1 שניות."
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "מתבצע ניסיון להתחבר אל %2 (פתחה %3) בעוד שנייה."
+msgstr[1] "מתבצע ניסיון להתחבר אל %2 (פתחה %3) בעוד שתי שניות."
+msgstr[2] "מתבצע ניסיון להתחבר אל %2 (פתחה %3) בעוד %1 שניות."
+msgstr[3] "מתבצע ניסיון להתחבר אל %2 (פתחה %3) בעוד %1 שניות."
 
 #: src/connectionmanager.cpp:262
 #, kde-format
@@ -3321,27 +3321,25 @@ msgid "Open the file location"
 msgstr "פתח את מיקום הקובץ"
 
 #: src/dcc/transferpanel.cpp:423
-#, fuzzy, kde-format
+#, kde-format
 msgid ""
 "You have selected %1 file to execute, are you sure you want to continue?"
 msgid_plural ""
 "You have selected %1 files to execute, are you sure you want to continue?"
-msgstr[0] "אתה בחרת את הקובץ %1 להפעלה, האם ברצונך להמשיך?"
-msgstr[1] "אתה בחרת %1 קבצים להפעלה, האם אתה בטוח שאתה רוצה להמשיך?"
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "בחרת קובץ להרצה, להמשיך?"
+msgstr[1] "בחרת שני קבצים להרצה, להמשיך?"
+msgstr[2] "בחרת %1 קבצים להרצה, להמשיך?"
+msgstr[3] "בחרת %1 קבצים להרצה, להמשיך?"
 
 #: src/dcc/transferpanel.cpp:427
-#, fuzzy, kde-format
-#| msgid "Execute %1 file"
-#| msgid_plural "Execute %1 files"
+#, kde-format
 msgctxt "@action:button"
 msgid "Execute %1 File"
 msgid_plural "Execute %1 Files"
-msgstr[0] "הפעל את הקובץ %1"
-msgstr[1] "הפעל %1 קבצים"
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "הרצת קובץ"
+msgstr[1] "הרצת שני קבצים"
+msgstr[2] "הרצת %1 קבצים"
+msgstr[3] "הרצת %1 קבצים"
 
 #: src/dcc/transferrecv.cpp:197
 #, kde-format
