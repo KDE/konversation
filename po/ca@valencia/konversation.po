@@ -1735,7 +1735,7 @@ msgstr "Activa &la caixa baixa als noms dels fitxers de registre"
 #: src/config/log_config.ui:47
 #, kde-format
 msgid "&Append hostname to logfile names"
-msgstr "&Annexa el nom de la màquina als noms dels fitxers de registre"
+msgstr "&Annexa el nom de l'amfitrió als noms dels fitxers de registre"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1)
 #: src/config/log_config.ui:54
@@ -3557,7 +3557,8 @@ msgstr "S'està esperant que l'amfitrió remot accepte"
 msgid ""
 "Could not send DCC RECV resume request to the partner via the IRC server."
 msgstr ""
-"No es poden enviar peticions DCC RECV al company mitjançat el servidor IRC."
+"No es poden enviar peticions DCC RECV al company mitjançant el servidor "
+"d'IRC."
 
 #: src/dcc/transferrecv.cpp:637
 #, kde-format
@@ -8913,7 +8914,7 @@ msgstr "Connexió ràpida"
 #: src/quickconnectdialog.cpp:44
 #, kde-format
 msgid "&Server host:"
-msgstr "Amfitrió del &servidor:"
+msgstr "&Servidor amfitrió:"
 
 #: src/quickconnectdialog.cpp:45
 #, kde-format
@@ -8994,10 +8995,10 @@ msgid ""
 "The delay is the time it takes for messages from you to reach the server, "
 "and from the server back to you.</qt>"
 msgstr ""
-"<qt>La barra d'estat mostra diversos missatges, incloent-hi els problemes en "
-"connectar amb el servidor. A la part dreta es mostra el retard actual amb el "
-"servidor. El retard és el temps que tarda a anar i tornar al servidor des de "
-"l'ordinador.</qt>"
+"<qt>La barra d'estat mostra diversos missatges, incloent-hi els problemes "
+"mentre es connectava amb el servidor. A la part dreta es mostra el retard "
+"actual amb el servidor. El retard és el temps que tarda a anar i tornar al "
+"servidor des de l'ordinador.</qt>"
 
 #: src/statusbar.cpp:147
 #, kde-format
@@ -9045,7 +9046,8 @@ msgstr "Ha fallat mentre es baixava %1: %2"
 #: src/upnp/upnprouter.cpp:134
 #, kde-format
 msgid "Error parsing router description."
-msgstr "S'ha produït un error durant l'anàlisi la descripció de l'encaminador."
+msgstr ""
+"S'ha produït un error durant l'anàlisi de la descripció de l'encaminador."
 
 #: src/urlcatcher.cpp:69 src/viewer/viewcontainer.cpp:2618
 #, kde-format
