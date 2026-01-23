@@ -1,13 +1,13 @@
 # Copyright (C) YEAR This_file_is_part_of_KDE
 # This file is distributed under the same license as the PACKAGE package.
 #
-# SPDX-FileCopyrightText: 2013, 2020, 2021, 2022, 2024 G.Sora <g.sora@tiscali.it>
+# SPDX-FileCopyrightText: 2013, 2020, 2021, 2022, 2024, 2026 G.Sora <g.sora@tiscali.it>
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-01-04 00:44+0000\n"
-"PO-Revision-Date: 2024-12-20 15:05+0100\n"
+"PO-Revision-Date: 2026-01-22 12:07+0100\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
 "Language: ia\n"
@@ -3270,7 +3270,7 @@ msgstr ""
 #: src/dcc/transferpanel.cpp:84
 #, kde-format
 msgid "Clear Completed"
-msgstr ""
+msgstr "Nettar completate"
 
 #: src/dcc/transferpanel.cpp:85
 #, kde-format
@@ -5071,7 +5071,7 @@ msgstr ""
 #: src/irc/channellistpanel.cpp:230 src/irc/channellistpanel.cpp:328
 #, kde-format
 msgid "Refreshing."
-msgstr ""
+msgstr "Refrescante."
 
 #: src/irc/channellistpanel.cpp:345
 #, kde-format
@@ -8304,7 +8304,7 @@ msgstr "[HighLight] (%1) *** %2"
 #: src/notificationhandler.cpp:443
 #, kde-format
 msgid "Failed to connect to %1"
-msgstr ""
+msgstr "Falleva a connecter a %1"
 
 #: src/notificationhandler.cpp:457
 #, kde-format
