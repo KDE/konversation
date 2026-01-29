@@ -5391,7 +5391,7 @@ msgstr ""
 "no utilitzeu expressions regulars, Konversation mostrarà qualsevol nom que "
 "continga la cadena que heu introduït. El nom del canal no pot començar amb "
 "la cadena que heu introduït.</p><p>Trieu el nom del canal al qual voleu "
-"afegir-vos prement sobre seu. Premeu el botó dret sobre el canal per a "
+"afegir-vos prement sobre seu. Premeu el botó dret damunt del canal per a "
 "mostrar una llista d'adreces web mencionades al tipus de canal.</p>"
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_channelBox)
@@ -6324,7 +6324,8 @@ msgstr ""
 "columna <b>Informació addicional</b> mostra la informació coneguda de cada "
 "sobrenom.</p><p>Els sobrenoms que apareixen davall <b>Sense connexió</b> no "
 "estan connectats a cap dels servidors de la xarxa.</p><p>Cliqueu amb el botó "
-"dret del ratolí en un sobrenom per a realitzar funcions addicionals.</p>"
+"dret del ratolí damunt d'un sobrenom per a realitzar funcions addicionals.</"
+"p>"
 
 #: src/irc/nicksonline.cpp:217
 #, kde-format
@@ -8103,7 +8104,7 @@ msgstr "Implementació de KStatusNotifierItem, KIdleTime i altres millores"
 #: src/main.cpp:84
 #, kde-format
 msgid "irc:// URL or server hostname"
-msgstr "irc:// URL o nom d'amfitrió del servidor"
+msgstr "irc:// URL o el nom d'amfitrió del servidor"
 
 #: src/main.cpp:85
 #, kde-format
