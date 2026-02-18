@@ -629,7 +629,7 @@
       <whatsthis></whatsthis>
     </entry>
     <entry key="SuffixMiddle" type="String" name="NickCompleteSuffixMiddle">
-      <default> </default>
+      <default code="true">QStringLiteral(" ")</default>
       <label></label>
       <whatsthis></whatsthis>
     </entry>
