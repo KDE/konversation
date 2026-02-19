@@ -14,21 +14,21 @@
 # Türker SEZER <turkersezer@tsdesign.info>, 2007.
 # Volkan Gezer <volkangezer@gmail.com>, 2013-2014, 2015, 2017.
 # Kaan Ozdincer <kaanozdincer@gmail.com>, 2014.
-# SPDX-FileCopyrightText: 2022, 2023, 2024, 2025 Emir SARI <emir_sari@icloud.com>
+# SPDX-FileCopyrightText: 2022, 2023, 2024, 2025, 2026 Emir SARI <emir_sari@icloud.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: extragear-network-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-01-04 00:44+0000\n"
-"PO-Revision-Date: 2025-11-28 12:38+0300\n"
-"Last-Translator: Emir SARI <emir_sari@îcloud.com>\n"
+"PO-Revision-Date: 2026-02-18 18:10+0300\n"
+"Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 25.08.2\n"
+"X-Generator: Lokalize 25.12.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -79,7 +79,7 @@ msgstr "Çalışan ortam çalarlarını listelemeye çalışırken bir hata olu�
 
 #: data/scripts/media:177
 msgid "No running audio players found."
-msgstr "Çalışan bir ses çalar bulunamadı."
+msgstr "Çalışan bir sesçalar bulunamadı."
 
 #: data/scripts/media:179
 msgid "No running video players found."
@@ -100,7 +100,7 @@ msgstr "%1 bir şey çalmıyor."
 #: data/scripts/media:201
 msgctxt "1 = Comma-separated list of audio players."
 msgid "None of the running audio players (%1) are playing anything."
-msgstr "Çalışan ses çalarların (%1) hiçbiri bir şey çalmıyor."
+msgstr "Çalışan sesçalarların (%1) hiçbiri bir şey çalmıyor."
 
 #: data/scripts/media:206
 msgctxt "1 = Comma-separated list of video players."

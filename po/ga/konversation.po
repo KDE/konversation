@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: kdeextragear-2/konversation.po\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-01-04 00:44+0000\n"
-"PO-Revision-Date: 2026-01-09 21:26+0000\n"
-"Last-Translator: Charlotte <altronic25@protonmail.com>\n"
+"PO-Revision-Date: 2026-02-17 16:07+0000\n"
+"Last-Translator: charlotte <altronic25@protonmail.com>\n"
 "Language-Team: Irish\n"
 "Language: ga\n"
 "MIME-Version: 1.0\n"
@@ -13,16 +13,17 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=5; plural=n==1 ? 0 : n==2 ? 1 : n<7 ? 2 : n < 11 ? "
 "3 : 4\n"
+"X-Generator: Lokalize 25.12.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "Séamus Ó Ciardhuáin,Kevin Scannell"
+msgstr "Séamus Ó Ciardhuáin,Kevin Scannell,Charlotte"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "seoc@iolfree.ie,kscanne@gmail.com"
+msgstr "seoc@iolfree.ie,kscanne@gmail.com,altronic25@protonmail.com"
 
 #. i18n: ectx: Menu (insert)
 #: data/konversationui.rc:26
@@ -39,7 +40,7 @@ msgstr "&Fuinneog"
 
 #: data/scripts/cmd:28
 msgid "You need to specify a command."
-msgstr ""
+msgstr "Caithfidh tú ordú a roghnú."
 
 #: data/scripts/cmd:41
 msgid ""
@@ -2047,8 +2048,7 @@ msgid "Logging"
 msgstr "Logáil"
 
 #: src/config/settingsdialog.cpp:152
-#, fuzzy, kde-format
-#| msgid "DCC"
+#, kde-format
 msgctxt "@title:tab"
 msgid "DCC"
 msgstr "DCC"
@@ -2194,13 +2194,12 @@ msgstr "Roghnaigh Pacáiste Téamaí"
 #: src/config/theme_config.cpp:180
 #, kde-format
 msgid "Konversation Themes (*.tar.gz *.tar.bz2 *.tar *.zip)"
-msgstr ""
+msgstr "Téamaí Konversation (*.tar.gz *.tar.bz2 *.tar *.zip)"
 
 #: src/config/theme_config.cpp:206
-#, fuzzy, kde-format
-#| msgid "Unknown error. Code %1"
+#, kde-format
 msgid "Unknown error (0)"
-msgstr "Earráid anaithnid. Cód %1"
+msgstr "Earráid anaithnid (0)"
 
 #: src/config/theme_config.cpp:210
 #, kde-format
@@ -2229,10 +2228,9 @@ msgstr "Bain Téama"
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, Theme_ConfigUI)
 #: src/config/theme_configui.ui:14
-#, fuzzy, kde-format
-#| msgid "TabBar_Config"
+#, kde-format
 msgid "Theme_Config"
-msgstr "TabBar_Config"
+msgstr "Theme_Config"
 
 #. i18n: ectx: property (text), widget (KNSWidgets::Button, getButton)
 #: src/config/theme_configui.ui:28
@@ -3525,10 +3523,9 @@ msgid ""
 msgstr ""
 
 #: src/dcc/transfersend.cpp:197
-#, fuzzy, kde-format
-#| msgid "(unknown)"
+#, kde-format
 msgid "unknown"
-msgstr "(anaithnid)"
+msgstr "anaithnid"
 
 #: src/dcc/transfersend.cpp:202
 #, kde-format
@@ -4365,12 +4362,10 @@ msgid "Join"
 msgstr ""
 
 #: src/irc/channel.cpp:1084
-#, fuzzy, kde-format
-#| msgctxt "%1 = our hostmask, %2 = channel, %3 = reason"
-#| msgid "You (%1) have left channel %2 (%3)."
+#, kde-format
 msgctxt "%1 = our hostmask, %2 = channel"
 msgid "You (%1) have joined the channel %2."
-msgstr "D'fhág tú (%1) cainéal %2 (%3)."
+msgstr "Chuaigh tú (%1) leis an cainéal %2."
 
 #: src/irc/channel.cpp:1112
 #, kde-format
@@ -4896,12 +4891,12 @@ msgstr ""
 #: src/irc/channel.cpp:1715
 #, kde-format
 msgid "You set the channel key to '%1'."
-msgstr ""
+msgstr "Shocraigh tú eochair an chainéil chuig '%1'."
 
 #: src/irc/channel.cpp:1716
 #, kde-format
 msgid "%1 sets the channel key to '%2'."
-msgstr ""
+msgstr "Shocraigh %1 eochair an chainéil chuig '%2'."
 
 #: src/irc/channel.cpp:1720
 #, kde-format
@@ -5676,7 +5671,7 @@ msgstr "%1@%2"
 #: src/irc/inputfilter.cpp:1789
 #, kde-format
 msgid "%1 is %2@%3 (%4)"
-msgstr ""
+msgstr "Is %1 %2@%3 (%4)"
 
 #: src/irc/inputfilter.cpp:1804 src/irc/outputfilterresolvejob.cpp:66
 #, kde-format
@@ -5706,12 +5701,12 @@ msgstr ""
 #: src/irc/inputfilter.cpp:1899 src/irc/inputfilter.cpp:1924
 #, kde-format
 msgid "Who"
-msgstr ""
+msgstr "Cé"
 
 #: src/irc/inputfilter.cpp:1900
 #, kde-format
 msgid "%1 is %2@%3 (%4)%5"
-msgstr ""
+msgstr "Is %1 %2@%3 (%4)%5"
 
 #: src/irc/inputfilter.cpp:1904
 #, kde-format
@@ -6142,7 +6137,7 @@ msgstr "Oscail &Iarratas"
 #: src/irc/nicksonline.cpp:42
 #, kde-format
 msgid "&Join Channel"
-msgstr ""
+msgstr "&Téigh Cainéal"
 
 #: src/irc/nicksonline.cpp:54
 #, kde-format
@@ -6624,7 +6619,7 @@ msgstr ""
 #: src/irc/outputfilter.cpp:1778
 #, kde-format
 msgid "Blowfish"
-msgstr ""
+msgstr "Blowfish"
 
 #: src/irc/outputfilter.cpp:1790
 #, kde-format
@@ -6826,7 +6821,7 @@ msgstr "Earráid leasainm"
 #: src/irc/server.cpp:2183
 #, kde-format
 msgid "Select File(s) to Send to %1"
-msgstr ""
+msgstr "Roghnaigh comhaid a chur chuig %1"
 
 #: src/irc/server.cpp:2352
 #, kde-format
@@ -6975,6 +6970,7 @@ msgstr "Earráid: Níorbh fhéidir script \"%1\" a aimsiú."
 #, kde-format
 msgid "Error: Could not execute script \"%1\". Check file permissions."
 msgstr ""
+"Earráid: Níorbh fhéidir script \"%1\" a rith. Cinntigh ceadanna comhaid."
 
 #: src/irc/server.cpp:4063
 #, kde-format
@@ -7437,10 +7433,9 @@ msgid "A user-friendly IRC client"
 msgstr "Cliant cairdiúil IRC"
 
 #: src/main.cpp:31
-#, fuzzy, kde-format
-#| msgid "(C) 2002-2012 by the Konversation team"
+#, kde-format
 msgid "Copyright 2002-%1 by the Konversation team"
-msgstr "© 2002-2012 Foireann Konversation"
+msgstr "© 2002-%1 Foireann Konversation"
 
 #: src/main.cpp:32
 #, kde-format
@@ -7855,10 +7850,9 @@ msgid "Channel to join after connection"
 msgstr ""
 
 #: src/main.cpp:87
-#, fuzzy, kde-format
-#| msgid "Channel"
+#, kde-format
 msgid "channel"
-msgstr "Cainéal"
+msgstr "cainéal"
 
 #: src/main.cpp:88
 #, kde-format
@@ -7866,10 +7860,9 @@ msgid "Nickname to use"
 msgstr "Leasainm le húsáid"
 
 #: src/main.cpp:88
-#, fuzzy, kde-format
-#| msgid "Nickname"
+#, kde-format
 msgid "nickname"
-msgstr "Leasainm"
+msgstr "leasainm"
 
 #: src/main.cpp:89
 #, kde-format
@@ -7877,10 +7870,9 @@ msgid "Password for connection"
 msgstr ""
 
 #: src/main.cpp:89
-#, fuzzy, kde-format
-#| msgid "Password:"
+#, kde-format
 msgid "password"
-msgstr "Focal Faire:"
+msgstr "focal faire"
 
 #: src/main.cpp:90
 #, kde-format
@@ -8384,7 +8376,7 @@ msgstr "[Iarratas] <%1> %2"
 #: src/notificationhandler.cpp:212 src/notificationhandler.cpp:219
 #, kde-format
 msgid "%1 joined %2"
-msgstr ""
+msgstr "Chuaigh %1 le %2"
 
 #: src/notificationhandler.cpp:231 src/notificationhandler.cpp:238
 #, kde-format
@@ -8394,7 +8386,7 @@ msgstr ""
 #: src/notificationhandler.cpp:250
 #, kde-format
 msgid "%1 quit %2"
-msgstr ""
+msgstr "D'fhág %1 %2"
 
 #: src/notificationhandler.cpp:261
 #, kde-format
@@ -8917,12 +8909,12 @@ msgstr ""
 #: src/viewer/awaylabel.cpp:16
 #, kde-format
 msgid "(away)"
-msgstr ""
+msgstr "(as láthair)"
 
 #: src/viewer/awaylabel.cpp:19
 #, kde-format
 msgid "&Unaway"
-msgstr ""
+msgstr "&Fill"
 
 #: src/viewer/awaylabel.cpp:22
 #, kde-format
@@ -8945,16 +8937,14 @@ msgid "Channel Settings for %1"
 msgstr "Socruithe Cainéil le haghaidh %1"
 
 #: src/viewer/channeloptionsdialog.cpp:218
-#, fuzzy, kde-format
-#| msgid "&Hide Advanced Modes &lt;&lt;"
+#, kde-format
 msgid "&Hide Advanced Modes <<"
-msgstr "Folaig&h Ardmóid &lt;&lt;"
+msgstr "Folaig&h Ardmóid <<"
 
 #: src/viewer/channeloptionsdialog.cpp:222
-#, fuzzy, kde-format
-#| msgid "Show &Advanced Modes >>"
+#, kde-format
 msgid "&Show Advanced Modes >>"
-msgstr "Taispeáin &Ardmhóid >>"
+msgstr "Tai&speáin Ardmhóid >>"
 
 #: src/viewer/channeloptionsdialog.cpp:313
 #, kde-format
@@ -9485,7 +9475,7 @@ msgstr "Oscail Clár Bán DCC"
 #: src/viewer/irccontextmenus.cpp:588
 #, kde-format
 msgid "Do you want to ignore %1?"
-msgstr ""
+msgstr "An bhfuil fonn ort a dhéanamh neamhaird de %1?"
 
 #: src/viewer/irccontextmenus.cpp:590
 #, kde-format
@@ -9799,7 +9789,7 @@ msgstr ""
 #: src/viewer/trayicon.cpp:23
 #, kde-format
 msgid "IRC Client"
-msgstr ""
+msgstr "Cliant IRC"
 
 #: src/viewer/viewcontainer.cpp:882
 #, kde-format
