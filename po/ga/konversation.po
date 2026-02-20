@@ -13,7 +13,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=5; plural=n==1 ? 0 : n==2 ? 1 : n<7 ? 2 : n < 11 ? "
 "3 : 4\n"
-"X-Generator: Lokalize 25.12.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -303,10 +302,9 @@ msgstr "SlonnIonad"
 
 #. i18n: ectx: property (text), widget (QTreeWidget, patternListView)
 #: src/config/autoreplace_configui.ui:60
-#, fuzzy, kde-format
-#| msgid "Replacement"
+#, kde-format
 msgid "Replace In"
-msgstr "Ionadaí"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QTreeWidget, patternListView)
 #: src/config/autoreplace_configui.ui:65
@@ -334,10 +332,9 @@ msgstr "&Bain"
 
 #. i18n: ectx: property (text), widget (QLabel, directionLabel)
 #: src/config/autoreplace_configui.ui:126
-#, fuzzy, kde-format
-#| msgid "Replace with:"
+#, kde-format
 msgid "Replace in:"
-msgstr "Ionadaigh le:"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, patternLabel)
 #: src/config/autoreplace_configui.ui:158
@@ -401,24 +398,21 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShowModeButtons)
 #: src/config/chatwindowappearance_config.ui:127
-#, fuzzy, kde-format
-#| msgid "Show &close button on tabs"
+#, kde-format
 msgid "Show channel &mode buttons"
-msgstr "Taispeáin &cnaipe dúnta ar chluaisíní"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShowNickList)
 #: src/config/chatwindowappearance_config.ui:134
-#, fuzzy, kde-format
-#| msgid "Show &quick buttons"
+#, kde-format
 msgid "Show channel &nick list and quick buttons"
-msgstr "Taispeáin cnaipí &gasta"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_AutoUserhost)
 #: src/config/chatwindowappearance_config.ui:162
-#, fuzzy, kde-format
-#| msgid "Show real names in nickname list"
+#, kde-format
 msgid "Show hostmas&ks in nickname list"
-msgstr "Taispeáin fíorainmneacha in aice le leasainmneacha"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShowRealNames)
 #: src/config/chatwindowappearance_config.ui:192
@@ -434,10 +428,9 @@ msgstr "Taispeáin cnaipí &gasta"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShowNicknameBox)
 #: src/config/chatwindowappearance_config.ui:231
-#, fuzzy, kde-format
-#| msgid "&Show real names next to nicknames"
+#, kde-format
 msgid "Show bo&x to change own nickname"
-msgstr "Tai&speáin fíorainmneacha in aice le leasainmneacha"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShowIRCViewScrollBar)
 #: src/config/chatwindowappearance_config.ui:238
@@ -567,39 +560,33 @@ msgstr ""
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_HideUnimportantEventsExcludeActiveThreshold)
 #: src/config/chatwindowbehaviour_config.ui:160
-#, fuzzy, kde-format
-#| msgid "1 hour"
-#| msgid_plural "%1 hours"
+#, kde-format
 msgctxt ""
 "Is prefaced with: Except for watched nicks and nicks active within the"
 msgid "last hour"
-msgstr "%1 uair"
+msgstr ""
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_HideUnimportantEventsExcludeActiveThreshold)
 #: src/config/chatwindowbehaviour_config.ui:165
-#, fuzzy, kde-format
-#| msgid "1 day"
-#| msgid_plural "%1 days"
+#, kde-format
 msgctxt ""
 "Is prefaced with: Except for watched nicks and nicks active within the"
 msgid "last day"
-msgstr "aon lá"
+msgstr ""
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_HideUnimportantEventsExcludeActiveThreshold)
 #: src/config/chatwindowbehaviour_config.ui:170
-#, fuzzy, kde-format
-#| msgid "Fast Queue"
+#, kde-format
 msgctxt ""
 "Is prefaced with: Except for watched nicks and nicks active within the"
 msgid "last week"
-msgstr "Ciú Tapa"
+msgstr ""
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox3_2)
 #: src/config/chatwindowbehaviour_config.ui:196
-#, fuzzy, kde-format
-#| msgid "Server List"
+#, kde-format
 msgid "Marker Lines"
-msgstr "Liosta Freastalaithe"
+msgstr ""
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, kcfg_AutomaticRememberLine)
 #: src/config/chatwindowbehaviour_config.ui:202
@@ -641,10 +628,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, whoIntervalLbl)
 #: src/config/chatwindowbehaviour_config.ui:299
-#, fuzzy, kde-format
-#| msgid "Update interval:"
+#, kde-format
 msgid "Update inter&val:"
-msgstr "Eatramh idir nuashonruithe:"
+msgstr ""
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox1)
 #: src/config/colorsappearance_config.ui:30
@@ -666,10 +652,9 @@ msgstr "&Cúlra:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel2_2)
 #: src/config/colorsappearance_config.ui:286
-#, fuzzy, kde-format
-#| msgid "Private message"
+#, kde-format
 msgid "&Server message:"
-msgstr "Teachtaireacht phríobháideach"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1_2)
 #: src/config/colorsappearance_config.ui:299
@@ -679,10 +664,9 @@ msgstr "H&ipearnasc:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel2)
 #: src/config/colorsappearance_config.ui:312
-#, fuzzy, kde-format
-#| msgid "Change away message"
+#, kde-format
 msgid "Channel &message:"
-msgstr "Athraigh an teachtaireacht neamhláithreachta"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1)
 #: src/config/colorsappearance_config.ui:325
@@ -698,17 +682,15 @@ msgstr "&Riaráiste:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel5)
 #: src/config/colorsappearance_config.ui:351
-#, fuzzy, kde-format
-#| msgid "Commands:"
+#, kde-format
 msgid "Comman&d message:"
-msgstr "Orduithe:"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1_8)
 #: src/config/colorsappearance_config.ui:364
-#, fuzzy, kde-format
-#| msgid "Enter new away message:"
+#, kde-format
 msgid "&Query message:"
-msgstr "Cuir teachtaireacht nua neamhláithreachta isteach"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1_9)
 #: src/config/colorsappearance_config.ui:377
@@ -874,24 +856,21 @@ msgstr[4] " soicind"
 
 #. i18n: ectx: property (title), widget (QGroupBox, kcfg_AutoReconnect)
 #: src/config/connectionbehavior_config.ui:26
-#, fuzzy, kde-format
-#| msgid "Enable emoticons"
+#, kde-format
 msgid "Enable Automatic Reconnect"
-msgstr "Cumasaigh straoiseoga"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, reconnectDelayLabel)
 #: src/config/connectionbehavior_config.ui:35
-#, fuzzy, kde-format
-#| msgid "&Reconnect"
+#, kde-format
 msgid "Reconnect delay:"
-msgstr "&Athnasc"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1)
 #: src/config/connectionbehavior_config.ui:48
-#, fuzzy, kde-format
-#| msgid "Connection:"
+#, kde-format
 msgid "Reconnection attempts:"
-msgstr "Ceangal:"
+msgstr ""
 
 #. i18n: ectx: property (title), widget (QGroupBox, debugGBox)
 #: src/config/connectionbehavior_config.ui:87
@@ -913,10 +892,9 @@ msgstr "Criptiú"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: src/config/connectionbehavior_config.ui:109
-#, fuzzy, kde-format
-#| msgid "Default Identity"
+#, kde-format
 msgid "Default encryption type:"
-msgstr "Aitheantas Réamhshocraithe"
+msgstr ""
 
 #. i18n: ectx: property (whatsThis), widget (QComboBox, kcfg_EncryptionType)
 #: src/config/connectionbehavior_config.ui:118
@@ -1058,10 +1036,9 @@ msgstr "Glac le &tairiscint íosluchtaithe go huathoibríoch"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_DccAutoResume)
 #: src/config/dcc_configui.ui:84
-#, fuzzy, kde-format
-#| msgid "Automaticall&y accept download offer"
+#, kde-format
 msgid "Au&tomatically resume download"
-msgstr "Glac le &tairiscint íosluchtaithe go huathoibríoch"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_DccFastSend)
 #: src/config/dcc_configui.ui:91
@@ -1077,10 +1054,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_DccChatAutoAccept)
 #: src/config/dcc_configui.ui:108
-#, fuzzy, kde-format
-#| msgid "Automaticall&y accept download offer"
+#, kde-format
 msgid "Automatically accept DCC chat offer"
-msgstr "Glac le &tairiscint íosluchtaithe go huathoibríoch"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_DccUPnP)
 #: src/config/dcc_configui.ui:115
@@ -1159,17 +1135,15 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_CustomTextFont)
 #: src/config/fontappearance_config.ui:28
-#, fuzzy, kde-format
-#| msgid "Draw text"
+#, kde-format
 msgid "Chat text:"
-msgstr "Línigh téacs"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_CustomListFont)
 #: src/config/fontappearance_config.ui:45
-#, fuzzy, kde-format
-#| msgid "Nickname List"
+#, kde-format
 msgid "Nickname list:"
-msgstr "Liosta Leasainmneacha"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_CustomTabFont)
 #: src/config/fontappearance_config.ui:62
@@ -1242,10 +1216,9 @@ msgstr "Comhlánú na Leasainmneacha"
 
 #. i18n: ectx: property (text), widget (QLabel, modeLbl)
 #: src/config/generalbehavior_configui.ui:101
-#, fuzzy, kde-format
-#| msgid "Completion"
+#, kde-format
 msgid "Completion &mode:"
-msgstr "Comhlánú"
+msgstr ""
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_NickCompletionMode)
 #: src/config/generalbehavior_configui.ui:115
@@ -1291,10 +1264,9 @@ msgstr "Rudaí éagsúla"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_DisableNotifyWhileAway)
 #: src/config/generalbehavior_configui.ui:201
-#, fuzzy, kde-format
-#| msgid "Enable Notifications"
+#, kde-format
 msgid "Disable notifications while &away"
-msgstr "Cumasaigh Fógairtí"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_UseCustomBrowser)
 #: src/config/generalbehavior_configui.ui:210
@@ -1304,17 +1276,15 @@ msgstr "Úsáid &brabhsálaí saincheaptha:"
 
 #. i18n: ectx: property (text), widget (QLabel, commandCharLabel)
 #: src/config/generalbehavior_configui.ui:226
-#, fuzzy, kde-format
-#| msgid "Command:"
+#, kde-format
 msgid "Comman&d char:"
-msgstr "Ordú:"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_CustomVersionReplyEnabled)
 #: src/config/generalbehavior_configui.ui:254
-#, fuzzy, kde-format
-#| msgid "Use custom web &browser:"
+#, kde-format
 msgid "Use custom &version reply:"
-msgstr "Úsáid &brabhsálaí saincheaptha:"
+msgstr ""
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, kcfg_CustomVersionReply)
 #: src/config/generalbehavior_configui.ui:264
@@ -1355,10 +1325,9 @@ msgstr ""
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox1)
 #: src/config/highlight_configui.ui:118
-#, fuzzy, kde-format
-#| msgid "Highlights"
+#, kde-format
 msgid "Highlight List"
-msgstr "Aibhsiú"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (HighlightTreeWidget, highlightListView)
 #: src/config/highlight_configui.ui:145
@@ -1374,10 +1343,9 @@ msgstr "Fuaim"
 
 #. i18n: ectx: property (text), widget (HighlightTreeWidget, highlightListView)
 #: src/config/highlight_configui.ui:155
-#, fuzzy, kde-format
-#| msgid "Text"
+#, kde-format
 msgid "Auto Text"
-msgstr "Téacs"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (HighlightTreeWidget, highlightListView)
 #: src/config/highlight_configui.ui:160
@@ -1411,10 +1379,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, autoTextLabel)
 #: src/config/highlight_configui.ui:326
-#, fuzzy, kde-format
-#| msgid "Text"
+#, kde-format
 msgid "A&uto text:"
-msgstr "Téacs"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, chatWindowsLabel)
 #: src/config/highlight_configui.ui:349
@@ -1433,10 +1400,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, enableNotificationsLabel)
 #: src/config/highlight_configui.ui:381
-#, fuzzy, kde-format
-#| msgid "Enable Notifications"
+#, kde-format
 msgid "Enable &notifications:"
-msgstr "Cumasaigh Fógairtí"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QTreeWidget, ignoreListView)
 #: src/config/ignore_configui.ui:45
@@ -1562,10 +1528,9 @@ msgstr "Tai&speáin fíorainmneacha in aice le leasainmneacha"
 #. i18n: ectx: label, entry (LauncherEntryCountMode), group (LauncherEntry)
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_LauncherEntryCountMode)
 #: src/config/konversation.kcfg:443 src/config/launcherentry_config.ui:56
-#, fuzzy, kde-format
-#| msgid "All Queues"
+#, kde-format
 msgid "All events"
-msgstr "Gach Ciú"
+msgstr ""
 
 #. i18n: ectx: label, entry (LauncherEntryCountMode), group (LauncherEntry)
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_LauncherEntryCountMode)
@@ -1576,10 +1541,9 @@ msgstr ""
 
 #. i18n: ectx: label, entry (OpenWatchedNicksAtStartup), group (Notify List)
 #: src/config/konversation.kcfg:577
-#, fuzzy, kde-format
-#| msgid "&Show at application startup"
+#, kde-format
 msgid "Open Watched Nicks tab at application startup"
-msgstr "Tai&speáin ag am tosaithe an fheidhmchláir"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShowLauncherEntryCount)
 #: src/config/launcherentry_config.ui:29
@@ -1589,10 +1553,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, modeLbl)
 #: src/config/launcherentry_config.ui:45
-#, fuzzy, kde-format
-#| msgid "Completion"
+#, kde-format
 msgid "Count &mode:"
-msgstr "Comhlánú"
+msgstr ""
 
 #. i18n: ectx: property (title), widget (QGroupBox, countedEventsGroupBox)
 #: src/config/launcherentry_config.ui:72
@@ -1620,10 +1583,9 @@ msgstr "Teachtaireacht phríobháideach"
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_TabNotificationsNick)
 #: src/config/launcherentry_config.ui:101
 #: src/config/tabnotifications_config.ui:166
-#, fuzzy, kde-format
-#| msgid "Current speed:"
+#, kde-format
 msgid "Current nick used"
-msgstr "Luas reatha:"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_LauncherEntryCountUseHighlights)
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_TabNotificationsHighlights)
@@ -1645,10 +1607,9 @@ msgstr ""
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_TabNotificationsEvents)
 #: src/config/launcherentry_config.ui:124
 #: src/config/tabnotifications_config.ui:113
-#, fuzzy, kde-format
-#| msgid "Channel Name"
+#, kde-format
 msgid "Channel event"
-msgstr "Ainm Cainéil"
+msgstr ""
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, kcfg_LauncherEntryCountUseSystem)
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, kcfg_TabNotificationsSystem)
@@ -1688,10 +1649,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_AddHostnameToLog)
 #: src/config/log_config.ui:47
-#, fuzzy, kde-format
-#| msgid "&Add sender to file name"
+#, kde-format
 msgid "&Append hostname to logfile names"
-msgstr "&Cuir seoltóir le hainm an chomhaid"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1)
 #: src/config/log_config.ui:54
@@ -1743,10 +1703,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_SortCaseInsensitive)
 #: src/config/nicklistbehavior_configui.ui:39
-#, fuzzy, kde-format
-#| msgid "Case sensitive"
+#, kde-format
 msgid "Sort case &insensitive"
-msgstr "Cásíogair"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_SortByActivity)
 #: src/config/nicklistbehavior_configui.ui:46
@@ -1783,17 +1742,15 @@ msgstr "Míniú"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_UseOSD)
 #: src/config/osd_configui.ui:35
-#, fuzzy, kde-format
-#| msgid "Enable On Screen Display"
+#, kde-format
 msgid "&Enable On Screen Display"
-msgstr "Cumasaigh Taispeáint-ar-Scáileán"
+msgstr ""
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox2)
 #: src/config/osd_configui.ui:45
-#, fuzzy, kde-format
-#| msgid "On Screen Display"
+#, kde-format
 msgid "On &Screen Display"
-msgstr "Taispeáint-ar-Scáileán"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_OSDDrawShadow)
 #: src/config/osd_configui.ui:54
@@ -1991,10 +1948,9 @@ msgid "Tabs"
 msgstr "Táib"
 
 #: src/config/settingsdialog.cpp:102
-#, fuzzy, kde-format
-#| msgid "Behavior"
+#, kde-format
 msgid "General Behavior"
-msgstr "Oibriú"
+msgstr ""
 
 #: src/config/settingsdialog.cpp:107
 #, kde-format
@@ -2150,10 +2106,9 @@ msgstr "Taispeáin &cnaipe dúnta ar chluaisíní"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShowTabBarCloseButton)
 #: src/config/tabs_configui.ui:88
-#, fuzzy, kde-format
-#| msgid "Show &close button on tabs"
+#, kde-format
 msgid "Show a close button on the &right side of the tab bar"
-msgstr "Taispeáin &cnaipe dúnta ar chluaisíní"
+msgstr ""
 
 #. i18n: ectx: property (title), widget (QGroupBox, focusGBox)
 #: src/config/tabs_configui.ui:98
@@ -2169,10 +2124,9 @@ msgstr "&Fócasaigh cluaisíní nua"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_FocusNewQueries)
 #: src/config/tabs_configui.ui:111
-#, fuzzy, kde-format
-#| msgid "&Focus new tabs"
+#, kde-format
 msgid "Focus new &queries"
-msgstr "&Fócasaigh cluaisíní nua"
+msgstr ""
 
 #. i18n: ectx: property (title), widget (QGroupBox, mouseGBox)
 #: src/config/tabs_configui.ui:121
@@ -2234,17 +2188,15 @@ msgstr "Theme_Config"
 
 #. i18n: ectx: property (text), widget (KNSWidgets::Button, getButton)
 #: src/config/theme_configui.ui:28
-#, fuzzy, kde-format
-#| msgid "I&nstall Theme..."
+#, kde-format
 msgid "G&et New Themes..."
-msgstr "Suiteáil &Téama..."
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, installButton)
 #: src/config/theme_configui.ui:35
-#, fuzzy, kde-format
-#| msgid "I&nstall Theme..."
+#, kde-format
 msgid "I&nstall from File..."
-msgstr "Suiteáil &Téama..."
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, removeButton)
 #: src/config/theme_configui.ui:45
@@ -2260,17 +2212,15 @@ msgstr "Deilbhín le haghaigh na ngnáthúsáideoirí"
 
 #. i18n: ectx: property (toolTip), widget (QLabel, previewLabel2)
 #: src/config/theme_configui.ui:104
-#, fuzzy, kde-format
-#| msgid "Icon for normal users"
+#, kde-format
 msgid "Icon for away users"
-msgstr "Deilbhín le haghaigh na ngnáthúsáideoirí"
+msgstr ""
 
 #. i18n: ectx: property (toolTip), widget (QLabel, previewLabel3)
 #: src/config/theme_configui.ui:120
-#, fuzzy, kde-format
-#| msgid "Icon for normal users"
+#, kde-format
 msgid "Icon for users with voice"
-msgstr "Deilbhín le haghaigh na ngnáthúsáideoirí"
+msgstr ""
 
 #. i18n: ectx: property (toolTip), widget (QLabel, previewLabel4)
 #: src/config/theme_configui.ui:136
@@ -2501,10 +2451,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_OpenWatchedNicksAtStartup)
 #: src/config/watchednicknames_configui.ui:40
-#, fuzzy, kde-format
-#| msgid "&Show at application startup"
+#, kde-format
 msgid "Show Watched Nicks tab on &application startup"
-msgstr "Tai&speáin ag am tosaithe an fheidhmchláir"
+msgstr ""
 
 #. i18n: ectx: property (whatsThis), widget (QLabel, notifyActionLabel)
 #: src/config/watchednicknames_configui.ui:66
@@ -2586,9 +2535,6 @@ msgid "Trying to connect to %2 (port %3) in 1 second."
 msgid_plural "Trying to connect to %2 (port %3) in %1 seconds."
 msgstr[0] ""
 msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
 
 #: src/connectionmanager.cpp:262
 #, kde-format
@@ -2596,9 +2542,6 @@ msgid "Trying to reconnect to %2 (port %3) in 1 second."
 msgid_plural "Trying to reconnect to %2 (port %3) in %1 seconds."
 msgstr[0] ""
 msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
 
 #: src/connectionmanager.cpp:275 src/dcc/chatcontainer.cpp:264
 #: src/irc/inputfilter.cpp:1535 src/irc/inputfilter.cpp:1539
@@ -3027,10 +2970,9 @@ msgstr "Ainm Comhaid:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel23)
 #: src/dcc/transferdetailedinfopanelui.ui:63
-#, fuzzy, kde-format
-#| msgid "Partner"
+#, kde-format
 msgid "Partner:"
-msgstr "Páirtí"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1_3)
 #: src/dcc/transferdetailedinfopanelui.ui:83
@@ -3070,10 +3012,9 @@ msgstr "Méid comhaid:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel14)
 #: src/dcc/transferdetailedtimeinfopanelui.ui:68
-#, fuzzy, kde-format
-#| msgid "&Resume"
+#, kde-format
 msgid "Resumed:"
-msgstr "&Lean ar aghaidh"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1_2)
 #: src/dcc/transferdetailedtimeinfopanelui.ui:88
@@ -3365,9 +3306,6 @@ msgid_plural ""
 "You have selected %1 files to execute, are you sure you want to continue?"
 msgstr[0] ""
 msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
 
 #: src/dcc/transferpanel.cpp:427
 #, kde-format
@@ -3376,9 +3314,6 @@ msgid "Execute %1 File"
 msgid_plural "Execute %1 Files"
 msgstr[0] ""
 msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
 
 #: src/dcc/transferrecv.cpp:197
 #, kde-format
@@ -3604,11 +3539,9 @@ msgstr "Colúin"
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, WhiteBoardFontChooserUi)
 #: src/dcc/whiteboardfontchooserui.ui:14
-#, fuzzy, kde-format
-#| msgctxt "DCC extension"
-#| msgid "Whiteboard"
+#, kde-format
 msgid "Whiteboard Font Chooser"
-msgstr "Clár Bán"
+msgstr ""
 
 #. i18n: ectx: property (text), item, widget (KComboBox, m_fontPointComboBox)
 #: src/dcc/whiteboardfontchooserui.ui:55
@@ -3931,11 +3864,10 @@ msgid ""
 msgstr ""
 
 #: src/identitydialog.cpp:482
-#, fuzzy, kde-format
-#| msgid "Completion"
+#, kde-format
 msgctxt "Shown in unfilled line edit"
 msgid "(optional)"
-msgstr "Comhlánú"
+msgstr ""
 
 #: src/identitydialog.cpp:489
 #, kde-format
@@ -3993,10 +3925,9 @@ msgstr "Leasainm"
 
 #. i18n: ectx: property (title), widget (QGroupBox, autoIdentifyGroup)
 #: src/identitydialog.ui:234
-#, fuzzy, kde-format
-#| msgid "Add Identity"
+#, kde-format
 msgid "Auto Identify"
-msgstr "Cuir Aitheantas Leis"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, nickservNicknameLabel)
 #: src/identitydialog.ui:256
@@ -4147,24 +4078,21 @@ msgstr ""
 
 #. i18n: ectx: property (title), widget (QGroupBox, awayCommandsGroup)
 #: src/identitydialog.ui:459
-#, fuzzy, kde-format
-#| msgid "Commands:"
+#, kde-format
 msgid "Away Commands"
-msgstr "Orduithe:"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, awayLabel)
 #: src/identitydialog.ui:471
-#, fuzzy, kde-format
-#| msgid "Command:"
+#, kde-format
 msgid "Away command:"
-msgstr "Ordú:"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, unAwayLabel)
 #: src/identitydialog.ui:484
-#, fuzzy, kde-format
-#| msgid "Command:"
+#, kde-format
 msgid "Return command:"
-msgstr "Ordú:"
+msgstr ""
 
 #. i18n: ectx: attribute (title), widget (QWidget, advancedWidget)
 #: src/identitydialog.ui:514
@@ -4252,10 +4180,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, kickLabel)
 #: src/identitydialog.ui:647
-#, fuzzy, kde-format
-#| msgid "Kick / Ban"
+#, kde-format
 msgid "&Kick reason:"
-msgstr "Ciceáil / Coisc"
+msgstr ""
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_kickEdit)
 #: src/identitydialog.ui:657
@@ -4267,10 +4194,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (KLineEdit, m_kickEdit)
 #: src/identitydialog.ui:660
-#, fuzzy, kde-format
-#| msgid "Konversation terminated."
+#, kde-format
 msgid "User terminated."
-msgstr "Stopadh Konversation."
+msgstr ""
 
 #: src/irc/channel.cpp:120
 #, kde-format
@@ -4502,9 +4428,6 @@ msgid " (%1 op)"
 msgid_plural " (%1 ops)"
 msgstr[0] ""
 msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
 
 #: src/irc/channel.cpp:1359 src/irc/channel.cpp:1373 src/irc/channel.cpp:1375
 #: src/irc/inputfilter.cpp:1479 src/irc/inputfilter.cpp:1495
@@ -4914,9 +4837,6 @@ msgid "You set the channel limit to 1 nick."
 msgid_plural "You set the channel limit to %1 nicks."
 msgstr[0] ""
 msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
 
 #: src/irc/channel.cpp:1730
 #, kde-format
@@ -4924,9 +4844,6 @@ msgid "%2 sets the channel limit to 1 nick."
 msgid_plural "%2 sets the channel limit to %1 nicks."
 msgstr[0] ""
 msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
 
 #: src/irc/channel.cpp:1734
 #, kde-format
@@ -5477,9 +5394,6 @@ msgid "limited to %1 user"
 msgid_plural "limited to %1 users"
 msgstr[0] ""
 msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
 
 #: src/irc/inputfilter.cpp:1363 src/urlcatcher.cpp:170
 #, kde-format
@@ -5835,9 +5749,6 @@ msgid "%2 has been idle for 1 second."
 msgid_plural "%2 has been idle for %1 seconds."
 msgstr[0] ""
 msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
 
 #: src/irc/inputfilter.cpp:2176
 #, kde-format
@@ -6009,10 +5920,9 @@ msgstr "Fiafraigh Dom i gCónaí"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, m_joinPreferences)
 #: src/irc/invitedialog.ui:49
-#, fuzzy, kde-format
-#| msgid "Always Ask"
+#, kde-format
 msgid "Always Join"
-msgstr "Fiafraigh Dom i gCónaí"
+msgstr ""
 
 #. i18n: ectx: property (text), item, widget (KComboBox, m_joinPreferences)
 #: src/irc/invitedialog.ui:54
@@ -6039,10 +5949,9 @@ msgid "Are you sure you want to remove this channel from your history?"
 msgstr ""
 
 #: src/irc/joinchanneldialog.cpp:218
-#, fuzzy, kde-format
-#| msgid "Remove Ban"
+#, kde-format
 msgid "Remove channel"
-msgstr "Bain Cosc"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel8)
 #: src/irc/joinchannelui.ui:67
@@ -6527,9 +6436,6 @@ msgid "No such ignore: %2"
 msgid_plural "No such ignores: %2"
 msgstr[0] ""
 msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
 
 #: src/irc/outputfilter.cpp:1648
 #, kde-format
@@ -6800,10 +6706,9 @@ msgid "Delayed connect aborted."
 msgstr ""
 
 #: src/irc/server.cpp:1181
-#, fuzzy, kde-format
-#| msgid "Disconnect from the current server."
+#, kde-format
 msgid "Disconnected from %1 (port %2)."
-msgstr "Bris an nasc leis an fhreastalaí reatha."
+msgstr ""
 
 #: src/irc/server.cpp:1339
 #, kde-format
@@ -7202,10 +7107,9 @@ msgstr "Freastalaithe:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: src/irc/servergroupdialogui.ui:118
-#, fuzzy, kde-format
-#| msgid "List of channels:"
+#, kde-format
 msgid "Auto Join Channels:"
-msgstr "Liosta cainéal:"
+msgstr ""
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, m_autoConnectCBox)
 #: src/irc/servergroupdialogui.ui:128
@@ -7320,9 +7224,6 @@ msgid_plural ""
 "The network %2 needs to have at least one server."
 msgstr[0] ""
 msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
 
 #: src/irc/serverlistdialog.cpp:219
 #, kde-format
@@ -8096,10 +7997,9 @@ msgid "Join on Connect"
 msgstr ""
 
 #: src/mainwindow.cpp:395
-#, fuzzy, kde-format
-#| msgid "Co&nnect on application start up"
+#, kde-format
 msgid "Connect at Startup"
-msgstr "Cea&ngail ag am tosaithe an fheidhmchláir"
+msgstr ""
 
 #: src/mainwindow.cpp:400
 #, kde-format
@@ -8187,10 +8087,9 @@ msgid "&Join Channel..."
 msgstr ""
 
 #: src/mainwindow.cpp:484
-#, fuzzy, kde-format
-#| msgid "Connect to the server"
+#, kde-format
 msgid "Join a new channel on this server"
-msgstr "Nasc leis an fhreastalaí"
+msgstr ""
 
 #: src/mainwindow.cpp:496 src/mainwindow.cpp:857
 #, kde-format
@@ -8357,11 +8256,10 @@ msgid "[HighLight] (%1) <%2> %3"
 msgstr "[Aibhsiú] (%1) <%2> %3"
 
 #: src/notificationhandler.cpp:153
-#, fuzzy, kde-format
-#| msgid "Enter new away message:"
+#, kde-format
 msgctxt "Notification title; see Event/message in konversation.notifyrc"
 msgid "New query message from %1"
-msgstr "Cuir teachtaireacht nua neamhláithreachta isteach"
+msgstr ""
 
 #: src/notificationhandler.cpp:164
 #, kde-format
@@ -8486,10 +8384,9 @@ msgstr "Dún"
 
 #. i18n: ectx: property (title), widget (QGroupBox, m_slowBox)
 #: src/queuetunerbase.ui:96
-#, fuzzy, kde-format
-#| msgid "All Queues"
+#, kde-format
 msgid "Slow Queue"
-msgstr "Gach Ciú"
+msgstr ""
 
 #. i18n: ectx: property (text), item, widget (KComboBox, m_slowType)
 #. i18n: ectx: property (text), item, widget (KComboBox, m_normalType)
@@ -8600,10 +8497,9 @@ msgstr "Faighte:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel9)
 #: src/queuetunerbase.ui:662
-#, fuzzy, kde-format
-#| msgid "Bytes:"
+#, kde-format
 msgid "Bytes (Raw):"
-msgstr "Bearta:"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel4_3)
 #: src/queuetunerbase.ui:672
@@ -8659,10 +8555,9 @@ msgid "&Use SSL"
 msgstr "Úsáid SSL"
 
 #: src/statusbar.cpp:36 src/statusbar.cpp:72 src/statusbar.cpp:140
-#, fuzzy, kde-format
-#| msgid "Ready."
+#, kde-format
 msgid "Ready"
-msgstr "Réidh."
+msgstr ""
 
 #: src/statusbar.cpp:42
 #, kde-format
@@ -8731,9 +8626,6 @@ msgid "No answer from server %2 for more than 1 second."
 msgid_plural "No answer from server %2 for more than %1 seconds."
 msgstr[0] ""
 msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
 
 #: src/upnp/upnprouter.cpp:123
 #, kde-format
@@ -9088,10 +8980,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, keyModeChBox)
 #: src/viewer/channeloptionsui.ui:188
-#, fuzzy, kde-format
-#| msgid "Channel &List"
+#, kde-format
 msgid "Channel &password:"
-msgstr "&Liosta Cainéal"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, toggleAdvancedModes)
 #: src/viewer/channeloptionsui.ui:202
@@ -9119,17 +9010,15 @@ msgstr "Socraigh De Réir"
 
 #. i18n: ectx: property (text), widget (QTreeWidget, banList)
 #: src/viewer/channeloptionsui.ui:298
-#, fuzzy, kde-format
-#| msgid "Timed out"
+#, kde-format
 msgid "Time Set"
-msgstr "Thar am"
+msgstr ""
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, updateBan)
 #: src/viewer/channeloptionsui.ui:321
-#, fuzzy, kde-format
-#| msgid "Update interval:"
+#, kde-format
 msgid "Update Ban"
-msgstr "Eatramh idir nuashonruithe:"
+msgstr ""
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, addBan)
 #: src/viewer/channeloptionsui.ui:340
@@ -9266,10 +9155,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, m_fgColorLbl)
 #: src/viewer/irccolorchooserui.ui:74
-#, fuzzy, kde-format
-#| msgid "&Foreground color:"
+#, kde-format
 msgid "Fore&ground color:"
-msgstr "&Dath an tulra:"
+msgstr ""
 
 #. i18n: ectx: property (toolTip), widget (KComboBox, m_bgColorCBox)
 #. i18n: ectx: property (toolTip), widget (QLabel, m_bgColorLbl)
@@ -9659,10 +9547,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, m_removeNewlinesButton)
 #: src/viewer/pasteeditor.ui:43
-#, fuzzy, kde-format
-#| msgid "&Remove Nickname"
+#, kde-format
 msgid "&Remove Newlines"
-msgstr "&Bain Leasainm"
+msgstr ""
 
 #: src/viewer/rawlog.cpp:17 src/viewer/viewcontainer.cpp:2743
 #, kde-format
@@ -9871,257 +9758,3 @@ msgstr ""
 #, kde-format
 msgid "Watched Nicks"
 msgstr ""
-
-#~ msgid "audio/x-wav audio/x-mp3 application/ogg audio/x-adpcm"
-#~ msgstr "audio/x-wav audio/x-mp3 application/ogg audio/x-adpcm"
-
-#~ msgid "*.pem"
-#~ msgstr "*.pem"
-
-#~ msgid "Konversation - IRC Client"
-#~ msgstr "Konversation - Cliant IRC"
-
-#~ msgid "Enable emoticons"
-#~ msgstr "Cumasaigh straoiseoga"
-
-#~ msgid "Emoticons theme"
-#~ msgstr "Téama straoiseoige"
-
-#~ msgid "SASL"
-#~ msgstr "SASL"
-
-#~ msgid "&Overwrite"
-#~ msgstr "F&orscríobh"
-
-#~ msgid "&OK"
-#~ msgstr "&OK"
-
-#~ msgid "&Cancel"
-#~ msgstr "&Cealaigh"
-
-#~ msgid "[HighLight] (%1) &lt;%2&gt;"
-#~ msgstr "[Aibhsiú] (%1) &lt;%2&gt;"
-
-#~ msgid "From Cursor"
-#~ msgstr "Ón Chúrsóir"
-
-#~ msgid "&Show Advanced Modes &gt;&gt;"
-#~ msgstr "Tai&speáin Ardmóid &gt;&gt;"
-
-#~ msgid "File &Information"
-#~ msgstr "Eolas Comha&id"
-
-#~ msgctxt "%1=filename"
-#~ msgid "File Information for %1"
-#~ msgstr "Eolas faoi Chomhad %1"
-
-#~ msgid "*.tar.gz *.tar.bz2 *.tar *.zip|Konversation Themes"
-#~ msgstr "*.tar.gz *.tar.bz2 *.tar *.zip|Téamaí Konversation"
-
-#~ msgid "Configure"
-#~ msgstr "Cumraigh"
-
-#~ msgctxt "%1=ownIP, %2=ownPort"
-#~ msgid "%1 (port <numid>%2</numid>)"
-#~ msgstr "%1 (port <numid>%2</numid>)"
-
-#~ msgid " (identified)"
-#~ msgstr " (aitheanta)"
-
-#~ msgid "Email"
-#~ msgstr "Ríomhphost"
-
-#~ msgid "Create New C&ontact..."
-#~ msgstr "Cruthaigh Teagmháil &Nua..."
-
-#~ msgid "Edit C&ontact..."
-#~ msgstr "Cuir T&eagmháil in Eagar..."
-
-#~ msgid "&Send Email..."
-#~ msgstr "&Seol Ríomhphost..."
-
-#~ msgctxt "(Offline) nickname details (e.g. real name from address book)"
-#~ msgid "(Offline) %1"
-#~ msgstr "(As Líne) %1"
-
-#~ msgid "Offline"
-#~ msgstr "As Líne"
-
-#~ msgid "Connecting"
-#~ msgstr "Ag nascadh"
-
-#~ msgid "Online"
-#~ msgstr "Ar Líne"
-
-#~ msgid "Cannot Send Email"
-#~ msgstr "Ní Féidir Ríomhphost a Sheoladh"
-
-#~ msgid "Send Email"
-#~ msgstr "Seol Ríomhphost"
-
-#~ msgid "Link IRC Nick to Address Book Contact"
-#~ msgstr "Cruthaigh nasc idir Leasainm IRC agus Teagmháil i Leabhar Seoltaí"
-
-#~ msgid "New Address Book Entry"
-#~ msgstr "Iontráil Nua Sa Leabhar Seoltaí"
-
-#~ msgid "Name the new entry:"
-#~ msgstr "Roghnaigh ainm don iontráil nua:"
-
-#~ msgid "Create a new entry in your address book"
-#~ msgstr "Cruthaigh iontráil nua i do leabhar seoltaí"
-
-#~ msgid "Create New &Entry..."
-#~ msgstr "Cruthaigh Iontráil &Nua..."
-
-#~ msgid "Photo"
-#~ msgstr "Grianghraf"
-
-#~ msgid "Name"
-#~ msgstr "Ainm"
-
-#~ msgid "S&earch:"
-#~ msgstr "&Cuardaigh:"
-
-#~ msgid "Edit Contact..."
-#~ msgid_plural "Edit Contacts..."
-#~ msgstr[0] "Cuir Teagmháil in Eagar..."
-#~ msgstr[1] "Cuir Teagmhálacha in Eagar..."
-#~ msgstr[2] "Cuir Teagmhálacha in Eagar..."
-#~ msgstr[3] "Cuir Teagmhálacha in Eagar..."
-#~ msgstr[4] "Cuir Teagmhálacha in Eagar..."
-
-#~ msgid "Choose Contact..."
-#~ msgid_plural "Choose Contacts..."
-#~ msgstr[0] "Roghnaigh Teagmháil..."
-#~ msgstr[1] "Roghnaigh Teagmhálacha..."
-#~ msgstr[2] "Roghnaigh Teagmhálacha..."
-#~ msgstr[3] "Roghnaigh Teagmhálacha..."
-#~ msgstr[4] "Roghnaigh Teagmhálacha..."
-
-#~ msgid "Create New Contact..."
-#~ msgid_plural "Create New Contacts..."
-#~ msgstr[0] "Cruthaigh Teagmháil Nua..."
-#~ msgstr[1] "Cruthaigh Teagmhálacha Nua..."
-#~ msgstr[2] "Cruthaigh Teagmhálacha Nua..."
-#~ msgstr[3] "Cruthaigh Teagmhálacha Nua..."
-#~ msgstr[4] "Cruthaigh Teagmhálacha Nua..."
-
-#~ msgid "Save As.."
-#~ msgstr "Sábháil Mar..."
-
-#~ msgid "Timestamp"
-#~ msgstr "Stampa Ama"
-
-#~ msgid "Connected; logging in..."
-#~ msgstr "Nasctha; ag logáil isteach..."
-
-#~ msgid "File Information"
-#~ msgstr "Eolas Comhaid"
-
-#~ msgid "Network:"
-#~ msgstr "Líonra:"
-
-#~ msgid "Nickname:"
-#~ msgstr "Leasainm:"
-
-#~ msgid "Click to add a nickname to the list."
-#~ msgstr "Cliceáil chun leasainm a chur leis an liosta."
-
-#~ msgid "Click to remove the selected nickname from the list."
-#~ msgstr "Cliceáil chun an leasainm roghnaithe a bhaint amach ón liosta."
-
-#~ msgid "Warning Dialogs to Show"
-#~ msgstr "Dialóga Rabhaidh le Taispeáint"
-
-#~ msgid "Close This Query"
-#~ msgstr "Dún An tIarratas Seo"
-
-#~ msgid "Keep Open"
-#~ msgstr "Coinnigh Oscailte"
-
-#~ msgid " sec"
-#~ msgstr " soic"
-
-# appears singular in Irish after a number!
-#~ msgid " bytes"
-#~ msgstr " beart"
-
-#~ msgid " lines"
-#~ msgstr " líne"
-
-#~ msgid " seconds"
-#~ msgstr " soicind"
-
-#~ msgid "Alt+A, Backspace, Tab, Backspace"
-#~ msgstr "Alt+A, Cúlspás, Táb, Cúlspás"
-
-#~ msgid "Address book:"
-#~ msgstr "Leabhar seoltaí:"
-
-#~ msgid "Phrase not found"
-#~ msgstr "Frása gan aimsiú"
-
-#~ msgid "Case Sensitive"
-#~ msgstr "Cásíogair"
-
-#~ msgid "Sa&ve List..."
-#~ msgstr "Sábháil Liosta..."
-
-#~ msgid "Find Ne&xt"
-#~ msgstr "An &Chéad Cheann Eile"
-
-#~ msgid "Find Previous"
-#~ msgstr "An Ceann Roimhe Seo"
-
-#~ msgid "Abort"
-#~ msgstr "Tobscoir"
-
-#~ msgid "Open File"
-#~ msgstr "Oscail Comhad"
-
-#~ msgid "Receive"
-#~ msgstr "Faigh"
-
-#~ msgid "&Join"
-#~ msgstr "&Ceangail"
-
-#~ msgid "Filter Settings"
-#~ msgstr "Socruithe Scagaire"
-
-#~ msgid "Today"
-#~ msgstr "Inniu"
-
-#~ msgid "Yesterday"
-#~ msgstr "Inné"
-
-#~ msgid "Invitation"
-#~ msgstr "Cuireadh"
-
-#~ msgid "Connection failure: %1"
-#~ msgstr "Theip ar nascadh: %1"
-
-#~ msgid "Remote user disconnected"
-#~ msgstr "Dínascadh an cianúsáideoir"
-
-#~ msgid "Edit..."
-#~ msgstr "Eagar..."
-
-#~ msgctxt "Tab name"
-#~ msgid "Away"
-#~ msgstr "Amuigh"
-
-#~ msgid "Edit Nickname"
-#~ msgstr "Cuir Leasainm in Eagar"
-
-#~ msgid "DCOP"
-#~ msgstr "DCOP"
-
-#~ msgid "&Forever"
-#~ msgstr "&Go Deo"
-
-#~ msgid "&Current Sessions Only"
-#~ msgstr "Seisiúin &Reatha Amháin"
-
-#~ msgid "Could not open the file: %1"
-#~ msgstr "Níorbh fhéidir an comhad a oscailt: %1"
