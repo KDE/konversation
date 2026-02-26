@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: kdeextragear-2/konversation.po\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-01-04 02:54+0000\n"
-"PO-Revision-Date: 2026-02-17 16:07+0000\n"
+"PO-Revision-Date: 2026-02-19 14:04+0000\n"
 "Last-Translator: charlotte <altronic25@protonmail.com>\n"
 "Language-Team: Irish\n"
 "Language: ga\n"
@@ -13,6 +13,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=5; plural=n==1 ? 0 : n==2 ? 1 : n<7 ? 2 : n < 11 ? "
 "3 : 4\n"
+"X-Generator: Lokalize 25.12.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -3720,7 +3721,7 @@ msgstr "Sábháil Íomhá"
 #: src/dcc/whiteboardtoolbar.cpp:228
 #, kde-format
 msgid "Images (*.png *.xpm *.jpg)"
-msgstr ""
+msgstr "Íomhánna (*.png *.xpm *.jpg)"
 
 #: src/identitydialog.cpp:37
 #, kde-format
@@ -6520,7 +6521,7 @@ msgstr ""
 #: src/irc/outputfilter.cpp:1777
 #, kde-format
 msgid "The key for %1 is \"%2\"."
-msgstr ""
+msgstr "Is an eochair do %1 \"%2\"."
 
 #: src/irc/outputfilter.cpp:1778
 #, kde-format
@@ -6540,12 +6541,12 @@ msgstr "Úsáid: %1DNS <leasainm>"
 #: src/irc/outputfilter.cpp:1834
 #, kde-format
 msgid "Usage: %1queuetuner [on | off]"
-msgstr ""
+msgstr "Usage: %1queuetuner [on | off]"
 
 #: src/irc/outputfilter.cpp:1895
 #, kde-format
 msgid "%1CYCLE [-APP | -SERVER] [channel | nickname]"
-msgstr ""
+msgstr "%1CYCLE [-APP | -SERVER] [cainéal|leasainm]"
 
 #: src/irc/outputfilter.cpp:1926
 #, kde-format
@@ -8084,7 +8085,7 @@ msgstr ""
 #: src/mainwindow.cpp:480 src/viewer/irccontextmenus.cpp:330
 #, kde-format
 msgid "&Join Channel..."
-msgstr ""
+msgstr "&Téigh Cainéal..."
 
 #: src/mainwindow.cpp:484
 #, kde-format
