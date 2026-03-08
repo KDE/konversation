@@ -661,7 +661,7 @@ msgstr "自定义颜色"
 #: src/config/colorsappearance_config.ui:36
 #, kde-format
 msgid "&Use custom colors for input box, nickname list and tab list"
-msgstr "对文字输入框、昵称列表和标签页列表使用自定义的颜色(&U)"
+msgstr "对文本输入框、昵称列表和标签页列表使用自定义的颜色(&U)"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel3)
 #: src/config/colorsappearance_config.ui:273
@@ -4188,7 +4188,7 @@ msgid ""
 msgstr ""
 "此设定会影响您输入的内容会以哪种字符编码发送到服务器，它同时也决定消息以哪种"
 "编码被显示。每当您打开 Konversation 时，它会自动根据当前系统环境取得相关设"
-"定。要是您在查看其他用户的消息文字时出现问题，可尝试更改此设定。"
+"定。要是您在查看其他用户的消息文本时出现问题，可尝试更改此设定。"
 
 #. i18n: ectx: property (text), widget (QLabel, loginLabel)
 #: src/identitydialog.ui:572
@@ -9232,7 +9232,7 @@ msgstr "无"
 #: src/viewer/irccolorchooserui.ui:17
 #, kde-format
 msgid "This is how your message will look with these colors"
-msgstr "这里是使用了自定义颜色的消息文字样板"
+msgstr "这里是使用了自定义颜色的消息文本样板"
 
 #. i18n: ectx: property (whatsThis), widget (QLabel, m_previewLbl)
 #: src/viewer/irccolorchooserui.ui:22
