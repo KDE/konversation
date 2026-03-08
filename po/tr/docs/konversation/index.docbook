@@ -4727,7 +4727,7 @@ $@ | while read line; do qdbus org.kde.konversation /irc say $SERVER "$TARGET" "
 </term>
 <listitem>
 <para
->Bu, çeşitli ortam oynatıcıları/çalarlar için “Şimdi Çalınıyor/Oynatılıyor” betiğidir. Ayrıca, yalnızca ses çalarlar veya video oynatıcıları için bu bilgiyi sunma olanağı da tanır. <replaceable
+>Bu, çeşitli ortam oynatıcıları/çalarlar için “Şimdi Çalınıyor/Oynatılıyor” betiğidir. Ayrıca, yalnızca sesçalarlar veya video oynatıcıları için bu bilgiyi sunma olanağı da tanır. <replaceable
 >Ses</replaceable
 > ve <replaceable
 >video</replaceable
