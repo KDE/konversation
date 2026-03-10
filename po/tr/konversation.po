@@ -20,7 +20,7 @@ msgstr ""
 "Project-Id-Version: extragear-network-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-02-24 00:44+0000\n"
-"PO-Revision-Date: 2026-02-18 18:10+0300\n"
+"PO-Revision-Date: 2026-03-09 21:59+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -2514,7 +2514,7 @@ msgstr ""
 "<qt>\n"
 "<p>\n"
 "Takma ad izleyicisi açıldığında ve <b>İzlenen Ağ/Takma adlar</b> listesinde "
-"çevrimiçi veya çevrimdışı olduğunda bildirim alacaksınız.</p>\n"
+"çevrim içi veya çevrim dışı olduğunda bildirim alacaksınız.</p>\n"
 "<p>Ayrıca tüm izlenen takma adları görmek için <b>İzlenen Takma Adlar</b> "
 "penceresini açabilirsiniz.</p>\n"
 "</qt>"
@@ -6160,7 +6160,7 @@ msgstr "(bilinmeyen)"
 #: src/irc/nickinfo.cpp:233
 #, kde-format
 msgid "Online&nbsp;Since:"
-msgstr "Çevrimiçi&nbsp;Başlangıç:"
+msgstr "Çevrim İçi&nbsp;Başlangıç:"
 
 #: src/irc/nicklistview.cpp:146
 #, kde-format
@@ -6260,14 +6260,14 @@ msgstr ""
 "<p>Bunlar Takma Ad İzleme listenizde bağlı oldukları sunucu ağının altında "
 "sıralanan takma adlardır.</p><p><b>Ek Bilgi</b> sütunu her bir takma ad için "
 "bilgi vermektedir.</p> <p>Takma adın katıldığı kanallar her takma adın "
-"altında listelenir.</p><p><b>Çevrimdışı</b> altında sıralanan takma adlar "
+"altında listelenir.</p><p><b>Çevrim Dışı</b> altında sıralanan takma adlar "
 "ağdaki hiçbir sunucuya bağlı değildir.</p><p>Ek yetenekleri devreye sokmak "
 "için takma ada fareyle sağ tıklayın.</p>"
 
 #: src/irc/nicksonline.cpp:217
 #, kde-format
 msgid " online via %1"
-msgstr " %1 ile çevrimiçi"
+msgstr " %1 ile çevrim içi"
 
 #: src/irc/nicksonline.cpp:222
 #, kde-format

@@ -300,7 +300,7 @@ revision history. (see installation appendix comment) -->
 ></listitem>
 <listitem
 ><para
->Takma adınızı içeren iletiler veya izleme listenizdeki takma adların çevrimiçi veya çevrimdışı olması gibi çok çeşitli olaylar için görsel ve işitsel bildirimler. </para
+>Takma adınızı içeren iletiler veya izleme listenizdeki takma adların çevrim içi veya çevrim dışı olması gibi çok çeşitli olaylar için görsel ve işitsel bildirimler. </para
 ></listitem>
 <listitem
 ><para
@@ -1080,7 +1080,7 @@ here, all the <guilabel
 >ağlarındaki</guilabel
 > sunucuları aynı <guilabel
 >ağ</guilabel
-> altında karıştırmaktan kaçının. Aynı sunucuya iki farklı ağ altında girmekten kaçının. Aksi takdirde, çevrimiçi <link linkend="nicksonline"
+> altında karıştırmaktan kaçının. Aynı sunucuya iki farklı ağ altında girmekten kaçının. Aksi takdirde, çevrim içi <link linkend="nicksonline"
 >takma adların izlenmesi</link
 > düzgün çalışmayacaktır.</para>
 </note>
@@ -2157,7 +2157,7 @@ Settings->Configure Konversation->Notifications->Tabs->Use colored LEDs needs to
 
 <sect1 id="nicksonline">
 <title
->Kimin çevrimiçi olduğunu izlemek</title>
+>Kimin çevrim içi olduğunu izlemek</title>
 
 <para
 >&konversation;, arkadaşlarınız &irc; ağına bağlı olduğunda veya olmadığında sizi bilgilendirecektir. </para>
@@ -2217,7 +2217,7 @@ Settings->Configure Konversation->Notifications->Tabs->Use colored LEDs needs to
 <calloutlist>
 <callout arearefs="pt-nicksonline-1"
 ><para
->İzleme listenizdeki takma adlar burada; ilişkili &irc; ağlarının altında listelenir. Hiçbir takma ad listelenmiyorsa izlemek için herhangi bir takma ad belirtmemişsinizdir veya takma ad izleme özelliğini etkinleştirmeniz gerekir (aşağıya bakın). Takma adın katıldığı kanalların bir listesini görmek için her bir çevrimiçi takma adı genişletin. Her kanalın yanındaki simgeler, <link linkend="channel-screen-tour"
+>İzleme listenizdeki takma adlar burada; ilişkili &irc; ağlarının altında listelenir. Hiçbir takma ad listelenmiyorsa izlemek için herhangi bir takma ad belirtmemişsinizdir veya takma ad izleme özelliğini etkinleştirmeniz gerekir (aşağıya bakın). Takma adın katıldığı kanalların bir listesini görmek için her bir çevrim içi takma adı genişletin. Her kanalın yanındaki simgeler, <link linkend="channel-screen-tour"
 >kanal</link
 > ekranlarındaki <interface
 >Takma Ad Paneli</interface
@@ -2348,7 +2348,7 @@ part of the listing.
 
 <para
 ><computeroutput
->[17:52] [Notify] psn çevrimiçi (irc.kde.org).</computeroutput
+>[17:52] [Notify] psn çevrim içi (irc.kde.org).</computeroutput
 ></para>
 
 </sect1>
@@ -2852,7 +2852,7 @@ part of the listing.
 >Dosya göndermek ve almak</title>
 
 <para
->Çevrimiçi olarak diğer kullanıcılara &irc; aracılığıyla dosya gönderebilirsiniz veya onlar size dosya gönderebilir. </para>
+>Çevrim içi olarak diğer kullanıcılara &irc; aracılığıyla dosya gönderebilirsiniz veya onlar size dosya gönderebilir. </para>
 
 <para>
 <emphasis
@@ -5501,7 +5501,7 @@ Set Encoding
 ><guilabel
 >İzlenen Takma Adlar</guilabel
 > ekranını görüntüler. <link linkend="nicksonline"
->Kimin çevrimiçi olduğunu izlemek</link
+>Kimin çevrim içi olduğunu izlemek</link
 > bölümüne bir göz atın.</action>
 		</para
 ></listitem>
