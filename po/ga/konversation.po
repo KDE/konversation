@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: kdeextragear-2/konversation.po\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-02-24 00:44+0000\n"
-"PO-Revision-Date: 2026-02-19 14:04+0000\n"
+"PO-Revision-Date: 2026-03-05 18:37+0000\n"
 "Last-Translator: charlotte <altronic25@protonmail.com>\n"
 "Language-Team: Irish\n"
 "Language: ga\n"
@@ -1138,7 +1138,7 @@ msgstr ""
 #: src/config/fontappearance_config.ui:28
 #, kde-format
 msgid "Chat text:"
-msgstr ""
+msgstr "Comhrá téacs:"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_CustomListFont)
 #: src/config/fontappearance_config.ui:45
@@ -4298,7 +4298,7 @@ msgstr "Chuaigh tú (%1) leis an cainéal %2."
 #, kde-format
 msgctxt "%1 is the nick joining and %2 the hostmask of that nick"
 msgid "%1 (%2) has joined this channel."
-msgstr ""
+msgstr "Chuaigh %1 (%2) le an cainéal seo."
 
 #: src/irc/channel.cpp:1138 src/irc/channel.cpp:1140 src/irc/channel.cpp:1162
 #: src/irc/channel.cpp:1165 src/irc/query.cpp:453 src/irc/query.cpp:461
@@ -4919,22 +4919,22 @@ msgstr ""
 #: src/irc/channel.cpp:1785
 #, kde-format
 msgid "You set the channel mode '%1'."
-msgstr ""
+msgstr "Shocraigh tú mód an chainéil '%1'."
 
 #: src/irc/channel.cpp:1786
 #, kde-format
 msgid "%1 sets the channel mode '%2'."
-msgstr ""
+msgstr "Shocraigh %1 mód an chainéil '%2'."
 
 #: src/irc/channel.cpp:1790
 #, kde-format
 msgid "You set channel mode +%1"
-msgstr ""
+msgstr "Shocraigh tú mód an chainéil +%1"
 
 #: src/irc/channel.cpp:1791
 #, kde-format
 msgid "%1 sets channel mode +%2"
-msgstr ""
+msgstr "Shocraigh %1 mód an chainéil +%2"
 
 #: src/irc/channel.cpp:1798
 #, kde-format
@@ -5004,7 +5004,7 @@ msgstr ""
 #: src/irc/channel.cpp:2389
 #, kde-format
 msgid "Do you want to leave %1?"
-msgstr ""
+msgstr "An bhfuil fonn ort %1 a fhágáil?"
 
 #: src/irc/channel.cpp:2390
 #, kde-format
@@ -5109,7 +5109,7 @@ msgstr ""
 #: src/irc/channellistpanel.cpp:354
 #, kde-format
 msgid "Save Channel List"
-msgstr ""
+msgstr "Sábháil Liosta Cainéal"
 
 #: src/irc/channellistpanel.cpp:386
 #, kde-format
@@ -5362,7 +5362,7 @@ msgstr ""
 #: src/irc/inputfilter.cpp:923
 #, kde-format
 msgid "%1 sets mode: %2"
-msgstr ""
+msgstr "Shocraigh %1 mód: %2"
 
 #: src/irc/inputfilter.cpp:1172 src/irc/inputfilter.cpp:1180
 #, kde-format
@@ -5481,17 +5481,17 @@ msgstr ""
 #: src/irc/inputfilter.cpp:1535
 #, kde-format
 msgid "%1: No such nick/channel."
-msgstr ""
+msgstr "%1: Níl a leithéid de leasainm/chainéal ann."
 
 #: src/irc/inputfilter.cpp:1539
 #, kde-format
 msgid "No such nick: %1."
-msgstr ""
+msgstr "Níl a leithéid de leasainm ann: %1."
 
 #: src/irc/inputfilter.cpp:1552
 #, kde-format
 msgid "%1: No such channel."
-msgstr ""
+msgstr "%1: Níl a leithéid de chainéal ann."
 
 #: src/irc/inputfilter.cpp:1565
 #, kde-format
@@ -5576,7 +5576,7 @@ msgstr ""
 #: src/irc/inputfilter.cpp:1757
 #, kde-format
 msgid "You invited %1 to channel %2."
-msgstr ""
+msgstr "Thug tú cuireadh chuig cainéal %2 do %1."
 
 #: src/irc/inputfilter.cpp:1779 src/irc/inputfilter.cpp:1877
 #, kde-format
@@ -5947,7 +5947,7 @@ msgstr "%1 (%2)"
 #: src/irc/joinchanneldialog.cpp:216
 #, kde-format
 msgid "Are you sure you want to remove this channel from your history?"
-msgstr ""
+msgstr "An bhfuil tú cinnte gur mian leat an cainéal seo a bhaint de do stair?"
 
 #: src/irc/joinchanneldialog.cpp:218
 #, kde-format
@@ -6089,12 +6089,12 @@ msgstr " Guth"
 #: src/irc/nicksonline.cpp:306
 #, kde-format
 msgid " HalfOp"
-msgstr ""
+msgstr " LeathOibreoir"
 
 #: src/irc/nicksonline.cpp:307
 #, kde-format
 msgid " Operator"
-msgstr ""
+msgstr " Oibreoir"
 
 #: src/irc/nicksonline.cpp:308
 #, kde-format
@@ -6174,6 +6174,8 @@ msgid ""
 "Usage: %1close [window] closes the named channel or query tab, or the "
 "current tab if none specified."
 msgstr ""
+"Úsáid: %1close [fuinneog] dúntar an cainéal ainmnithe nó cluaisín iarratais, "
+"nó an cluaisín reatha má gan argóint"
 
 #: src/irc/outputfilter.cpp:655
 #, kde-format
@@ -6184,7 +6186,7 @@ msgstr "Úsáid: %1NOTICE <faighteoir> <teachtaireacht>"
 #, kde-format
 msgctxt "%1 is the message, %2 the recipient nickname"
 msgid "Sending notice \"%1\" to %2."
-msgstr ""
+msgstr "Á sheoladh fógra \"%1\" chuig %2."
 
 #: src/irc/outputfilter.cpp:674
 #, kde-format
@@ -6204,12 +6206,12 @@ msgstr ""
 #: src/irc/outputfilter.cpp:752
 #, kde-format
 msgid "You need to specify a message."
-msgstr ""
+msgstr "Caithfidh tú teachtaireacht a roghnú."
 
 #: src/irc/outputfilter.cpp:835 src/irc/outputfilter.cpp:840
 #, kde-format
 msgid "Sending CTCP-%1 request to %2."
-msgstr ""
+msgstr "Á sheoladh iarratas CTCP-%1 chuig %2."
 
 #: src/irc/outputfilter.cpp:852
 #, kde-format
@@ -6229,7 +6231,7 @@ msgstr "Úsáid: %1OMSG téacs"
 #: src/irc/outputfilter.cpp:896
 #, kde-format
 msgid "Sending notice \"%1\" to %2."
-msgstr ""
+msgstr "Á sheoladh fógra \"%1\" chuig %2."
 
 #: src/irc/outputfilter.cpp:899
 #, kde-format
@@ -6551,7 +6553,7 @@ msgstr "%1CYCLE [-APP | -SERVER] [cainéal|leasainm]"
 #: src/irc/outputfilter.cpp:1926
 #, kde-format
 msgid "%1CLEAR [-ALL] [channel | nickname]"
-msgstr ""
+msgstr "%1CLEAR [-ALL] [cainéal | leasainm]"
 
 #: src/irc/outputfilterresolvejob.cpp:66
 #, kde-format
@@ -6849,7 +6851,7 @@ msgstr ""
 #, kde-format
 msgctxt "%1 = file name, %2 nickname of recipient"
 msgid "Sending \"%1\" to %2..."
-msgstr ""
+msgstr "Ag seoladh \"%1\" chuig %2..."
 
 #: src/irc/server.cpp:2841
 #, kde-format
@@ -7892,7 +7894,7 @@ msgstr ""
 #: src/mainwindow.cpp:209 src/viewer/viewcontainer.cpp:938
 #, kde-format
 msgid "&Channel Settings..."
-msgstr ""
+msgstr "Socruithe &Cainéil..."
 
 #: src/mainwindow.cpp:212
 #, kde-format
@@ -7927,7 +7929,7 @@ msgstr "&Konsole Nua"
 #: src/mainwindow.cpp:238
 #, kde-format
 msgid "Open a terminal in a new tab"
-msgstr ""
+msgstr "Oscail teirminéal i gcluaisín nua"
 
 #: src/mainwindow.cpp:268
 #, kde-format
@@ -8167,7 +8169,7 @@ msgstr "Deimhnigh Scor"
 #: src/mainwindow.cpp:623
 #, kde-format
 msgid "<qt>Are you sure you want to quit <b>Konversation</b>?</qt>"
-msgstr ""
+msgstr "<qt>An bhfuil tú cinnte gur mian leat <b>Konversation</b> a scor?</qt>"
 
 #: src/mainwindow.cpp:660
 #, kde-format
@@ -8238,7 +8240,7 @@ msgstr "Liosta Freastalaithe"
 #, kde-format
 msgctxt "Notification title; see Event/message in konversation.notifyrc"
 msgid "New message from %1 in %2"
-msgstr ""
+msgstr "Teachtaireacht nua ó %1 i %2"
 
 #: src/notificationhandler.cpp:103
 #, kde-format
@@ -8798,6 +8800,8 @@ msgid ""
 "Konversation URL List: %1\n"
 "\n"
 msgstr ""
+"Liosta URL Konversation: %1\n"
+"\n"
 
 #: src/viewer/awaylabel.cpp:16
 #, kde-format
@@ -9105,7 +9109,7 @@ msgstr "Ionsáigh carachtar"
 #: src/viewer/irccolorchooser.cpp:18
 #, kde-format
 msgid "IRC Color Chooser"
-msgstr ""
+msgstr "Roghnóir Dathanna IRC"
 
 #: src/viewer/irccolorchooser.cpp:23
 #, kde-format
@@ -9369,17 +9373,17 @@ msgstr "An bhfuil fonn ort a dhéanamh neamhaird de %1?"
 #: src/viewer/irccontextmenus.cpp:590
 #, kde-format
 msgid "Do you want to ignore the selected users?"
-msgstr ""
+msgstr "An bhfuil fonn ort a dhéanamh neamhaird den úsáideoirí roghnaithe?"
 
 #: src/viewer/irccontextmenus.cpp:618
 #, kde-format
 msgid "Do you want to stop ignoring %1?"
-msgstr ""
+msgstr "An bhfuil fonn ort neamhaird ar %1 a stad?"
 
 #: src/viewer/irccontextmenus.cpp:620
 #, kde-format
 msgid "Do you want to stop ignoring the selected users?"
-msgstr ""
+msgstr "An bhfuil fonn ort neamhaird ar na úsáideoirí roghnaithe a stad?"
 
 #: src/viewer/irccontextmenus.cpp:781
 #, kde-format
@@ -9654,7 +9658,7 @@ msgstr ""
 #, kde-format
 msgctxt "%1 is a timestamp, %2 is the author's name"
 msgid "On %1 by %2"
-msgstr ""
+msgstr "Ar %1 le %2"
 
 #: src/viewer/topichistoryview.cpp:208
 #, kde-format
@@ -9687,12 +9691,12 @@ msgstr "Aimsigh Téacs..."
 #: src/viewer/viewcontainer.cpp:884
 #, kde-format
 msgid "Search for text in the current tab"
-msgstr ""
+msgstr "Cuardaigh do téacs sa gcluaisín reatha"
 
 #: src/viewer/viewcontainer.cpp:902
 #, kde-format
 msgid "Channel &List for %1"
-msgstr ""
+msgstr "&Liosta Chainéil do %1"
 
 #: src/viewer/viewcontainer.cpp:922
 #, kde-format
