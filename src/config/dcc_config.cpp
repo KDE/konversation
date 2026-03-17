@@ -24,7 +24,7 @@ DCC_Config::DCC_Config(QWidget *parent, const char* name) :
 
     languageChange();
     connect(kcfg_DccMethodToGetOwnIp, QOverload<int>::of(&QComboBox::activated), this, &DCC_Config::dccMethodChanged);
-    connect(kcfg_DccUPnP, &QCheckBox::stateChanged, this, &DCC_Config::dccUPnPChanged);
+    connect(kcfg_DccUPnP, &QCheckBox::checkStateChanged, this, &DCC_Config::dccUPnPChanged);
     dccMethodChanged(kcfg_DccMethodToGetOwnIp->currentIndex());
     kcfg_DccBufferSize->setSuffix(ki18np(" byte", " bytes"));
     kcfg_DccSendTimeout->setSuffix(ki18np(" second", " seconds"));
@@ -54,7 +54,7 @@ void DCC_Config::dccMethodChanged(int index)
     kcfg_DccSpecificOwnIp->setEnabled( index == 2 );
 }
 
-void DCC_Config::dccUPnPChanged(int state)
+void DCC_Config::dccUPnPChanged(Qt::CheckState state)
 {
     DCC::TransferManager *transferManager = Application::instance()->getDccTransferManager();
 

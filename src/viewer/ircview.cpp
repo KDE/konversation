@@ -2252,7 +2252,7 @@ void IRCView::contextMenuEvent(QContextMenuEvent* ev)
     // is outdated. Thus what we're going to do here is post a fake mouse
     // move event using the context menu event coordinate, forcing an update
     // just before we display the context menu.
-    QMouseEvent fake(QEvent::MouseMove, ev->pos(), Qt::NoButton, Qt::NoButton, Qt::NoModifier);
+    QMouseEvent fake(QEvent::MouseMove, ev->pos(), ev->globalPos(), Qt::NoButton, Qt::NoButton, Qt::NoModifier);
     mouseMoveEvent(&fake);
 
     if (m_isOnChannel && m_server)

@@ -178,9 +178,9 @@ ChannelListPanel::ChannelListPanel(QWidget* parent) : ChatWindow(parent)
             this, &ChannelListPanel::currentChanged);
     connect(m_channelListView, &QTreeView::customContextMenuRequested, this, &ChannelListPanel::contextMenu);
 
-    connect(m_regexBox, &QCheckBox::stateChanged, this, &ChannelListPanel::filterChanged);
-    connect(m_topicBox, &QCheckBox::stateChanged, this, &ChannelListPanel::filterChanged);
-    connect(m_channelBox, &QCheckBox::stateChanged, this, &ChannelListPanel::filterChanged);
+    connect(m_regexBox, &QCheckBox::checkStateChanged, this, &ChannelListPanel::filterChanged);
+    connect(m_topicBox, &QCheckBox::checkStateChanged, this, &ChannelListPanel::filterChanged);
+    connect(m_channelBox, &QCheckBox::checkStateChanged, this, &ChannelListPanel::filterChanged);
     connect(m_minUser, QOverload<int>::of(&QSpinBox::valueChanged), this, &ChannelListPanel::filterChanged);
     connect(m_maxUser, QOverload<int>::of(&QSpinBox::valueChanged), this, &ChannelListPanel::filterChanged);
 

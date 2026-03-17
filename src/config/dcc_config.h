@@ -25,7 +25,7 @@ class DCC_Config : public QWidget, private Ui::DCC_ConfigUI
     private Q_SLOTS:
         void languageChange();
         void dccMethodChanged(int index);
-        void dccUPnPChanged(int state);
+        void dccUPnPChanged(Qt::CheckState state);
 
     private:
         Q_DISABLE_COPY(DCC_Config)

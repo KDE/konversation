@@ -24,10 +24,10 @@ namespace Konversation
             ~InsertCharDialog() override;
 
             void setFont(const QFont &font);
-            uint chr() const;
+            char32_t chr() const;
 
         Q_SIGNALS:
-            void insertChar(uint);
+            void insertChar(char32_t);
 
         private Q_SLOTS:
             void charSelected();

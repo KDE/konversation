@@ -177,7 +177,7 @@ class ViewContainer : public QAbstractItemModel
         void findPrevText();
 
         void insertCharacter();
-        void insertChar(uint chr);
+        void insertChar(char32_t chr);
         void insertIRCColor();
         void doAutoReplace();
 

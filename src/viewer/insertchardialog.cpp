@@ -51,14 +51,14 @@ namespace Konversation
         m_charTable->setFont(font.family());
     }
 
-    uint InsertCharDialog::chr() const
+    char32_t InsertCharDialog::chr() const
     {
         return m_charTable->currentCodePoint();
     }
 
     void InsertCharDialog::charSelected()
     {
-        Q_EMIT insertChar(m_charTable->currentCodePoint());
+        Q_EMIT insertChar(chr());
     }
     void InsertCharDialog::slotAccepted()
     {

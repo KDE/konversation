@@ -403,11 +403,11 @@ namespace Konversation
 
         QString TransferListModel::getSpeedPrettyText (transferspeed_t speed)
         {
-            if (speed == Transfer::Calculating || speed == Transfer::InfiniteValue)
+            if (speed == static_cast<transferspeed_t>(Transfer::Calculating ) || speed == static_cast<transferspeed_t>(Transfer::InfiniteValue))
             {
                 return QStringLiteral("?");
             }
-            else if (speed == Transfer::NotInTransfer)
+            else if (speed == static_cast<transferspeed_t>(Transfer::NotInTransfer))
             {
                 return QString();
             }

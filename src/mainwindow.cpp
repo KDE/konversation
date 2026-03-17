@@ -413,7 +413,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(nullptr)
         action=new QAction(this);
         action->setText(i18n("Go to Tab %1",i));
         actionCollection()->setDefaultShortcut(action,QKeySequence(QStringLiteral("Alt+%1").arg(i%10)));
-        connect(action, &QAction::triggered, this, [=] { m_viewContainer->goToView(static_cast<int>(i - 1)); });
+        connect(action, &QAction::triggered, this, [=, this] { m_viewContainer->goToView(static_cast<int>(i - 1)); });
         actionCollection()->addAction(QStringLiteral("go_to_tab_%1").arg(i), action);
     }
 

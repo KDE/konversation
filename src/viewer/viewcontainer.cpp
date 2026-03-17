@@ -2457,7 +2457,7 @@ void ViewContainer::insertCharacter()
     m_insertCharDialog->show();
 }
 
-void ViewContainer::insertChar(uint chr)
+void ViewContainer::insertChar(char32_t chr)
 {
     auto* view = qobject_cast<ChatWindow*>(m_tabWidget->currentWidget());
 
