@@ -1,14 +1,14 @@
 # Copyright (C) YEAR This_file_is_part_of_KDE
 # This file is distributed under the same license as the PACKAGE package.
 # Safa Alfulaij <safa1996alfulaij@gmail.com>, 2014, 2016.
-# SPDX-FileCopyrightText: 2022, 2025 Zayed Al-Saidi <zayed.alsaidi@gmail.com>
+# SPDX-FileCopyrightText: 2022, 2025, 2026 Zayed Al-Saidi <zayed.alsaidi@gmail.com>
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-02-24 00:44+0000\n"
-"PO-Revision-Date: 2025-11-29 21:42+0400\n"
+"PO-Revision-Date: 2026-03-24 11:19+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -1556,7 +1556,7 @@ msgstr "مكّن إن أردت من أسطر إدخال IRC التحقّق من 
 #, kde-format
 msgid ""
 "Enabling this will cause the input box to grow vertically when it fills up."
-msgstr "تمكين هذا يسبّب بمربع الإدخال التوسّع رأسيًا عندما يمتلئ."
+msgstr "تمكين هذا يسبّب بمربع الإدخال التوسّع عموديًا عندما يمتلئ."
 
 #. i18n: ectx: label, entry, group (General Options)
 #: src/config/konversation.kcfg:266
@@ -8488,7 +8488,7 @@ msgid ""
 "tray. Use <b>Quit</b> from the <b>Konversation</b> menu to quit the "
 "application.</p>"
 msgstr ""
-"<p>سيبقي إغلاق النافذة الرئيسية محادثك قيد التشغيل في صينية النظام. استخدم "
+"<p>سيبقي إغلاق النافذة الرئيسة محادثك قيد التشغيل في صينية النظام. استخدم "
 "<b>اخرج</b> من قائمة <b>محادثك</b> لإنهاء التطبيق.</p>"
 
 #: src/mainwindow.cpp:662
