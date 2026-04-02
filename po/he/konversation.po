@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-02-24 00:44+0000\n"
-"PO-Revision-Date: 2026-03-05 07:28+0200\n"
+"PO-Revision-Date: 2026-04-01 17:45+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
 "n % 10 == 0) ? 2 : 3));\n"
-"X-Generator: Lokalize 25.12.2\n"
+"X-Generator: Poedit 3.8\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -117,7 +117,7 @@ msgstr "יש בעיה בהגדרות תבנית הפלט."
 
 #: data/scripts/media:302
 msgid "media v%1 for Konversation."
-msgstr "מדיה בגרסה %1 ל־Konversation"
+msgstr "מדיה בגרסה %1 ל־Konversation."
 
 #: data/scripts/media:303
 msgid "Usage:"
@@ -3095,7 +3095,7 @@ msgstr "שותף"
 #: src/dcc/transferlistmodel.cpp:30
 #, kde-format
 msgid "Started At"
-msgstr "התחיל ב..."
+msgstr "התחיל ב…"
 
 #: src/dcc/transferlistmodel.cpp:32
 #, kde-format
@@ -3410,7 +3410,7 @@ msgstr "<b>אין אפשרות לפתוח את הקובץ.<br />שגיאה: %1</
 msgid ""
 "Could not send Reverse DCC SEND acknowledgement to the partner via the IRC "
 "server."
-msgstr "אין אפשרות לשלוח אישור Reverse DCC SEND אל הצד השני דרך ה־IRC"
+msgstr "אין אפשרות לשלוח אישור Reverse DCC SEND אל הצד השני דרך ה־IRC."
 
 #: src/dcc/transferrecv.cpp:593
 #, kde-format
@@ -4298,7 +4298,7 @@ msgstr "מגבלת ערוצי משתמש"
 #: src/irc/channel.cpp:900
 #, kde-format
 msgid "Enter the new user limit for the channel:"
-msgstr "קבע הגבלה על מספר המשתתפים בחדר."
+msgstr "נא למלא את ההגבלה החדשה על מספר המשתתפים בחדר:"
 
 #: src/irc/channel.cpp:1057 src/irc/channel.cpp:1062
 #: src/irc/inputfilter.cpp:1565 src/irc/inputfilter.cpp:1586
@@ -4870,13 +4870,13 @@ msgid "%1 removes the channel key."
 msgstr "המשתמש %1 מסיר את מפתח החדר."
 
 #: src/irc/channel.cpp:1729
-#, fuzzy, kde-format
+#, kde-format
 msgid "You set the channel limit to 1 nick."
 msgid_plural "You set the channel limit to %1 nicks."
-msgstr[0] "אתה הגבלת את החדר אל כינוי אחד."
-msgstr[1] "אתה הגבלת את החדר אל %1 כינויים."
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "הגבלת את החדר לכינוי אחד."
+msgstr[1] "הגבלת את החדר לשני כינויים."
+msgstr[2] "הגבלת את החדר ל־%1 כינויים."
+msgstr[3] "הגבלת את החדר ל־%1 כינויים."
 
 #: src/irc/channel.cpp:1730
 #, fuzzy, kde-format
@@ -5135,7 +5135,7 @@ msgstr "לחץ כאן להצטרפות אל חדר. כרטיסייה חדשה ת
 #: src/irc/channellistpanel.cpp:230 src/irc/channellistpanel.cpp:328
 #, kde-format
 msgid "Refreshing."
-msgstr "מרענן"
+msgstr "מתרענן."
 
 #: src/irc/channellistpanel.cpp:345
 #, kde-format
@@ -5924,7 +5924,7 @@ msgstr "אתה מחובר כעת בתור %1."
 #: src/irc/inputfilter.cpp:2499
 #, kde-format
 msgid "SASL authentication successful."
-msgstr "אימות SASL עבר בהצלחה"
+msgstr "אימות SASL עבר בהצלחה."
 
 #: src/irc/inputfilter.cpp:2512
 #, kde-format
@@ -5994,7 +5994,7 @@ msgstr "%1 (%2)"
 #: src/irc/joinchanneldialog.cpp:216
 #, kde-format
 msgid "Are you sure you want to remove this channel from your history?"
-msgstr "להסיר את החדר הזה מההיסטוריה שלך"
+msgstr "להסיר את החדר הזה מההיסטוריה שלך?"
 
 #: src/irc/joinchanneldialog.cpp:218
 #, kde-format
@@ -6706,7 +6706,7 @@ msgstr "בקשת יכולות: %1"
 #: src/irc/server.cpp:809
 #, kde-format
 msgid "Closing capabilities negotiation."
-msgstr "סוגר את ניהול היכולות"
+msgstr "המשא ומתן על היכולות נסגר."
 
 #: src/irc/server.cpp:817
 #, kde-format
@@ -8569,7 +8569,7 @@ msgstr "כמות:"
 #: src/queuetunerbase.ui:561 src/queuetunerbase.ui:702
 #, kde-format
 msgid "Lines:"
-msgstr "שורות: "
+msgstr "שורות:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel5_2_2)
 #. i18n: ectx: property (text), widget (QLabel, textLabel5_2)
@@ -8788,7 +8788,7 @@ msgstr "&שמירה…"
 #: src/urlcatcher.cpp:100
 #, kde-format
 msgid "Save selected URLs to the disk."
-msgstr "שמירת הכתובות הנבחרות לכונן:"
+msgstr "שמירת הכתובות הנבחרות לכונן."
 
 #: src/urlcatcher.cpp:103
 #, kde-format
