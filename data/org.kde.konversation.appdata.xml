@@ -741,6 +741,7 @@
     <binary>konversation</binary>
   </provides>
   <releases>
+    <release version="1.10.26040" date="2026-04-16"/>
     <release version="1.10.25123" date="2026-03-05"/>
     <release version="1.10.25122" date="2026-02-05"/>
     <release version="1.10.25121" date="2026-01-08"/>
