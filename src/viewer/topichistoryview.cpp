@@ -103,33 +103,14 @@ void TopicHistoryLabel::setTextSelectable(bool selectable)
 
 TopicHistoryItemDelegate::TopicHistoryItemDelegate(QAbstractItemView* itemView, QObject* parent) : KWidgetItemDelegate(itemView, parent)
 {
-    m_hiddenLabel = new TopicHistoryLabel(itemView);
-    m_hiddenLabel->setFixedHeight(0);
-    m_hiddenLabel->lower();
-
-    m_shownBefore = false;
-
-    itemView->installEventFilter(this);
+    QTextOption o;
+    o.setWrapMode(QTextOption::WrapAtWordBoundaryOrAnywhere);
+    m_document.setDefaultTextOption(o);
+    m_document.setDocumentMargin(2);
+    m_document.setUndoRedoEnabled(false);
 }
 
-TopicHistoryItemDelegate::~TopicHistoryItemDelegate()
-{
-}
-
-bool TopicHistoryItemDelegate::eventFilter(QObject* watched, QEvent* event)
-{
-    // NOTE: QTextEdit needs to have been shown at least once (and while its
-    // parents are shown, too) before it starts to calculate the document sizes
-    // we need in sizeHint().
-
-    if (!m_shownBefore && event->type() == QEvent::Show && !event->spontaneous())
-    {
-        m_hiddenLabel->show();
-        m_hiddenLabel->hide();
-    }
-
-    return KWidgetItemDelegate::eventFilter(watched, event);
-}
+TopicHistoryItemDelegate::~TopicHistoryItemDelegate() = default;
 
 QList<QWidget*> TopicHistoryItemDelegate::createItemWidgets(const QModelIndex& index) const
 {
@@ -181,12 +162,14 @@ void TopicHistoryItemDelegate::paint(QPainter* painter, const QStyleOptionViewIt
 QSize TopicHistoryItemDelegate::sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const
 {
     Q_UNUSED(option)
+    // m_document is mutable, potentially not thread safe
+    Q_ASSERT_X(QThread::isMainThread(), "TopicHistoryItemDelegate::sizeHint", "sizeHint not called from main thread, see m_document");
 
-    m_hiddenLabel->setPlainText(index.model()->data(index).toString());
-    m_hiddenLabel->setFixedWidth(itemView()->viewport()->width()
+    m_document.setPlainText(index.model()->data(index).toString());
+    m_document.setTextWidth(itemView()->viewport()->width()
         - (2 * static_cast<TopicHistoryView*>(itemView())->categorySpacing())
         - (2 * MARGIN));
-    int documentHeight = m_hiddenLabel->document()->size().toSize().height();
+    int documentHeight = m_document.size().toSize().height();
 
     return QSize(itemView()->viewport()->width(), documentHeight + (2 * MARGIN));
 }

@@ -12,12 +12,9 @@
 #include <KCategorizedView>
 #include <KWidgetItemDelegate>
 
-
 #include <KTextEdit>
 
-
 class Server;
-
 
 class TopicHistorySortfilterProxyModel : public KCategorizedSortFilterProxyModel
 {
@@ -74,16 +71,13 @@ class TopicHistoryItemDelegate : public KWidgetItemDelegate
         void paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const override;
         QSize sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const override;
 
-        bool eventFilter(QObject* watched, QEvent* event) override;
-
-
     protected:
         QList<QWidget*> createItemWidgets (const QModelIndex& index) const override;
         void updateItemWidgets(const QList<QWidget *> &widgets, const QStyleOptionViewItem &option, const QPersistentModelIndex &index) const override;
 
     private:
-        TopicHistoryLabel* m_hiddenLabel;
-        bool m_shownBefore;
+        // mutable because sizeHint is const
+        mutable QTextDocument m_document;
 
         Q_DISABLE_COPY(TopicHistoryItemDelegate)
 };
@@ -128,5 +122,3 @@ class TopicHistoryView : public KCategorizedView
 };
 
 #endif
-
-struct Topic;
