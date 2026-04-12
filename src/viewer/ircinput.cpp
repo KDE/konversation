@@ -63,6 +63,7 @@ IRCInput::IRCInput(QWidget* parent) : KTextEdit(parent)
 
 IRCInput::~IRCInput()
 {
+    disconnect(this, &IRCInput::textChanged, this, &IRCInput::maybeResize);
 }
 
 void IRCInput::createHighlighter()
