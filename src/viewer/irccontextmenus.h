@@ -70,7 +70,7 @@ class IrcContextMenus : public QObject
 
         static void processLinkAction(int actionId, const QString& link);
 
-        static void topicHistoryMenu(const QPoint& pos, Server* server, const QString& text,
+        static void topicHistoryMenu(QWidget *window, const QPoint& pos, Server* server, const QString& text,
             const QString& author);
 
 
@@ -138,7 +138,6 @@ class IrcContextMenus : public QObject
         QAction* m_addNotifyAction;
         QAction* m_removeNotifyAction;
         QList<QAction*> m_sharedDccActions;
-        QMenu* m_topicHistoryMenu;
         QAction* m_queryTopicAuthorAction;
 
         Q_DISABLE_COPY(IrcContextMenus)

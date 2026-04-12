@@ -774,21 +774,22 @@ void IrcContextMenus::processLinkAction(int  actionId, const QString& link)
 
 void IrcContextMenus::setupTopicHistoryMenu()
 {
-    m_topicHistoryMenu = new QMenu(m_parent);
-
-    m_topicHistoryMenu->addAction(m_textCopyAction);
-
-    m_queryTopicAuthorAction = createAction(m_topicHistoryMenu, OpenQuery, i18nc("Opens a query (private message) window with the author of the topic", "Query author"));
+    m_queryTopicAuthorAction = createAction(OpenQuery, i18nc("Opens a query (private message) window with the author of the topic", "Query author"));
 }
 
-void IrcContextMenus::topicHistoryMenu(const QPoint& pos, Server* server, const QString& text, const QString& author)
+void IrcContextMenus::topicHistoryMenu(QWidget* window, const QPoint& pos, Server* server, const QString& text, const QString& author)
 {
-    QMenu* topicHistoryMenu = self()->m_topicHistoryMenu;
+    QMenu* menu = new QMenu(window);
 
-    self()->m_textCopyAction->setEnabled(true);
-    self()->m_queryTopicAuthorAction->setEnabled(!author.isEmpty());
+    auto copyAction = self()->m_textCopyAction;
+    copyAction->setEnabled(true);
+    menu->addAction(copyAction);
 
-    QAction* action = topicHistoryMenu->exec(pos);
+    auto msgAuthorAction = self()->m_queryTopicAuthorAction;
+    msgAuthorAction->setEnabled(!author.isEmpty());
+    menu->addAction(msgAuthorAction);
+
+    QAction* action = menu->exec(pos);
 
     switch (extractActionId(action))
     {
@@ -806,48 +807,37 @@ void IrcContextMenus::topicHistoryMenu(const QPoint& pos, Server* server, const 
 QAction* IrcContextMenus::createAction(ActionId id, const QString& text)
 {
     auto* action = new QAction(text, m_parent);
-
     action->setData(id);
-
     return action;
 }
 
 QAction* IrcContextMenus::createAction(ActionId id, const QIcon& icon)
 {
     auto* action = new QAction(m_parent);
-
     action->setData(id);
     action->setIcon(icon);
-
     return action;
 }
 
 QAction* IrcContextMenus::createAction(ActionId id, const QIcon& icon, const QString& text)
 {
     auto* action = new QAction(icon, text, m_parent);
-
     action->setData(id);
-
     return action;
 }
 
 QAction* IrcContextMenus::createAction(QMenu* menu, ActionId id, const QString& text)
 {
     QAction* action = createAction(id, text);
-
     menu->addAction(action);
-
     return action;
 }
 
 QAction* IrcContextMenus::createAction(QMenu* menu, ActionId id, const QIcon& icon, const QString& text)
 {
     QAction* action = createAction(id, text);
-
     action->setIcon(icon);
-
     menu->addAction(action);
-
     return action;
 }
 

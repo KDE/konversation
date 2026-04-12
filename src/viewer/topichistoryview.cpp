@@ -251,7 +251,7 @@ void TopicHistoryView::contextMenuEvent(QContextMenuEvent* event)
     if (author == TopicHistoryModel::authorPlaceholder())
         author.clear();
 
-    IrcContextMenus::topicHistoryMenu(event->globalPos(), m_server, text, author);
+    IrcContextMenus::topicHistoryMenu(this->window(), event->globalPos(), m_server, text, author);
 }
 
 void TopicHistoryView::updateSelectedItemWidgets()
