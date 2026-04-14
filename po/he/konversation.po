@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-02-24 00:44+0000\n"
-"PO-Revision-Date: 2026-04-06 09:21+0300\n"
+"PO-Revision-Date: 2026-04-13 21:26+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -5953,7 +5953,7 @@ msgstr "הצטרף"
 #: src/irc/invitedialog.ui:23
 #, kde-format
 msgid "..."
-msgstr "..."
+msgstr "…"
 
 #. i18n: ectx: property (text), widget (QLabel, m_textLabel)
 #: src/irc/invitedialog.ui:33
@@ -7987,7 +7987,7 @@ msgstr "&מצב העברות DCC"
 #: src/viewer/viewcontainer.cpp:917
 #, kde-format
 msgid "&Open Logfile"
-msgstr "&פתח קובץ יומן"
+msgstr "&פתיחת קובץ יומן"
 
 #: src/mainwindow.cpp:204
 #, kde-format
@@ -8012,7 +8012,7 @@ msgstr "&רשימת חדרים"
 #: src/mainwindow.cpp:221
 #, kde-format
 msgid "Show a list of all the known channels on this server"
-msgstr "הצג את רשימת על החדרים בשרת זה"
+msgstr "הצגת רשימת כל החדרים בשרת הזה"
 
 #: src/mainwindow.cpp:226
 #, kde-format
@@ -8240,12 +8240,12 @@ msgstr "סגור את &כל השאילתות הפתוחות"
 #: src/mainwindow.cpp:544
 #, kde-format
 msgid "Show Nicklist"
-msgstr "הצג רשימת כינויים"
+msgstr "הצגת רשימת כינויים"
 
 #: src/mainwindow.cpp:550
 #, kde-format
 msgid "Show/Hide Konversation"
-msgstr "הצג או הסתר את Konversation"
+msgstr "הצגת/הסתרת Konversation"
 
 #: src/mainwindow.cpp:561
 #, kde-format
