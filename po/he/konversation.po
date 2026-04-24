@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-02-24 00:44+0000\n"
-"PO-Revision-Date: 2026-04-13 21:26+0300\n"
+"PO-Revision-Date: 2026-04-21 14:09+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -8753,7 +8753,7 @@ msgstr "ההורדה של %1 נכשלה: %2"
 #: src/upnp/upnprouter.cpp:134
 #, kde-format
 msgid "Error parsing router description."
-msgstr "שגיאה בפענוח תיאור הנתב."
+msgstr "שגיאה בפיענוח תיאור הנתב."
 
 #: src/urlcatcher.cpp:69 src/viewer/viewcontainer.cpp:2618
 #, kde-format
