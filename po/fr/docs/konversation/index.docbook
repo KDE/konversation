@@ -5860,7 +5860,7 @@ application work. -->
 </para>
 <para
 >Exemple : <userinput
->Ceci est mon texte %Iitalique%I.</userinput
+>Ceci est mon texte %IItalique%I.</userinput
 ></para>
 <para
 >Sortie : <inlinemediaobject
@@ -5870,7 +5870,7 @@ application work. -->
 </para>
 <para
 >Exemple : <userinput
->Ceci est mon texte %Usouligné%U.</userinput
+>Ceci est mon texte %USouligné%U.</userinput
 ></para>
 <para
 >Sortie : <inlinemediaobject
