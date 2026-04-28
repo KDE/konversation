@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: kdeextragear-2/konversation.po\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-02-24 00:44+0000\n"
-"PO-Revision-Date: 2026-03-05 18:37+0000\n"
+"PO-Revision-Date: 2026-04-25 23:31+0100\n"
 "Last-Translator: charlotte <altronic25@protonmail.com>\n"
 "Language-Team: Irish\n"
 "Language: ga\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=5; plural=n==1 ? 0 : n==2 ? 1 : n<7 ? 2 : n < 11 ? "
 "3 : 4\n"
-"X-Generator: Lokalize 25.12.2\n"
+"X-Generator: Lokalize 26.04.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -4286,7 +4286,7 @@ msgstr ""
 #, kde-format
 msgctxt "Message type"
 msgid "Join"
-msgstr ""
+msgstr "Ceangail"
 
 #: src/irc/channel.cpp:1084
 #, kde-format
@@ -5084,12 +5084,12 @@ msgstr ""
 #, kde-format
 msgctxt "join channel"
 msgid "&Join Channel"
-msgstr ""
+msgstr "&Téigh I gCainéal"
 
 #: src/irc/channellistpanel.cpp:162
 #, kde-format
 msgid "Click here to join the channel. A new tab is created for the channel."
-msgstr ""
+msgstr "Cliceáil chun téigh sa chainéal"
 
 #: src/irc/channellistpanel.cpp:230 src/irc/channellistpanel.cpp:328
 #, kde-format
@@ -5121,7 +5121,7 @@ msgstr ""
 #: src/irc/channellistpanel.cpp:450 src/irc/joinchanneldialog.cpp:30
 #, kde-format
 msgid "Join Channel"
-msgstr ""
+msgstr "Téigh I gCainéal"
 
 #: src/irc/channellistpanel.cpp:459
 #, kde-format
@@ -6857,7 +6857,7 @@ msgstr "Ag seoladh \"%1\" chuig %2..."
 #, kde-format
 msgctxt "%1 = file name, %2 = file size, %3 = nickname of sender"
 msgid "Downloading \"%1\" (%2) from %3..."
-msgstr ""
+msgstr "\"%1\" (%2) á íosluchtú ó %3..."
 
 #: src/irc/server.cpp:3170 src/notificationhandler.cpp:348
 #, kde-format

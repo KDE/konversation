@@ -8490,7 +8490,8 @@ msgid ""
 "<qt>This will hide the menu bar completely. You can show it again by typing "
 "%1.</qt>"
 msgstr ""
-"<qt>Toto skryje panel ponuky úplne. Môžete ju zobraziť zadaním %1.</qt>"
+"<qt>Toto úplne skryje panel ponuky. Môžete ho znova zobraziť stlačením %1.</"
+"qt>"
 
 #: src/mainwindow.cpp:807
 #, kde-format
