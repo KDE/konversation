@@ -4281,10 +4281,10 @@ msgid ""
 "correctly, try changing this setting."
 msgstr ""
 "Toto nastavenie ovplyvňuje ako znaky, ktoré ste zadali, sa kódujú na "
-"poslanie na server. Ovplyvňiuje to aj to, ako sú správy zobrazené. Keď "
+"poslanie na server. Ovplyvňuje to aj to, ako sú správy zobrazené. Keď "
 "prvýkrát otvoríte Konversation, automaticky zistí toto nastavenie z "
 "operačného systému. Ak sa zdá, že máte problémy vidieť správy iných "
-"používateľov správne, skúste zmeniť toto nastavenia."
+"používateľov správne, skúste zmeniť toto nastavenie."
 
 #. i18n: ectx: property (text), widget (QLabel, loginLabel)
 #: src/identitydialog.ui:572
@@ -9246,7 +9246,7 @@ msgid ""
 "p></qt>"
 msgstr ""
 "<qt><p>Toto ovláda <em>režim</em> kanála. Meniť to môže iba operátor.</"
-"p><p><b>S</b>súkromný kanál sa zobrazí v zozname kanálov, ale téma sa "
+"p><p><b>S</b>úkromný kanál sa zobrazí v zozname kanálov, ale téma sa "
 "nezobrazí. Používateľove <em>WHOIS</em> môže a nemusí zobraziť, či sú v "
 "súkromnom kanáli, závisí to od IRC servera.</p></qt>"
 
