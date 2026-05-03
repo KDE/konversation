@@ -362,7 +362,7 @@ revision history. (see installation appendix comment) -->
 >Daha önce hiç &irc; kullanmadıysanız…</title>
 
 <para
->Basitçe söylemek gerekirse &irc;, resmi İnternet standartları tarafından tanımlanan ve hayatınızın birçok saatini çalabilecek bir sohbet protokolüdür. &irc;’yi kullanmak için yalnızca bir sunucuya bağlanmanız gerekir. Ardından bir kanala (sohbet odasına eşdeğer) katılabilir veya başkalarıyla doğrudan konuşabilirsiniz.</para>
+>Basitçe söylemek gerekirse &irc;, resmî İnternet standartları tarafından tanımlanan ve hayatınızın birçok saatini çalabilecek bir sohbet protokolüdür. &irc;’yi kullanmak için yalnızca bir sunucuya bağlanmanız gerekir. Ardından bir kanala (sohbet odasına eşdeğer) katılabilir veya başkalarıyla doğrudan konuşabilirsiniz.</para>
 
 <para
 >Bir sunucuya ve kanala katılmak için &konversation;’u açın. <guilabel
@@ -878,7 +878,7 @@ Limits on Real Name and Ident?
 ><guilabel
 >Sunucu Listesi</guilabel
 ></action
-> ekranı, sizin halihazırda tanımlı &irc; <guilabel
+> ekranı, sizin hâlihazırda tanımlı &irc; <guilabel
 >ağlarınızı</guilabel
 > gruba göre listeli olarak listeler. Bir &irc; ağı, birbiriyle işbirliğinde bulunan bir sunucular koleksiyonudur. Bir ağdaki herhangi bir sunucuya bağlandığınızda, ağdaki tüm kanallara erişiminiz olur. &irc; ağlarına örnek olarak <userinput
 ><replaceable
@@ -918,7 +918,7 @@ Limits on Real Name and Ident?
 <calloutlist>
 <callout arearefs="pt-serverlist-1"
 ><para
->Sizin halihazırda tanımlı <guilabel
+>Sizin hâlihazırda tanımlı <guilabel
 >ağlarınız</guilabel
 >, ağa bağlanmak için kullandığınız <guilabel
 >kimlik</guilabel
@@ -1826,7 +1826,7 @@ Settings->Configure Konversation->Notifications->Tabs->Use colored LEDs needs to
 ><replaceable
 >#kanal</replaceable
 ></userinput
->’a katılır. Kanal halihazırda yoksa oluşturulur ve kanal operatörü siz olursunuz.</para
+>’a katılır. Kanal hâlihazırda yoksa oluşturulur ve kanal operatörü siz olursunuz.</para
 ></listitem>
 </varlistentry>
 
@@ -3023,8 +3023,8 @@ part of the listing.
 		</term>
 		<listitem>
 			<para
->Bir aktarım başladığında; ancak dosya kullanıcının sisteminde halihazırda varsa kullanıcıya <interface
->Dosya halihazırda var. Aktarım sürdürülsün mü?</interface
+>Bir aktarım başladığında; ancak dosya kullanıcının sisteminde hâlihazırda varsa kullanıcıya <interface
+>Dosya hâlihazırda var. Aktarım sürdürülsün mü?</interface
 > iletisi gösterilir. Bu durum, kullanıcının aktarımı sürdürdüğünü gösterir. </para>
 		</listitem>
 	</varlistentry>
@@ -3513,7 +3513,7 @@ part of the listing.
 ><replaceable
 >Kanala</replaceable
 ></userinput
-> katılır. Sunucu izin veriyorsa ve kanal halihazırda yoksa kanal oluşturulur ve siz de kanal operatörü olursunuz. Kanala katılmak için bir parola gerekiyorsa <userinput
+> katılır. Sunucu izin veriyorsa ve kanal hâlihazırda yoksa kanal oluşturulur ve siz de kanal operatörü olursunuz. Kanala katılmak için bir parola gerekiyorsa <userinput
 ><replaceable
 >parola</replaceable
 ></userinput
@@ -4075,7 +4075,7 @@ part of the listing.
 ><replaceable
 >takma ad</replaceable
 ></userinput
-> ekler veya var olanları kaldırır. Takma ad halihazırda listedeyse kaldırılır. Listede değilse eklenir. <userinput
+> ekler veya var olanları kaldırır. Takma ad hâlihazırda listedeyse kaldırılır. Listede değilse eklenir. <userinput
 ><replaceable
 >Takma ad</replaceable
 ></userinput
@@ -6072,7 +6072,7 @@ distribution. -->
 > </para>
 
 <para
->Çeviri: Kaan Özdinçer<email
+>Çeviri: Kaan ÖZDİNÇER<email
 >kaanozdincer@gmail.com</email
 ></para
 > <para
