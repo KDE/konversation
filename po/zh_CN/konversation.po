@@ -5408,7 +5408,7 @@ msgctxt ""
 "We asked the server for available capabilities and got an empty list. This "
 "isn't an error, and isn't permanent"
 msgid "No configurable server capabilities are currently available."
-msgstr ""
+msgstr "当前没有可配置的服务器功能。"
 
 #: src/irc/inputfilter.cpp:847
 #, kde-format
