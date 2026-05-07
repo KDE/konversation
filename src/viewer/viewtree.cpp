@@ -16,7 +16,6 @@
 #include <QFontDatabase>
 #include <QGuiApplication>
 #include <QPainter>
-#include <QPainterPath>
 #include <QItemSelectionModel>
 #include <QStyleHints>
 #include <QToolTip>
