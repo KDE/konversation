@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-02-24 00:44+0000\n"
-"PO-Revision-Date: 2026-05-07 10:25+0300\n"
+"PO-Revision-Date: 2026-05-14 20:41+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -1095,7 +1095,7 @@ msgstr "עבור ל־&IPv4 לשליחות DCC:"
 #: src/config/dcc_configui.ui:156
 #, kde-format
 msgid "DCC send t&imeout:"
-msgstr "מקסימום &זמן העברת DCC:"
+msgstr "&זמן העברת DCC מרבי:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel6)
 #: src/config/dcc_configui.ui:179
@@ -5153,7 +5153,7 @@ msgstr " משתמשים לא ייחודיים: %1 (מתוכם %2 מוצגים)"
 #: src/irc/channellistpanel.cpp:354
 #, kde-format
 msgid "Save Channel List"
-msgstr "שמור את רשימת החדרים"
+msgstr "שמירת רשימת החדרים"
 
 #: src/irc/channellistpanel.cpp:386
 #, kde-format
@@ -5161,7 +5161,7 @@ msgid ""
 "Konversation Channel List: %1 - %2\n"
 "\n"
 msgstr ""
-"רשימת החדרים של Konversation: %1- %2\n"
+"רשימת החדרים של Konversation:‏ %1- %2\n"
 "\n"
 
 #: src/irc/channellistpanel.cpp:450 src/irc/joinchanneldialog.cpp:30
@@ -5183,13 +5183,13 @@ msgstr "רשימת החדרים עבור %1"
 #: src/irc/channellistpanelui.ui:35
 #, kde-format
 msgid "Ma&ximum users:"
-msgstr "&מרב המשתמשים:"
+msgstr "כמות משתמשים מ&רבית:"
 
 #. i18n: ectx: property (text), widget (QLabel, m_lblMinuser)
 #: src/irc/channellistpanelui.ui:51
 #, kde-format
 msgid "&Minimum users:"
-msgstr "&מינימום משתמשים:"
+msgstr "כמות משתמשים מ&זערית:"
 
 #. i18n: ectx: property (whatsThis), widget (QTreeView, m_channelListView)
 #: src/irc/channellistpanelui.ui:64
@@ -5219,13 +5219,13 @@ msgstr "&נושא"
 #: src/irc/channellistpanelui.ui:121
 #, kde-format
 msgid "Enter a filter string here."
-msgstr "הכנס כאן מחרוזת סימון."
+msgstr "נא למלא כאן כאן מחרוזת סינון."
 
 #. i18n: ectx: property (placeholderText), widget (KLineEdit, m_filterLine)
 #: src/irc/channellistpanelui.ui:127 src/urlcatcher.cpp:147
 #, kde-format
 msgid "Search"
-msgstr "חפש"
+msgstr "חיפוש"
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_regexBox)
 #: src/irc/channellistpanelui.ui:156
@@ -6785,8 +6785,8 @@ msgid ""
 "\"%2\".\n"
 "Please enter a new one or press Cancel to disconnect:"
 msgstr ""
-"אף אחד מהכינויים בזהות \"%1\" מתקבלים על ידי החיבור \"%2\".\n"
-"אנא הכניס אחד חדש או לחץ בטל להתנתק:"
+"אף אחד מהכינויים בזהות „%1” לא התקבלו על ידי החיבור „%2”.\n"
+"נא למלא אחד חדש או ללחוץ על ביטול כדי להתנתק:"
 
 #: src/irc/server.cpp:1340
 #, kde-format
@@ -6796,7 +6796,7 @@ msgstr "שגיאת כינוי"
 #: src/irc/server.cpp:2183
 #, kde-format
 msgid "Select File(s) to Send to %1"
-msgstr "בחר קובץ או קבצים לשליחה אל %1"
+msgstr "נא לבחור קובץ או קבצים לשליחה אל %1"
 
 #: src/irc/server.cpp:2352
 #, kde-format
