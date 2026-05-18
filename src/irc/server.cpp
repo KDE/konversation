@@ -503,29 +503,18 @@ void Server::connectToIRCServer()
             }
 
             m_socket->setProtocol(QSsl::SecureProtocols);
-            // QIODevice::Unbuffered, see m_socket->connectToHost() call below
+            // QIODevice::Unbuffered is no longer necessary
             m_socket->connectToHostEncrypted(getConnectionSettings().server().host(),
                                              getConnectionSettings().server().port(),
-                                             (QIODevice::ReadWrite | QIODevice::Unbuffered));
+                                             (QIODevice::ReadWrite));
         }
         else
         {
             connect(m_socket, &QAbstractSocket::connected, this, &Server::socketConnected);
-            // TODO re-evaluate this, perhaps with a test case
-            // The comment below was added here in October of 2019, but it is a copy of
-            // a kdelibs commit from September 2008, describing Qt4 behavior.
-            // See https://invent.kde.org/unmaintained/kdelibs/-/commit/34a9fb1ca1a9e5442502f5baedffc8880ed8aa21
-            //
-            // From KTcpSocket::connectToHost():
-            // There are enough layers of buffers between us and the network, and there is a quirk
-            // in QIODevice that can make it try to readData() twice per read() call if buffered and
-            // reaData() does not deliver enough data the first time. Like when the other side is
-            // simply not sending any more data...
-            // This can *apparently* lead to long delays sometimes which stalls applications.
-            // Do not want.
+            // QIODevice::Unbuffered is no longer necessary
             m_socket->connectToHost(getConnectionSettings().server().host(),
                                     getConnectionSettings().server().port(),
-                                    (QIODevice::ReadWrite | QIODevice::Unbuffered));
+                                    (QIODevice::ReadWrite));
         }
 
         // set up the connection details
