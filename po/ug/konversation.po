@@ -8,24 +8,25 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-02-24 00:44+0000\n"
-"PO-Revision-Date: 2013-09-08 07:04+0900\n"
-"Last-Translator: Gheyret Kenji <gheyret@gmail.com>\n"
+"PO-Revision-Date: 2026-05-31 19:22-0400\n"
+"Last-Translator: Abduqadir Abliz <sahranbay@gmail.com>\n"
 "Language-Team: Uyghur Computer Science Association <UKIJ@yahoogroups.com>\n"
 "Language: ug\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 3.9\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "ئابدۇقادىر ئابلىز, غەيرەت كەنجى"
+msgstr "ئابدۇقادىر ئابلىز، غەيرەت كەنجى"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "sahran.ug@gmail.com,  gheyret@gmail.com"
+msgstr "sahranbay@gmail.com, gheyret@gmail.com"
 
 #. i18n: ectx: Menu (insert)
 #: data/konversationui.rc:26
@@ -631,10 +632,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, whoIntervalLbl)
 #: src/config/chatwindowbehaviour_config.ui:299
-#, fuzzy, kde-format
-#| msgid "Update interval:"
+#, kde-format
 msgid "Update inter&val:"
-msgstr "يېڭىلاش ئىنتېرۋالى:"
+msgstr ""
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox1)
 #: src/config/colorsappearance_config.ui:30
@@ -720,7 +720,7 @@ msgstr ""
 #: src/config/colorsappearance_config.ui:868
 #, kde-format
 msgid "5:"
-msgstr "5:"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel8)
 #. i18n: ectx: property (text), widget (QLabel, textLabel12_5)
@@ -728,7 +728,7 @@ msgstr "5:"
 #: src/config/colorsappearance_config.ui:878
 #, kde-format
 msgid "4:"
-msgstr "4:"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel7)
 #. i18n: ectx: property (text), widget (QLabel, textLabel12_4)
@@ -736,7 +736,7 @@ msgstr "4:"
 #: src/config/colorsappearance_config.ui:794
 #, kde-format
 msgid "3:"
-msgstr "3:"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel6)
 #. i18n: ectx: property (text), widget (QLabel, textLabel12_3)
@@ -744,7 +744,7 @@ msgstr "3:"
 #: src/config/colorsappearance_config.ui:778
 #, kde-format
 msgid "2:"
-msgstr "2:"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel4_2)
 #. i18n: ectx: property (text), widget (QLabel, textLabel12_14)
@@ -752,7 +752,7 @@ msgstr "2:"
 #: src/config/colorsappearance_config.ui:838
 #, kde-format
 msgid "0:"
-msgstr "0:"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel5_2)
 #. i18n: ectx: property (text), widget (QLabel, textLabel12_2)
@@ -760,7 +760,7 @@ msgstr "0:"
 #: src/config/colorsappearance_config.ui:762
 #, kde-format
 msgid "1:"
-msgstr "1:"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel11)
 #. i18n: ectx: property (text), widget (QLabel, textLabel12_8)
@@ -768,7 +768,7 @@ msgstr "1:"
 #: src/config/colorsappearance_config.ui:848
 #, kde-format
 msgid "7:"
-msgstr "7:"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel10)
 #. i18n: ectx: property (text), widget (QLabel, textLabel12_7)
@@ -776,7 +776,7 @@ msgstr "7:"
 #: src/config/colorsappearance_config.ui:858
 #, kde-format
 msgid "6:"
-msgstr "6:"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1_3)
 #: src/config/colorsappearance_config.ui:700
@@ -803,49 +803,49 @@ msgstr ""
 #: src/config/colorsappearance_config.ui:1051
 #, kde-format
 msgid "11:"
-msgstr "11:"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel12_10)
 #: src/config/colorsappearance_config.ui:1082
 #, kde-format
 msgid "9:"
-msgstr "9:"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel12_9)
 #: src/config/colorsappearance_config.ui:1092
 #, kde-format
 msgid "8:"
-msgstr "8:"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel12_11)
 #: src/config/colorsappearance_config.ui:1102
 #, kde-format
 msgid "10:"
-msgstr "10:"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel12_13)
 #: src/config/colorsappearance_config.ui:1183
 #, kde-format
 msgid "12:"
-msgstr "12:"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel12_16)
 #: src/config/colorsappearance_config.ui:1200
 #, kde-format
 msgid "15:"
-msgstr "15:"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel12_15)
 #: src/config/colorsappearance_config.ui:1224
 #, kde-format
 msgid "14:"
-msgstr "14:"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel12)
 #: src/config/colorsappearance_config.ui:1234
 #, kde-format
 msgid "13:"
-msgstr "13:"
+msgstr ""
 
 #: src/config/connectionbehavior_config.cpp:29 src/config/dcc_config.cpp:30
 #: src/config/settingsdialog.cpp:116
@@ -935,7 +935,7 @@ msgstr "ۋاكالەتچى"
 #: src/dcc/transferdetailedinfopanelui.ui:23 src/identitydialog.ui:243
 #, kde-format
 msgid "Type:"
-msgstr "تىپى:"
+msgstr "تۈرى:"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_ProxyType)
 #: src/config/connectionbehavior_config.ui:161
@@ -1090,7 +1090,7 @@ msgstr ""
 #: src/config/dcc_configui.ui:207
 #, kde-format
 msgid "IP"
-msgstr "IP"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel4)
 #: src/config/dcc_configui.ui:213
@@ -1145,7 +1145,7 @@ msgstr ""
 #: src/config/fontappearance_config.ui:62
 #, kde-format
 msgid "Tab bar:"
-msgstr ""
+msgstr "بەتكۈچ بالداق:"
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, kcfg_FixedMOTD)
 #: src/config/fontappearance_config.ui:76
@@ -1250,13 +1250,13 @@ msgstr ""
 #: src/config/generalbehavior_configui.ui:182
 #, kde-format
 msgid "Case sensitive"
-msgstr "چوڭ كىچىك يېزىلىشنى پەرقلەندۈر"
+msgstr "چوڭ كىچىك ھەرپنى پەرقلەندۈر"
 
 #. i18n: ectx: property (title), widget (QGroupBox, miscGBox)
 #: src/config/generalbehavior_configui.ui:195
 #, kde-format
 msgid "Miscellaneous"
-msgstr "باشقىلار"
+msgstr "باشقا"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_DisableNotifyWhileAway)
 #: src/config/generalbehavior_configui.ui:201
@@ -1396,22 +1396,21 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, enableNotificationsLabel)
 #: src/config/highlight_configui.ui:381
-#, fuzzy, kde-format
-#| msgid "Notifications"
+#, kde-format
 msgid "Enable &notifications:"
-msgstr "ئۇقتۇرۇشلار"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QTreeWidget, ignoreListView)
 #: src/config/ignore_configui.ui:45
 #, kde-format
 msgid "Pattern"
-msgstr "Pattern"
+msgstr "ئەندىزە"
 
 #. i18n: ectx: property (text), widget (QTreeWidget, ignoreListView)
 #: src/config/ignore_configui.ui:50 src/dcc/transferlistmodel.cpp:44
 #, kde-format
 msgid "Type"
-msgstr "تىپى"
+msgstr "تۈرى"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel2)
 #: src/config/ignore_configui.ui:58
@@ -1525,10 +1524,9 @@ msgstr ""
 #. i18n: ectx: label, entry (LauncherEntryCountMode), group (LauncherEntry)
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_LauncherEntryCountMode)
 #: src/config/konversation.kcfg:443 src/config/launcherentry_config.ui:56
-#, fuzzy, kde-format
-#| msgid "All Networks"
+#, kde-format
 msgid "All events"
-msgstr "بارلىق تورلار"
+msgstr ""
 
 #. i18n: ectx: label, entry (LauncherEntryCountMode), group (LauncherEntry)
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_LauncherEntryCountMode)
@@ -1551,10 +1549,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, modeLbl)
 #: src/config/launcherentry_config.ui:45
-#, fuzzy, kde-format
-#| msgid "Count:"
+#, kde-format
 msgid "Count &mode:"
-msgstr "سانى:"
+msgstr ""
 
 #. i18n: ectx: property (title), widget (QGroupBox, countedEventsGroupBox)
 #: src/config/launcherentry_config.ui:72
@@ -1908,13 +1905,13 @@ msgstr "ئارايۈز"
 #: src/config/settingsdialog.cpp:51
 #, kde-format
 msgid "Behavior"
-msgstr "ھەرىكەت"
+msgstr "قىلمىش"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox5)
 #: src/config/settingsdialog.cpp:55 src/config/tabnotifications_config.ui:55
 #, kde-format
 msgid "Notifications"
-msgstr "ئۇقتۇرۇشلار"
+msgstr "ئۇقتۇرۇش"
 
 #: src/config/settingsdialog.cpp:68 src/config/settingsdialog.cpp:117
 #, kde-format
@@ -1929,12 +1926,12 @@ msgstr ""
 #: src/config/settingsdialog.cpp:80
 #, kde-format
 msgid "Colors"
-msgstr "رەڭلەر"
+msgstr "رەڭ"
 
 #: src/config/settingsdialog.cpp:86
 #, kde-format
 msgid "Fonts"
-msgstr "خەت نۇسخىلىرى"
+msgstr "خەت نۇسخا"
 
 #: src/config/settingsdialog.cpp:90 src/viewer/irccontextmenus.cpp:88
 #, kde-format
@@ -1944,13 +1941,12 @@ msgstr ""
 #: src/config/settingsdialog.cpp:96 src/config/settingsdialog.cpp:158
 #, kde-format
 msgid "Tabs"
-msgstr "بەتكۈچلەر"
+msgstr "بەتكۈچ"
 
 #: src/config/settingsdialog.cpp:102
-#, fuzzy, kde-format
-#| msgid "Behavior"
+#, kde-format
 msgid "General Behavior"
-msgstr "ھەرىكەت"
+msgstr "ئادەتتىكى قىلمىش"
 
 #: src/config/settingsdialog.cpp:107
 #, kde-format
@@ -1961,7 +1957,7 @@ msgstr "باغلىنىش"
 #, kde-format
 msgid " line"
 msgid_plural " lines"
-msgstr[0] " سىزىقلار"
+msgstr[0] " قۇر"
 
 #: src/config/settingsdialog.cpp:115
 #, kde-format
@@ -2158,10 +2154,9 @@ msgid "Theme archive is invalid."
 msgstr ""
 
 #: src/config/theme_config.cpp:236 src/config/theme_config.cpp:266
-#, fuzzy, kde-format
-#| msgid "I&nstall Theme..."
+#, kde-format
 msgid "Cannot Install Theme"
-msgstr "ئۆرنەك ئورنات(&N)…"
+msgstr ""
 
 #: src/config/theme_config.cpp:290
 #, kde-format
@@ -2181,17 +2176,15 @@ msgstr "ئۆرنەك سەپلەش"
 
 #. i18n: ectx: property (text), widget (KNSWidgets::Button, getButton)
 #: src/config/theme_configui.ui:28
-#, fuzzy, kde-format
-#| msgid "I&nstall Theme..."
+#, kde-format
 msgid "G&et New Themes..."
-msgstr "ئۆرنەك ئورنات(&N)…"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, installButton)
 #: src/config/theme_configui.ui:35
-#, fuzzy, kde-format
-#| msgid "I&nstall Theme..."
+#, kde-format
 msgid "I&nstall from File..."
-msgstr "ئۆرنەك ئورنات(&N)…"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, removeButton)
 #: src/config/theme_configui.ui:45
@@ -2776,7 +2769,7 @@ msgstr ""
 #, kde-format
 msgctxt "Universal Plug and Play"
 msgid "UPnP"
-msgstr "UPnP"
+msgstr ""
 
 #: src/dcc/chatcontainer.cpp:178
 #, kde-format
@@ -2896,7 +2889,7 @@ msgstr "ھالىتى"
 #: src/dcc/transferdetailedinfopanel.cpp:35
 #, kde-format
 msgid "Details"
-msgstr "تەپسىلاتلار"
+msgstr "تەپسىلاتى"
 
 #: src/dcc/transferdetailedinfopanel.cpp:127
 #, kde-format
@@ -2929,15 +2922,13 @@ msgstr ""
 #, kde-format
 msgctxt "%1 = PartnerNick, %2 = Partner IRC Servername"
 msgid "%1 on %2"
-msgstr "%1 - %2 نىڭدا"
+msgstr "%2 دىكى %1"
 
 #: src/dcc/transferdetailedinfopanel.cpp:169
-#, fuzzy, kde-format
-#| msgctxt "network (nickname)"
-#| msgid "%1 (%2)"
+#, kde-format
 msgctxt "%1=ownIP, %2=ownPort"
 msgid "%1 (port %2)"
-msgstr "%1 (%2)"
+msgstr ""
 
 #: src/dcc/transferdetailedinfopanel.cpp:177
 #, kde-format
@@ -3106,7 +3097,7 @@ msgstr "ئۆچىرەت"
 #: src/dcc/transferlistmodel.cpp:473
 #, kde-format
 msgid "Preparing"
-msgstr "تەييارلىق ھالەت"
+msgstr "تەييارلاۋاتىدۇ"
 
 #: src/dcc/transferlistmodel.cpp:475
 #, kde-format
@@ -3409,7 +3400,7 @@ msgstr ""
 #: src/dcc/transferrecv.cpp:825 src/dcc/transfersend.cpp:592
 #, kde-format
 msgid "Timed out"
-msgstr ""
+msgstr "ۋاقىت ئېشىپ كەتتى"
 
 #: src/dcc/transfersend.cpp:165
 #, kde-format
@@ -3435,10 +3426,9 @@ msgid ""
 msgstr ""
 
 #: src/dcc/transfersend.cpp:197
-#, fuzzy, kde-format
-#| msgid "(unknown)"
+#, kde-format
 msgid "unknown"
-msgstr "(نامەلۇم)"
+msgstr "يوچۇن"
 
 #: src/dcc/transfersend.cpp:202
 #, kde-format
@@ -3446,10 +3436,9 @@ msgid "No filename was given"
 msgstr ""
 
 #: src/dcc/transfersend.cpp:243
-#, fuzzy, kde-format
-#| msgid "Could not open file \"%1\"."
+#, kde-format
 msgid "Could not retrieve \"%1\""
-msgstr "ھۆججەت «%1» نى ئاچقىلى بولمىدى."
+msgstr ""
 
 #: src/dcc/transfersend.cpp:264
 #, kde-format
@@ -3514,7 +3503,7 @@ msgstr ""
 #: src/dcc/transferview.cpp:302
 #, kde-format
 msgid "Columns"
-msgstr "ئىستونلار"
+msgstr "رەت"
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, WhiteBoardFontChooserUi)
 #: src/dcc/whiteboardfontchooserui.ui:14
@@ -3526,7 +3515,7 @@ msgstr ""
 #: src/dcc/whiteboardfontchooserui.ui:55
 #, kde-format
 msgid "6"
-msgstr "6"
+msgstr ""
 
 #. i18n: ectx: property (text), item, widget (KComboBox, m_fontPointComboBox)
 #: src/dcc/whiteboardfontchooserui.ui:60
@@ -3538,19 +3527,19 @@ msgstr "7"
 #: src/dcc/whiteboardfontchooserui.ui:65
 #, kde-format
 msgid "8"
-msgstr "8"
+msgstr ""
 
 #. i18n: ectx: property (text), item, widget (KComboBox, m_fontPointComboBox)
 #: src/dcc/whiteboardfontchooserui.ui:70
 #, kde-format
 msgid "9"
-msgstr "9"
+msgstr ""
 
 #. i18n: ectx: property (text), item, widget (KComboBox, m_fontPointComboBox)
 #: src/dcc/whiteboardfontchooserui.ui:75
 #, kde-format
 msgid "10"
-msgstr "10"
+msgstr ""
 
 #. i18n: ectx: property (text), item, widget (KComboBox, m_fontPointComboBox)
 #: src/dcc/whiteboardfontchooserui.ui:80
@@ -3562,31 +3551,31 @@ msgstr "11"
 #: src/dcc/whiteboardfontchooserui.ui:85
 #, kde-format
 msgid "12"
-msgstr "12"
+msgstr ""
 
 #. i18n: ectx: property (text), item, widget (KComboBox, m_fontPointComboBox)
 #: src/dcc/whiteboardfontchooserui.ui:90
 #, kde-format
 msgid "14"
-msgstr "14"
+msgstr ""
 
 #. i18n: ectx: property (text), item, widget (KComboBox, m_fontPointComboBox)
 #: src/dcc/whiteboardfontchooserui.ui:95
 #, kde-format
 msgid "16"
-msgstr "16"
+msgstr ""
 
 #. i18n: ectx: property (text), item, widget (KComboBox, m_fontPointComboBox)
 #: src/dcc/whiteboardfontchooserui.ui:100
 #, kde-format
 msgid "18"
-msgstr "18"
+msgstr ""
 
 #. i18n: ectx: property (text), item, widget (KComboBox, m_fontPointComboBox)
 #: src/dcc/whiteboardfontchooserui.ui:105
 #, kde-format
 msgid "20"
-msgstr "20"
+msgstr ""
 
 #. i18n: ectx: property (text), item, widget (KComboBox, m_fontPointComboBox)
 #: src/dcc/whiteboardfontchooserui.ui:110
@@ -3598,37 +3587,37 @@ msgstr "22"
 #: src/dcc/whiteboardfontchooserui.ui:115
 #, kde-format
 msgid "24"
-msgstr "24"
+msgstr ""
 
 #. i18n: ectx: property (text), item, widget (KComboBox, m_fontPointComboBox)
 #: src/dcc/whiteboardfontchooserui.ui:120
 #, kde-format
 msgid "26"
-msgstr "26"
+msgstr ""
 
 #. i18n: ectx: property (text), item, widget (KComboBox, m_fontPointComboBox)
 #: src/dcc/whiteboardfontchooserui.ui:125
 #, kde-format
 msgid "28"
-msgstr "28"
+msgstr ""
 
 #. i18n: ectx: property (text), item, widget (KComboBox, m_fontPointComboBox)
 #: src/dcc/whiteboardfontchooserui.ui:130
 #, kde-format
 msgid "36"
-msgstr "36"
+msgstr ""
 
 #. i18n: ectx: property (text), item, widget (KComboBox, m_fontPointComboBox)
 #: src/dcc/whiteboardfontchooserui.ui:135
 #, kde-format
 msgid "48"
-msgstr "48"
+msgstr ""
 
 #. i18n: ectx: property (text), item, widget (KComboBox, m_fontPointComboBox)
 #: src/dcc/whiteboardfontchooserui.ui:140
 #, kde-format
 msgid "72"
-msgstr "72"
+msgstr ""
 
 #: src/dcc/whiteboardtoolbar.cpp:33
 #, kde-format
@@ -3648,7 +3637,7 @@ msgstr ""
 #: src/dcc/whiteboardtoolbar.cpp:44
 #, kde-format
 msgid "Draw a straight line"
-msgstr ""
+msgstr "تۈز سىزىق سىزىدۇ"
 
 #: src/dcc/whiteboardtoolbar.cpp:49
 #, kde-format
@@ -3839,11 +3828,10 @@ msgid ""
 msgstr ""
 
 #: src/identitydialog.cpp:482
-#, fuzzy, kde-format
-#| msgid "Completion"
+#, kde-format
 msgctxt "Shown in unfilled line edit"
 msgid "(optional)"
-msgstr "تاماملاش"
+msgstr ""
 
 #: src/identitydialog.cpp:489
 #, kde-format
@@ -3868,7 +3856,7 @@ msgstr "قوش"
 #: src/identitydialog.ui:108
 #, kde-format
 msgid "Duplicate"
-msgstr "كۆچۈر"
+msgstr "كۆپەيت"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, m_editBtn)
 #: src/identitydialog.ui:139
@@ -3929,7 +3917,7 @@ msgstr "بۇيرۇق:"
 #: src/identitydialog.ui:286 src/irc/nickinfo.cpp:220
 #, kde-format
 msgid "Account:"
-msgstr "ھېسابات:"
+msgstr "ھېساب:"
 
 #. i18n: ectx: property (text), widget (QLabel, authPasswordLabel)
 #: src/identitydialog.ui:299
@@ -4245,7 +4233,7 @@ msgstr ""
 #: src/irc/inputfilter.cpp:2419 src/irc/query.cpp:163
 #, kde-format
 msgid "Nick"
-msgstr "Nick"
+msgstr ""
 
 #: src/irc/channel.cpp:1057
 #, kde-format
@@ -4281,7 +4269,7 @@ msgstr ""
 #, kde-format
 msgctxt "Message type"
 msgid "Quit"
-msgstr "ئاخىرلاشتۇر"
+msgstr "چىكىن"
 
 #: src/irc/channel.cpp:1138
 #, kde-format
@@ -5012,7 +5000,7 @@ msgstr ""
 #: src/irc/inputfilter.cpp:1715 src/irc/inputfilter.cpp:2436
 #, kde-format
 msgid "Users"
-msgstr "ئىشلەتكۈچىلەر"
+msgstr "ئىشلەتكۈچى"
 
 #: src/irc/channellistpanel.cpp:82
 #, kde-format
@@ -5191,7 +5179,7 @@ msgstr "باشقۇرغۇچى"
 #: src/irc/channelnick.cpp:189
 #, kde-format
 msgid "Owner"
-msgstr "ئىگىسى"
+msgstr "ئىگىدار"
 
 #: src/irc/channelnick.cpp:190
 #, kde-format
@@ -5311,7 +5299,7 @@ msgstr ""
 #: src/irc/inputfilter.cpp:847
 #, kde-format
 msgid "Capabilities"
-msgstr ""
+msgstr "ئىقتىدارى"
 
 #: src/irc/inputfilter.cpp:900
 #, kde-format
@@ -5362,7 +5350,7 @@ msgstr[0] ""
 #: src/irc/inputfilter.cpp:1363 src/urlcatcher.cpp:170
 #, kde-format
 msgid "URL"
-msgstr "URL"
+msgstr "تور ئادرېسى"
 
 #: src/irc/inputfilter.cpp:1364
 #, kde-format
@@ -5394,7 +5382,7 @@ msgstr ""
 #: src/irc/inputfilter.cpp:2193
 #, kde-format
 msgid "Whois"
-msgstr "Whois"
+msgstr ""
 
 #: src/irc/inputfilter.cpp:1394
 #, kde-format
@@ -5554,7 +5542,7 @@ msgstr ""
 #: src/irc/inputfilter.cpp:1804 src/irc/outputfilterresolvejob.cpp:66
 #, kde-format
 msgid "DNS"
-msgstr "DNS"
+msgstr ""
 
 #: src/irc/inputfilter.cpp:1805
 #, kde-format
@@ -5652,7 +5640,7 @@ msgstr[0] "%1 كۈن"
 #, kde-format
 msgid "1 hour"
 msgid_plural "%1 hours"
-msgstr[0] "%1 سائەت"
+msgstr[0] "‏%1‎‏ سائەت"
 
 #: src/irc/inputfilter.cpp:2137 src/irc/inputfilter.cpp:2150
 #: src/irc/inputfilter.cpp:2160 src/statusbar.cpp:179 src/statusbar.cpp:187
@@ -5756,7 +5744,7 @@ msgctxt ""
 "The server didn't respond with the identity of the ban creator, so we say "
 "unknown (in brackets to avoid confusion with a real nickname)"
 msgid "(unknown)"
-msgstr "(نامەلۇم)"
+msgstr "(يوچۇن)"
 
 #: src/irc/inputfilter.cpp:2343 src/irc/inputfilter.cpp:2361
 #, kde-format
@@ -5892,10 +5880,9 @@ msgid "Are you sure you want to remove this channel from your history?"
 msgstr ""
 
 #: src/irc/joinchanneldialog.cpp:218
-#, fuzzy, kde-format
-#| msgid "Remove Theme"
+#, kde-format
 msgid "Remove channel"
-msgstr "ئۆرنەكنى چىقىرىۋەت"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel8)
 #: src/irc/joinchannelui.ui:67
@@ -5923,7 +5910,7 @@ msgstr ""
 #: src/irc/nickinfo.cpp:228
 #, kde-format
 msgid "(unknown)"
-msgstr "(نامەلۇم)"
+msgstr "(يوچۇن)"
 
 #: src/irc/nickinfo.cpp:233
 #, kde-format
@@ -6040,7 +6027,7 @@ msgstr " ئەمەل بەلگىسى"
 #: src/irc/nicksonline.cpp:308
 #, kde-format
 msgid " Owner"
-msgstr " ئىگىسى"
+msgstr " ئىگىدار"
 
 #: src/irc/nicksonline.cpp:309
 #, kde-format
@@ -6063,7 +6050,7 @@ msgstr ""
 #: src/irc/outputfilter.cpp:323
 #, kde-format
 msgid "Raw"
-msgstr "خام"
+msgstr "ئەسلى"
 
 #: src/irc/outputfilter.cpp:380
 #, kde-format
@@ -7115,7 +7102,7 @@ msgstr "تەھرىر(&I)…"
 #: src/irc/serverlistdialog.cpp:52 src/quickconnectdialog.cpp:95
 #, kde-format
 msgid "C&onnect"
-msgstr "ئۇلا(&O)"
+msgstr "باغلان(&O)"
 
 #: src/irc/serverlistdialog.cpp:52 src/quickconnectdialog.cpp:95
 #, kde-format
@@ -7226,7 +7213,7 @@ msgstr ""
 #: src/irc/topichistorymodel.cpp:28
 #, kde-format
 msgid "Unknown"
-msgstr "نامەلۇم"
+msgstr "يوچۇن"
 
 #: src/irc/topichistorymodel.cpp:172
 #, kde-format
@@ -7236,7 +7223,7 @@ msgstr "تېكىست"
 #: src/irc/topichistorymodel.cpp:175
 #, kde-format
 msgid "Author"
-msgstr "ئاپتور"
+msgstr "يازغۇچى"
 
 #: src/irc/topichistorymodel.cpp:178
 #, kde-format
@@ -7257,7 +7244,7 @@ msgstr ""
 #: src/main.cpp:27 src/viewer/trayicon.cpp:23
 #, kde-format
 msgid "Konversation"
-msgstr "Konversation"
+msgstr ""
 
 #: src/main.cpp:29
 #, kde-format
@@ -7291,12 +7278,12 @@ msgstr ""
 #: src/main.cpp:37
 #, kde-format
 msgid "Peter Simonsson"
-msgstr "Peter Simonsson"
+msgstr ""
 
 #: src/main.cpp:37
 #, kde-format
 msgid "Maintainer"
-msgstr "مەسئۇل كىشى"
+msgstr "ئاسرىغۇچى"
 
 #: src/main.cpp:38
 #, kde-format
@@ -7343,7 +7330,7 @@ msgstr ""
 #: src/main.cpp:42
 #, kde-format
 msgid "John Tapsell"
-msgstr "John Tapsell"
+msgstr ""
 
 #: src/main.cpp:42
 #, kde-format
@@ -7383,7 +7370,7 @@ msgstr ""
 #: src/main.cpp:47
 #, kde-format
 msgid "Christian Muehlhaeuser"
-msgstr "Christian Muehlhaeuser"
+msgstr ""
 
 #: src/main.cpp:47
 #, kde-format
@@ -7413,7 +7400,7 @@ msgstr ""
 #: src/main.cpp:50
 #, kde-format
 msgid "Alex Zepeda"
-msgstr "Alex Zepeda"
+msgstr ""
 
 #: src/main.cpp:50
 #, kde-format
@@ -7443,7 +7430,7 @@ msgstr ""
 #: src/main.cpp:53
 #, kde-format
 msgid "Michael Goettsche"
-msgstr "Michael Goettsche"
+msgstr ""
 
 #: src/main.cpp:53
 #, kde-format
@@ -7453,7 +7440,7 @@ msgstr ""
 #: src/main.cpp:54
 #, kde-format
 msgid "Benjamin Meyer"
-msgstr "Benjamin Meyer"
+msgstr ""
 
 #: src/main.cpp:54
 #, kde-format
@@ -7463,7 +7450,7 @@ msgstr ""
 #: src/main.cpp:55
 #, kde-format
 msgid "Jakub Stachowski"
-msgstr "Jakub Stachowski"
+msgstr ""
 
 #: src/main.cpp:55
 #, kde-format
@@ -7513,12 +7500,12 @@ msgstr ""
 #: src/main.cpp:60
 #, kde-format
 msgid "Lucijan Busch"
-msgstr "Lucijan Busch"
+msgstr ""
 
 #: src/main.cpp:60 src/main.cpp:66 src/main.cpp:69
 #, kde-format
 msgid "Bug fixes"
-msgstr "كەمتۈكلەرنى تۈزىتىش"
+msgstr "كەمتۈك تۈزىتىش"
 
 #: src/main.cpp:61
 #, kde-format
@@ -7543,7 +7530,7 @@ msgstr ""
 #: src/main.cpp:63
 #, kde-format
 msgid "Thomas Nagy"
-msgstr "Thomas Nagy"
+msgstr ""
 
 #: src/main.cpp:63
 #, kde-format
@@ -7578,7 +7565,7 @@ msgstr ""
 #: src/main.cpp:67
 #, kde-format
 msgid "Ivor Hewitt"
-msgstr "Ivor Hewitt"
+msgstr ""
 
 #: src/main.cpp:67
 #, kde-format
@@ -7634,7 +7621,7 @@ msgstr ""
 #: src/main.cpp:73
 #, kde-format
 msgid "Abdurrahman AVCI"
-msgstr "Abdurrahman AVCI"
+msgstr ""
 
 #: src/main.cpp:73
 #, kde-format
@@ -7662,10 +7649,9 @@ msgid "Server to connect"
 msgstr ""
 
 #: src/main.cpp:85
-#, fuzzy, kde-format
-#| msgid "&Server:"
+#, kde-format
 msgid "server"
-msgstr "مۇلازىمېتىر(&S):"
+msgstr ""
 
 #: src/main.cpp:86
 #, kde-format
@@ -7673,10 +7659,9 @@ msgid "Port to use"
 msgstr ""
 
 #: src/main.cpp:86
-#, fuzzy, kde-format
-#| msgid "Support"
+#, kde-format
 msgid "port"
-msgstr "قوللاش"
+msgstr ""
 
 #: src/main.cpp:87
 #, kde-format
@@ -7684,8 +7669,7 @@ msgid "Channel to join after connection"
 msgstr ""
 
 #: src/main.cpp:87
-#, fuzzy, kde-format
-#| msgid "Channel"
+#, kde-format
 msgid "channel"
 msgstr "قانال"
 
@@ -7695,10 +7679,9 @@ msgid "Nickname to use"
 msgstr ""
 
 #: src/main.cpp:88
-#, fuzzy, kde-format
-#| msgid "Nickname"
+#, kde-format
 msgid "nickname"
-msgstr "تەخەللۇس"
+msgstr ""
 
 #: src/main.cpp:89
 #, kde-format
@@ -7706,10 +7689,9 @@ msgid "Password for connection"
 msgstr ""
 
 #: src/main.cpp:89
-#, fuzzy, kde-format
-#| msgid "Password:"
+#, kde-format
 msgid "password"
-msgstr "ئىم:"
+msgstr "ئىم"
 
 #: src/main.cpp:90
 #, kde-format
@@ -7730,7 +7712,7 @@ msgstr ""
 #: src/main.cpp:92
 #, kde-format
 msgid "msec"
-msgstr ""
+msgstr "مىللىسېكۇنت"
 
 #: src/main.cpp:93
 #, kde-format
@@ -7950,7 +7932,7 @@ msgstr ""
 #: src/mainwindow.cpp:414
 #, kde-format
 msgid "Go to Tab %1"
-msgstr ""
+msgstr "%1‎‏-بەتكۈچكە يۆتكەل"
 
 #: src/mainwindow.cpp:421
 #, kde-format
@@ -7975,7 +7957,7 @@ msgstr ""
 #: src/mainwindow.cpp:438
 #, kde-format
 msgid "Reset Font Size"
-msgstr ""
+msgstr "خەت نۇسخا چوڭلۇقى تەڭشەك"
 
 #: src/mainwindow.cpp:442
 #, kde-format
@@ -8085,7 +8067,7 @@ msgstr ""
 #: src/mainwindow.cpp:568
 #, kde-format
 msgid "Bookmarks"
-msgstr "خەتكۈشلەر"
+msgstr "خەتكۈش"
 
 #: src/mainwindow.cpp:613
 #, kde-format
@@ -8097,7 +8079,7 @@ msgstr ""
 #: src/mainwindow.cpp:614 src/mainwindow.cpp:624
 #, kde-format
 msgid "Confirm Quit"
-msgstr "چېكىنىشنى جەزملەش"
+msgstr "چېكىنىشنى جەزملە"
 
 #: src/mainwindow.cpp:623
 #, kde-format
@@ -8123,11 +8105,13 @@ msgid ""
 "<qt>This will hide the menu bar completely. You can show it again by typing "
 "%1.</qt>"
 msgstr ""
+"<qt>بۇ مەشغۇلات تىزىملىك بالداقنى پۈتۈنلەي يوشۇرىدۇ. %1 نى بېسىپ قايتا "
+"كۆرسىتەلەيسىز.</qt>"
 
 #: src/mainwindow.cpp:807
 #, kde-format
 msgid "Hide menu bar"
-msgstr "تىزىملىك بالدىقىنى يوشۇر"
+msgstr "تىزىملىك بالداقنى يوشۇر"
 
 #: src/mainwindow.cpp:839
 #, kde-format
@@ -8299,7 +8283,7 @@ msgstr ""
 #: src/queuetuner.cpp:224
 #, kde-format
 msgid "Reset..."
-msgstr "R"
+msgstr "ئەسلىگە قايتۇر…"
 
 #: src/queuetuner.cpp:229
 #, kde-format
@@ -8491,10 +8475,9 @@ msgid "&Use SSL"
 msgstr ""
 
 #: src/statusbar.cpp:36 src/statusbar.cpp:72 src/statusbar.cpp:140
-#, fuzzy, kde-format
-#| msgid "Ready."
+#, kde-format
 msgid "Ready"
-msgstr "تەييار."
+msgstr "تەييار"
 
 #: src/statusbar.cpp:42
 #, kde-format
@@ -8611,7 +8594,7 @@ msgstr ""
 #: src/urlcatcher.cpp:103
 #, kde-format
 msgid "Add Bookmark..."
-msgstr "خەتكۈش قوشۇش"
+msgstr "خەتكۈش قوش…"
 
 #: src/urlcatcher.cpp:111
 #, kde-format
@@ -8691,7 +8674,7 @@ msgstr ""
 #: src/urlcatcher.cpp:168
 #, kde-format
 msgid "From"
-msgstr "يوللىغۇچى"
+msgstr "كىمدىن"
 
 #: src/urlcatcher.cpp:172
 #, kde-format
@@ -9087,10 +9070,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, m_fgColorLbl)
 #: src/viewer/irccolorchooserui.ui:74
-#, fuzzy, kde-format
-#| msgid "&Foreground color:"
+#, kde-format
 msgid "Fore&ground color:"
-msgstr "ئالدى رەڭگى(&F):"
+msgstr ""
 
 #. i18n: ectx: property (toolTip), widget (KComboBox, m_bgColorCBox)
 #. i18n: ectx: property (toolTip), widget (QLabel, m_bgColorLbl)
@@ -9130,7 +9112,7 @@ msgstr "خەتكۈچكە قوش"
 #: src/viewer/irccontextmenus.cpp:142
 #, kde-format
 msgid "Open With..."
-msgstr "بۇنىڭدا ئېچىش…"
+msgstr "ئاچقۇز…"
 
 #: src/viewer/irccontextmenus.cpp:143
 #, kde-format
@@ -9140,12 +9122,12 @@ msgstr ""
 #: src/viewer/irccontextmenus.cpp:283
 #, kde-format
 msgid "Search for '%1' with"
-msgstr "'%1' نى ئىزدەش ئۇسۇلى"
+msgstr "«%1» نى ئىزدەش ئۇسۇلى"
 
 #: src/viewer/irccontextmenus.cpp:297
 #, kde-format
 msgid "Configure Web Shortcuts..."
-msgstr "تور تېزلەتمىلىرىنى سەپلەش…"
+msgstr "تور تېزلەتمىسىنى سەپلەش…"
 
 #: src/viewer/irccontextmenus.cpp:333
 #, kde-format
@@ -9500,7 +9482,7 @@ msgstr "ئىزدە(&I)"
 #: src/viewer/searchbarbase.ui:68
 #, kde-format
 msgid "Jump to next match"
-msgstr ""
+msgstr "كېيىنكى ماس كەلگەنگە ئاتلا"
 
 #. i18n: ectx: property (text), widget (QToolButton, m_findNextButton)
 #: src/viewer/searchbarbase.ui:71
@@ -9512,7 +9494,7 @@ msgstr "كېيىنكى(&N)"
 #: src/viewer/searchbarbase.ui:81
 #, kde-format
 msgid "Jump to previous match"
-msgstr ""
+msgstr "ئالدىنقى ماس كەلگەنگە ئاتلا"
 
 #. i18n: ectx: property (text), widget (QToolButton, m_findPreviousButton)
 #: src/viewer/searchbarbase.ui:84
@@ -9524,7 +9506,7 @@ msgstr "ئالدىنقى(&P)"
 #: src/viewer/searchbarbase.ui:110
 #, kde-format
 msgid "Modify search behavior"
-msgstr ""
+msgstr "ئىزدەش قىلمىشىنى ئۆزگەرت"
 
 #. i18n: ectx: property (text), widget (QToolButton, m_optionsButton)
 #: src/viewer/searchbarbase.ui:113
@@ -9600,7 +9582,7 @@ msgstr ""
 #: src/viewer/trayicon.cpp:23
 #, kde-format
 msgid "IRC Client"
-msgstr ""
+msgstr "IRC خېرىدارى"
 
 #: src/viewer/viewcontainer.cpp:882
 #, kde-format
