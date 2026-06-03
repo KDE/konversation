@@ -93,6 +93,7 @@
   <summary xml:lang="sr-ijekavianlatin">IRC klijent</summary>
   <summary xml:lang="sv">IRC-klient</summary>
   <summary xml:lang="tr">IRC istemcisi</summary>
+  <summary xml:lang="ug">IRC خېرىدارى</summary>
   <summary xml:lang="uk">Клієнт IRC</summary>
   <summary xml:lang="zh-CN">IRC 客户端</summary>
   <summary xml:lang="zh-TW">IRC 用戶端程式</summary>
@@ -178,6 +179,7 @@
     <p xml:lang="sv">Funktioner:</p>
     <p xml:lang="ta">அம்சங்கள்:</p>
     <p xml:lang="tr">Özellikler:</p>
+    <p xml:lang="ug">ئىقتىدار:</p>
     <p xml:lang="uk">Можливості:</p>
     <p xml:lang="zh-CN">功能：</p>
     <p xml:lang="zh-TW">功能：</p>
@@ -263,6 +265,7 @@
       <li xml:lang="sr-ijekavianlatin">podrška za SSL servere</li>
       <li xml:lang="sv">Stöd för SSL-server</li>
       <li xml:lang="tr">SSL sunucu desteği</li>
+      <li xml:lang="ug">SSL مۇلازىمېتىر قوللاش</li>
       <li xml:lang="uk">Підтримка роботи із серверами SSL</li>
       <li xml:lang="zh-CN">SSL 服务器支持</li>
       <li xml:lang="zh-TW">支援 SSL 伺服器</li>
