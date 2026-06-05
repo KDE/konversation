@@ -3439,7 +3439,7 @@ part of the listing.
 >&konversation; komutları</title>
 <!--FIXME commands in src/irc/outputfilter.[h|cpp]-->
 <para
->Aşağıdaki komutlar &konversation; tarafından yorumlanır ve standart &irc; komutlarından farklı olabilir. Köşeli parantez içindeki öğeler isteğe bağlıdır. Çubuk (|) ile ayrılmış ögeler komutun alternatif biçimleridir. Burada listelenmeyen komutlar girildiği gibi sunucuya gönderilir. </para>
+>Aşağıdaki komutlar &konversation; tarafından yorumlanır ve standart &irc; komutlarından farklı olabilir. Köşeli parantez içindeki ögeler isteğe bağlıdır. Çubuk (|) ile ayrılmış ögeler komutun alternatif biçimleridir. Burada listelenmeyen komutlar girildiği gibi sunucuya gönderilir. </para>
 
 <para>
 <variablelist>
