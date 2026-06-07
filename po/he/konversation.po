@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-02-24 00:44+0000\n"
-"PO-Revision-Date: 2026-05-22 12:27+0300\n"
+"PO-Revision-Date: 2026-06-06 06:46+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -4815,22 +4815,22 @@ msgstr ""
 #: src/irc/channel.cpp:1684
 #, kde-format
 msgid "You set the channel mode to 'secret'."
-msgstr ""
+msgstr "הגדרת את מצב החדר ל‚סודי’."
 
 #: src/irc/channel.cpp:1685
 #, kde-format
 msgid "%1 sets the channel mode to 'secret'."
-msgstr ""
+msgstr "מצב החדר הוגדר כ‚סודי’ על ידי %1."
 
 #: src/irc/channel.cpp:1689
 #, kde-format
 msgid "You set the channel mode to 'visible'."
-msgstr ""
+msgstr "הגדרת את מצב החדר ל‚גלוי’."
 
 #: src/irc/channel.cpp:1690
 #, kde-format
 msgid "%1 sets the channel mode to 'visible'."
-msgstr ""
+msgstr "מצב החדר הוגדר כ‚גלוי’ על ידי %1"
 
 #: src/irc/channel.cpp:1701
 #, kde-format
@@ -5391,7 +5391,7 @@ msgctxt ""
 "We asked the server for available capabilities and got an empty list. This "
 "isn't an error, and isn't permanent"
 msgid "No configurable server capabilities are currently available."
-msgstr ""
+msgstr "אין יכולות שרת זמינות גכרגע שאפשר להגדיר."
 
 #: src/irc/inputfilter.cpp:847
 #, kde-format
