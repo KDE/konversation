@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: Konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-02-24 00:44+0000\n"
-"PO-Revision-Date: 2026-06-09 21:45+0200\n"
+"PO-Revision-Date: 2026-06-18 21:50+0200\n"
 "Last-Translator: Kristof Kiszel <ulysses@fsf.hu>\n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
 "Language: hu\n"
@@ -6980,7 +6980,7 @@ msgid ""
 msgstr ""
 "Az aktuális identitásban (%1) megadott becenevek egyike sem elfogadott a "
 "következőhöz való csatlakozás során: „%2”.\n"
-"Adjon meg újat, vagy kattintson a Mégsem gombra a kapcsolat bontásához:"
+"Adjon meg újat, vagy kattintson a Mégse gombra a kapcsolat bontásához:"
 
 #: src/irc/server.cpp:1340
 #, kde-format
