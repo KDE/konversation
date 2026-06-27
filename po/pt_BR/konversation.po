@@ -14,21 +14,21 @@
 # Aracele Torres <araceletorres@gmail.com>, 2010.
 # Marcus Gama <marcus.gama@gmail.com>, 2011, 2012.
 # SPDX-FileCopyrightText: 2025 Geraldo Simiao <geraldosimiao@fedoraproject.org>
-# SPDX-FileCopyrightText: 2025 Guilherme Marçal Silva <guimarcalsilva@gmail.com>
+# SPDX-FileCopyrightText: 2025-2026 Guilherme Marçal Silva <guimarcalsilva@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-02-24 00:44+0000\n"
-"PO-Revision-Date: 2025-11-28 07:16-0300\n"
-"Last-Translator: Marcus Gama <marcus.gama@gmail.com>\n"
+"PO-Revision-Date: 2026-06-26 03:24-0300\n"
+"Last-Translator: Guilherme Marçal Silva <guimarcalsilva@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <kde-i18n-pt_BR@kde.org>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 25.08.3\n"
+"X-Generator: Lokalize 26.04.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1831,13 +1831,13 @@ msgstr "Explicação"
 #: src/config/osd_configui.ui:35
 #, kde-format
 msgid "&Enable On Screen Display"
-msgstr "A&tivar o visualizador"
+msgstr "A&tivar o indicador na tela"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox2)
 #: src/config/osd_configui.ui:45
 #, kde-format
 msgid "On &Screen Display"
-msgstr "Vi&sualização na tela"
+msgstr "Indicado&r na tela"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_OSDDrawShadow)
 #: src/config/osd_configui.ui:54
@@ -1849,13 +1849,13 @@ msgstr "&Desenhar sombras"
 #: src/config/osd_configui.ui:67
 #, kde-format
 msgid "OSD font:"
-msgstr "Fonte do visualizador:"
+msgstr "Fonte do indicador na tela:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox3)
 #: src/config/osd_configui.ui:135
 #, kde-format
 msgid "Show &OSD Message"
-msgstr "M&ostrar mensagem na tela"
+msgstr "M&ostrar indicador na tela"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_OSDShowOwnNick)
 #: src/config/osd_configui.ui:141
@@ -2108,7 +2108,7 @@ msgstr "Apelidos monitorados"
 #: src/config/settingsdialog.cpp:174
 #, kde-format
 msgid "On Screen Display"
-msgstr "Visualização na tela"
+msgstr "Indicador na tela"
 
 #: src/config/settingsdialog.cpp:180
 #, kde-format
@@ -7893,7 +7893,7 @@ msgstr "Michael Goettsche"
 #, kde-format
 msgid "Quick connect, Ported new OSD, other features and bugfixes"
 msgstr ""
-"Conexão rápida, migração para o novo visualizador, outros recursos e "
+"Conexão rápida, migração para o novo indicador na tela, outros recursos e "
 "correções de erros"
 
 #: src/main.cpp:54
@@ -8029,7 +8029,7 @@ msgstr "Ivor Hewitt"
 #: src/main.cpp:67
 #, kde-format
 msgid "Bug fixes, OSD work, clearing topics"
-msgstr "Correção de erros, trabalho no visualizador, limpeza de tópicos"
+msgstr "Correção de erros, trabalho no indicador na tela, limpeza de tópicos"
 
 #: src/main.cpp:68
 #, kde-format
@@ -8530,7 +8530,7 @@ msgstr "Exibir/ocultar o Konversation"
 #: src/mainwindow.cpp:561
 #, kde-format
 msgid "Enable On Screen Display"
-msgstr "Ativar o visualizador"
+msgstr "Ativar indicador na tela"
 
 #: src/mainwindow.cpp:568
 #, kde-format
