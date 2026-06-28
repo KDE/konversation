@@ -135,7 +135,7 @@ msgstr "Ús:"
 
 #: data/scripts/media:304
 msgid "\"/media\" - report what the first player found is playing."
-msgstr "«/media» - informa què està reproduint el primer reproductor trobat."
+msgstr "«/media» – informa què està reproduint el primer reproductor trobat."
 
 # skip-rule: t-apo_ini,t-apo_fin
 #: data/scripts/media:305
@@ -143,7 +143,7 @@ msgid ""
 "\"/media [ 'audio' | 'video' ]\" - report what is playing in a known audio "
 "or video player."
 msgstr ""
-"«/media [ 'audio' | 'video' ]» - informa què està reproduint un reproductor "
+"«/media [ 'audio' | 'video' ]» – informa què està reproduint un reproductor "
 "d'àudio o vídeo reconegut."
 
 #: data/scripts/media:306
@@ -151,7 +151,7 @@ msgid ""
 "\"/media { Player }\" - report what is playing in the specified player if it "
 "is found."
 msgstr ""
-"«/media { Player }» - informa què està reproduint el reproductor indicat si "
+"«/media { Player }» – informa què està reproduint el reproductor indicat si "
 "s'ha trobat."
 
 #: src/application.cpp:384 src/irc/server.cpp:1814 src/irc/server.cpp:3847
@@ -695,7 +695,7 @@ msgstr "Colors a mida"
 #, kde-format
 msgid "&Use custom colors for input box, nickname list and tab list"
 msgstr ""
-"Utilit&za els colors a mida en el quadro d'entrada, la llista de sobrenoms i "
+"&Utilitza els colors a mida en el quadro d'entrada, la llista de sobrenoms i "
 "la llista de pestanyes"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel3)
@@ -844,7 +844,7 @@ msgid ""
 msgstr ""
 "Quan es marca esta opció, els codis de color afegits als missatges IRC es "
 "mostraran en la finestra de conversa com text acolorit. Podeu afegir codis "
-"de color als missatges seleccionant Inserix -> Color d'IRC"
+"de color als missatges seleccionant Inserix → Color d'IRC"
 
 #. i18n: ectx: property (title), widget (QGroupBox, kcfg_AllowColorCodes)
 #: src/config/colorsappearance_config.ui:747
@@ -1245,7 +1245,7 @@ msgstr "Activa la safata del sistema"
 #: src/config/generalbehavior_configui.ui:38
 #, kde-format
 msgid "&Use system tray for new message notification"
-msgstr "Utilit&za la safata del sistema per a la notificació de missatges nous"
+msgstr "&Utilitza la safata del sistema per a la notificació de missatges nous"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_TrayNotifyOnlyOwnNick)
 #: src/config/generalbehavior_configui.ui:66
@@ -3301,62 +3301,62 @@ msgstr "Interromput"
 #: src/dcc/transferlistmodel.cpp:506
 #, kde-format
 msgid "Queued - Transfer is waiting for you to accept or reject it"
-msgstr "En cua - la transferència està esperant que l'accepteu o la rebutgeu"
+msgstr "En cua – la transferència està esperant que l'accepteu o la rebutgeu"
 
 #: src/dcc/transferlistmodel.cpp:511
 #, kde-format
 msgid "Preparing - Transfer is checking for resumable files"
 msgstr ""
-"S'està preparant - la transferència està comprovant fitxers que es puguen "
+"S'està preparant – la transferència està comprovant fitxers que es puguen "
 "reprendre"
 
 #: src/dcc/transferlistmodel.cpp:513
 #, kde-format
 msgid "Preparing - Transfer is acquiring the data to send"
 msgstr ""
-"S'està preparant - la transferència està adquirint les dades per a enviar"
+"S'està preparant – la transferència està adquirint les dades per a enviar"
 
 #: src/dcc/transferlistmodel.cpp:519
 #, kde-format
 msgid "Pending - Transfer is waiting for the partner to accept or reject it"
 msgstr ""
-"Pendent - La transferència està esperant que el company l'accepte o la "
+"Pendent – La transferència està esperant que el company l'accepte o la "
 "rebutge"
 
 #: src/dcc/transferlistmodel.cpp:521
 #, kde-format
 msgid "Connecting - Transfer is connecting to the partner"
-msgstr "S'està connectant - la transferència està connectant amb el company"
+msgstr "S'està connectant – la transferència està connectant amb el company"
 
 #: src/dcc/transferlistmodel.cpp:526
 #, kde-format
 msgid "Receiving - Transfer is receiving data from the partner"
-msgstr "S'està rebent - la transferència està rebent dades del company"
+msgstr "S'està rebent – la transferència està rebent dades del company"
 
 #: src/dcc/transferlistmodel.cpp:528
 #, kde-format
 msgid "Sending - Transfer is sending data to partner"
-msgstr "S'està enviant - la transferència està enviant dades al company"
+msgstr "S'està enviant – la transferència està enviant dades al company"
 
 #: src/dcc/transferlistmodel.cpp:534
 #, kde-format
 msgid "Done - Transfer has completed successfully"
-msgstr "Fet - la transferència s'ha completat correctament"
+msgstr "Fet – la transferència s'ha completat correctament"
 
 #: src/dcc/transferlistmodel.cpp:538
 #, kde-format
 msgid "Failed - Transfer failed with 'unknown reason'"
-msgstr "Ha fallat - la transferència ha fallat per una «raó desconeguda»"
+msgstr "Ha fallat – la transferència ha fallat per una «raó desconeguda»"
 
 #: src/dcc/transferlistmodel.cpp:542
 #, kde-format
 msgid "Failed - Transfer failed with reason '%1'"
-msgstr "Ha fallat - la transferència ha fallat, la raó ha sigut «%1»"
+msgstr "Ha fallat – la transferència ha fallat, la raó ha sigut «%1»"
 
 #: src/dcc/transferlistmodel.cpp:545
 #, kde-format
 msgid "Aborted - Transfer was aborted by the User"
-msgstr "S'ha interromput - l'usuari ha interromput la transferència"
+msgstr "S'ha interromput – l'usuari ha interromput la transferència"
 
 #: src/dcc/transferlistmodel.cpp:637
 #, kde-format
@@ -5346,7 +5346,7 @@ msgid ""
 "Konversation Channel List: %1 - %2\n"
 "\n"
 msgstr ""
-"Llista de canals de Konversation: %1 - %2\n"
+"Llista de canals de Konversation: %1 – %2\n"
 "\n"
 
 #: src/irc/channellistpanel.cpp:450 src/irc/joinchanneldialog.cpp:30
@@ -6740,8 +6740,8 @@ msgstr ""
 "n'establix la clau. El camp clau reconeix els prefixos «cbc:» i «ecb:» per a "
 "establir el mode de xifratge de bloc de l'operació tant per a Cipher-Bloc "
 "Chaining o Electronic Codebook. El mode predeterminat quan no s'ha donat un "
-"prefix es pot canviar en el diàleg de configuració davall «Comportament -> "
-"Connexió -> Encriptació -> Tipus d'encriptació predeterminat», el "
+"prefix es pot canviar en el diàleg de configuració davall «Comportament → "
+"Connexió → Encriptació → Tipus d'encriptació predeterminat», el "
 "predeterminat per a esta configuració és Electronic Codebook (ECB)."
 
 #: src/irc/outputfilter.cpp:1692
@@ -7329,7 +7329,7 @@ msgstr ""
 #: src/irc/serverdialogui.ui:108
 #, kde-format
 msgid "&Use global proxy"
-msgstr "Utilit&za un servidor intermediari global"
+msgstr "&Utilitza un servidor intermediari global"
 
 #: src/irc/servergroupdialog.cpp:84
 #, kde-format
@@ -8954,7 +8954,7 @@ msgstr ""
 #: src/quickconnectdialog.cpp:79
 #, kde-format
 msgid "&Use SSL"
-msgstr "Utilit&za SSL"
+msgstr "&Utilitza SSL"
 
 #: src/statusbar.cpp:36 src/statusbar.cpp:72 src/statusbar.cpp:140
 #, kde-format
@@ -10028,7 +10028,7 @@ msgstr "Trieu la carpeta de destinació"
 #: src/viewer/osd.cpp:326
 #, kde-format
 msgid "OSD Preview - drag to reposition"
-msgstr "Previsualització OSD - arrossega fins a la nova posició"
+msgstr "Previsualització OSD – arrossega fins a la nova posició"
 
 #: src/viewer/pasteeditor.cpp:23
 #, kde-format
