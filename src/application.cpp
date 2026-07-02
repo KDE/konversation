@@ -30,7 +30,6 @@
 #include "konversation_log.h"
 #include "konversation_state.h"
 
-#include <kio_version.h>
 #include <KIO/JobUiDelegateFactory>
 #include <KIO/OpenUrlJob>
 #include <KConfig>

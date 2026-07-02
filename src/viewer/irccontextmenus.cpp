@@ -19,7 +19,6 @@
 #include <QFileDialog>
 #include <KIO/CopyJob>
 #include <KIO/ApplicationLauncherJob>
-#include <kio_version.h>
 #include <KIO/JobUiDelegateFactory>
 #include <QMenu>
 #include <KMessageBox>

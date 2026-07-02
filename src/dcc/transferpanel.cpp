@@ -17,7 +17,6 @@
 
 #include <QSplitter>
 
-#include <kwidgetsaddons_version.h>
 #include <KIO/OpenFileManagerWindowJob>
 #include <KMessageBox>
 #include <QMenu>

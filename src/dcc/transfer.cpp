@@ -17,7 +17,6 @@
 
 #include <config-konversation.h>
 
-#include <kio_version.h>
 #include <KIO/JobUiDelegateFactory>
 
 #include <KIO/OpenUrlJob>

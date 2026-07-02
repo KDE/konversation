@@ -38,7 +38,6 @@
 
 #include <KMessageBox>
 #include <KIO/OpenUrlJob>
-#include <kio_version.h>
 #include <KIO/JobUiDelegateFactory>
 #include <QUrl>
 #include <KXMLGUIFactory>

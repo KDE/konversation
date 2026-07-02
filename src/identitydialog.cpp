@@ -18,7 +18,6 @@
 #include <KMessageWidget>
 #include <KUser>
 #include <KStandardGuiItem>
-#include <kio_version.h>
 
 #include <QDialogButtonBox>
 #include <QPushButton>

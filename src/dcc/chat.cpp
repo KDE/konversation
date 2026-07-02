@@ -24,7 +24,6 @@
 #include <QTcpSocket>
 #include <QTcpServer>
 
-#include <kwidgetsaddons_version.h>
 #include <KMessageBox>
 #include <KGuiItem>
 

@@ -15,7 +15,6 @@
 #include <QMimeData>
 #include <QRegularExpression>
 
-#include <kwidgetsaddons_version.h>
 #include <KMessageBox>
 #include <KCompletionBox>
 #include <KActionCollection>

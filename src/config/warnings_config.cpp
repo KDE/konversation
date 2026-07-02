@@ -12,7 +12,6 @@
 
 #include <QHeaderView>
 
-#include <ki18n_version.h>
 #include <KSharedConfig>
 #include <KConfigGroup>
 #include <KLazyLocalizedString>
