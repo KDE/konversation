@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-02-24 00:44+0000\n"
+"POT-Creation-Date: 2026-07-02 02:39+0000\n"
 "PO-Revision-Date: 2021-06-19 20:37+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
@@ -7175,7 +7175,7 @@ msgstr ""
 #. i18n: ectx: property (text), widget (QPushButton, m_editButton)
 #. i18n: ectx: property (text), widget (QPushButton, m_editIdentityButton)
 #: src/irc/servergroupdialogui.ui:71 src/irc/serverlistdialogui.ui:64
-#: src/viewer/ircinput.cpp:486
+#: src/viewer/ircinput.cpp:487
 #, kde-format
 msgid "&Edit..."
 msgstr "&திருத்து..."
@@ -9553,7 +9553,7 @@ msgstr "%1ஐ நீக்கவேண்டுமா ?"
 msgid "Do you want to stop ignoring the selected users?"
 msgstr "தேர்ந்தெடுக்கப்பட்ட வலைப்பின்னல்களை நீக்கவேண்டுமா?"
 
-#: src/viewer/irccontextmenus.cpp:781
+#: src/viewer/irccontextmenus.cpp:777
 #, kde-format
 msgctxt "Opens a query (private message) window with the author of the topic"
 msgid "Query author"
@@ -9576,7 +9576,7 @@ msgid ""
 "p><p>A message cannot contain multiple lines.</p></qt>"
 msgstr ""
 
-#: src/viewer/ircinput.cpp:474
+#: src/viewer/ircinput.cpp:475
 #, fuzzy, kde-format
 #| msgid " bytes"
 msgid "1 byte"
@@ -9584,7 +9584,7 @@ msgid_plural "%1 bytes"
 msgstr[0] "பைட்டுகள்"
 msgstr[1] "பைட்டுகள்"
 
-#: src/viewer/ircinput.cpp:475
+#: src/viewer/ircinput.cpp:476
 #, fuzzy, kde-format
 #| msgid " lines"
 msgid "1 line"
@@ -9592,7 +9592,7 @@ msgid_plural "%1 lines"
 msgstr[0] "வரிகள்"
 msgstr[1] "வரிகள்"
 
-#: src/viewer/ircinput.cpp:481
+#: src/viewer/ircinput.cpp:482
 #, fuzzy, kde-format
 #| msgid ""
 #| "<qt>You are attempting to paste a large portion of text (%1 bytes or %2 "
@@ -9609,12 +9609,12 @@ msgstr ""
 "<qt>நீங்கள் அரட்டைககுள் பெரிய பகுதியை இணைக்க முயலுகிறீர்கள்(%1 பைட்டுகள் அல்லது %2 "
 "வரிகள்). இதனால் இணைப்பு மீட்டமை ஏற்படலாம். நீங்கள் மேலும் தொடர விரும்புகிறீர்களா?</qt>"
 
-#: src/viewer/ircinput.cpp:484
+#: src/viewer/ircinput.cpp:485
 #, kde-format
 msgid "Large Paste Warning"
 msgstr "பெரிய ஒட்டு எச்சரிக்கை"
 
-#: src/viewer/ircinput.cpp:485
+#: src/viewer/ircinput.cpp:486
 #, fuzzy, kde-format
 #| msgid "Part"
 msgid "Paste"
@@ -9838,7 +9838,7 @@ msgctxt "%1 is a timestamp, %2 is the author's name"
 msgid "On %1 by %2"
 msgstr ""
 
-#: src/viewer/topichistoryview.cpp:208
+#: src/viewer/topichistoryview.cpp:191
 #, kde-format
 msgid ""
 "This is a list of all topics that have been set for this channel while its "

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-02-24 00:44+0000\n"
+"POT-Creation-Date: 2026-07-02 02:39+0000\n"
 "PO-Revision-Date: 2014-09-30 10:05+0200\n"
 "Last-Translator: Bjørn Steensrud <bjornst@skogkatt.homelinux.org>\n"
 "Language-Team: Norwegian Bokmål <l10n-no@nuug.no>\n"
@@ -7292,7 +7292,7 @@ msgstr ""
 #. i18n: ectx: property (text), widget (QPushButton, m_editButton)
 #. i18n: ectx: property (text), widget (QPushButton, m_editIdentityButton)
 #: src/irc/servergroupdialogui.ui:71 src/irc/serverlistdialogui.ui:64
-#: src/viewer/ircinput.cpp:486
+#: src/viewer/ircinput.cpp:487
 #, kde-format
 msgid "&Edit..."
 msgstr "&Rediger …"
@@ -9731,7 +9731,7 @@ msgstr "Vil du slutte å ignorere %1?"
 msgid "Do you want to stop ignoring the selected users?"
 msgstr "Vil du slutte å ignorere de valgte brukerne?"
 
-#: src/viewer/irccontextmenus.cpp:781
+#: src/viewer/irccontextmenus.cpp:777
 #, kde-format
 msgctxt "Opens a query (private message) window with the author of the topic"
 msgid "Query author"
@@ -9767,21 +9767,21 @@ msgstr ""
 "Konversation-håndboka for flere kommandoer.</p><p>En melding kan ikke bestå "
 "av flere linjer.</p></qt>"
 
-#: src/viewer/ircinput.cpp:474
+#: src/viewer/ircinput.cpp:475
 #, kde-format
 msgid "1 byte"
 msgid_plural "%1 bytes"
 msgstr[0] "1 byte"
 msgstr[1] "%1 byte"
 
-#: src/viewer/ircinput.cpp:475
+#: src/viewer/ircinput.cpp:476
 #, kde-format
 msgid "1 line"
 msgid_plural "%1 lines"
 msgstr[0] "1 linje"
 msgstr[1] "%1 linjer"
 
-#: src/viewer/ircinput.cpp:481
+#: src/viewer/ircinput.cpp:482
 #, kde-format
 msgctxt ""
 "%1 is, for instance, '200 bytes'.  %2 is, for instance, '7 lines'.  Both are "
@@ -9795,12 +9795,12 @@ msgstr ""
 "at tilkoblingen nullstilles eller at du lager en tekstflom som gjør at du "
 "sparkes ut. Er du sikker på at du vil fortsette?</qt>"
 
-#: src/viewer/ircinput.cpp:484
+#: src/viewer/ircinput.cpp:485
 #, kde-format
 msgid "Large Paste Warning"
 msgstr "Advarsel om stor innliming"
 
-#: src/viewer/ircinput.cpp:485
+#: src/viewer/ircinput.cpp:486
 #, kde-format
 msgid "Paste"
 msgstr "Lim inn"
@@ -10029,7 +10029,7 @@ msgctxt "%1 is a timestamp, %2 is the author's name"
 msgid "On %1 by %2"
 msgstr "På %1 av %2"
 
-#: src/viewer/topichistoryview.cpp:208
+#: src/viewer/topichistoryview.cpp:191
 #, kde-format
 msgid ""
 "This is a list of all topics that have been set for this channel while its "

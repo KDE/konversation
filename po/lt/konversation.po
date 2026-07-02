@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-02-24 00:44+0000\n"
+"POT-Creation-Date: 2026-07-02 02:39+0000\n"
 "PO-Revision-Date: 2024-02-02 23:03+0200\n"
 "Last-Translator: Mindaugas Baranauskas <opensuse.lietuviu.kalba@gmail.com>\n"
 "Language-Team: Lithuanian <kde-i18n-lt@kde.org>\n"
@@ -7314,7 +7314,7 @@ msgstr ""
 #. i18n: ectx: property (text), widget (QPushButton, m_editButton)
 #. i18n: ectx: property (text), widget (QPushButton, m_editIdentityButton)
 #: src/irc/servergroupdialogui.ui:71 src/irc/serverlistdialogui.ui:64
-#: src/viewer/ircinput.cpp:486
+#: src/viewer/ircinput.cpp:487
 #, kde-format
 msgid "&Edit..."
 msgstr "&Keisti..."
@@ -9764,7 +9764,7 @@ msgstr "Ar norite nustoti ignoruoti %1?"
 msgid "Do you want to stop ignoring the selected users?"
 msgstr "Ar norite nustoti ignoruoti pažymėtus naudotojus?"
 
-#: src/viewer/irccontextmenus.cpp:781
+#: src/viewer/irccontextmenus.cpp:777
 #, fuzzy, kde-format
 #| msgid "Query author"
 msgctxt "Opens a query (private message) window with the author of the topic"
@@ -9788,7 +9788,7 @@ msgid ""
 "p><p>A message cannot contain multiple lines.</p></qt>"
 msgstr ""
 
-#: src/viewer/ircinput.cpp:474
+#: src/viewer/ircinput.cpp:475
 #, kde-format
 msgid "1 byte"
 msgid_plural "%1 bytes"
@@ -9797,7 +9797,7 @@ msgstr[1] "%1 baitai"
 msgstr[2] "%1 baitų"
 msgstr[3] "%1 baitas"
 
-#: src/viewer/ircinput.cpp:475
+#: src/viewer/ircinput.cpp:476
 #, kde-format
 msgid "1 line"
 msgid_plural "%1 lines"
@@ -9806,7 +9806,7 @@ msgstr[1] "%1 eilutės"
 msgstr[2] "%1 eilučių"
 msgstr[3] "%1 eilutė"
 
-#: src/viewer/ircinput.cpp:481
+#: src/viewer/ircinput.cpp:482
 #, kde-format
 msgctxt ""
 "%1 is, for instance, '200 bytes'.  %2 is, for instance, '7 lines'.  Both are "
@@ -9817,12 +9817,12 @@ msgid ""
 "continue?</qt>"
 msgstr ""
 
-#: src/viewer/ircinput.cpp:484
+#: src/viewer/ircinput.cpp:485
 #, kde-format
 msgid "Large Paste Warning"
 msgstr "Perspėjimas dėl didelės apimties įterpimo"
 
-#: src/viewer/ircinput.cpp:485
+#: src/viewer/ircinput.cpp:486
 #, kde-format
 msgid "Paste"
 msgstr "Padėti"
@@ -10052,7 +10052,7 @@ msgctxt "%1 is a timestamp, %2 is the author's name"
 msgid "On %1 by %2"
 msgstr "%1, autorius %2"
 
-#: src/viewer/topichistoryview.cpp:208
+#: src/viewer/topichistoryview.cpp:191
 #, kde-format
 msgid ""
 "This is a list of all topics that have been set for this channel while its "
