@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-02-24 00:44+0000\n"
+"POT-Creation-Date: 2026-07-02 00:44+0000\n"
 "PO-Revision-Date: 2014-10-20 20:22+0000\n"
 "Last-Translator: Samir Ribić <Unknown>\n"
 "Language-Team: <bs@li.org>\n"
@@ -7410,7 +7410,7 @@ msgstr ""
 #. i18n: ectx: property (text), widget (QPushButton, m_editButton)
 #. i18n: ectx: property (text), widget (QPushButton, m_editIdentityButton)
 #: src/irc/servergroupdialogui.ui:71 src/irc/serverlistdialogui.ui:64
-#: src/viewer/ircinput.cpp:486
+#: src/viewer/ircinput.cpp:487
 #, kde-format
 msgid "&Edit..."
 msgstr "&Izmijeni..."
@@ -9891,7 +9891,7 @@ msgstr "Želite li da zaustavite ignorisanje %1 ?"
 msgid "Do you want to stop ignoring the selected users?"
 msgstr "Želite li da prestanete zanemarivati izabrane korisnike?"
 
-#: src/viewer/irccontextmenus.cpp:781
+#: src/viewer/irccontextmenus.cpp:777
 #, fuzzy, kde-format
 #| msgid "Query author"
 msgctxt "Opens a query (private message) window with the author of the topic"
@@ -9926,7 +9926,7 @@ msgstr ""
 "se nalaze.</td></tr></table><p>Za još naredbi, pogledajte priručnik "
 "Konverzacije.</p><p>Poruka ne može sadržati više redova.</p></qt>"
 
-#: src/viewer/ircinput.cpp:474
+#: src/viewer/ircinput.cpp:475
 #, kde-format
 msgid "1 byte"
 msgid_plural "%1 bytes"
@@ -9934,7 +9934,7 @@ msgstr[0] "%1 bajt"
 msgstr[1] "%1 bajta"
 msgstr[2] "%1 bajtova"
 
-#: src/viewer/ircinput.cpp:475
+#: src/viewer/ircinput.cpp:476
 #, kde-format
 msgid "1 line"
 msgid_plural "%1 lines"
@@ -9942,7 +9942,7 @@ msgstr[0] "%1 red"
 msgstr[1] "%1 reda"
 msgstr[2] "%1 redova"
 
-#: src/viewer/ircinput.cpp:481
+#: src/viewer/ircinput.cpp:482
 #, kde-format
 msgctxt ""
 "%1 is, for instance, '200 bytes'.  %2 is, for instance, '7 lines'.  Both are "
@@ -9956,12 +9956,12 @@ msgstr ""
 "izazvati resetovanja veze ili poplavna izbacivanja. Želite li zaista da "
 "nastavite?</qt>"
 
-#: src/viewer/ircinput.cpp:484
+#: src/viewer/ircinput.cpp:485
 #, kde-format
 msgid "Large Paste Warning"
 msgstr "Upozorenje o velikom umetanju"
 
-#: src/viewer/ircinput.cpp:485
+#: src/viewer/ircinput.cpp:486
 #, kde-format
 msgid "Paste"
 msgstr "Umetni"
@@ -10190,7 +10190,7 @@ msgctxt "%1 is a timestamp, %2 is the author's name"
 msgid "On %1 by %2"
 msgstr "Vrijeme %1 autor %2"
 
-#: src/viewer/topichistoryview.cpp:208
+#: src/viewer/topichistoryview.cpp:191
 #, kde-format
 msgid ""
 "This is a list of all topics that have been set for this channel while its "

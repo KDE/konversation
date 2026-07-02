@@ -19,7 +19,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: extragear-network-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-02-24 00:44+0000\n"
+"POT-Creation-Date: 2026-07-02 00:44+0000\n"
 "PO-Revision-Date: 2026-05-02 19:53+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
@@ -7334,7 +7334,7 @@ msgstr ""
 #. i18n: ectx: property (text), widget (QPushButton, m_editButton)
 #. i18n: ectx: property (text), widget (QPushButton, m_editIdentityButton)
 #: src/irc/servergroupdialogui.ui:71 src/irc/serverlistdialogui.ui:64
-#: src/viewer/ircinput.cpp:486
+#: src/viewer/ircinput.cpp:487
 #, kde-format
 msgid "&Edit..."
 msgstr "Dü&zenle…"
@@ -9788,7 +9788,7 @@ msgstr ""
 "Seçili kullanıcıları yok sayma listesinden çıkarmak istediğinizden emin "
 "misiniz?"
 
-#: src/viewer/irccontextmenus.cpp:781
+#: src/viewer/irccontextmenus.cpp:777
 #, kde-format
 msgctxt "Opens a query (private message) window with the author of the topic"
 msgid "Query author"
@@ -9824,21 +9824,21 @@ msgstr ""
 "Kitabı’na bakabilirsiniz.</p><p>Bir ileti birden çok satırdan oluşamaz.</p></"
 "qt>"
 
-#: src/viewer/ircinput.cpp:474
+#: src/viewer/ircinput.cpp:475
 #, kde-format
 msgid "1 byte"
 msgid_plural "%1 bytes"
 msgstr[0] "%1 bayt"
 msgstr[1] "%1 bayt"
 
-#: src/viewer/ircinput.cpp:475
+#: src/viewer/ircinput.cpp:476
 #, kde-format
 msgid "1 line"
 msgid_plural "%1 lines"
 msgstr[0] "1 satır"
 msgstr[1] "%1 satır"
 
-#: src/viewer/ircinput.cpp:481
+#: src/viewer/ircinput.cpp:482
 #, kde-format
 msgctxt ""
 "%1 is, for instance, '200 bytes'.  %2 is, for instance, '7 lines'.  Both are "
@@ -9852,12 +9852,12 @@ msgstr ""
 "Bu bağlantının kesilmesine neden olabilir. Sürdürmeyi gerçekten istiyor "
 "musunuz?</qt>"
 
-#: src/viewer/ircinput.cpp:484
+#: src/viewer/ircinput.cpp:485
 #, kde-format
 msgid "Large Paste Warning"
 msgstr "Büyük Yapıştırma Uyarısı"
 
-#: src/viewer/ircinput.cpp:485
+#: src/viewer/ircinput.cpp:486
 #, kde-format
 msgid "Paste"
 msgstr "Yapıştır"
@@ -10089,7 +10089,7 @@ msgctxt "%1 is a timestamp, %2 is the author's name"
 msgid "On %1 by %2"
 msgstr "%1 üzerinde %2 ile"
 
-#: src/viewer/topichistoryview.cpp:208
+#: src/viewer/topichistoryview.cpp:191
 #, kde-format
 msgid ""
 "This is a list of all topics that have been set for this channel while its "
