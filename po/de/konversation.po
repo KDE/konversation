@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-02 00:44+0000\n"
+"POT-Creation-Date: 2026-07-03 00:45+0000\n"
 "PO-Revision-Date: 2026-02-22 13:07+0100\n"
 "Last-Translator: Frank Steinmetzger <dev-kde@felsenfleischer.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -156,7 +156,7 @@ msgstr ""
 "\"/media { Player }\" - Berichten, was der angegebene Medienspieler gerade "
 "spielt, sofern dieser unterstützt wird."
 
-#: src/application.cpp:384 src/irc/server.cpp:1814 src/irc/server.cpp:3847
+#: src/application.cpp:383 src/irc/server.cpp:1814 src/irc/server.cpp:3847
 #: src/irc/server.cpp:3852
 #, kde-format
 msgid "D-Bus"
@@ -2036,7 +2036,7 @@ msgstr "Farben"
 msgid "Fonts"
 msgstr "Schriftarten"
 
-#: src/config/settingsdialog.cpp:90 src/viewer/irccontextmenus.cpp:88
+#: src/config/settingsdialog.cpp:90 src/viewer/irccontextmenus.cpp:87
 #, kde-format
 msgid "Quick Buttons"
 msgstr "Schnellschalter"
@@ -2349,7 +2349,7 @@ msgstr "Symbol für Benutzer mit Besitzerstatus"
 msgid "Preview:"
 msgstr "Vorschau:"
 
-#: src/config/warnings_config.cpp:143
+#: src/config/warnings_config.cpp:142
 #, kde-format
 msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
@@ -2357,7 +2357,7 @@ msgctxt ""
 msgid "... a channel invitation is received"
 msgstr "... eine Kanaleinladung empfangen wird"
 
-#: src/config/warnings_config.cpp:146
+#: src/config/warnings_config.cpp:145
 #, kde-format
 msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
@@ -2367,7 +2367,7 @@ msgstr ""
 "... das Speichern einer Protokolldatei nur den sichtbaren Bereich speichern "
 "würde"
 
-#: src/config/warnings_config.cpp:149
+#: src/config/warnings_config.cpp:148
 #, kde-format
 msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
@@ -2375,7 +2375,7 @@ msgctxt ""
 msgid "... a log file is about to be deleted"
 msgstr "... eine Protokolldatei gelöscht wird"
 
-#: src/config/warnings_config.cpp:152
+#: src/config/warnings_config.cpp:151
 #, kde-format
 msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
@@ -2386,7 +2386,7 @@ msgstr ""
 "... eine offene Query mit einem Benutzer besteht, der gerade auf die "
 "Ignorieren-Liste gesetzt wurde"
 
-#: src/config/warnings_config.cpp:155
+#: src/config/warnings_config.cpp:154
 #, kde-format
 msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
@@ -2396,7 +2396,7 @@ msgstr ""
 "... eine Verbindung zu einem anderen Server im gleichen Netzwerk gewechselt "
 "wird"
 
-#: src/config/warnings_config.cpp:158
+#: src/config/warnings_config.cpp:157
 #, kde-format
 msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
@@ -2406,7 +2406,7 @@ msgstr ""
 "... eine neue Verbindung zu einem bereits verbundenen Netzwerk hergestellt "
 "wird"
 
-#: src/config/warnings_config.cpp:161
+#: src/config/warnings_config.cpp:160
 #, kde-format
 msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
@@ -2414,7 +2414,7 @@ msgctxt ""
 msgid "... closing a server tab"
 msgstr "... ein Server-Unterfenster geschlossen wird"
 
-#: src/config/warnings_config.cpp:164
+#: src/config/warnings_config.cpp:163
 #, kde-format
 msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
@@ -2422,7 +2422,7 @@ msgctxt ""
 msgid "... closing a channel tab"
 msgstr "... ein Kanal-Unterfenster geschlossen wird"
 
-#: src/config/warnings_config.cpp:167
+#: src/config/warnings_config.cpp:166
 #, kde-format
 msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
@@ -2430,7 +2430,7 @@ msgctxt ""
 msgid "... closing a query tab"
 msgstr "... ein Query-Unterfenster geschlossen wird"
 
-#: src/config/warnings_config.cpp:170
+#: src/config/warnings_config.cpp:169
 #, kde-format
 msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
@@ -2438,7 +2438,7 @@ msgctxt ""
 msgid "... closing a DCC Chat tab"
 msgstr "... ein DCC-Chat-Unterfenster geschlossen wird"
 
-#: src/config/warnings_config.cpp:173
+#: src/config/warnings_config.cpp:172
 #, kde-format
 msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
@@ -2449,7 +2449,7 @@ msgstr ""
 "... die Quelle für die Kanalliste aus dem aktuellen Unterfenster nicht "
 "bestimmt werden kann."
 
-#: src/config/warnings_config.cpp:176
+#: src/config/warnings_config.cpp:175
 #, kde-format
 msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
@@ -2457,7 +2457,7 @@ msgctxt ""
 msgid "... you have chosen to hide the menu bar"
 msgstr "... Sie die Menüleiste ausgeblendet haben"
 
-#: src/config/warnings_config.cpp:179
+#: src/config/warnings_config.cpp:178
 #, kde-format
 msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
@@ -2467,7 +2467,7 @@ msgstr ""
 "... das Auflisten der Kanäle aufgrund der Download-Größe einen "
 "Verbindungsabbruch verursachen könnte"
 
-#: src/config/warnings_config.cpp:182
+#: src/config/warnings_config.cpp:181
 #, kde-format
 msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
@@ -2475,7 +2475,7 @@ msgctxt ""
 msgid "... pasting large portions of text"
 msgstr "... großer Texte eingefügt werden"
 
-#: src/config/warnings_config.cpp:185
+#: src/config/warnings_config.cpp:184
 #, kde-format
 msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
@@ -2485,7 +2485,7 @@ msgstr ""
 "... Konversation über das Symbol im Systemabschnitt der Kontrollleiste "
 "beendet wird"
 
-#: src/config/warnings_config.cpp:188
+#: src/config/warnings_config.cpp:187
 #, kde-format
 msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
@@ -2493,7 +2493,7 @@ msgctxt ""
 msgid "... you have chosen to ignore a nickname"
 msgstr "... Sie sich entscheiden, einen Benutzer zu ignorieren"
 
-#: src/config/warnings_config.cpp:191
+#: src/config/warnings_config.cpp:190
 #, kde-format
 msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
@@ -2501,7 +2501,7 @@ msgctxt ""
 msgid "... you have chosen to stop ignoring a nickname"
 msgstr "... Sie sich entscheiden, einen Benutzer nicht mehr zu ignorieren"
 
-#: src/config/warnings_config.cpp:194
+#: src/config/warnings_config.cpp:193
 #, kde-format
 msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
@@ -2509,7 +2509,7 @@ msgctxt ""
 msgid "... quitting Konversation while DCC file transfers are active"
 msgstr "... Konversation beendet wird, obwohl DCC-Dateiübertragungen laufen"
 
-#: src/config/warnings_config.cpp:197
+#: src/config/warnings_config.cpp:196
 #, kde-format
 msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
@@ -2520,7 +2520,7 @@ msgstr ""
 "... einige Zeichen in einer Nachricht mit der aktuellen Zeichenkodierung "
 "nicht kompatibel sind"
 
-#: src/config/warnings_config.cpp:200
+#: src/config/warnings_config.cpp:199
 #, kde-format
 msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
@@ -2800,7 +2800,7 @@ msgstr "Fehler: %1"
 msgid "getNickname: Server %1 is not found."
 msgstr "getNickname: Server %1 nicht gefunden."
 
-#: src/dcc/chat.cpp:98
+#: src/dcc/chat.cpp:97
 #, kde-format
 msgctxt "%1=dcc extension like Chat or Whiteboard"
 msgid "Could not send a DCC %1 request to the partner via the IRC server."
@@ -2808,46 +2808,46 @@ msgstr ""
 "Anfrage nach DCC-%1 über den Server kann der Gegenstelle nicht zugestellt "
 "werden."
 
-#: src/dcc/chat.cpp:119 src/dcc/transfersend.cpp:374
+#: src/dcc/chat.cpp:118 src/dcc/transfersend.cpp:374
 #, kde-format
 msgid "Awaiting acceptance by remote user..."
 msgstr "Warten auf Annahme des Empfängers ..."
 
-#: src/dcc/chat.cpp:148
+#: src/dcc/chat.cpp:147
 #, kde-format
 msgctxt "%1=partnerNick, %2=Servername, %3=dcc extension as chat or wboard"
 msgid "%1 (on %2) offers to DCC %3 with you"
 msgstr "%1 (auf %2) sendet Ihnen eine Anfrage nach DCC-%3"
 
-#: src/dcc/chat.cpp:149
+#: src/dcc/chat.cpp:148
 #, kde-format
 msgctxt "%1=dcc extension as Chat or Whiteboard, %2=partnerNick"
 msgid "DCC %1 offer from %2"
 msgstr "Anfrage nach DCC-%1 von %2"
 
-#: src/dcc/chat.cpp:150
+#: src/dcc/chat.cpp:149
 #, kde-format
 msgid "Accept"
 msgstr "Annehmen"
 
-#: src/dcc/chat.cpp:151
+#: src/dcc/chat.cpp:150
 #, kde-format
 msgid "Reject"
 msgstr "Ablehnen"
 
-#: src/dcc/chat.cpp:157
+#: src/dcc/chat.cpp:156
 #, kde-format
 msgctxt "%1=dcc extension like Chat or Whiteboard"
 msgid "You rejected the DCC %1 offer."
 msgstr "Sie haben die Anfrage nach DCC-%1 abgelehnt."
 
-#: src/dcc/chat.cpp:196
+#: src/dcc/chat.cpp:195
 #, kde-format
 msgctxt "%1=dcc extension as Chat or Whiteboard"
 msgid "DCC %1 request was rejected"
 msgstr "Die Anfrage nach DCC-%1 wurde abgelehnt"
 
-#: src/dcc/chat.cpp:285
+#: src/dcc/chat.cpp:284
 #, kde-format
 msgctxt "%1=dcc extension like Chat or Whiteboard"
 msgid ""
@@ -2857,7 +2857,7 @@ msgstr ""
 "Bestätigung für den Reverse-DCC-%1 über den IRC-Server kann der Gegenstelle "
 "nicht zugestellt werden."
 
-#: src/dcc/chat.cpp:303 src/dcc/chat.cpp:335 src/dcc/transferrecv.cpp:589
+#: src/dcc/chat.cpp:302 src/dcc/chat.cpp:334 src/dcc/transferrecv.cpp:589
 #: src/dcc/transfersend.cpp:396
 #, kde-format
 msgid ""
@@ -2866,7 +2866,7 @@ msgstr ""
 "Port %1 kann nicht weitergeleitet werden. Die DCC-Anfrage wird dennoch "
 "gesendet."
 
-#: src/dcc/chat.cpp:317
+#: src/dcc/chat.cpp:316
 #, kde-format
 msgctxt "%1=extension like Chat or Whiteboard"
 msgid ""
@@ -2876,59 +2876,59 @@ msgstr ""
 "Bestätigung für den Reverse-DCC-%1 über den IRC-Server kann der Gegenstelle "
 "nicht zugestellt werden."
 
-#: src/dcc/chat.cpp:359
+#: src/dcc/chat.cpp:358
 #, kde-format
 msgid "Could not open a socket for listening: %1"
 msgstr "Es lässt sich kein Socket zum Empfang öffnen: %1"
 
-#: src/dcc/chat.cpp:370
+#: src/dcc/chat.cpp:369
 #, kde-format
 msgctxt "%1=dcc extension like Chat or Whiteboard,%2=partnerNick, %3=port"
 msgid "Offering DCC %1 connection to %2 on port %3..."
 msgstr "%2 wird eine DCC-%1-Verbindung an Port %3 angeboten ..."
 
-#: src/dcc/chat.cpp:431
+#: src/dcc/chat.cpp:430
 #, kde-format
 msgctxt "DCC extension"
 msgid "Whiteboard"
 msgstr "Whiteboard"
 
-#: src/dcc/chat.cpp:434
+#: src/dcc/chat.cpp:433
 #, kde-format
 msgctxt "DCC extension"
 msgid "Chat"
 msgstr "Chat"
 
-#: src/dcc/chat.cpp:465
+#: src/dcc/chat.cpp:464
 #, kde-format
 msgctxt ""
 "%1=extension like Chat or Whiteboard ,%2 = nickname, %3 = IP, %4 = port"
 msgid "Establishing DCC %1 connection to %2 (%3:%4)..."
 msgstr "DCC-%1-Verbindung zu %2 (%3:%4) wird aufgebaut ..."
 
-#: src/dcc/chat.cpp:482
+#: src/dcc/chat.cpp:481
 #, kde-format
 msgctxt "%1=extension like Chat or Whiteboard, %2 = partnerNick"
 msgid "Established DCC %1 connection to %2."
 msgstr "DCC-%1-Verbindung zu %2 wird aufgebaut."
 
-#: src/dcc/chat.cpp:489 src/dcc/transfersend.cpp:570
+#: src/dcc/chat.cpp:488 src/dcc/transfersend.cpp:570
 #, kde-format
 msgid "Socket error: %1"
 msgstr "Socketfehler: %1"
 
-#: src/dcc/chat.cpp:550
+#: src/dcc/chat.cpp:549
 #, kde-format
 msgid "Could not accept the client."
 msgstr "Das Clientprogramm kann nicht akzeptiert werden."
 
-#: src/dcc/chat.cpp:572
+#: src/dcc/chat.cpp:571
 #, kde-format
 msgctxt "%1=dcc extension as Chat or Whiteboard, %2=partnerNick"
 msgid "Established DCC %1 connection to %2."
 msgstr "DCC-%1-Verbindung zu %2 wird aufgebaut."
 
-#: src/dcc/chat.cpp:578
+#: src/dcc/chat.cpp:577
 #, kde-format
 msgid "Connection closed."
 msgstr "Verbindung unterbrochen."
@@ -3391,88 +3391,88 @@ msgstr "Eingehende Übertragungen"
 msgid "Outgoing Transfers"
 msgstr "Ausgehende Übertragungen"
 
-#: src/dcc/transferpanel.cpp:36 src/viewer/viewcontainer.cpp:2650
+#: src/dcc/transferpanel.cpp:35 src/viewer/viewcontainer.cpp:2649
 #, kde-format
 msgid "DCC Status"
 msgstr "DCC-Status"
 
-#: src/dcc/transferpanel.cpp:73
+#: src/dcc/transferpanel.cpp:72
 #, kde-format
 msgid "&Select All Items"
 msgstr "Alle Einträge au&swählen"
 
-#: src/dcc/transferpanel.cpp:74
+#: src/dcc/transferpanel.cpp:73
 #, kde-format
 msgid "S&elect All Completed Items"
 msgstr "All&e fertiggestellten Einträge auswählen"
 
-#: src/dcc/transferpanel.cpp:76
+#: src/dcc/transferpanel.cpp:75
 #, kde-format
 msgid "&Accept"
 msgstr "&Annehmen"
 
-#: src/dcc/transferpanel.cpp:77
+#: src/dcc/transferpanel.cpp:76
 #, kde-format
 msgid "Start receiving"
 msgstr "Empfang starten"
 
-#: src/dcc/transferpanel.cpp:78
+#: src/dcc/transferpanel.cpp:77
 #, kde-format
 msgid "A&bort"
 msgstr "A&bbrechen"
 
-#: src/dcc/transferpanel.cpp:79
+#: src/dcc/transferpanel.cpp:78
 #, kde-format
 msgid "Abort the transfer(s)"
 msgstr "Übertragung(en) anhalten"
 
-#: src/dcc/transferpanel.cpp:81
+#: src/dcc/transferpanel.cpp:80
 #, kde-format
 msgid "Resend"
 msgstr "Erneut senden"
 
-#: src/dcc/transferpanel.cpp:82
+#: src/dcc/transferpanel.cpp:81
 #, kde-format
 msgctxt "clear selected dcctransfer"
 msgid "&Clear"
 msgstr "&Entfernen"
 
-#: src/dcc/transferpanel.cpp:83
+#: src/dcc/transferpanel.cpp:82
 #, kde-format
 msgid "Clear all selected Items"
 msgstr "Alle markierten Einträge entfernen"
 
-#: src/dcc/transferpanel.cpp:84
+#: src/dcc/transferpanel.cpp:83
 #, kde-format
 msgid "Clear Completed"
 msgstr "Abgeschlossene entfernen"
 
-#: src/dcc/transferpanel.cpp:85
+#: src/dcc/transferpanel.cpp:84
 #, kde-format
 msgid "Clear Completed Items"
 msgstr "Alle fertiggestellten Einträge entfernen"
 
-#: src/dcc/transferpanel.cpp:87
+#: src/dcc/transferpanel.cpp:86
 #, kde-format
 msgid "&Open File"
 msgstr "Datei öff&nen"
 
-#: src/dcc/transferpanel.cpp:88
+#: src/dcc/transferpanel.cpp:87
 #, kde-format
 msgid "Run the file"
 msgstr "Datei ausführen"
 
-#: src/dcc/transferpanel.cpp:89
+#: src/dcc/transferpanel.cpp:88
 #, kde-format
 msgid "Open Location"
 msgstr "Speicherort öffnen"
 
-#: src/dcc/transferpanel.cpp:90
+#: src/dcc/transferpanel.cpp:89
 #, kde-format
 msgid "Open the file location"
 msgstr "Speicherort der Datei öffnen"
 
-#: src/dcc/transferpanel.cpp:423
+#: src/dcc/transferpanel.cpp:422
 #, kde-format
 msgid ""
 "You have selected %1 file to execute, are you sure you want to continue?"
@@ -3483,7 +3483,7 @@ msgstr[0] ""
 msgstr[1] ""
 "Sie haben %1 Dateien zur Ausführung ausgewählt. Möchten Sie fortfahren?"
 
-#: src/dcc/transferpanel.cpp:427
+#: src/dcc/transferpanel.cpp:426
 #, kde-format
 msgctxt "@action:button"
 msgid "Execute %1 File"
@@ -3904,12 +3904,12 @@ msgstr "Bild speichern"
 msgid "Images (*.png *.xpm *.jpg)"
 msgstr "Bilder (*.png *.xpm *.jpg)"
 
-#: src/identitydialog.cpp:37
+#: src/identitydialog.cpp:36
 #, kde-format
 msgid "Identities"
 msgstr "Identitäten"
 
-#: src/identitydialog.cpp:54
+#: src/identitydialog.cpp:53
 #, kde-format
 msgid ""
 "This is your list of nicknames. A nickname is the name that other users will "
@@ -3931,73 +3931,73 @@ msgstr ""
 "Spitznamen ein. Falls Ihre erste Wahl vom Server abgelehnt wird, nimmt "
 "Konversation einen der alternativen Spitznamen."
 
-#: src/identitydialog.cpp:87
+#: src/identitydialog.cpp:86
 #, kde-format
 msgid "SASL PLAIN"
 msgstr "SASL PLAIN"
 
-#: src/identitydialog.cpp:88
+#: src/identitydialog.cpp:87
 #, kde-format
 msgctxt "Cert = Certificate"
 msgid "SASL EXTERNAL (Cert)"
 msgstr "SASL EXTERNAL (Cert)"
 
-#: src/identitydialog.cpp:89
+#: src/identitydialog.cpp:88
 #, kde-format
 msgid "Standard NickServ"
 msgstr "Standard-NickServ"
 
-#: src/identitydialog.cpp:90
+#: src/identitydialog.cpp:89
 #, kde-format
 msgid "Server Password"
 msgstr "Server-Passwort"
 
-#: src/identitydialog.cpp:91
+#: src/identitydialog.cpp:90
 #, kde-format
 msgid "SSL Client Certificate"
 msgstr "SSL-Client-Zertifikat"
 
-#: src/identitydialog.cpp:97
+#: src/identitydialog.cpp:96
 #, kde-format
 msgid " minute"
 msgid_plural " minutes"
 msgstr[0] " Minute"
 msgstr[1] " Minuten"
 
-#: src/identitydialog.cpp:115
+#: src/identitydialog.cpp:114
 #, kde-format
 msgid "Change identity information"
 msgstr "Identität bearbeiten"
 
-#: src/identitydialog.cpp:116 src/irc/servergroupdialog.cpp:85
+#: src/identitydialog.cpp:115 src/irc/servergroupdialog.cpp:85
 #: src/viewer/editnotifydialog.cpp:79
 #, kde-format
 msgid "Discards all changes made"
 msgstr "Verwirft alle Änderungen"
 
-#: src/identitydialog.cpp:260
+#: src/identitydialog.cpp:259
 #, kde-format
 msgid "Add Identity"
 msgstr "Identität hinzufügen"
 
-#: src/identitydialog.cpp:260 src/identitydialog.cpp:283
-#: src/identitydialog.cpp:338
+#: src/identitydialog.cpp:259 src/identitydialog.cpp:282
+#: src/identitydialog.cpp:337
 #, kde-format
 msgid "Identity name:"
 msgstr "Identitätsname:"
 
-#: src/identitydialog.cpp:274 src/identitydialog.cpp:292
-#: src/identitydialog.cpp:351
+#: src/identitydialog.cpp:273 src/identitydialog.cpp:291
+#: src/identitydialog.cpp:350
 #, kde-format
 msgid "You need to give the identity a name."
 msgstr "Die Identität muss einen Namen haben."
 
-#: src/identitydialog.cpp:283
+#: src/identitydialog.cpp:282
 #, kde-format
 msgid "Rename Identity"
 msgstr "Identität umbenennen"
 
-#: src/identitydialog.cpp:317
+#: src/identitydialog.cpp:316
 #, kde-format
 msgid ""
 "This identity is in use, if you remove it the network settings using it will "
@@ -4007,50 +4007,50 @@ msgstr ""
 "Identität verwenden, werden auf die Standard-Identität zurückgesetzt. Soll "
 "die Identität trotzdem gelöscht werden?"
 
-#: src/identitydialog.cpp:322
+#: src/identitydialog.cpp:321
 #, kde-format
 msgid "Are you sure you want to delete all information for this identity?"
 msgstr ""
 "Sollen wirklich alle Informationen zu dieser Identität gelöscht werden?"
 
-#: src/identitydialog.cpp:325
+#: src/identitydialog.cpp:324
 #, kde-format
 msgid "Delete Identity"
 msgstr "Identität löschen"
 
-#: src/identitydialog.cpp:338
+#: src/identitydialog.cpp:337
 #, kde-format
 msgid "Duplicate Identity"
 msgstr "Identität kopieren"
 
-#: src/identitydialog.cpp:381
+#: src/identitydialog.cpp:380
 #, kde-format
 msgid "You must add at least one nick to the identity."
 msgstr "Jede Identität muss mindestens einen Spitznamen enthalten."
 
-#: src/identitydialog.cpp:393
+#: src/identitydialog.cpp:392
 #, kde-format
 msgid "Nicks must not contain spaces."
 msgstr "Spitznamen dürfen keine Leerzeichen enthalten."
 
-#: src/identitydialog.cpp:406
+#: src/identitydialog.cpp:405
 #, kde-format
 msgid "Please enter a real name."
 msgstr "Bitte geben Sie einen Realnamen ein."
 
-#: src/identitydialog.cpp:417
+#: src/identitydialog.cpp:416
 #, kde-format
 msgid "Ident must not contain spaces."
 msgstr "Identitäten dürfen keine Leerzeichen enthalten."
 
-#: src/identitydialog.cpp:464
+#: src/identitydialog.cpp:463
 #, kde-format
 msgid "NickServ may not function with auto join;  SASL is recommended."
 msgstr ""
 "NickServ wird nicht mit automatischem Betreten funktionieren, SASL ist "
 "erforderlich."
 
-#: src/identitydialog.cpp:471
+#: src/identitydialog.cpp:470
 #, kde-format
 msgid ""
 "The password entered here will override the one set in the server settings, "
@@ -4059,13 +4059,13 @@ msgstr ""
 "Das hier eingegebene Passwort überschreibt das in den Server-Einstellungen "
 "vergebene, sofern vorhanden."
 
-#: src/identitydialog.cpp:482
+#: src/identitydialog.cpp:481
 #, kde-format
 msgctxt "Shown in unfilled line edit"
 msgid "(optional)"
 msgstr "(optional)"
 
-#: src/identitydialog.cpp:489
+#: src/identitydialog.cpp:488
 #, kde-format
 msgid ""
 "Certificate-based authentication forces SSL to be enabled for a connection, "
@@ -4624,7 +4624,7 @@ msgstr "%1 (%2) hat diesen Kanal verlassen (%3)."
 #: src/irc/channel.cpp:1223 src/irc/channel.cpp:1225 src/irc/channel.cpp:1232
 #: src/irc/channel.cpp:1237 src/irc/channel.cpp:1258 src/irc/channel.cpp:1260
 #: src/irc/channel.cpp:1267 src/irc/channel.cpp:1272
-#: src/viewer/irccontextmenus.cpp:402
+#: src/viewer/irccontextmenus.cpp:401
 #, kde-format
 msgid "Kick"
 msgstr "Kick"
@@ -5312,7 +5312,7 @@ msgstr "Kanalthema"
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, ChannelListWidgetUI)
 #: src/irc/channellistpanel.cpp:139 src/irc/channellistpanelui.ui:14
-#: src/viewer/viewcontainer.cpp:2963 src/viewer/viewcontainer.cpp:2984
+#: src/viewer/viewcontainer.cpp:2962 src/viewer/viewcontainer.cpp:2983
 #, kde-format
 msgid "Channel List"
 msgstr "Kanalliste"
@@ -6311,7 +6311,7 @@ msgstr ""
 "Klicken Sie hier, um einen Spitznamen von der Liste der Namen zu entfernen, "
 "die hier erscheinen sollen."
 
-#: src/irc/nicksonline.cpp:39 src/viewer/irccontextmenus.cpp:431
+#: src/irc/nicksonline.cpp:39 src/viewer/irccontextmenus.cpp:430
 #, kde-format
 msgid "&Whois"
 msgstr "&Whois"
@@ -6705,8 +6705,8 @@ msgid "Added %1 to your ignore list."
 msgstr "%1 auf die Ignorieren-Liste gesetzt."
 
 #: src/irc/outputfilter.cpp:1540 src/irc/outputfilter.cpp:1609
-#: src/viewer/irccontextmenus.cpp:438 src/viewer/irccontextmenus.cpp:595
-#: src/viewer/irccontextmenus.cpp:596
+#: src/viewer/irccontextmenus.cpp:437 src/viewer/irccontextmenus.cpp:594
+#: src/viewer/irccontextmenus.cpp:595
 #, kde-format
 msgid "Ignore"
 msgstr "Ignorieren"
@@ -7433,7 +7433,7 @@ msgstr ""
 #. i18n: ectx: property (text), widget (QPushButton, m_editButton)
 #. i18n: ectx: property (text), widget (QPushButton, m_editIdentityButton)
 #: src/irc/servergroupdialogui.ui:71 src/irc/serverlistdialogui.ui:64
-#: src/viewer/ircinput.cpp:487
+#: src/viewer/ircinput.cpp:486
 #, kde-format
 msgid "&Edit..."
 msgstr "&Bearbeiten ..."
@@ -7714,8 +7714,8 @@ msgstr "Autor"
 msgid "Time"
 msgstr "Zeit"
 
-#: src/konsolepanel.cpp:26 src/viewer/viewcontainer.cpp:2607
-#: src/viewer/viewcontainer.cpp:2608
+#: src/konsolepanel.cpp:26 src/viewer/viewcontainer.cpp:2606
+#: src/viewer/viewcontainer.cpp:2607
 #, kde-format
 msgid "Konsole"
 msgstr "Konsole"
@@ -8305,7 +8305,7 @@ msgid "&DCC Status"
 msgstr "&DCC-Status"
 
 #: src/mainwindow.cpp:200 src/mainwindow.cpp:847
-#: src/viewer/viewcontainer.cpp:917
+#: src/viewer/viewcontainer.cpp:916
 #, kde-format
 msgid "&Open Logfile"
 msgstr "Protoko&lldatei öffnen"
@@ -8315,7 +8315,7 @@ msgstr "Protoko&lldatei öffnen"
 msgid "Open the known history for this channel in a new tab"
 msgstr "Bekannten Verlauf für diesen Kanal in einem neuen Unterfenster öffnen"
 
-#: src/mainwindow.cpp:209 src/viewer/viewcontainer.cpp:938
+#: src/mainwindow.cpp:209 src/viewer/viewcontainer.cpp:937
 #, kde-format
 msgid "&Channel Settings..."
 msgstr "&Kanaleinstellungen ..."
@@ -8325,7 +8325,7 @@ msgstr "&Kanaleinstellungen ..."
 msgid "Open the channel settings dialog for this tab"
 msgstr "Den Dialog für Kanaleinstellungen zu diesem Unterfenster öffnen"
 
-#: src/mainwindow.cpp:217 src/viewer/viewcontainer.cpp:908
+#: src/mainwindow.cpp:217 src/viewer/viewcontainer.cpp:907
 #, kde-format
 msgid "Channel &List"
 msgstr "Kana&lliste"
@@ -8380,7 +8380,7 @@ msgstr "Zuletzt aktives Unterfenster"
 msgid "Next Active Tab"
 msgstr "Nächstes aktives Unterfenster"
 
-#: src/mainwindow.cpp:312 src/viewer/viewcontainer.cpp:296
+#: src/mainwindow.cpp:312 src/viewer/viewcontainer.cpp:295
 #, kde-format
 msgid "Move Tab Up"
 msgstr "Unterfenster nach oben verschieben"
@@ -8391,19 +8391,19 @@ msgstr "Unterfenster nach oben verschieben"
 msgid "Move this tab"
 msgstr "Dieses Unterfenster verschieben"
 
-#: src/mainwindow.cpp:323 src/viewer/viewcontainer.cpp:304
+#: src/mainwindow.cpp:323 src/viewer/viewcontainer.cpp:303
 #, kde-format
 msgid "Move Tab Down"
 msgstr "Unterfenster nach unten verschieben"
 
 #: src/mainwindow.cpp:334 src/mainwindow.cpp:364
-#: src/viewer/viewcontainer.cpp:350
+#: src/viewer/viewcontainer.cpp:349
 #, kde-format
 msgid "Move Tab Right"
 msgstr "Unterfenster nach rechts verschieben"
 
 #: src/mainwindow.cpp:343 src/mainwindow.cpp:355
-#: src/viewer/viewcontainer.cpp:342
+#: src/viewer/viewcontainer.cpp:341
 #, kde-format
 msgid "Move Tab Left"
 msgstr "Unterfenster nach links verschieben"
@@ -8508,7 +8508,7 @@ msgstr "Inhalt aller Fenster löschen"
 msgid "Global Away"
 msgstr "Globale Abwesenheit"
 
-#: src/mainwindow.cpp:480 src/viewer/irccontextmenus.cpp:330
+#: src/mainwindow.cpp:480 src/viewer/irccontextmenus.cpp:329
 #, kde-format
 msgid "&Join Channel..."
 msgstr "Kanal &betreten ..."
@@ -9088,7 +9088,7 @@ msgstr "Herunterladen von %1 fehlgeschlagen: %2"
 msgid "Error parsing router description."
 msgstr "Fehler beim Einlesen der Router-Beschreibung."
 
-#: src/urlcatcher.cpp:69 src/viewer/viewcontainer.cpp:2618
+#: src/urlcatcher.cpp:69 src/viewer/viewcontainer.cpp:2617
 #, kde-format
 msgid "URL Catcher"
 msgstr "URL-Fänger"
@@ -9248,7 +9248,7 @@ msgstr ""
 "Dateidialog geöffnet werden. Möchten Sie wirklich mehrere Adressen auf "
 "einmal speichern?"
 
-#: src/urlcatcher.cpp:266 src/viewer/irccontextmenus.cpp:762
+#: src/urlcatcher.cpp:266 src/viewer/irccontextmenus.cpp:761
 #, kde-format
 msgid "Save link as"
 msgstr "Verknüpfung speichern unter"
@@ -9717,210 +9717,210 @@ msgstr ""
 "<b>Hinweis: Nicht alle Benutzer haben die Darstellung von Farben in ihren "
 "Programmen aktiviert.</b></qt>"
 
-#: src/viewer/irccontextmenus.cpp:137
+#: src/viewer/irccontextmenus.cpp:136
 #, kde-format
 msgid "Copy Link Address"
 msgstr "Verknüpfungsadresse kopieren"
 
-#: src/viewer/irccontextmenus.cpp:141
+#: src/viewer/irccontextmenus.cpp:140
 #, kde-format
 msgid "Add to Bookmarks"
 msgstr "Zu Lesezeichen hinzufügen"
 
-#: src/viewer/irccontextmenus.cpp:142
+#: src/viewer/irccontextmenus.cpp:141
 #, kde-format
 msgid "Open With..."
 msgstr "Öffnen mit ..."
 
-#: src/viewer/irccontextmenus.cpp:143
+#: src/viewer/irccontextmenus.cpp:142
 #, kde-format
 msgid "Save Link As..."
 msgstr "Verknüpfung speichern unter ..."
 
-#: src/viewer/irccontextmenus.cpp:283
+#: src/viewer/irccontextmenus.cpp:282
 #, kde-format
 msgid "Search for '%1' with"
 msgstr "Nach „%1“ suchen mit"
 
-#: src/viewer/irccontextmenus.cpp:297
+#: src/viewer/irccontextmenus.cpp:296
 #, kde-format
 msgid "Configure Web Shortcuts..."
 msgstr "Web-Kurzbefehle festlegen ..."
 
-#: src/viewer/irccontextmenus.cpp:333
+#: src/viewer/irccontextmenus.cpp:332
 #, kde-format
 msgid "Get &topic"
 msgstr "&Thema anzeigen"
 
-#: src/viewer/irccontextmenus.cpp:334
+#: src/viewer/irccontextmenus.cpp:333
 #, kde-format
 msgid "Get &user list"
 msgstr "Ben&utzerliste holen"
 
-#: src/viewer/irccontextmenus.cpp:379
+#: src/viewer/irccontextmenus.cpp:378
 #, kde-format
 msgid "Open Query"
 msgstr "Query öffnen"
 
-#: src/viewer/irccontextmenus.cpp:391
+#: src/viewer/irccontextmenus.cpp:390
 #, kde-format
 msgid "Modes"
 msgstr "Modi"
 
-#: src/viewer/irccontextmenus.cpp:392
+#: src/viewer/irccontextmenus.cpp:391
 #, kde-format
 msgid "Give Op"
 msgstr "Op geben"
 
-#: src/viewer/irccontextmenus.cpp:393
+#: src/viewer/irccontextmenus.cpp:392
 #, kde-format
 msgid "Take Op"
 msgstr "Op nehmen"
 
-#: src/viewer/irccontextmenus.cpp:394
+#: src/viewer/irccontextmenus.cpp:393
 #, kde-format
 msgid "Give HalfOp"
 msgstr "HalfOp geben"
 
-#: src/viewer/irccontextmenus.cpp:395
+#: src/viewer/irccontextmenus.cpp:394
 #, kde-format
 msgid "Take HalfOp"
 msgstr "HalfOp nehmen"
 
-#: src/viewer/irccontextmenus.cpp:396
+#: src/viewer/irccontextmenus.cpp:395
 #, kde-format
 msgid "Give Voice"
 msgstr "Erlaubnis zu schreiben geben"
 
-#: src/viewer/irccontextmenus.cpp:397
+#: src/viewer/irccontextmenus.cpp:396
 #, kde-format
 msgid "Take Voice"
 msgstr "Erlaubnis zu schreiben nehmen"
 
-#: src/viewer/irccontextmenus.cpp:401
+#: src/viewer/irccontextmenus.cpp:400
 #, kde-format
 msgid "Kick / Ban"
 msgstr "Kick / Bann"
 
-#: src/viewer/irccontextmenus.cpp:403
+#: src/viewer/irccontextmenus.cpp:402
 #, kde-format
 msgid "Kickban"
 msgstr "Kickbann"
 
-#: src/viewer/irccontextmenus.cpp:404
+#: src/viewer/irccontextmenus.cpp:403
 #, kde-format
 msgid "Ban Nickname"
 msgstr "Benutzer bannen"
 
-#: src/viewer/irccontextmenus.cpp:406
+#: src/viewer/irccontextmenus.cpp:405
 #, kde-format
 msgid "Ban *!*@*.host"
 msgstr "*!*@*.host bannen"
 
-#: src/viewer/irccontextmenus.cpp:407
+#: src/viewer/irccontextmenus.cpp:406
 #, kde-format
 msgid "Ban *!*@domain"
 msgstr "*!*@domain bannen"
 
-#: src/viewer/irccontextmenus.cpp:408
+#: src/viewer/irccontextmenus.cpp:407
 #, kde-format
 msgid "Ban *!user@*.host"
 msgstr "*!user@*.host bannen"
 
-#: src/viewer/irccontextmenus.cpp:409
+#: src/viewer/irccontextmenus.cpp:408
 #, kde-format
 msgid "Ban *!user@domain"
 msgstr "*!user@domain bannen"
 
-#: src/viewer/irccontextmenus.cpp:411
+#: src/viewer/irccontextmenus.cpp:410
 #, kde-format
 msgid "Kickban *!*@*.host"
 msgstr "*!*@*.host kickbannen"
 
-#: src/viewer/irccontextmenus.cpp:412
+#: src/viewer/irccontextmenus.cpp:411
 #, kde-format
 msgid "Kickban *!*@domain"
 msgstr "*!*@domain kickbannen"
 
-#: src/viewer/irccontextmenus.cpp:413
+#: src/viewer/irccontextmenus.cpp:412
 #, kde-format
 msgid "Kickban *!user@*.host"
 msgstr "*!user@*.host kickbannen"
 
-#: src/viewer/irccontextmenus.cpp:414
+#: src/viewer/irccontextmenus.cpp:413
 #, kde-format
 msgid "Kickban *!user@domain"
 msgstr "*!user@domain kickbannen"
 
-#: src/viewer/irccontextmenus.cpp:432
+#: src/viewer/irccontextmenus.cpp:431
 #, kde-format
 msgid "&Version"
 msgstr "&Version"
 
-#: src/viewer/irccontextmenus.cpp:433
+#: src/viewer/irccontextmenus.cpp:432
 #, kde-format
 msgid "&Ping"
 msgstr "&Ping"
 
-#: src/viewer/irccontextmenus.cpp:440 src/viewer/irccontextmenus.cpp:625
-#: src/viewer/irccontextmenus.cpp:626
+#: src/viewer/irccontextmenus.cpp:439 src/viewer/irccontextmenus.cpp:624
+#: src/viewer/irccontextmenus.cpp:625
 #, kde-format
 msgid "Unignore"
 msgstr "Nicht mehr ignorieren"
 
-#: src/viewer/irccontextmenus.cpp:443
+#: src/viewer/irccontextmenus.cpp:442
 #, kde-format
 msgid "Add to Watched Nicks"
 msgstr "Zur Liste zu beobachtender Spitznamen hinzufügen"
 
-#: src/viewer/irccontextmenus.cpp:445
+#: src/viewer/irccontextmenus.cpp:444
 #, kde-format
 msgid "Remove From Watched Nicks"
 msgstr "Von der Liste zu beobachtender Spitznamen entfernen"
 
-#: src/viewer/irccontextmenus.cpp:452
+#: src/viewer/irccontextmenus.cpp:451
 #, kde-format
 msgid "Send &File..."
 msgstr "&Datei senden ..."
 
-#: src/viewer/irccontextmenus.cpp:454
+#: src/viewer/irccontextmenus.cpp:453
 #, kde-format
 msgid "Open DCC Chat"
 msgstr "DCC-Chat öffnen"
 
-#: src/viewer/irccontextmenus.cpp:455
+#: src/viewer/irccontextmenus.cpp:454
 #, kde-format
 msgid "Open DCC Whiteboard"
 msgstr "DCC-Whiteboard öffnen"
 
-#: src/viewer/irccontextmenus.cpp:588
+#: src/viewer/irccontextmenus.cpp:587
 #, kde-format
 msgid "Do you want to ignore %1?"
 msgstr "Soll %1 ignoriert werden?"
 
-#: src/viewer/irccontextmenus.cpp:590
+#: src/viewer/irccontextmenus.cpp:589
 #, kde-format
 msgid "Do you want to ignore the selected users?"
 msgstr "Sollen die ausgewählten Benutzer ignoriert werden?"
 
-#: src/viewer/irccontextmenus.cpp:618
+#: src/viewer/irccontextmenus.cpp:617
 #, kde-format
 msgid "Do you want to stop ignoring %1?"
 msgstr "Soll %1 von der Ignorieren-Liste entfernt werden?"
 
-#: src/viewer/irccontextmenus.cpp:620
+#: src/viewer/irccontextmenus.cpp:619
 #, kde-format
 msgid "Do you want to stop ignoring the selected users?"
 msgstr ""
 "Sollen die ausgewählten Benutzer von der „Ignorieren“-Liste entfernt werden?"
 
-#: src/viewer/irccontextmenus.cpp:777
+#: src/viewer/irccontextmenus.cpp:776
 #, kde-format
 msgctxt "Opens a query (private message) window with the author of the topic"
 msgid "Query author"
 msgstr "Query mit Autor"
 
-#: src/viewer/ircinput.cpp:54
+#: src/viewer/ircinput.cpp:53
 #, kde-format
 msgid ""
 "<qt><p>The input line is where you type messages to be sent the channel, "
@@ -9950,21 +9950,21 @@ msgstr ""
 "Handbuch zu Konversation finden Sie weitere Befehle.</p><p>Eine Nachricht "
 "kann nicht aus mehreren Zeilen bestehen.</p></qt>"
 
-#: src/viewer/ircinput.cpp:475
+#: src/viewer/ircinput.cpp:474
 #, kde-format
 msgid "1 byte"
 msgid_plural "%1 bytes"
 msgstr[0] "1 Byte"
 msgstr[1] "%1 Bytes"
 
-#: src/viewer/ircinput.cpp:476
+#: src/viewer/ircinput.cpp:475
 #, kde-format
 msgid "1 line"
 msgid_plural "%1 lines"
 msgstr[0] "1 Zeile"
 msgstr[1] "%1 Zeilen"
 
-#: src/viewer/ircinput.cpp:482
+#: src/viewer/ircinput.cpp:481
 #, kde-format
 msgctxt ""
 "%1 is, for instance, '200 bytes'.  %2 is, for instance, '7 lines'.  Both are "
@@ -9978,12 +9978,12 @@ msgstr ""
 "%2). Dies kann zu Verbindungsabbrüchen oder Flood-Kills führen. Möchten Sie "
 "wirklich fortfahren?</qt>"
 
-#: src/viewer/ircinput.cpp:485
+#: src/viewer/ircinput.cpp:484
 #, kde-format
 msgid "Large Paste Warning"
 msgstr "Warnung: Der Inhalt der Zwischenablage ist sehr umfangreich!"
 
-#: src/viewer/ircinput.cpp:486
+#: src/viewer/ircinput.cpp:485
 #, kde-format
 msgid "Paste"
 msgstr "Einfügen"
@@ -10103,7 +10103,7 @@ msgstr "&Zitatsymbole hinzufügen"
 msgid "&Remove Newlines"
 msgstr "&Zeilenumbrüche entfernen"
 
-#: src/viewer/rawlog.cpp:17 src/viewer/viewcontainer.cpp:2743
+#: src/viewer/rawlog.cpp:17 src/viewer/viewcontainer.cpp:2742
 #, kde-format
 msgid "Raw Log"
 msgstr "Rohdatenprotokoll"
@@ -10251,63 +10251,63 @@ msgstr ""
 msgid "IRC Client"
 msgstr "IRC-Programm"
 
-#: src/viewer/viewcontainer.cpp:882
+#: src/viewer/viewcontainer.cpp:881
 #, kde-format
 msgid "Find Text..."
 msgstr "Text suchen ..."
 
-#: src/viewer/viewcontainer.cpp:884
+#: src/viewer/viewcontainer.cpp:883
 #, kde-format
 msgid "Search for text in the current tab"
 msgstr "Text im aktuellen Unterfenster suchen"
 
-#: src/viewer/viewcontainer.cpp:902
+#: src/viewer/viewcontainer.cpp:901
 #, kde-format
 msgid "Channel &List for %1"
 msgstr "Kana&lliste für %1"
 
-#: src/viewer/viewcontainer.cpp:922
+#: src/viewer/viewcontainer.cpp:921
 #, kde-format
 msgid "&Open Logfile for %1"
 msgstr "Pr&otokolldatei für %1 öffnen"
 
-#: src/viewer/viewcontainer.cpp:933
+#: src/viewer/viewcontainer.cpp:932
 #, kde-format
 msgid "&Channel Settings for %1..."
 msgstr "Einstellungen für &Kanal %1 ..."
 
-#: src/viewer/viewcontainer.cpp:2116
+#: src/viewer/viewcontainer.cpp:2115
 #, kde-format
 msgid "Rename Tab"
 msgstr "Unterfenster umbenennen"
 
-#: src/viewer/viewcontainer.cpp:2117
+#: src/viewer/viewcontainer.cpp:2116
 #, kde-format
 msgid "Enter new tab name:"
 msgstr "Geben Sie den neuen Unterfensternamen an:"
 
-#: src/viewer/viewcontainer.cpp:2189
+#: src/viewer/viewcontainer.cpp:2188
 #, kde-format
 msgctxt "Default encoding"
 msgid "Default ( %1 )"
 msgstr "Standard ( %1 )"
 
-#: src/viewer/viewcontainer.cpp:2230
+#: src/viewer/viewcontainer.cpp:2229
 #, kde-format
 msgid "&Rename Tab..."
 msgstr "Unterfenster &umbenennen ..."
 
-#: src/viewer/viewcontainer.cpp:2379
+#: src/viewer/viewcontainer.cpp:2378
 #, kde-format
 msgid "You can only search in text fields."
 msgstr "Es können nur Textfelder durchsucht werden."
 
-#: src/viewer/viewcontainer.cpp:2380
+#: src/viewer/viewcontainer.cpp:2379
 #, kde-format
 msgid "Find Text Information"
 msgstr "Textsuche"
 
-#: src/viewer/viewcontainer.cpp:2980
+#: src/viewer/viewcontainer.cpp:2979
 #, kde-format
 msgid ""
 "To know which server to display the channel list for, the list can only be "
@@ -10317,7 +10317,7 @@ msgstr ""
 "die Kanalliste nur aus Queries, Status- oder Kanal-Unterfenstern heraus "
 "geöffnet werden."
 
-#: src/viewer/viewcontainer.cpp:3010
+#: src/viewer/viewcontainer.cpp:3009
 #, kde-format
 msgid ""
 "Using this function may result in a lot of network traffic. If your "
@@ -10328,12 +10328,12 @@ msgstr ""
 "schnell genug ist, kann es passieren, dass der Server die Verbindung zu "
 "Ihrem Programm abbricht."
 
-#: src/viewer/viewcontainer.cpp:3014
+#: src/viewer/viewcontainer.cpp:3013
 #, kde-format
 msgid "Channel List Warning"
 msgstr "Kanalliste: Warnung"
 
-#: src/viewer/viewcontainer.cpp:3044
+#: src/viewer/viewcontainer.cpp:3043
 #, kde-format
 msgid "Watched Nicks"
 msgstr "Beobachtete Spitznamen"

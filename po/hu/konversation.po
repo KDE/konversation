@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-02 00:44+0000\n"
+"POT-Creation-Date: 2026-07-03 00:45+0000\n"
 "PO-Revision-Date: 2026-06-18 21:50+0200\n"
 "Last-Translator: Kristof Kiszel <ulysses@fsf.hu>\n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
@@ -149,7 +149,7 @@ msgstr ""
 "\"/media { Player }\" - jelentés arról, hogy éppen mit játszik a megadott "
 "lejátszó, ha az megtalálható."
 
-#: src/application.cpp:384 src/irc/server.cpp:1814 src/irc/server.cpp:3847
+#: src/application.cpp:383 src/irc/server.cpp:1814 src/irc/server.cpp:3847
 #: src/irc/server.cpp:3852
 #, kde-format
 msgid "D-Bus"
@@ -2013,7 +2013,7 @@ msgstr "Színek"
 msgid "Fonts"
 msgstr "Betűtípusok"
 
-#: src/config/settingsdialog.cpp:90 src/viewer/irccontextmenus.cpp:88
+#: src/config/settingsdialog.cpp:90 src/viewer/irccontextmenus.cpp:87
 #, kde-format
 msgid "Quick Buttons"
 msgstr "Gyors gombok"
@@ -2324,7 +2324,7 @@ msgstr "Tulajdonosi jogokkal rendelkező felhasználók ikonja"
 msgid "Preview:"
 msgstr "Előnézet:"
 
-#: src/config/warnings_config.cpp:143
+#: src/config/warnings_config.cpp:142
 #, kde-format
 msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
@@ -2332,7 +2332,7 @@ msgctxt ""
 msgid "... a channel invitation is received"
 msgstr "…csatornameghívás érkezett"
 
-#: src/config/warnings_config.cpp:146
+#: src/config/warnings_config.cpp:145
 #, kde-format
 msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
@@ -2340,7 +2340,7 @@ msgctxt ""
 msgid "... saving a log file would save only the visible portion"
 msgstr "…naplófájl mentése csak a látható részt mentené"
 
-#: src/config/warnings_config.cpp:149
+#: src/config/warnings_config.cpp:148
 #, kde-format
 msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
@@ -2348,7 +2348,7 @@ msgctxt ""
 msgid "... a log file is about to be deleted"
 msgstr "…naplófájl törlődne"
 
-#: src/config/warnings_config.cpp:152
+#: src/config/warnings_config.cpp:151
 #, kde-format
 msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
@@ -2358,7 +2358,7 @@ msgid ""
 msgstr ""
 "…meglévő csevegés van egy olyan becenévvel, aki éppen most lett ignorálva"
 
-#: src/config/warnings_config.cpp:155
+#: src/config/warnings_config.cpp:154
 #, kde-format
 msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
@@ -2366,7 +2366,7 @@ msgctxt ""
 msgid "... switching a connection to a different server in the same network"
 msgstr "…új kiszolgálóra vált ugyanazon a hálózaton"
 
-#: src/config/warnings_config.cpp:158
+#: src/config/warnings_config.cpp:157
 #, kde-format
 msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
@@ -2374,7 +2374,7 @@ msgctxt ""
 msgid "... creating a new connection to an already connected network"
 msgstr "…új kapcsolat létrehozásakor már meglévő hálózaton"
 
-#: src/config/warnings_config.cpp:161
+#: src/config/warnings_config.cpp:160
 #, kde-format
 msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
@@ -2382,7 +2382,7 @@ msgctxt ""
 msgid "... closing a server tab"
 msgstr "…kiszolgálólap bezárásakor"
 
-#: src/config/warnings_config.cpp:164
+#: src/config/warnings_config.cpp:163
 #, kde-format
 msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
@@ -2390,7 +2390,7 @@ msgctxt ""
 msgid "... closing a channel tab"
 msgstr "…csatornalap bezárásakor"
 
-#: src/config/warnings_config.cpp:167
+#: src/config/warnings_config.cpp:166
 #, kde-format
 msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
@@ -2398,7 +2398,7 @@ msgctxt ""
 msgid "... closing a query tab"
 msgstr "…beszélgetéslap bezárásakor"
 
-#: src/config/warnings_config.cpp:170
+#: src/config/warnings_config.cpp:169
 #, kde-format
 msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
@@ -2406,7 +2406,7 @@ msgctxt ""
 msgid "... closing a DCC Chat tab"
 msgstr "…DCC csevegéslap bezárásakor"
 
-#: src/config/warnings_config.cpp:173
+#: src/config/warnings_config.cpp:172
 #, kde-format
 msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
@@ -2415,7 +2415,7 @@ msgid ""
 "... a source for the channel list cannot be determined from the current tab"
 msgstr "…a csatornalista forrása nem határozható meg az aktuális lapból"
 
-#: src/config/warnings_config.cpp:176
+#: src/config/warnings_config.cpp:175
 #, kde-format
 msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
@@ -2423,7 +2423,7 @@ msgctxt ""
 msgid "... you have chosen to hide the menu bar"
 msgstr "…a menüsáv elrejtését választotta"
 
-#: src/config/warnings_config.cpp:179
+#: src/config/warnings_config.cpp:178
 #, kde-format
 msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
@@ -2432,7 +2432,7 @@ msgid "... a channel listing may cause disconnection due to the download size"
 msgstr ""
 "…a csatornalistázás a kapcsolat bontását okozhatja a letöltési méret miatt"
 
-#: src/config/warnings_config.cpp:182
+#: src/config/warnings_config.cpp:181
 #, kde-format
 msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
@@ -2440,7 +2440,7 @@ msgctxt ""
 msgid "... pasting large portions of text"
 msgstr "…nagyméretű szöveget illeszt be"
 
-#: src/config/warnings_config.cpp:185
+#: src/config/warnings_config.cpp:184
 #, kde-format
 msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
@@ -2448,7 +2448,7 @@ msgctxt ""
 msgid "... quitting Konversation via the tray icon"
 msgstr "…kilép a Konversationből a tálcaikonnal"
 
-#: src/config/warnings_config.cpp:188
+#: src/config/warnings_config.cpp:187
 #, kde-format
 msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
@@ -2456,7 +2456,7 @@ msgctxt ""
 msgid "... you have chosen to ignore a nickname"
 msgstr "…egy becenév ignorálását választotta"
 
-#: src/config/warnings_config.cpp:191
+#: src/config/warnings_config.cpp:190
 #, kde-format
 msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
@@ -2464,7 +2464,7 @@ msgctxt ""
 msgid "... you have chosen to stop ignoring a nickname"
 msgstr "…egy becenév ignorálásának megszüntetését választotta"
 
-#: src/config/warnings_config.cpp:194
+#: src/config/warnings_config.cpp:193
 #, kde-format
 msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
@@ -2473,7 +2473,7 @@ msgid "... quitting Konversation while DCC file transfers are active"
 msgstr ""
 "…kilép a Konversationből, miközben DCC fájlátvitelek vannak folyamatban"
 
-#: src/config/warnings_config.cpp:197
+#: src/config/warnings_config.cpp:196
 #, kde-format
 msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
@@ -2482,7 +2482,7 @@ msgid ""
 "... some characters in a message are incompatible with the active encoding"
 msgstr "…néhány karakter nem kompatibilis az aktív kódolással"
 
-#: src/config/warnings_config.cpp:200
+#: src/config/warnings_config.cpp:199
 #, kde-format
 msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
@@ -2753,52 +2753,52 @@ msgstr "Hiba: %1"
 msgid "getNickname: Server %1 is not found."
 msgstr "getNickname: %1 kiszolgáló nem található."
 
-#: src/dcc/chat.cpp:98
+#: src/dcc/chat.cpp:97
 #, kde-format
 msgctxt "%1=dcc extension like Chat or Whiteboard"
 msgid "Could not send a DCC %1 request to the partner via the IRC server."
 msgstr "Nem küldhető DCC %1 kérés a partnernek az IRC kiszolgálón keresztül."
 
-#: src/dcc/chat.cpp:119 src/dcc/transfersend.cpp:374
+#: src/dcc/chat.cpp:118 src/dcc/transfersend.cpp:374
 #, kde-format
 msgid "Awaiting acceptance by remote user..."
 msgstr "Várakozás a távoli felhasználóra…"
 
-#: src/dcc/chat.cpp:148
+#: src/dcc/chat.cpp:147
 #, kde-format
 msgctxt "%1=partnerNick, %2=Servername, %3=dcc extension as chat or wboard"
 msgid "%1 (on %2) offers to DCC %3 with you"
 msgstr "%1 (kiszolgáló: %2) a következőt ajánlja Önnek: DCC %3"
 
-#: src/dcc/chat.cpp:149
+#: src/dcc/chat.cpp:148
 #, kde-format
 msgctxt "%1=dcc extension as Chat or Whiteboard, %2=partnerNick"
 msgid "DCC %1 offer from %2"
 msgstr "DCC %1 ajánlat a következőtől: %2"
 
-#: src/dcc/chat.cpp:150
+#: src/dcc/chat.cpp:149
 #, kde-format
 msgid "Accept"
 msgstr "Elfogadás"
 
-#: src/dcc/chat.cpp:151
+#: src/dcc/chat.cpp:150
 #, kde-format
 msgid "Reject"
 msgstr "Elutasítás"
 
-#: src/dcc/chat.cpp:157
+#: src/dcc/chat.cpp:156
 #, kde-format
 msgctxt "%1=dcc extension like Chat or Whiteboard"
 msgid "You rejected the DCC %1 offer."
 msgstr "Elutasította a DCC %1 ajánlatot."
 
-#: src/dcc/chat.cpp:196
+#: src/dcc/chat.cpp:195
 #, kde-format
 msgctxt "%1=dcc extension as Chat or Whiteboard"
 msgid "DCC %1 request was rejected"
 msgstr "A DCC %1 kérés visszautasítva"
 
-#: src/dcc/chat.cpp:285
+#: src/dcc/chat.cpp:284
 #, kde-format
 msgctxt "%1=dcc extension like Chat or Whiteboard"
 msgid ""
@@ -2806,7 +2806,7 @@ msgid ""
 "server."
 msgstr "Nem küldhető fordított DCC  %1 az IRC kiszolgálón keresztül."
 
-#: src/dcc/chat.cpp:303 src/dcc/chat.cpp:335 src/dcc/transferrecv.cpp:589
+#: src/dcc/chat.cpp:302 src/dcc/chat.cpp:334 src/dcc/transferrecv.cpp:589
 #: src/dcc/transfersend.cpp:396
 #, kde-format
 msgid ""
@@ -2815,7 +2815,7 @@ msgstr ""
 "Nem sikerült továbbítani ezt a portot: %1. DCC kérés küldése a távoli "
 "felhasználónak ettől függetlenül."
 
-#: src/dcc/chat.cpp:317
+#: src/dcc/chat.cpp:316
 #, kde-format
 msgctxt "%1=extension like Chat or Whiteboard"
 msgid ""
@@ -2825,59 +2825,59 @@ msgstr ""
 "Nem küldhető fordított DCC  %1 nyugtázás a partnernek az IRC kiszolgálón "
 "keresztül."
 
-#: src/dcc/chat.cpp:359
+#: src/dcc/chat.cpp:358
 #, kde-format
 msgid "Could not open a socket for listening: %1"
 msgstr "Nem sikerült socketet megnyitni a hallgatáshoz: %1"
 
-#: src/dcc/chat.cpp:370
+#: src/dcc/chat.cpp:369
 #, kde-format
 msgctxt "%1=dcc extension like Chat or Whiteboard,%2=partnerNick, %3=port"
 msgid "Offering DCC %1 connection to %2 on port %3..."
 msgstr "DCC %1 kapcsolat ajánlása (port: %3) a következőnek: %2…"
 
-#: src/dcc/chat.cpp:431
+#: src/dcc/chat.cpp:430
 #, kde-format
 msgctxt "DCC extension"
 msgid "Whiteboard"
 msgstr "Faliújság"
 
-#: src/dcc/chat.cpp:434
+#: src/dcc/chat.cpp:433
 #, kde-format
 msgctxt "DCC extension"
 msgid "Chat"
 msgstr "Csevegés"
 
-#: src/dcc/chat.cpp:465
+#: src/dcc/chat.cpp:464
 #, kde-format
 msgctxt ""
 "%1=extension like Chat or Whiteboard ,%2 = nickname, %3 = IP, %4 = port"
 msgid "Establishing DCC %1 connection to %2 (%3:%4)..."
 msgstr "DCC %1 kapcsolat létrehozása a következőhöz: %2 (%3:%4)…"
 
-#: src/dcc/chat.cpp:482
+#: src/dcc/chat.cpp:481
 #, kde-format
 msgctxt "%1=extension like Chat or Whiteboard, %2 = partnerNick"
 msgid "Established DCC %1 connection to %2."
 msgstr "DCC %1 kapcsolat létrehozása a következőhöz: %2."
 
-#: src/dcc/chat.cpp:489 src/dcc/transfersend.cpp:570
+#: src/dcc/chat.cpp:488 src/dcc/transfersend.cpp:570
 #, kde-format
 msgid "Socket error: %1"
 msgstr "Socket hiba: %1"
 
-#: src/dcc/chat.cpp:550
+#: src/dcc/chat.cpp:549
 #, kde-format
 msgid "Could not accept the client."
 msgstr "Nem sikerült elfogadni a klienst."
 
-#: src/dcc/chat.cpp:572
+#: src/dcc/chat.cpp:571
 #, kde-format
 msgctxt "%1=dcc extension as Chat or Whiteboard, %2=partnerNick"
 msgid "Established DCC %1 connection to %2."
 msgstr "DCC %1 kapcsolat létrehozva a következőhöz: %2."
 
-#: src/dcc/chat.cpp:578
+#: src/dcc/chat.cpp:577
 #, kde-format
 msgid "Connection closed."
 msgstr "A kapcsolat lezárva."
@@ -3334,88 +3334,88 @@ msgstr "Bejövő átvitelek"
 msgid "Outgoing Transfers"
 msgstr "Kimenő átvitelek"
 
-#: src/dcc/transferpanel.cpp:36 src/viewer/viewcontainer.cpp:2650
+#: src/dcc/transferpanel.cpp:35 src/viewer/viewcontainer.cpp:2649
 #, kde-format
 msgid "DCC Status"
 msgstr "DCC állapot"
 
-#: src/dcc/transferpanel.cpp:73
+#: src/dcc/transferpanel.cpp:72
 #, kde-format
 msgid "&Select All Items"
 msgstr "Összes elem kijelölé&se"
 
-#: src/dcc/transferpanel.cpp:74
+#: src/dcc/transferpanel.cpp:73
 #, kde-format
 msgid "S&elect All Completed Items"
 msgstr "Összes befejezett elem kij&elölése"
 
-#: src/dcc/transferpanel.cpp:76
+#: src/dcc/transferpanel.cpp:75
 #, kde-format
 msgid "&Accept"
 msgstr "Elfog&adás"
 
-#: src/dcc/transferpanel.cpp:77
+#: src/dcc/transferpanel.cpp:76
 #, kde-format
 msgid "Start receiving"
 msgstr "Fogadás indítása"
 
-#: src/dcc/transferpanel.cpp:78
+#: src/dcc/transferpanel.cpp:77
 #, kde-format
 msgid "A&bort"
 msgstr "Me&gszakítás"
 
-#: src/dcc/transferpanel.cpp:79
+#: src/dcc/transferpanel.cpp:78
 #, kde-format
 msgid "Abort the transfer(s)"
 msgstr "Átvitelek megszakítása"
 
-#: src/dcc/transferpanel.cpp:81
+#: src/dcc/transferpanel.cpp:80
 #, kde-format
 msgid "Resend"
 msgstr "Újraküldés"
 
-#: src/dcc/transferpanel.cpp:82
+#: src/dcc/transferpanel.cpp:81
 #, kde-format
 msgctxt "clear selected dcctransfer"
 msgid "&Clear"
 msgstr "&Törlés"
 
-#: src/dcc/transferpanel.cpp:83
+#: src/dcc/transferpanel.cpp:82
 #, kde-format
 msgid "Clear all selected Items"
 msgstr "Összes kijelölt elem törlése"
 
-#: src/dcc/transferpanel.cpp:84
+#: src/dcc/transferpanel.cpp:83
 #, kde-format
 msgid "Clear Completed"
 msgstr "Törlés befejezve"
 
-#: src/dcc/transferpanel.cpp:85
+#: src/dcc/transferpanel.cpp:84
 #, kde-format
 msgid "Clear Completed Items"
 msgstr "Befejezett elemek törlése"
 
-#: src/dcc/transferpanel.cpp:87
+#: src/dcc/transferpanel.cpp:86
 #, kde-format
 msgid "&Open File"
 msgstr "F&ájl megnyitása"
 
-#: src/dcc/transferpanel.cpp:88
+#: src/dcc/transferpanel.cpp:87
 #, kde-format
 msgid "Run the file"
 msgstr "Fájl futtatása"
 
-#: src/dcc/transferpanel.cpp:89
+#: src/dcc/transferpanel.cpp:88
 #, kde-format
 msgid "Open Location"
 msgstr "Hely megnyitása"
 
-#: src/dcc/transferpanel.cpp:90
+#: src/dcc/transferpanel.cpp:89
 #, kde-format
 msgid "Open the file location"
 msgstr "Fájl helyének megnyitása"
 
-#: src/dcc/transferpanel.cpp:423
+#: src/dcc/transferpanel.cpp:422
 #, kde-format
 msgid ""
 "You have selected %1 file to execute, are you sure you want to continue?"
@@ -3424,7 +3424,7 @@ msgid_plural ""
 msgstr[0] "Ön kijelölt %1 fájlt futtatásra, biztosan folytatni szeretné?"
 msgstr[1] "Ön kijelölt %1 fájlt futtatásra, biztosan folytatni szeretné?"
 
-#: src/dcc/transferpanel.cpp:427
+#: src/dcc/transferpanel.cpp:426
 #, kde-format
 msgctxt "@action:button"
 msgid "Execute %1 File"
@@ -3837,12 +3837,12 @@ msgstr "Kép mentése"
 msgid "Images (*.png *.xpm *.jpg)"
 msgstr "Képek (*.png, *.xpm, *.jpg)"
 
-#: src/identitydialog.cpp:37
+#: src/identitydialog.cpp:36
 #, kde-format
 msgid "Identities"
 msgstr "Identitások"
 
-#: src/identitydialog.cpp:54
+#: src/identitydialog.cpp:53
 #, kde-format
 msgid ""
 "This is your list of nicknames. A nickname is the name that other users will "
@@ -3863,73 +3863,73 @@ msgstr ""
 "által használatban van. Adjon meg magának alternatív neveket, így ha az első "
 "használatban van, akkor a Konversation automatikusan a következőt próbálja."
 
-#: src/identitydialog.cpp:87
+#: src/identitydialog.cpp:86
 #, kde-format
 msgid "SASL PLAIN"
 msgstr "SASL PLAIN"
 
-#: src/identitydialog.cpp:88
+#: src/identitydialog.cpp:87
 #, kde-format
 msgctxt "Cert = Certificate"
 msgid "SASL EXTERNAL (Cert)"
 msgstr "SASL EXTERNAL (Tanúsítvány)"
 
-#: src/identitydialog.cpp:89
+#: src/identitydialog.cpp:88
 #, kde-format
 msgid "Standard NickServ"
 msgstr "Szabványos becenév szolgáltatás"
 
-#: src/identitydialog.cpp:90
+#: src/identitydialog.cpp:89
 #, kde-format
 msgid "Server Password"
 msgstr "Kiszolgáló jelszó"
 
-#: src/identitydialog.cpp:91
+#: src/identitydialog.cpp:90
 #, kde-format
 msgid "SSL Client Certificate"
 msgstr "SSL kliens tanúsítvány"
 
-#: src/identitydialog.cpp:97
+#: src/identitydialog.cpp:96
 #, kde-format
 msgid " minute"
 msgid_plural " minutes"
 msgstr[0] " perc"
 msgstr[1] " perc"
 
-#: src/identitydialog.cpp:115
+#: src/identitydialog.cpp:114
 #, kde-format
 msgid "Change identity information"
 msgstr "Identitás információinak megváltoztatása"
 
-#: src/identitydialog.cpp:116 src/irc/servergroupdialog.cpp:85
+#: src/identitydialog.cpp:115 src/irc/servergroupdialog.cpp:85
 #: src/viewer/editnotifydialog.cpp:79
 #, kde-format
 msgid "Discards all changes made"
 msgstr "Összes módosítás elvetése"
 
-#: src/identitydialog.cpp:260
+#: src/identitydialog.cpp:259
 #, kde-format
 msgid "Add Identity"
 msgstr "Identitás hozzáadása"
 
-#: src/identitydialog.cpp:260 src/identitydialog.cpp:283
-#: src/identitydialog.cpp:338
+#: src/identitydialog.cpp:259 src/identitydialog.cpp:282
+#: src/identitydialog.cpp:337
 #, kde-format
 msgid "Identity name:"
 msgstr "Identitás neve:"
 
-#: src/identitydialog.cpp:274 src/identitydialog.cpp:292
-#: src/identitydialog.cpp:351
+#: src/identitydialog.cpp:273 src/identitydialog.cpp:291
+#: src/identitydialog.cpp:350
 #, kde-format
 msgid "You need to give the identity a name."
 msgstr "Önnek meg kell adnia az identitás nevét."
 
-#: src/identitydialog.cpp:283
+#: src/identitydialog.cpp:282
 #, kde-format
 msgid "Rename Identity"
 msgstr "Identitás átnevezése"
 
-#: src/identitydialog.cpp:317
+#: src/identitydialog.cpp:316
 #, kde-format
 msgid ""
 "This identity is in use, if you remove it the network settings using it will "
@@ -3939,50 +3939,50 @@ msgstr ""
 "vissza fognak térni az alapértelmezett identitáshoz. Mindenképpen törölni "
 "szeretné?"
 
-#: src/identitydialog.cpp:322
+#: src/identitydialog.cpp:321
 #, kde-format
 msgid "Are you sure you want to delete all information for this identity?"
 msgstr ""
 "Minden információt törölni szeretne ezzel az identitással kapcsolatban?"
 
-#: src/identitydialog.cpp:325
+#: src/identitydialog.cpp:324
 #, kde-format
 msgid "Delete Identity"
 msgstr "Identitás törlése"
 
-#: src/identitydialog.cpp:338
+#: src/identitydialog.cpp:337
 #, kde-format
 msgid "Duplicate Identity"
 msgstr "Identitás megkettőzése"
 
-#: src/identitydialog.cpp:381
+#: src/identitydialog.cpp:380
 #, kde-format
 msgid "You must add at least one nick to the identity."
 msgstr "Önnek legalább egy becenevet hozzá kell adni az identitáshoz."
 
-#: src/identitydialog.cpp:393
+#: src/identitydialog.cpp:392
 #, kde-format
 msgid "Nicks must not contain spaces."
 msgstr "A becenevek nem tartalmazhatnak szóközt."
 
-#: src/identitydialog.cpp:406
+#: src/identitydialog.cpp:405
 #, kde-format
 msgid "Please enter a real name."
 msgstr "Adjon meg egy valós nevet."
 
-#: src/identitydialog.cpp:417
+#: src/identitydialog.cpp:416
 #, kde-format
 msgid "Ident must not contain spaces."
 msgstr "Az identek nem tartalmazhatnak szóközöket."
 
-#: src/identitydialog.cpp:464
+#: src/identitydialog.cpp:463
 #, kde-format
 msgid "NickServ may not function with auto join;  SASL is recommended."
 msgstr ""
 "A NickServ nem biztos, hogy működik automatikus csatlakozással; a SASL "
 "ajánlott."
 
-#: src/identitydialog.cpp:471
+#: src/identitydialog.cpp:470
 #, kde-format
 msgid ""
 "The password entered here will override the one set in the server settings, "
@@ -3991,13 +3991,13 @@ msgstr ""
 "Az itt megadott jelszó felül fogja írni a kiszolgáló beállításaiban "
 "megadottat, ha van olyan."
 
-#: src/identitydialog.cpp:482
+#: src/identitydialog.cpp:481
 #, kde-format
 msgctxt "Shown in unfilled line edit"
 msgid "(optional)"
 msgstr "(opcionális)"
 
-#: src/identitydialog.cpp:489
+#: src/identitydialog.cpp:488
 #, kde-format
 msgid ""
 "Certificate-based authentication forces SSL to be enabled for a connection, "
@@ -4554,7 +4554,7 @@ msgstr "%1 (%2) elhagyta ezt a csatornát (%3)."
 #: src/irc/channel.cpp:1223 src/irc/channel.cpp:1225 src/irc/channel.cpp:1232
 #: src/irc/channel.cpp:1237 src/irc/channel.cpp:1258 src/irc/channel.cpp:1260
 #: src/irc/channel.cpp:1267 src/irc/channel.cpp:1272
-#: src/viewer/irccontextmenus.cpp:402
+#: src/viewer/irccontextmenus.cpp:401
 #, kde-format
 msgid "Kick"
 msgstr "Kirúgás"
@@ -5242,7 +5242,7 @@ msgstr "Csatorna témája"
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, ChannelListWidgetUI)
 #: src/irc/channellistpanel.cpp:139 src/irc/channellistpanelui.ui:14
-#: src/viewer/viewcontainer.cpp:2963 src/viewer/viewcontainer.cpp:2984
+#: src/viewer/viewcontainer.cpp:2962 src/viewer/viewcontainer.cpp:2983
 #, kde-format
 msgid "Channel List"
 msgstr "Csatornalista"
@@ -6241,7 +6241,7 @@ msgid ""
 msgstr ""
 "Kattintson a becenév eltávolításához a képernyőn megjelenő becenévlistából."
 
-#: src/irc/nicksonline.cpp:39 src/viewer/irccontextmenus.cpp:431
+#: src/irc/nicksonline.cpp:39 src/viewer/irccontextmenus.cpp:430
 #, kde-format
 msgid "&Whois"
 msgstr "Ki ő (&Whois)"
@@ -6637,8 +6637,8 @@ msgid "Added %1 to your ignore list."
 msgstr "%1 hozzáadva a mellőzési listához."
 
 #: src/irc/outputfilter.cpp:1540 src/irc/outputfilter.cpp:1609
-#: src/viewer/irccontextmenus.cpp:438 src/viewer/irccontextmenus.cpp:595
-#: src/viewer/irccontextmenus.cpp:596
+#: src/viewer/irccontextmenus.cpp:437 src/viewer/irccontextmenus.cpp:594
+#: src/viewer/irccontextmenus.cpp:595
 #, kde-format
 msgid "Ignore"
 msgstr "Kihagyás"
@@ -7352,7 +7352,7 @@ msgstr ""
 #. i18n: ectx: property (text), widget (QPushButton, m_editButton)
 #. i18n: ectx: property (text), widget (QPushButton, m_editIdentityButton)
 #: src/irc/servergroupdialogui.ui:71 src/irc/serverlistdialogui.ui:64
-#: src/viewer/ircinput.cpp:487
+#: src/viewer/ircinput.cpp:486
 #, kde-format
 msgid "&Edit..."
 msgstr "Sz&erkesztés..."
@@ -7628,8 +7628,8 @@ msgstr "Szerző"
 msgid "Time"
 msgstr "Idő"
 
-#: src/konsolepanel.cpp:26 src/viewer/viewcontainer.cpp:2607
-#: src/viewer/viewcontainer.cpp:2608
+#: src/konsolepanel.cpp:26 src/viewer/viewcontainer.cpp:2606
+#: src/viewer/viewcontainer.cpp:2607
 #, kde-format
 msgid "Konsole"
 msgstr "Parancsértelmező (Konsole)"
@@ -8210,7 +8210,7 @@ msgid "&DCC Status"
 msgstr "&DCC állapot"
 
 #: src/mainwindow.cpp:200 src/mainwindow.cpp:847
-#: src/viewer/viewcontainer.cpp:917
+#: src/viewer/viewcontainer.cpp:916
 #, kde-format
 msgid "&Open Logfile"
 msgstr "Napl&ófájl megnyitása"
@@ -8220,7 +8220,7 @@ msgstr "Napl&ófájl megnyitása"
 msgid "Open the known history for this channel in a new tab"
 msgstr "Megnyitja a teljes előzményét ennek a csatornának egy új lapon"
 
-#: src/mainwindow.cpp:209 src/viewer/viewcontainer.cpp:938
+#: src/mainwindow.cpp:209 src/viewer/viewcontainer.cpp:937
 #, kde-format
 msgid "&Channel Settings..."
 msgstr "&Csatorna-beállítások..."
@@ -8230,7 +8230,7 @@ msgstr "&Csatorna-beállítások..."
 msgid "Open the channel settings dialog for this tab"
 msgstr "Megnyitja az aktuális csatorna beállításainak dialógusablakát"
 
-#: src/mainwindow.cpp:217 src/viewer/viewcontainer.cpp:908
+#: src/mainwindow.cpp:217 src/viewer/viewcontainer.cpp:907
 #, kde-format
 msgid "Channel &List"
 msgstr "Csatorna&lista"
@@ -8285,7 +8285,7 @@ msgstr "Utoljára fókuszban lévő lap"
 msgid "Next Active Tab"
 msgstr "Következő aktív lap"
 
-#: src/mainwindow.cpp:312 src/viewer/viewcontainer.cpp:296
+#: src/mainwindow.cpp:312 src/viewer/viewcontainer.cpp:295
 #, kde-format
 msgid "Move Tab Up"
 msgstr "Lap mozgatása felfelé"
@@ -8296,19 +8296,19 @@ msgstr "Lap mozgatása felfelé"
 msgid "Move this tab"
 msgstr "Lap mozgatása"
 
-#: src/mainwindow.cpp:323 src/viewer/viewcontainer.cpp:304
+#: src/mainwindow.cpp:323 src/viewer/viewcontainer.cpp:303
 #, kde-format
 msgid "Move Tab Down"
 msgstr "Lap mozgatása lefelé"
 
 #: src/mainwindow.cpp:334 src/mainwindow.cpp:364
-#: src/viewer/viewcontainer.cpp:350
+#: src/viewer/viewcontainer.cpp:349
 #, kde-format
 msgid "Move Tab Right"
 msgstr "Lap mozgatása jobbra"
 
 #: src/mainwindow.cpp:343 src/mainwindow.cpp:355
-#: src/viewer/viewcontainer.cpp:342
+#: src/viewer/viewcontainer.cpp:341
 #, kde-format
 msgid "Move Tab Left"
 msgstr "Lap mozgatása balra"
@@ -8413,7 +8413,7 @@ msgstr "Minden megnyitott lap tartalmának törlése"
 msgid "Global Away"
 msgstr "Általános távollét"
 
-#: src/mainwindow.cpp:480 src/viewer/irccontextmenus.cpp:330
+#: src/mainwindow.cpp:480 src/viewer/irccontextmenus.cpp:329
 #, kde-format
 msgid "&Join Channel..."
 msgstr "Be&lépés csatornába..."
@@ -8991,7 +8991,7 @@ msgstr "%1 letöltése nem sikerült: %2"
 msgid "Error parsing router description."
 msgstr "Hiba a router-leírás feldolgozásakor."
 
-#: src/urlcatcher.cpp:69 src/viewer/viewcontainer.cpp:2618
+#: src/urlcatcher.cpp:69 src/viewer/viewcontainer.cpp:2617
 #, kde-format
 msgid "URL Catcher"
 msgstr "URL-elfogó"
@@ -9149,7 +9149,7 @@ msgstr ""
 "fog megnyílni a cél megadásához. Biztosan szeretné az összes URL-t egyszerre "
 "menteni?"
 
-#: src/urlcatcher.cpp:266 src/viewer/irccontextmenus.cpp:762
+#: src/urlcatcher.cpp:266 src/viewer/irccontextmenus.cpp:761
 #, kde-format
 msgid "Save link as"
 msgstr "Hivatkozás mentése másként"
@@ -9605,210 +9605,210 @@ msgstr ""
 "<b>Figyelem:  Nem minden felhasználó kapcsolja be a színek megjelenítésének "
 "lehetőségét.</b></qt>"
 
-#: src/viewer/irccontextmenus.cpp:137
+#: src/viewer/irccontextmenus.cpp:136
 #, kde-format
 msgid "Copy Link Address"
 msgstr "A link címének másolása"
 
-#: src/viewer/irccontextmenus.cpp:141
+#: src/viewer/irccontextmenus.cpp:140
 #, kde-format
 msgid "Add to Bookmarks"
 msgstr "Könyvjelző létrehozása"
 
-#: src/viewer/irccontextmenus.cpp:142
+#: src/viewer/irccontextmenus.cpp:141
 #, kde-format
 msgid "Open With..."
 msgstr "Megnyitás ezzel…"
 
-#: src/viewer/irccontextmenus.cpp:143
+#: src/viewer/irccontextmenus.cpp:142
 #, kde-format
 msgid "Save Link As..."
 msgstr "A link célpontjának men&tése..."
 
-#: src/viewer/irccontextmenus.cpp:283
+#: src/viewer/irccontextmenus.cpp:282
 #, kde-format
 msgid "Search for '%1' with"
 msgstr "„%1” keresése ezzel"
 
-#: src/viewer/irccontextmenus.cpp:297
+#: src/viewer/irccontextmenus.cpp:296
 #, kde-format
 msgid "Configure Web Shortcuts..."
 msgstr "Keresőazonosítók beállítása…"
 
-#: src/viewer/irccontextmenus.cpp:333
+#: src/viewer/irccontextmenus.cpp:332
 #, kde-format
 msgid "Get &topic"
 msgstr "&Téma lekérése"
 
-#: src/viewer/irccontextmenus.cpp:334
+#: src/viewer/irccontextmenus.cpp:333
 #, kde-format
 msgid "Get &user list"
 msgstr "Felhaszn&álólista lekérése"
 
-#: src/viewer/irccontextmenus.cpp:379
+#: src/viewer/irccontextmenus.cpp:378
 #, kde-format
 msgid "Open Query"
 msgstr "Felkérés"
 
-#: src/viewer/irccontextmenus.cpp:391
+#: src/viewer/irccontextmenus.cpp:390
 #, kde-format
 msgid "Modes"
 msgstr "Állapotok"
 
-#: src/viewer/irccontextmenus.cpp:392
+#: src/viewer/irccontextmenus.cpp:391
 #, kde-format
 msgid "Give Op"
 msgstr "Op adása"
 
-#: src/viewer/irccontextmenus.cpp:393
+#: src/viewer/irccontextmenus.cpp:392
 #, kde-format
 msgid "Take Op"
 msgstr "Op elvétele"
 
-#: src/viewer/irccontextmenus.cpp:394
+#: src/viewer/irccontextmenus.cpp:393
 #, kde-format
 msgid "Give HalfOp"
 msgstr "FélOp adása"
 
-#: src/viewer/irccontextmenus.cpp:395
+#: src/viewer/irccontextmenus.cpp:394
 #, kde-format
 msgid "Take HalfOp"
 msgstr "FélOp elvétele"
 
-#: src/viewer/irccontextmenus.cpp:396
+#: src/viewer/irccontextmenus.cpp:395
 #, kde-format
 msgid "Give Voice"
 msgstr "Beszédjog adása"
 
-#: src/viewer/irccontextmenus.cpp:397
+#: src/viewer/irccontextmenus.cpp:396
 #, kde-format
 msgid "Take Voice"
 msgstr "Beszédjog elvétele"
 
-#: src/viewer/irccontextmenus.cpp:401
+#: src/viewer/irccontextmenus.cpp:400
 #, kde-format
 msgid "Kick / Ban"
 msgstr "Kirúgás / Tiltás"
 
-#: src/viewer/irccontextmenus.cpp:403
+#: src/viewer/irccontextmenus.cpp:402
 #, kde-format
 msgid "Kickban"
 msgstr "Kirúgás és tiltás"
 
-#: src/viewer/irccontextmenus.cpp:404
+#: src/viewer/irccontextmenus.cpp:403
 #, kde-format
 msgid "Ban Nickname"
 msgstr "Becenév tiltása"
 
-#: src/viewer/irccontextmenus.cpp:406
+#: src/viewer/irccontextmenus.cpp:405
 #, kde-format
 msgid "Ban *!*@*.host"
 msgstr "*!*@*.hoszt tiltása"
 
-#: src/viewer/irccontextmenus.cpp:407
+#: src/viewer/irccontextmenus.cpp:406
 #, kde-format
 msgid "Ban *!*@domain"
 msgstr "*!*@domain tiltása"
 
-#: src/viewer/irccontextmenus.cpp:408
+#: src/viewer/irccontextmenus.cpp:407
 #, kde-format
 msgid "Ban *!user@*.host"
 msgstr "*!felhasználó@*.hoszt tiltása"
 
-#: src/viewer/irccontextmenus.cpp:409
+#: src/viewer/irccontextmenus.cpp:408
 #, kde-format
 msgid "Ban *!user@domain"
 msgstr "*!felhasználó@domain tiltása"
 
-#: src/viewer/irccontextmenus.cpp:411
+#: src/viewer/irccontextmenus.cpp:410
 #, kde-format
 msgid "Kickban *!*@*.host"
 msgstr "*!*@*.hoszt kirúgása és tiltása"
 
-#: src/viewer/irccontextmenus.cpp:412
+#: src/viewer/irccontextmenus.cpp:411
 #, kde-format
 msgid "Kickban *!*@domain"
 msgstr "*!*@domain kirúgása és tiltása"
 
-#: src/viewer/irccontextmenus.cpp:413
+#: src/viewer/irccontextmenus.cpp:412
 #, kde-format
 msgid "Kickban *!user@*.host"
 msgstr " *!felhasználó@*.host kirúgása és tiltása"
 
-#: src/viewer/irccontextmenus.cpp:414
+#: src/viewer/irccontextmenus.cpp:413
 #, kde-format
 msgid "Kickban *!user@domain"
 msgstr "*!felhasználó@domain kirúgása és tiltása"
 
-#: src/viewer/irccontextmenus.cpp:432
+#: src/viewer/irccontextmenus.cpp:431
 #, kde-format
 msgid "&Version"
 msgstr "&Verzió"
 
-#: src/viewer/irccontextmenus.cpp:433
+#: src/viewer/irccontextmenus.cpp:432
 #, kde-format
 msgid "&Ping"
 msgstr "&Ping"
 
-#: src/viewer/irccontextmenus.cpp:440 src/viewer/irccontextmenus.cpp:625
-#: src/viewer/irccontextmenus.cpp:626
+#: src/viewer/irccontextmenus.cpp:439 src/viewer/irccontextmenus.cpp:624
+#: src/viewer/irccontextmenus.cpp:625
 #, kde-format
 msgid "Unignore"
 msgstr "Mellőzés visszavonása"
 
-#: src/viewer/irccontextmenus.cpp:443
+#: src/viewer/irccontextmenus.cpp:442
 #, kde-format
 msgid "Add to Watched Nicks"
 msgstr "Hozzáadás a figyelt becenevekhez"
 
-#: src/viewer/irccontextmenus.cpp:445
+#: src/viewer/irccontextmenus.cpp:444
 #, kde-format
 msgid "Remove From Watched Nicks"
 msgstr "Eltávolítás a figyelt becenevekből"
 
-#: src/viewer/irccontextmenus.cpp:452
+#: src/viewer/irccontextmenus.cpp:451
 #, kde-format
 msgid "Send &File..."
 msgstr "&Fájl küldése…"
 
-#: src/viewer/irccontextmenus.cpp:454
+#: src/viewer/irccontextmenus.cpp:453
 #, kde-format
 msgid "Open DCC Chat"
 msgstr "DCC csevegés megnyitása"
 
-#: src/viewer/irccontextmenus.cpp:455
+#: src/viewer/irccontextmenus.cpp:454
 #, kde-format
 msgid "Open DCC Whiteboard"
 msgstr "DCC falújság megnyitása"
 
-#: src/viewer/irccontextmenus.cpp:588
+#: src/viewer/irccontextmenus.cpp:587
 #, kde-format
 msgid "Do you want to ignore %1?"
 msgstr "Figyelmen kívül szeretné hagyni a következő felhasználót: %1?"
 
-#: src/viewer/irccontextmenus.cpp:590
+#: src/viewer/irccontextmenus.cpp:589
 #, kde-format
 msgid "Do you want to ignore the selected users?"
 msgstr "Figyelmen kívül szeretné hagyni a kiválasztott felhasználókat?"
 
-#: src/viewer/irccontextmenus.cpp:618
+#: src/viewer/irccontextmenus.cpp:617
 #, kde-format
 msgid "Do you want to stop ignoring %1?"
 msgstr "Meg szeretné szüntetni %1 mellőzését?"
 
-#: src/viewer/irccontextmenus.cpp:620
+#: src/viewer/irccontextmenus.cpp:619
 #, kde-format
 msgid "Do you want to stop ignoring the selected users?"
 msgstr ""
 "Meg szeretné szüntetni a kiválasztott felhasználók figyelmen kívül hagyását?"
 
-#: src/viewer/irccontextmenus.cpp:777
+#: src/viewer/irccontextmenus.cpp:776
 #, kde-format
 msgctxt "Opens a query (private message) window with the author of the topic"
 msgid "Query author"
 msgstr "Beszélgetés a szerzővel"
 
-#: src/viewer/ircinput.cpp:54
+#: src/viewer/ircinput.cpp:53
 #, kde-format
 msgid ""
 "<qt><p>The input line is where you type messages to be sent the channel, "
@@ -9838,21 +9838,21 @@ msgstr ""
 "table><p>További parancsokhoz tekintse meg a Konversation kézikönyvét.</"
 "p><p>Az üzenet nem lehet többsoros.</p></qt>"
 
-#: src/viewer/ircinput.cpp:475
+#: src/viewer/ircinput.cpp:474
 #, kde-format
 msgid "1 byte"
 msgid_plural "%1 bytes"
 msgstr[0] "1 bájt"
 msgstr[1] "%1 bájt"
 
-#: src/viewer/ircinput.cpp:476
+#: src/viewer/ircinput.cpp:475
 #, kde-format
 msgid "1 line"
 msgid_plural "%1 lines"
 msgstr[0] "1 sor"
 msgstr[1] "%1 sor"
 
-#: src/viewer/ircinput.cpp:482
+#: src/viewer/ircinput.cpp:481
 #, kde-format
 msgctxt ""
 "%1 is, for instance, '200 bytes'.  %2 is, for instance, '7 lines'.  Both are "
@@ -9866,12 +9866,12 @@ msgstr ""
 "Ez a kapcsolat újraindulását, vagy floodolás miatti büntetést eredményezhet. "
 "Biztosan folytatni akarja?</qt>"
 
-#: src/viewer/ircinput.cpp:485
+#: src/viewer/ircinput.cpp:484
 #, kde-format
 msgid "Large Paste Warning"
 msgstr "Nagyméretű beillesztési figyelmezetés"
 
-#: src/viewer/ircinput.cpp:486
+#: src/viewer/ircinput.cpp:485
 #, kde-format
 msgid "Paste"
 msgstr "Beillesztés"
@@ -9989,7 +9989,7 @@ msgstr "Id&ézetjelző hozzáadása"
 msgid "&Remove Newlines"
 msgstr "&Új sorok eltávolítása"
 
-#: src/viewer/rawlog.cpp:17 src/viewer/viewcontainer.cpp:2743
+#: src/viewer/rawlog.cpp:17 src/viewer/viewcontainer.cpp:2742
 #, kde-format
 msgid "Raw Log"
 msgstr "Nyers napló"
@@ -10135,63 +10135,63 @@ msgstr ""
 msgid "IRC Client"
 msgstr "IRC kliens"
 
-#: src/viewer/viewcontainer.cpp:882
+#: src/viewer/viewcontainer.cpp:881
 #, kde-format
 msgid "Find Text..."
 msgstr "Szöveg keresése..."
 
-#: src/viewer/viewcontainer.cpp:884
+#: src/viewer/viewcontainer.cpp:883
 #, kde-format
 msgid "Search for text in the current tab"
 msgstr "Szöveg keresése az aktuális lapon"
 
-#: src/viewer/viewcontainer.cpp:902
+#: src/viewer/viewcontainer.cpp:901
 #, kde-format
 msgid "Channel &List for %1"
 msgstr "%1 csatorna&listája"
 
-#: src/viewer/viewcontainer.cpp:922
+#: src/viewer/viewcontainer.cpp:921
 #, kde-format
 msgid "&Open Logfile for %1"
 msgstr "%1 naplófájlának &megnyitása"
 
-#: src/viewer/viewcontainer.cpp:933
+#: src/viewer/viewcontainer.cpp:932
 #, kde-format
 msgid "&Channel Settings for %1..."
 msgstr "%1 &beállításai..."
 
-#: src/viewer/viewcontainer.cpp:2116
+#: src/viewer/viewcontainer.cpp:2115
 #, kde-format
 msgid "Rename Tab"
 msgstr "Lap átnevezése"
 
-#: src/viewer/viewcontainer.cpp:2117
+#: src/viewer/viewcontainer.cpp:2116
 #, kde-format
 msgid "Enter new tab name:"
 msgstr "Adja meg a lap új nevét:"
 
-#: src/viewer/viewcontainer.cpp:2189
+#: src/viewer/viewcontainer.cpp:2188
 #, kde-format
 msgctxt "Default encoding"
 msgid "Default ( %1 )"
 msgstr "Alapértelmezett ( %1 )"
 
-#: src/viewer/viewcontainer.cpp:2230
+#: src/viewer/viewcontainer.cpp:2229
 #, kde-format
 msgid "&Rename Tab..."
 msgstr "Lap &átnevezése..."
 
-#: src/viewer/viewcontainer.cpp:2379
+#: src/viewer/viewcontainer.cpp:2378
 #, kde-format
 msgid "You can only search in text fields."
 msgstr "Csak a szövegmezőkben kereshet."
 
-#: src/viewer/viewcontainer.cpp:2380
+#: src/viewer/viewcontainer.cpp:2379
 #, kde-format
 msgid "Find Text Information"
 msgstr "Szöveginformáció keresése"
 
-#: src/viewer/viewcontainer.cpp:2980
+#: src/viewer/viewcontainer.cpp:2979
 #, kde-format
 msgid ""
 "To know which server to display the channel list for, the list can only be "
@@ -10200,7 +10200,7 @@ msgstr ""
 "Az egyes kiszolgálókhoz tartozó csatornalista csak egy csatornából, privát "
 "csevegésből, vagy kiszolgálólapról nyitható meg."
 
-#: src/viewer/viewcontainer.cpp:3010
+#: src/viewer/viewcontainer.cpp:3009
 #, kde-format
 msgid ""
 "Using this function may result in a lot of network traffic. If your "
@@ -10211,12 +10211,12 @@ msgstr ""
 "kapcsolata nem elég gyors, lehetséges hogy a kliense le lesz választva a "
 "kiszolgálóról."
 
-#: src/viewer/viewcontainer.cpp:3014
+#: src/viewer/viewcontainer.cpp:3013
 #, kde-format
 msgid "Channel List Warning"
 msgstr "Csatornalista figyelmeztetés"
 
-#: src/viewer/viewcontainer.cpp:3044
+#: src/viewer/viewcontainer.cpp:3043
 #, kde-format
 msgid "Watched Nicks"
 msgstr "Figyelt becenevek"

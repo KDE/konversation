@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-02 00:44+0000\n"
+"POT-Creation-Date: 2026-07-03 00:45+0000\n"
 "PO-Revision-Date: 2012-07-11 10:37+0700\n"
 "Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
 "Language-Team: Khmer\n"
@@ -143,7 +143,7 @@ msgid ""
 msgstr ""
 "\"/media { Player }\"  រាយការណ៍​អ្វី​ដែល​កំពុង​ចាក់​នៅ​ក្នុង​កម្មវិធី​ដែល​បាន​បញ្ជាក់ ប្រសិនបើ​រក​ឃើញ ។"
 
-#: src/application.cpp:384 src/irc/server.cpp:1814 src/irc/server.cpp:3847
+#: src/application.cpp:383 src/irc/server.cpp:1814 src/irc/server.cpp:3847
 #: src/irc/server.cpp:3852
 #, kde-format
 msgid "D-Bus"
@@ -1987,7 +1987,7 @@ msgstr "ពណ៌"
 msgid "Fonts"
 msgstr "ពុម្ពអក្សរ​"
 
-#: src/config/settingsdialog.cpp:90 src/viewer/irccontextmenus.cpp:88
+#: src/config/settingsdialog.cpp:90 src/viewer/irccontextmenus.cpp:87
 #, kde-format
 msgid "Quick Buttons"
 msgstr "ប៊ូតុង​ឆាប់​រហ័ស"
@@ -2302,7 +2302,7 @@ msgstr "រូប​តំណាង​សម្រាប់​អ្នក​ប
 msgid "Preview:"
 msgstr "មើល​ជាមុន​ ៖"
 
-#: src/config/warnings_config.cpp:143
+#: src/config/warnings_config.cpp:142
 #, kde-format
 msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
@@ -2310,7 +2310,7 @@ msgctxt ""
 msgid "... a channel invitation is received"
 msgstr "... ការ​អញ្ជើញ​របស់​ឆានែល​ត្រូវ​បាន​ទទួល​"
 
-#: src/config/warnings_config.cpp:146
+#: src/config/warnings_config.cpp:145
 #, kde-format
 msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
@@ -2318,7 +2318,7 @@ msgctxt ""
 msgid "... saving a log file would save only the visible portion"
 msgstr "... ​ការ​រក្សាទុក​​ឯកសារ​កំណត់​ហេតុ នឹង​រក្សាទុក​តែ​ចំណែក​ដែល​អាច​មើល​ឃើញ​ប៉ុណ្ណោះ​​"
 
-#: src/config/warnings_config.cpp:149
+#: src/config/warnings_config.cpp:148
 #, kde-format
 msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
@@ -2326,7 +2326,7 @@ msgctxt ""
 msgid "... a log file is about to be deleted"
 msgstr "... ឯកសារ​កំណត់ហេតុ​នឹង​ត្រូវ​បាន​លុប​"
 
-#: src/config/warnings_config.cpp:152
+#: src/config/warnings_config.cpp:151
 #, kde-format
 msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
@@ -2335,7 +2335,7 @@ msgid ""
 "... an open query exists for a nickname that has just been marked as ignored"
 msgstr "... សំណួរ​ដែល​បាន​បើក មាន​សម្រាប់​សម្មតិនាម​ដែល​ទើបតែ​ត្រូវ​បាន​សម្គាល់​មិន​អើពើ​​"
 
-#: src/config/warnings_config.cpp:155
+#: src/config/warnings_config.cpp:154
 #, kde-format
 msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
@@ -2343,7 +2343,7 @@ msgctxt ""
 msgid "... switching a connection to a different server in the same network"
 msgstr "... ប្ដូរ​ការ​តភ្ជាប់​ទៅកាន់​ម៉ាស៊ីន​បម្រើ​ដែល​ខុសគ្នា​ក្នុង​បណ្ដាញ​ដូច​គ្នា"
 
-#: src/config/warnings_config.cpp:158
+#: src/config/warnings_config.cpp:157
 #, kde-format
 msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
@@ -2351,7 +2351,7 @@ msgctxt ""
 msgid "... creating a new connection to an already connected network"
 msgstr "... បង្កើត​ការ​តភ្ជាប់​ថ្មី​ទៅកាន់​បណ្ដាញ​ដែល​បាន​តភ្ជាប់​រួច​ហើយ"
 
-#: src/config/warnings_config.cpp:161
+#: src/config/warnings_config.cpp:160
 #, kde-format
 msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
@@ -2359,7 +2359,7 @@ msgctxt ""
 msgid "... closing a server tab"
 msgstr "... បិទ​ផ្ទាំង​ម៉ាស៊ីន​បម្រើ"
 
-#: src/config/warnings_config.cpp:164
+#: src/config/warnings_config.cpp:163
 #, kde-format
 msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
@@ -2367,7 +2367,7 @@ msgctxt ""
 msgid "... closing a channel tab"
 msgstr "... បិទ​ផ្ទាំង​របស់​ឆានែល​​"
 
-#: src/config/warnings_config.cpp:167
+#: src/config/warnings_config.cpp:166
 #, kde-format
 msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
@@ -2375,7 +2375,7 @@ msgctxt ""
 msgid "... closing a query tab"
 msgstr "... បិទ​ផ្ទាំង​សំណួរ​"
 
-#: src/config/warnings_config.cpp:170
+#: src/config/warnings_config.cpp:169
 #, kde-format
 msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
@@ -2383,7 +2383,7 @@ msgctxt ""
 msgid "... closing a DCC Chat tab"
 msgstr "... បិទ​ផ្ទាំង​ជជែក​​របស់​​ DCC"
 
-#: src/config/warnings_config.cpp:173
+#: src/config/warnings_config.cpp:172
 #, kde-format
 msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
@@ -2392,7 +2392,7 @@ msgid ""
 "... a source for the channel list cannot be determined from the current tab"
 msgstr "... ប្រភព​សម្រាប់​បញ្ជី​ឆានែល មិន​អាច​ត្រូវ​បាន​កំណត់​ចេញ​ពី​ផ្ទាំង​បច្ចុប្បន្ន​​ឡើយ​​"
 
-#: src/config/warnings_config.cpp:176
+#: src/config/warnings_config.cpp:175
 #, kde-format
 msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
@@ -2400,7 +2400,7 @@ msgctxt ""
 msgid "... you have chosen to hide the menu bar"
 msgstr "... អ្នក​បាន​ជ្រើស​ ដើម្បី​លាក់​របារ​ម៉ឺនុយ​"
 
-#: src/config/warnings_config.cpp:179
+#: src/config/warnings_config.cpp:178
 #, kde-format
 msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
@@ -2408,7 +2408,7 @@ msgctxt ""
 msgid "... a channel listing may cause disconnection due to the download size"
 msgstr "... ការ​រាយ​បញ្ជី​​ឆានែល អាច​បណ្ដាល​ឲ្យ​ដាច់​ការ​តភ្ជាប់​ដោយ​សារ​តែ​​ទំហំ​ទាញ​យក"
 
-#: src/config/warnings_config.cpp:182
+#: src/config/warnings_config.cpp:181
 #, kde-format
 msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
@@ -2416,7 +2416,7 @@ msgctxt ""
 msgid "... pasting large portions of text"
 msgstr "... បិទ​ភ្ជាប់​ចំណែក​ធំ​របស់​អត្ថបទ"
 
-#: src/config/warnings_config.cpp:185
+#: src/config/warnings_config.cpp:184
 #, kde-format
 msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
@@ -2424,7 +2424,7 @@ msgctxt ""
 msgid "... quitting Konversation via the tray icon"
 msgstr "... ចាកចេញ​ពី Konversation តាមរយៈ​រូបតំណាង​ថាស​"
 
-#: src/config/warnings_config.cpp:188
+#: src/config/warnings_config.cpp:187
 #, kde-format
 msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
@@ -2432,7 +2432,7 @@ msgctxt ""
 msgid "... you have chosen to ignore a nickname"
 msgstr "... ​អ្នក​បាន​ជ្រើស​មិន​អើពើ​សម្មតិនាម​"
 
-#: src/config/warnings_config.cpp:191
+#: src/config/warnings_config.cpp:190
 #, kde-format
 msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
@@ -2440,7 +2440,7 @@ msgctxt ""
 msgid "... you have chosen to stop ignoring a nickname"
 msgstr "... ​អ្នក​បាន​ជ្រើស​បញ្ឈប់​ការ​មិន​អើពើ​សម្មតិនាម"
 
-#: src/config/warnings_config.cpp:194
+#: src/config/warnings_config.cpp:193
 #, kde-format
 msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
@@ -2448,7 +2448,7 @@ msgctxt ""
 msgid "... quitting Konversation while DCC file transfers are active"
 msgstr "... ចាកចេញ​​ Konversation ខណៈ​ពេល​​ការ​ផ្ទេរ​ឯកសារ​របស់​ DCC កំពុង​សកម្ម​ ​"
 
-#: src/config/warnings_config.cpp:197
+#: src/config/warnings_config.cpp:196
 #, kde-format
 msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
@@ -2457,7 +2457,7 @@ msgid ""
 "... some characters in a message are incompatible with the active encoding"
 msgstr "... តួ​អក្សរ​មួយ​ចំនួន​នៅ​ក្នុង​សារ មាន​លក្ខណៈ​មិន​ឆប​គ្នា​​ជាមួយ​ការ​អ៊ិនកូដ​សកម្ម​ "
 
-#: src/config/warnings_config.cpp:200
+#: src/config/warnings_config.cpp:199
 #, kde-format
 msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
@@ -2730,52 +2730,52 @@ msgstr "កំហុស ៖ %1"
 msgid "getNickname: Server %1 is not found."
 msgstr "មាន​ឈ្មោះ​សម្មតិនាម ៖ ម៉ាស៊ីន​បម្រើ​ %1 មិន​ត្រូវ​បាន​ស្វែង​រក​ឡើយ​ ។"
 
-#: src/dcc/chat.cpp:98
+#: src/dcc/chat.cpp:97
 #, kde-format
 msgctxt "%1=dcc extension like Chat or Whiteboard"
 msgid "Could not send a DCC %1 request to the partner via the IRC server."
 msgstr "មិន​អាច​ផ្ញើ​សំណើ DCC %1 ទៅកាន់​ដៃគូ​តាមរយៈ​ម៉ាស៊ីន​បម្រើ IRC បាន​ទេ ។"
 
-#: src/dcc/chat.cpp:119 src/dcc/transfersend.cpp:374
+#: src/dcc/chat.cpp:118 src/dcc/transfersend.cpp:374
 #, kde-format
 msgid "Awaiting acceptance by remote user..."
 msgstr "កំពុង​រង់ចាំ​ការ​ព្រម​ទទួល​ដោយ​អ្នក​ប្រើ​ពី​ចម្ងាយ..."
 
-#: src/dcc/chat.cpp:148
+#: src/dcc/chat.cpp:147
 #, kde-format
 msgctxt "%1=partnerNick, %2=Servername, %3=dcc extension as chat or wboard"
 msgid "%1 (on %2) offers to DCC %3 with you"
 msgstr "%1 (លើ​ %2) ផ្ដល់​ទៅ​ DCC %3 ជាមួយ​អ្នក​"
 
-#: src/dcc/chat.cpp:149
+#: src/dcc/chat.cpp:148
 #, kde-format
 msgctxt "%1=dcc extension as Chat or Whiteboard, %2=partnerNick"
 msgid "DCC %1 offer from %2"
 msgstr "DCC %1 ផ្ដល់​ពី​ %2"
 
-#: src/dcc/chat.cpp:150
+#: src/dcc/chat.cpp:149
 #, kde-format
 msgid "Accept"
 msgstr "ទទួលយក"
 
-#: src/dcc/chat.cpp:151
+#: src/dcc/chat.cpp:150
 #, kde-format
 msgid "Reject"
 msgstr "ច្រាន​ចោល​"
 
-#: src/dcc/chat.cpp:157
+#: src/dcc/chat.cpp:156
 #, kde-format
 msgctxt "%1=dcc extension like Chat or Whiteboard"
 msgid "You rejected the DCC %1 offer."
 msgstr "អ្នក​បាន​ច្រាន​ចោល​ការ​ផ្ដល់​ DCC %1 ។"
 
-#: src/dcc/chat.cpp:196
+#: src/dcc/chat.cpp:195
 #, kde-format
 msgctxt "%1=dcc extension as Chat or Whiteboard"
 msgid "DCC %1 request was rejected"
 msgstr "សំណើ​របស់ DCC %1 ត្រូវ​បាន​ច្រានចោល"
 
-#: src/dcc/chat.cpp:285
+#: src/dcc/chat.cpp:284
 #, kde-format
 msgctxt "%1=dcc extension like Chat or Whiteboard"
 msgid ""
@@ -2783,7 +2783,7 @@ msgid ""
 "server."
 msgstr "មិន​អាច​ផ្ញើ​​ការ​ទទួល​ស្គាល់ DCC %1 ដាក់​បញ្ច្រាស​ទៅ​កាន់​ដៃគូ​តាមរយៈ​ម៉ាស៊ីន​បម្រើ IRC បានទេ ។ "
 
-#: src/dcc/chat.cpp:303 src/dcc/chat.cpp:335 src/dcc/transferrecv.cpp:589
+#: src/dcc/chat.cpp:302 src/dcc/chat.cpp:334 src/dcc/transferrecv.cpp:589
 #: src/dcc/transfersend.cpp:396
 #, fuzzy, kde-format
 #| msgid ""
@@ -2795,7 +2795,7 @@ msgstr ""
 "បាន​បរាជ័យ​ក្នុង​ការ​បញ្ជូន​ច្រក​ <numid>%1</numid> បន្ត ។ ផ្ញើ​សំណើ​របស់​ DCC ទៅ​កាន់​អ្នក​ប្រើ​ពី​ចម្ងាយ​"
 "ដោយ​មិន​គិត​អំពី​អ្វី​ទាំងអស់ ។"
 
-#: src/dcc/chat.cpp:317
+#: src/dcc/chat.cpp:316
 #, kde-format
 msgctxt "%1=extension like Chat or Whiteboard"
 msgid ""
@@ -2803,12 +2803,12 @@ msgid ""
 "server."
 msgstr "មិន​អាច​ផ្ញើ​​ការ​ទទួល​ស្គាល់ DCC %1 ដាក់​បញ្ច្រាស​ទៅ​កាន់​ដៃគូ​តាមរយៈ​ម៉ាស៊ីន​បម្រើ IRC បានទេ ។"
 
-#: src/dcc/chat.cpp:359
+#: src/dcc/chat.cpp:358
 #, kde-format
 msgid "Could not open a socket for listening: %1"
 msgstr "មិន​អាច​បើក​រន្ធ​ដើម្បី​ស្ដាប់ ៖ %1"
 
-#: src/dcc/chat.cpp:370
+#: src/dcc/chat.cpp:369
 #, fuzzy, kde-format
 #| msgctxt "%1=dcc extension like Chat or Whiteboard,%2=partnerNick, %3=port"
 #| msgid "Offering DCC %1 connection to %2 on port <numid>%3</numid>..."
@@ -2816,19 +2816,19 @@ msgctxt "%1=dcc extension like Chat or Whiteboard,%2=partnerNick, %3=port"
 msgid "Offering DCC %1 connection to %2 on port %3..."
 msgstr "កំពុង​ផ្ដល់​ការ​តភ្ជាប់​​​ DCC %1 ទៅកាន់​ %2 លើ​ច្រក​ <numid>%3</numid>..."
 
-#: src/dcc/chat.cpp:431
+#: src/dcc/chat.cpp:430
 #, kde-format
 msgctxt "DCC extension"
 msgid "Whiteboard"
 msgstr "ក្ដារខៀន"
 
-#: src/dcc/chat.cpp:434
+#: src/dcc/chat.cpp:433
 #, kde-format
 msgctxt "DCC extension"
 msgid "Chat"
 msgstr "ជជែក"
 
-#: src/dcc/chat.cpp:465
+#: src/dcc/chat.cpp:464
 #, fuzzy, kde-format
 #| msgctxt ""
 #| "%1=extension like Chat or Whiteboard ,%2 = nickname, %3 = IP, %4 = port"
@@ -2838,29 +2838,29 @@ msgctxt ""
 msgid "Establishing DCC %1 connection to %2 (%3:%4)..."
 msgstr "កំពុង​បង្កើត​ការ​តភ្ជាប់​ DCC %1 ទៅកាន់​ %2 (%3:<numid>%4</numid>)..."
 
-#: src/dcc/chat.cpp:482
+#: src/dcc/chat.cpp:481
 #, kde-format
 msgctxt "%1=extension like Chat or Whiteboard, %2 = partnerNick"
 msgid "Established DCC %1 connection to %2."
 msgstr "បាន​បង្កើត​ការ​តភ្ជាប់​ DCC %1 ទៅកាន់ %2 ។"
 
-#: src/dcc/chat.cpp:489 src/dcc/transfersend.cpp:570
+#: src/dcc/chat.cpp:488 src/dcc/transfersend.cpp:570
 #, kde-format
 msgid "Socket error: %1"
 msgstr "កំហុស​រន្ធ ៖ %1"
 
-#: src/dcc/chat.cpp:550
+#: src/dcc/chat.cpp:549
 #, kde-format
 msgid "Could not accept the client."
 msgstr "មិន​អាច​ទទួល​យក​ម៉ាស៊ីន​ភ្ញៀវ​បានទេ ។"
 
-#: src/dcc/chat.cpp:572
+#: src/dcc/chat.cpp:571
 #, kde-format
 msgctxt "%1=dcc extension as Chat or Whiteboard, %2=partnerNick"
 msgid "Established DCC %1 connection to %2."
 msgstr "បាន​បង្កើត​ការ​តភ្ជាប់​ DCC %1 ទៅកាន់​ %2 ។"
 
-#: src/dcc/chat.cpp:578
+#: src/dcc/chat.cpp:577
 #, kde-format
 msgid "Connection closed."
 msgstr "បាន​បិទ​ការ​តភ្ជាប់"
@@ -3326,88 +3326,88 @@ msgstr "ផ្ទេរ​ចូល"
 msgid "Outgoing Transfers"
 msgstr "ផ្ទេរ​ចេញ"
 
-#: src/dcc/transferpanel.cpp:36 src/viewer/viewcontainer.cpp:2650
+#: src/dcc/transferpanel.cpp:35 src/viewer/viewcontainer.cpp:2649
 #, kde-format
 msgid "DCC Status"
 msgstr "ស្ថានភាព DCC"
 
-#: src/dcc/transferpanel.cpp:73
+#: src/dcc/transferpanel.cpp:72
 #, kde-format
 msgid "&Select All Items"
 msgstr "ជ្រើស​ធាតុ​ទាំង​អស់"
 
-#: src/dcc/transferpanel.cpp:74
+#: src/dcc/transferpanel.cpp:73
 #, kde-format
 msgid "S&elect All Completed Items"
 msgstr "ជ្រើស​ធាតុ​ដែល​បាន​បញ្ចប់​ទាំង​អស់"
 
-#: src/dcc/transferpanel.cpp:76
+#: src/dcc/transferpanel.cpp:75
 #, kde-format
 msgid "&Accept"
 msgstr "យល់​ព្រម"
 
-#: src/dcc/transferpanel.cpp:77
+#: src/dcc/transferpanel.cpp:76
 #, kde-format
 msgid "Start receiving"
 msgstr "ចាប់ផ្ដើម​ទទួល"
 
-#: src/dcc/transferpanel.cpp:78
+#: src/dcc/transferpanel.cpp:77
 #, kde-format
 msgid "A&bort"
 msgstr "បោះបង់"
 
-#: src/dcc/transferpanel.cpp:79
+#: src/dcc/transferpanel.cpp:78
 #, kde-format
 msgid "Abort the transfer(s)"
 msgstr "បោះបង់​កា​រផ្ទេរ"
 
-#: src/dcc/transferpanel.cpp:81
+#: src/dcc/transferpanel.cpp:80
 #, kde-format
 msgid "Resend"
 msgstr "ផ្ញើ​ម្ដង​ទៀត"
 
-#: src/dcc/transferpanel.cpp:82
+#: src/dcc/transferpanel.cpp:81
 #, kde-format
 msgctxt "clear selected dcctransfer"
 msgid "&Clear"
 msgstr "សម្អាត"
 
-#: src/dcc/transferpanel.cpp:83
+#: src/dcc/transferpanel.cpp:82
 #, kde-format
 msgid "Clear all selected Items"
 msgstr "សម្អាត​​ធាតុ​ដែល​បាន​ជ្រើស​ទាំងអស់"
 
-#: src/dcc/transferpanel.cpp:84
+#: src/dcc/transferpanel.cpp:83
 #, kde-format
 msgid "Clear Completed"
 msgstr "បាន​បញ្ចប់​ការ​​សម្អាត​​ទាំងស្រុង"
 
-#: src/dcc/transferpanel.cpp:85
+#: src/dcc/transferpanel.cpp:84
 #, kde-format
 msgid "Clear Completed Items"
 msgstr "សម្អាត​​ធាតុ​ដែល​បាន​បញ្ចប់​ទាំងស្រុង"
 
-#: src/dcc/transferpanel.cpp:87
+#: src/dcc/transferpanel.cpp:86
 #, kde-format
 msgid "&Open File"
 msgstr "បើក​ឯកសារ"
 
-#: src/dcc/transferpanel.cpp:88
+#: src/dcc/transferpanel.cpp:87
 #, kde-format
 msgid "Run the file"
 msgstr "ដំណើរការ​ឯកសារ"
 
-#: src/dcc/transferpanel.cpp:89
+#: src/dcc/transferpanel.cpp:88
 #, kde-format
 msgid "Open Location"
 msgstr "បើក​ទីតាំង"
 
-#: src/dcc/transferpanel.cpp:90
+#: src/dcc/transferpanel.cpp:89
 #, kde-format
 msgid "Open the file location"
 msgstr "បើក​ទីតាំង​ឯកសារ"
 
-#: src/dcc/transferpanel.cpp:423
+#: src/dcc/transferpanel.cpp:422
 #, kde-format
 msgid ""
 "You have selected %1 file to execute, are you sure you want to continue?"
@@ -3415,7 +3415,7 @@ msgid_plural ""
 "You have selected %1 files to execute, are you sure you want to continue?"
 msgstr[0] "អ្នក​បាន​ជ្រើស​ឯកសារ %1 ដើម្បី​ប្រតិបត្តិ តើ​អ្នក​ពិត​ជា​ចង់​បន្ត​មែន​ឬ ?"
 
-#: src/dcc/transferpanel.cpp:427
+#: src/dcc/transferpanel.cpp:426
 #, fuzzy, kde-format
 #| msgid "Execute %1 file"
 #| msgid_plural "Execute %1 files"
@@ -3822,12 +3822,12 @@ msgstr "រក្សាទុក​រូប​ភាព"
 msgid "Images (*.png *.xpm *.jpg)"
 msgstr ""
 
-#: src/identitydialog.cpp:37
+#: src/identitydialog.cpp:36
 #, kde-format
 msgid "Identities"
 msgstr "អត្ត​សញ្ញាណ"
 
-#: src/identitydialog.cpp:54
+#: src/identitydialog.cpp:53
 #, kde-format
 msgid ""
 "This is your list of nicknames. A nickname is the name that other users will "
@@ -3847,72 +3847,72 @@ msgstr ""
 "អ្នក​ ។ ប្រ​សិន​បើ ជម្រើស​ដំបូង​ត្រូវ​បាន​ច្រាន​ចោល​ដោយ​ម៉ាស៊ីន​បម្រើ​ Konversation នឹង​សាកល្បង​ជំនួស​"
 "សម្មតិនាម​ ។"
 
-#: src/identitydialog.cpp:87
+#: src/identitydialog.cpp:86
 #, kde-format
 msgid "SASL PLAIN"
 msgstr ""
 
-#: src/identitydialog.cpp:88
+#: src/identitydialog.cpp:87
 #, kde-format
 msgctxt "Cert = Certificate"
 msgid "SASL EXTERNAL (Cert)"
 msgstr ""
 
-#: src/identitydialog.cpp:89
+#: src/identitydialog.cpp:88
 #, kde-format
 msgid "Standard NickServ"
 msgstr "NickServ ស្ដង់ដារ"
 
-#: src/identitydialog.cpp:90
+#: src/identitydialog.cpp:89
 #, kde-format
 msgid "Server Password"
 msgstr "ពាក្យ​សម្ងាត់​ម៉ាស៊ីន​បម្រើ"
 
-#: src/identitydialog.cpp:91
+#: src/identitydialog.cpp:90
 #, kde-format
 msgid "SSL Client Certificate"
 msgstr "វិញ្ញាបនបត្រ​ម៉ាស៊ីន​ភ្ញៀវ SSL"
 
-#: src/identitydialog.cpp:97
+#: src/identitydialog.cpp:96
 #, kde-format
 msgid " minute"
 msgid_plural " minutes"
 msgstr[0] "នាទី"
 
-#: src/identitydialog.cpp:115
+#: src/identitydialog.cpp:114
 #, kde-format
 msgid "Change identity information"
 msgstr "ប្ដូរ​ព័ត៌មាន​អត្តសញ្ញាណ"
 
-#: src/identitydialog.cpp:116 src/irc/servergroupdialog.cpp:85
+#: src/identitydialog.cpp:115 src/irc/servergroupdialog.cpp:85
 #: src/viewer/editnotifydialog.cpp:79
 #, kde-format
 msgid "Discards all changes made"
 msgstr "បោះបង់​របៀប​ផ្លាស់ប្ដូរ​ទាំងអស់"
 
-#: src/identitydialog.cpp:260
+#: src/identitydialog.cpp:259
 #, kde-format
 msgid "Add Identity"
 msgstr "បន្ថែម​អត្តសញ្ញាណ"
 
-#: src/identitydialog.cpp:260 src/identitydialog.cpp:283
-#: src/identitydialog.cpp:338
+#: src/identitydialog.cpp:259 src/identitydialog.cpp:282
+#: src/identitydialog.cpp:337
 #, kde-format
 msgid "Identity name:"
 msgstr "ឈ្មោះ​អត្ត​សញ្ញាណ​ ៖"
 
-#: src/identitydialog.cpp:274 src/identitydialog.cpp:292
-#: src/identitydialog.cpp:351
+#: src/identitydialog.cpp:273 src/identitydialog.cpp:291
+#: src/identitydialog.cpp:350
 #, kde-format
 msgid "You need to give the identity a name."
 msgstr "អ្នក​ត្រូវ​ការ​ឲ្យ​ឈ្មោះ​អត្តសញ្ញាណ​ ។​"
 
-#: src/identitydialog.cpp:283
+#: src/identitydialog.cpp:282
 #, kde-format
 msgid "Rename Identity"
 msgstr "ប្ដូរ​ឈ្មោះ​អត្ត​សញ្ញាណ​"
 
-#: src/identitydialog.cpp:317
+#: src/identitydialog.cpp:316
 #, kde-format
 msgid ""
 "This identity is in use, if you remove it the network settings using it will "
@@ -3921,61 +3921,61 @@ msgstr ""
 "អត្ត​សញ្ញាណ​ក្នុង​ការ​ប្រើ​នេះ​​ ប្រ​សិន​បើ​អ្នក​យក​​វា​ចេញ​ការ​ប្រើ​ការ​កំណត់​បណ្ដាញ​ វា​នឹង​ថយ​ក្រោយ​ទៅកាន់​អត្ត​"
 "សញ្ញាណ​លំនាំដើម​ ។ យ៉ាងណាក៏ដោយ​លុប​វា​ឬ ?"
 
-#: src/identitydialog.cpp:322
+#: src/identitydialog.cpp:321
 #, kde-format
 msgid "Are you sure you want to delete all information for this identity?"
 msgstr "តើ​អ្នក​ពិត​ជា​ចង់​លុប​ព័ត៌មាន​ទាំង​អស់​សម្រាប់​អត្តសញ្ញាណ​នេះ​​ឬ​ ?"
 
-#: src/identitydialog.cpp:325
+#: src/identitydialog.cpp:324
 #, kde-format
 msgid "Delete Identity"
 msgstr "លុប​អត្ត​សញ្ញាណ​"
 
-#: src/identitydialog.cpp:338
+#: src/identitydialog.cpp:337
 #, kde-format
 msgid "Duplicate Identity"
 msgstr "ស្ទួន​អត្ត​សញ្ញាណ​"
 
-#: src/identitydialog.cpp:381
+#: src/identitydialog.cpp:380
 #, kde-format
 msgid "You must add at least one nick to the identity."
 msgstr "អ្នក​ត្រូវ​តែ​បន្ថែម​យ៉ាង​ហោច​​ណាស់​សម្មតិនា​ម​មួយ​ទៅកាន់​អត្តសញ្ញាណ​ ។"
 
-#: src/identitydialog.cpp:393
+#: src/identitydialog.cpp:392
 #, kde-format
 msgid "Nicks must not contain spaces."
 msgstr ""
 
-#: src/identitydialog.cpp:406
+#: src/identitydialog.cpp:405
 #, kde-format
 msgid "Please enter a real name."
 msgstr "សូម​បញ្ចូល​ឈ្មោះ​ពិត​ ។"
 
-#: src/identitydialog.cpp:417
+#: src/identitydialog.cpp:416
 #, kde-format
 msgid "Ident must not contain spaces."
 msgstr ""
 
-#: src/identitydialog.cpp:464
+#: src/identitydialog.cpp:463
 #, kde-format
 msgid "NickServ may not function with auto join;  SASL is recommended."
 msgstr ""
 
-#: src/identitydialog.cpp:471
+#: src/identitydialog.cpp:470
 #, kde-format
 msgid ""
 "The password entered here will override the one set in the server settings, "
 "if any."
 msgstr "ពាក្យ​សម្ងាត់​ដែល​បាន​បញ្ចូល​នៅ​ទីនេះ​នឹង​ត្រូវ​បាន​បដិសេធ​នៅ​ក្នុង​ការ​កំណត់​ម៉ាស៊ីន​បម្រើ ។"
 
-#: src/identitydialog.cpp:482
+#: src/identitydialog.cpp:481
 #, fuzzy, kde-format
 #| msgid "Completion"
 msgctxt "Shown in unfilled line edit"
 msgid "(optional)"
 msgstr "ការបំពេញ​"
 
-#: src/identitydialog.cpp:489
+#: src/identitydialog.cpp:488
 #, fuzzy, kde-format
 #| msgid ""
 #| "SSL Client Certificate authentication forces SSL to be enabled for a "
@@ -4533,7 +4533,7 @@ msgstr "%1 (%2) បាន​ចេញ​ពី​ឆានែល​នេះ​�
 #: src/irc/channel.cpp:1223 src/irc/channel.cpp:1225 src/irc/channel.cpp:1232
 #: src/irc/channel.cpp:1237 src/irc/channel.cpp:1258 src/irc/channel.cpp:1260
 #: src/irc/channel.cpp:1267 src/irc/channel.cpp:1272
-#: src/viewer/irccontextmenus.cpp:402
+#: src/viewer/irccontextmenus.cpp:401
 #, kde-format
 msgid "Kick"
 msgstr "ទាត់"
@@ -5217,7 +5217,7 @@ msgstr "ប្រ​ធាន​បទ​​ឆានែល​"
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, ChannelListWidgetUI)
 #: src/irc/channellistpanel.cpp:139 src/irc/channellistpanelui.ui:14
-#: src/viewer/viewcontainer.cpp:2963 src/viewer/viewcontainer.cpp:2984
+#: src/viewer/viewcontainer.cpp:2962 src/viewer/viewcontainer.cpp:2983
 #, kde-format
 msgid "Channel List"
 msgstr "បញ្ជី​ឆានែល​"
@@ -6227,7 +6227,7 @@ msgid ""
 "Click to remove a nick from the list of nicknames that appear on this screen."
 msgstr "ចុច​ដើម្បី​យក​សម្មតិនាម​ចេញ​ពី​បញ្ជី​របស់​សម្មតិនា​មដែល​លេចឡើង​លើ​អេក្រង់​នេះ​ ។"
 
-#: src/irc/nicksonline.cpp:39 src/viewer/irccontextmenus.cpp:431
+#: src/irc/nicksonline.cpp:39 src/viewer/irccontextmenus.cpp:430
 #, kde-format
 msgid "&Whois"
 msgstr "ជា​នរណា"
@@ -6624,8 +6624,8 @@ msgid "Added %1 to your ignore list."
 msgstr "​បាន​បន្ថែម​ %1 ទៅកាន់​បញ្ជី​មិន​អើពើ​របស់​អ្នក​ ។"
 
 #: src/irc/outputfilter.cpp:1540 src/irc/outputfilter.cpp:1609
-#: src/viewer/irccontextmenus.cpp:438 src/viewer/irccontextmenus.cpp:595
-#: src/viewer/irccontextmenus.cpp:596
+#: src/viewer/irccontextmenus.cpp:437 src/viewer/irccontextmenus.cpp:594
+#: src/viewer/irccontextmenus.cpp:595
 #, kde-format
 msgid "Ignore"
 msgstr "មិន​អើពើ"
@@ -7341,7 +7341,7 @@ msgstr ""
 #. i18n: ectx: property (text), widget (QPushButton, m_editButton)
 #. i18n: ectx: property (text), widget (QPushButton, m_editIdentityButton)
 #: src/irc/servergroupdialogui.ui:71 src/irc/serverlistdialogui.ui:64
-#: src/viewer/ircinput.cpp:487
+#: src/viewer/ircinput.cpp:486
 #, kde-format
 msgid "&Edit..."
 msgstr "កែសម្រួល​​..."
@@ -7620,8 +7620,8 @@ msgstr "អ្នក​និពន្ធ​"
 msgid "Time"
 msgstr "កំណត់​ពេលវេលា"
 
-#: src/konsolepanel.cpp:26 src/viewer/viewcontainer.cpp:2607
-#: src/viewer/viewcontainer.cpp:2608
+#: src/konsolepanel.cpp:26 src/viewer/viewcontainer.cpp:2606
+#: src/viewer/viewcontainer.cpp:2607
 #, kde-format
 msgid "Konsole"
 msgstr "Konsole"
@@ -8203,7 +8203,7 @@ msgid "&DCC Status"
 msgstr "ស្ថានភាព​របស់​ DCC"
 
 #: src/mainwindow.cpp:200 src/mainwindow.cpp:847
-#: src/viewer/viewcontainer.cpp:917
+#: src/viewer/viewcontainer.cpp:916
 #, kde-format
 msgid "&Open Logfile"
 msgstr "បើក​ឯកសារ​កំណត់ហេតុ​"
@@ -8213,7 +8213,7 @@ msgstr "បើក​ឯកសារ​កំណត់ហេតុ​"
 msgid "Open the known history for this channel in a new tab"
 msgstr "បើក​ប្រវត្តិ​ដែល​ស្គាល់​សម្រាប់​ឆានែល​នេះ​ក្នុង​ផ្ទាំង​ថ្មី"
 
-#: src/mainwindow.cpp:209 src/viewer/viewcontainer.cpp:938
+#: src/mainwindow.cpp:209 src/viewer/viewcontainer.cpp:937
 #, kde-format
 msgid "&Channel Settings..."
 msgstr "ការ​កំណត់​ឆានែល..."
@@ -8223,7 +8223,7 @@ msgstr "ការ​កំណត់​ឆានែល..."
 msgid "Open the channel settings dialog for this tab"
 msgstr "បើក​ប្រអប់​កំណត់​ឆានែល​សម្រាប់​ផ្ទាំង​នេះ"
 
-#: src/mainwindow.cpp:217 src/viewer/viewcontainer.cpp:908
+#: src/mainwindow.cpp:217 src/viewer/viewcontainer.cpp:907
 #, kde-format
 msgid "Channel &List"
 msgstr "បញ្ជី និង​ឆានែល"
@@ -8278,7 +8278,7 @@ msgstr "ផ្ទាំង​ដែល​បាន​ផ្ដោត​ចុង
 msgid "Next Active Tab"
 msgstr "ផ្ទាំង​សកម្ម​បន្ទាប់​"
 
-#: src/mainwindow.cpp:312 src/viewer/viewcontainer.cpp:296
+#: src/mainwindow.cpp:312 src/viewer/viewcontainer.cpp:295
 #, kde-format
 msgid "Move Tab Up"
 msgstr "ផ្លាស់​ទី​​ផ្ទាំង​ទៅ​​លើ​"
@@ -8289,19 +8289,19 @@ msgstr "ផ្លាស់​ទី​​ផ្ទាំង​ទៅ​​លើ
 msgid "Move this tab"
 msgstr ""
 
-#: src/mainwindow.cpp:323 src/viewer/viewcontainer.cpp:304
+#: src/mainwindow.cpp:323 src/viewer/viewcontainer.cpp:303
 #, kde-format
 msgid "Move Tab Down"
 msgstr "ផ្លាស់​ទី​​ផ្ទាំង​ចុះ​​ក្រោម​"
 
 #: src/mainwindow.cpp:334 src/mainwindow.cpp:364
-#: src/viewer/viewcontainer.cpp:350
+#: src/viewer/viewcontainer.cpp:349
 #, kde-format
 msgid "Move Tab Right"
 msgstr "ផ្លាស់​ទី​​ផ្ទាំង​ទៅ​ស្តាំ"
 
 #: src/mainwindow.cpp:343 src/mainwindow.cpp:355
-#: src/viewer/viewcontainer.cpp:342
+#: src/viewer/viewcontainer.cpp:341
 #, kde-format
 msgid "Move Tab Left"
 msgstr "ផ្លាស់​ទី​ផ្ទាំង​ទៅ​ឆ្វេង​"
@@ -8407,7 +8407,7 @@ msgstr "សម្អាត​​មាតិកា​រ​នៃ​ការ​
 msgid "Global Away"
 msgstr "ឆ្ងាយ​សកល"
 
-#: src/mainwindow.cpp:480 src/viewer/irccontextmenus.cpp:330
+#: src/mainwindow.cpp:480 src/viewer/irccontextmenus.cpp:329
 #, kde-format
 msgid "&Join Channel..."
 msgstr "ត​ឆានែល​..."
@@ -8986,7 +8986,7 @@ msgstr "បាន​បរាជ័យ​ទៅ​ទាញ​យក​ %1 ៖ %
 msgid "Error parsing router description."
 msgstr "កំហុស​ការ​ញែក​​សេចក្ដី​ពិពណ៌នា​រ៉ោតទ័រ​ ។"
 
-#: src/urlcatcher.cpp:69 src/viewer/viewcontainer.cpp:2618
+#: src/urlcatcher.cpp:69 src/viewer/viewcontainer.cpp:2617
 #, kde-format
 msgid "URL Catcher"
 msgstr "កម្មវិធី​ចាប​យក​របស់ URL"
@@ -9137,7 +9137,7 @@ msgstr ""
 "អ្នក​បាន​ជ្រើស​ URL ច្រើន​ជាង​មួយ ។ ប្រអប់​ឯកសារ​ត្រូវ​កំណត់​ទិសដៅ​នឹង​បើក​សម្រាប់​​នីមួយៗ ។ ​អ្នក​ពិត​ជា​ចង់​"
 "រក្សាទុក URLs មួយ​ចំនួន​នៅ​ពេល​តែ​ម្ដង​ឬ ?"
 
-#: src/urlcatcher.cpp:266 src/viewer/irccontextmenus.cpp:762
+#: src/urlcatcher.cpp:266 src/viewer/irccontextmenus.cpp:761
 #, kde-format
 msgid "Save link as"
 msgstr "រក្សា​ទុក​ដំណ​ជា​"
@@ -9588,210 +9588,210 @@ msgstr ""
 "ដែល​អ្នក​​នឹង​មើល​សារ​របស់​អ្នក​ជាមួយ​ពណ៌​អត្ថបទ​ផ្ទៃខាងក្រោយ​ធម្មតា ។<br>\n"
 "<b>សម្គាល់​ ៖  គ្មាន​ម៉ាស៊ីន​ភ្ញៀវ​គាំទ្រ​វា​ឡើយ និង​គ្មាន​អ្នកប្រើ​បើក​ជម្រើស​ដើម្បី​មើល​វា​ឡើយ​ ។</b></qt>"
 
-#: src/viewer/irccontextmenus.cpp:137
+#: src/viewer/irccontextmenus.cpp:136
 #, kde-format
 msgid "Copy Link Address"
 msgstr "ចម្លង​​អាសយដ្ឋាន​តំណ"
 
-#: src/viewer/irccontextmenus.cpp:141
+#: src/viewer/irccontextmenus.cpp:140
 #, kde-format
 msgid "Add to Bookmarks"
 msgstr "បន្ថែម​ទៅកាន់​ចំណាំ"
 
-#: src/viewer/irccontextmenus.cpp:142
+#: src/viewer/irccontextmenus.cpp:141
 #, kde-format
 msgid "Open With..."
 msgstr "បើក​ជាមួយ..."
 
-#: src/viewer/irccontextmenus.cpp:143
+#: src/viewer/irccontextmenus.cpp:142
 #, kde-format
 msgid "Save Link As..."
 msgstr "រក្សាទុក​ដំណ​ជា​..."
 
-#: src/viewer/irccontextmenus.cpp:283
+#: src/viewer/irccontextmenus.cpp:282
 #, kde-format
 msgid "Search for '%1' with"
 msgstr "ស្វែងរក '%1' ជាមួយ"
 
-#: src/viewer/irccontextmenus.cpp:297
+#: src/viewer/irccontextmenus.cpp:296
 #, kde-format
 msgid "Configure Web Shortcuts..."
 msgstr "កំណត់​រចនាសម្ព័ន្ធ​ផ្លូវកាត់​បណ្ដាញ..."
 
-#: src/viewer/irccontextmenus.cpp:333
+#: src/viewer/irccontextmenus.cpp:332
 #, kde-format
 msgid "Get &topic"
 msgstr "យក​ប្រធាន​បទ​"
 
-#: src/viewer/irccontextmenus.cpp:334
+#: src/viewer/irccontextmenus.cpp:333
 #, kde-format
 msgid "Get &user list"
 msgstr "យក​​បញ្ជី​អ្នក​ប្រើ​"
 
-#: src/viewer/irccontextmenus.cpp:379
+#: src/viewer/irccontextmenus.cpp:378
 #, kde-format
 msgid "Open Query"
 msgstr "បើក​សំណួរ​"
 
-#: src/viewer/irccontextmenus.cpp:391
+#: src/viewer/irccontextmenus.cpp:390
 #, kde-format
 msgid "Modes"
 msgstr "របៀប"
 
-#: src/viewer/irccontextmenus.cpp:392
+#: src/viewer/irccontextmenus.cpp:391
 #, kde-format
 msgid "Give Op"
 msgstr "ឲ្យ​​ការី​"
 
-#: src/viewer/irccontextmenus.cpp:393
+#: src/viewer/irccontextmenus.cpp:392
 #, kde-format
 msgid "Take Op"
 msgstr "យក​ការី​"
 
-#: src/viewer/irccontextmenus.cpp:394
+#: src/viewer/irccontextmenus.cpp:393
 #, kde-format
 msgid "Give HalfOp"
 msgstr "ឲ្យ​ការី​​ពាក់​កណ្ដាល​"
 
-#: src/viewer/irccontextmenus.cpp:395
+#: src/viewer/irccontextmenus.cpp:394
 #, kde-format
 msgid "Take HalfOp"
 msgstr "យក​​ការី​ពាក់កណ្ដាល​"
 
-#: src/viewer/irccontextmenus.cpp:396
+#: src/viewer/irccontextmenus.cpp:395
 #, kde-format
 msgid "Give Voice"
 msgstr "ឲ្យ​សំឡេង"
 
-#: src/viewer/irccontextmenus.cpp:397
+#: src/viewer/irccontextmenus.cpp:396
 #, kde-format
 msgid "Take Voice"
 msgstr "យក​សំឡេង"
 
-#: src/viewer/irccontextmenus.cpp:401
+#: src/viewer/irccontextmenus.cpp:400
 #, kde-format
 msgid "Kick / Ban"
 msgstr "ទាត់ / បម្រាម​"
 
-#: src/viewer/irccontextmenus.cpp:403
+#: src/viewer/irccontextmenus.cpp:402
 #, kde-format
 msgid "Kickban"
 msgstr "Kickban"
 
-#: src/viewer/irccontextmenus.cpp:404
+#: src/viewer/irccontextmenus.cpp:403
 #, kde-format
 msgid "Ban Nickname"
 msgstr "Ban Nickname"
 
-#: src/viewer/irccontextmenus.cpp:406
+#: src/viewer/irccontextmenus.cpp:405
 #, kde-format
 msgid "Ban *!*@*.host"
 msgstr "Ban *!*@*.host"
 
-#: src/viewer/irccontextmenus.cpp:407
+#: src/viewer/irccontextmenus.cpp:406
 #, kde-format
 msgid "Ban *!*@domain"
 msgstr "Ban *!*@domain"
 
-#: src/viewer/irccontextmenus.cpp:408
+#: src/viewer/irccontextmenus.cpp:407
 #, kde-format
 msgid "Ban *!user@*.host"
 msgstr "Ban *!user@*.host"
 
-#: src/viewer/irccontextmenus.cpp:409
+#: src/viewer/irccontextmenus.cpp:408
 #, kde-format
 msgid "Ban *!user@domain"
 msgstr "Ban *!user@domain"
 
-#: src/viewer/irccontextmenus.cpp:411
+#: src/viewer/irccontextmenus.cpp:410
 #, kde-format
 msgid "Kickban *!*@*.host"
 msgstr "Kickban *!*@*.host"
 
-#: src/viewer/irccontextmenus.cpp:412
+#: src/viewer/irccontextmenus.cpp:411
 #, kde-format
 msgid "Kickban *!*@domain"
 msgstr "Kickban *!*@domain"
 
-#: src/viewer/irccontextmenus.cpp:413
+#: src/viewer/irccontextmenus.cpp:412
 #, kde-format
 msgid "Kickban *!user@*.host"
 msgstr "Kickban *!user@*.host"
 
-#: src/viewer/irccontextmenus.cpp:414
+#: src/viewer/irccontextmenus.cpp:413
 #, kde-format
 msgid "Kickban *!user@domain"
 msgstr "Kickban *!user@domain"
 
-#: src/viewer/irccontextmenus.cpp:432
+#: src/viewer/irccontextmenus.cpp:431
 #, kde-format
 msgid "&Version"
 msgstr "កំណែ"
 
-#: src/viewer/irccontextmenus.cpp:433
+#: src/viewer/irccontextmenus.cpp:432
 #, kde-format
 msgid "&Ping"
 msgstr "Ping"
 
-#: src/viewer/irccontextmenus.cpp:440 src/viewer/irccontextmenus.cpp:625
-#: src/viewer/irccontextmenus.cpp:626
+#: src/viewer/irccontextmenus.cpp:439 src/viewer/irccontextmenus.cpp:624
+#: src/viewer/irccontextmenus.cpp:625
 #, kde-format
 msgid "Unignore"
 msgstr "អើពើ"
 
-#: src/viewer/irccontextmenus.cpp:443
+#: src/viewer/irccontextmenus.cpp:442
 #, kde-format
 msgid "Add to Watched Nicks"
 msgstr "បន្ថែម​សម្មតិនាម​ដែល​បាន​មើល​"
 
-#: src/viewer/irccontextmenus.cpp:445
+#: src/viewer/irccontextmenus.cpp:444
 #, kde-format
 msgid "Remove From Watched Nicks"
 msgstr "បន្ថែម​ពី​​សម្មតិនាម​ដែល​បាន​មើល​"
 
-#: src/viewer/irccontextmenus.cpp:452
+#: src/viewer/irccontextmenus.cpp:451
 #, kde-format
 msgid "Send &File..."
 msgstr "ផ្ញើ​ឯកសារ​..."
 
-#: src/viewer/irccontextmenus.cpp:454
+#: src/viewer/irccontextmenus.cpp:453
 #, kde-format
 msgid "Open DCC Chat"
 msgstr "បើក​ការ​​ជជែក​របស់ DCC"
 
-#: src/viewer/irccontextmenus.cpp:455
+#: src/viewer/irccontextmenus.cpp:454
 #, kde-format
 msgid "Open DCC Whiteboard"
 msgstr "បើក​ផ្ទាំង​របស់​ DCC"
 
-#: src/viewer/irccontextmenus.cpp:588
+#: src/viewer/irccontextmenus.cpp:587
 #, kde-format
 msgid "Do you want to ignore %1?"
 msgstr "តើ​អ្នក​មិន​ចង់​អើពើ %1 ឬ ?"
 
-#: src/viewer/irccontextmenus.cpp:590
+#: src/viewer/irccontextmenus.cpp:589
 #, kde-format
 msgid "Do you want to ignore the selected users?"
 msgstr "តើ​អ្នក​មិន​ចង់​អើពើ​អ្នក​ប្រើ​ដែល​បាន​ជ្រើស​ឬ ?"
 
-#: src/viewer/irccontextmenus.cpp:618
+#: src/viewer/irccontextmenus.cpp:617
 #, kde-format
 msgid "Do you want to stop ignoring %1?"
 msgstr "តើ​អ្នក​ចង់​​បញ្ឈប់​​ការ​មិន​អើពើ​ %1 ឬ ?"
 
-#: src/viewer/irccontextmenus.cpp:620
+#: src/viewer/irccontextmenus.cpp:619
 #, kde-format
 msgid "Do you want to stop ignoring the selected users?"
 msgstr "តើ​អ្នក​ចង់​បញ្ឈប់​ការ​មិន​អើពើ​អ្នក​ប្រើ​ដែល​បាន​ជ្រើស​​ឬ​ ?"
 
-#: src/viewer/irccontextmenus.cpp:777
+#: src/viewer/irccontextmenus.cpp:776
 #, fuzzy, kde-format
 #| msgid "Query author"
 msgctxt "Opens a query (private message) window with the author of the topic"
 msgid "Query author"
 msgstr "អ្នក​បង្កើត​សំណួរ"
 
-#: src/viewer/ircinput.cpp:54
+#: src/viewer/ircinput.cpp:53
 #, kde-format
 msgid ""
 "<qt><p>The input line is where you type messages to be sent the channel, "
@@ -9818,19 +9818,19 @@ msgstr ""
 "table><p>សម្រាប់​ពាក្យ​បញ្ជា​បន្ថែម​ មើល​សៀវភៅ​ដៃ​របស់​ Konversation ។</p><p>សារ​មិន​អាច​មាន​ជួរ​"
 "ច្រើន​ឡើយ ។</p></qt>"
 
-#: src/viewer/ircinput.cpp:475
+#: src/viewer/ircinput.cpp:474
 #, kde-format
 msgid "1 byte"
 msgid_plural "%1 bytes"
 msgstr[0] " %1 បៃ"
 
-#: src/viewer/ircinput.cpp:476
+#: src/viewer/ircinput.cpp:475
 #, kde-format
 msgid "1 line"
 msgid_plural "%1 lines"
 msgstr[0] " %1 បន្ទាត់​"
 
-#: src/viewer/ircinput.cpp:482
+#: src/viewer/ircinput.cpp:481
 #, kde-format
 msgctxt ""
 "%1 is, for instance, '200 bytes'.  %2 is, for instance, '7 lines'.  Both are "
@@ -9843,12 +9843,12 @@ msgstr ""
 "<qt>អ្នក​កំពុង​តែ​ប៉ុនប៉ង​​​ទៅ​​បិទភ្ជាប់​ចំណែក​របស់​អត្ថបទ​​ (%1 ឬ %2) នៅ​ក្នុង​ការ​ជជែក ។ វា​អាច​ជា​មូលហេតុ​ការ​"
 "កំណត់​ការ​តភ្ជាប់​ឡើងវិញ​ ឬ​​បញ្ចប់​​ ។ តើ​អ្នក​ពិត​ជា​ចង់​បន្ត​ឬ​ ?</qt>"
 
-#: src/viewer/ircinput.cpp:485
+#: src/viewer/ircinput.cpp:484
 #, kde-format
 msgid "Large Paste Warning"
 msgstr "បិទភ្ជាប់​ការ​ព្រមាន​"
 
-#: src/viewer/ircinput.cpp:486
+#: src/viewer/ircinput.cpp:485
 #, kde-format
 msgid "Paste"
 msgstr "បិទ​ភ្ជាប់​"
@@ -9964,7 +9964,7 @@ msgstr "បន្ថែម​ទ្រនិច​បង្ហាញ​សម្
 msgid "&Remove Newlines"
 msgstr "យក​បន្ទាត់​ថ្មី​ចេញ​"
 
-#: src/viewer/rawlog.cpp:17 src/viewer/viewcontainer.cpp:2743
+#: src/viewer/rawlog.cpp:17 src/viewer/viewcontainer.cpp:2742
 #, kde-format
 msgid "Raw Log"
 msgstr "កំណត់​ហេតុ​ដើម​"
@@ -10116,63 +10116,63 @@ msgstr ""
 msgid "IRC Client"
 msgstr ""
 
-#: src/viewer/viewcontainer.cpp:882
+#: src/viewer/viewcontainer.cpp:881
 #, kde-format
 msgid "Find Text..."
 msgstr "ស្វែង​រក​អត្ថបទ​..."
 
-#: src/viewer/viewcontainer.cpp:884
+#: src/viewer/viewcontainer.cpp:883
 #, kde-format
 msgid "Search for text in the current tab"
 msgstr "ស្វែងរក​អត្ថបទ​នៅ​ក្នុង​ផ្ទាំង​បច្ចុប្បន្ន"
 
-#: src/viewer/viewcontainer.cpp:902
+#: src/viewer/viewcontainer.cpp:901
 #, kde-format
 msgid "Channel &List for %1"
 msgstr "ឆានែល​ និង​បញ្ជី​សម្រាប់​ %1"
 
-#: src/viewer/viewcontainer.cpp:922
+#: src/viewer/viewcontainer.cpp:921
 #, kde-format
 msgid "&Open Logfile for %1"
 msgstr "បើក​ឯកសារ​កំណត់ហេតុ​សម្រាប់​ %1"
 
-#: src/viewer/viewcontainer.cpp:933
+#: src/viewer/viewcontainer.cpp:932
 #, kde-format
 msgid "&Channel Settings for %1..."
 msgstr "កំណត់​ឆានែល​សម្រាប់​ %1..."
 
-#: src/viewer/viewcontainer.cpp:2116
+#: src/viewer/viewcontainer.cpp:2115
 #, kde-format
 msgid "Rename Tab"
 msgstr "ប្ដូរ​ឈ្មោះផ្ទាំង​"
 
-#: src/viewer/viewcontainer.cpp:2117
+#: src/viewer/viewcontainer.cpp:2116
 #, kde-format
 msgid "Enter new tab name:"
 msgstr "បញ្ចូល​ឈ្មោះ​ផ្ទាំង​ថ្មី ៖"
 
-#: src/viewer/viewcontainer.cpp:2189
+#: src/viewer/viewcontainer.cpp:2188
 #, kde-format
 msgctxt "Default encoding"
 msgid "Default ( %1 )"
 msgstr "លំនាំដើម​ ( %1 )"
 
-#: src/viewer/viewcontainer.cpp:2230
+#: src/viewer/viewcontainer.cpp:2229
 #, kde-format
 msgid "&Rename Tab..."
 msgstr "ប្ដូរ​ឈ្មោះ​ផ្ទាំង​..."
 
-#: src/viewer/viewcontainer.cpp:2379
+#: src/viewer/viewcontainer.cpp:2378
 #, kde-format
 msgid "You can only search in text fields."
 msgstr "អ្នក​អាច​ស្វែង​រក​នៅ​ក្នុង​វាល​អត្ថបទ​តែប៉ុណ្ណោះ ។"
 
-#: src/viewer/viewcontainer.cpp:2380
+#: src/viewer/viewcontainer.cpp:2379
 #, kde-format
 msgid "Find Text Information"
 msgstr "ស្វែង​រក​ព័ត៌មាន​អត្ថបទ​"
 
-#: src/viewer/viewcontainer.cpp:2980
+#: src/viewer/viewcontainer.cpp:2979
 #, kde-format
 msgid ""
 "To know which server to display the channel list for, the list can only be "
@@ -10181,7 +10181,7 @@ msgstr ""
 "ដើម្បី​ស្គាល់​​ម៉ាស៊ីន​បម្រើ​ណាមួយ​​ត្រូវ​បង្ហាញ​បញ្ជី​ឆានែល​សម្រាប់​ បញ្ជី​​អាច​ត្រូវ​បាន​បើក​ចេញ​ពី​សំណួរ​ ឆានែល​ ឬ​បង្អួច​"
 "ស្ថាន​ភាព​​ ។"
 
-#: src/viewer/viewcontainer.cpp:3010
+#: src/viewer/viewcontainer.cpp:3009
 #, kde-format
 msgid ""
 "Using this function may result in a lot of network traffic. If your "
@@ -10191,12 +10191,12 @@ msgstr ""
 "ការ​ប្រើ​មុខងារ​នេះ​អាច​មាន​លទ្ធផល​នៅ​ក្នុង​ចរាចរ​របស់​បណ្ដាញ​ជាច្រើន​ ។ ប្រសិន​បើ​ ការ​តភ្ជាប់​របស់​អ្នក​មិន​"
 "លឿន​គ្រប់​គ្រាន់​ វា​អាច​ធ្វើ​ទៅ​បាន ប៉ុន្តែ​​​ម៉ាស៊ីន​ភ្ញៀវ​របស់​អ្នក​នឹង​ត្រូវ​បាន​ផ្តាច់​ដោយ​ម៉ាស៊ីន​បម្រើ​ ។"
 
-#: src/viewer/viewcontainer.cpp:3014
+#: src/viewer/viewcontainer.cpp:3013
 #, kde-format
 msgid "Channel List Warning"
 msgstr "ការ​ព្រមាន​បញ្ជី​ឆានែល​"
 
-#: src/viewer/viewcontainer.cpp:3044
+#: src/viewer/viewcontainer.cpp:3043
 #, kde-format
 msgid "Watched Nicks"
 msgstr "សម្មតិនាម​ដែល​បាន​មើល​​"

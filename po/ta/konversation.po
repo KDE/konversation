@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-02 00:44+0000\n"
+"POT-Creation-Date: 2026-07-03 00:45+0000\n"
 "PO-Revision-Date: 2021-06-19 20:37+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
@@ -148,7 +148,7 @@ msgid ""
 "is found."
 msgstr ""
 
-#: src/application.cpp:384 src/irc/server.cpp:1814 src/irc/server.cpp:3847
+#: src/application.cpp:383 src/irc/server.cpp:1814 src/irc/server.cpp:3847
 #: src/irc/server.cpp:3852
 #, kde-format
 msgid "D-Bus"
@@ -1970,7 +1970,7 @@ msgstr "வண்ணங்கள்"
 msgid "Fonts"
 msgstr "இடம் காட்டியிலிருந்து"
 
-#: src/config/settingsdialog.cpp:90 src/viewer/irccontextmenus.cpp:88
+#: src/config/settingsdialog.cpp:90 src/viewer/irccontextmenus.cpp:87
 #, fuzzy, kde-format
 msgid "Quick Buttons"
 msgstr "துரித பட்டன்கள்"
@@ -2290,7 +2290,7 @@ msgstr "%1  வழி செய்பவர் சலுகைகளை %2க்
 msgid "Preview:"
 msgstr "முன்பார்வை:"
 
-#: src/config/warnings_config.cpp:143
+#: src/config/warnings_config.cpp:142
 #, fuzzy, kde-format
 #| msgid "&Show channel topic"
 msgctxt ""
@@ -2299,7 +2299,7 @@ msgctxt ""
 msgid "... a channel invitation is received"
 msgstr "&வழி தலைப்பைக் காட்டு:"
 
-#: src/config/warnings_config.cpp:146
+#: src/config/warnings_config.cpp:145
 #, kde-format
 msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
@@ -2307,7 +2307,7 @@ msgctxt ""
 msgid "... saving a log file would save only the visible portion"
 msgstr ""
 
-#: src/config/warnings_config.cpp:149
+#: src/config/warnings_config.cpp:148
 #, kde-format
 msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
@@ -2315,7 +2315,7 @@ msgctxt ""
 msgid "... a log file is about to be deleted"
 msgstr ""
 
-#: src/config/warnings_config.cpp:152
+#: src/config/warnings_config.cpp:151
 #, kde-format
 msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
@@ -2324,7 +2324,7 @@ msgid ""
 "... an open query exists for a nickname that has just been marked as ignored"
 msgstr ""
 
-#: src/config/warnings_config.cpp:155
+#: src/config/warnings_config.cpp:154
 #, fuzzy, kde-format
 msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
@@ -2332,7 +2332,7 @@ msgctxt ""
 msgid "... switching a connection to a different server in the same network"
 msgstr "கண்காணிக்க நிக்குகளைச் சேர்:"
 
-#: src/config/warnings_config.cpp:158
+#: src/config/warnings_config.cpp:157
 #, fuzzy, kde-format
 msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
@@ -2340,7 +2340,7 @@ msgctxt ""
 msgid "... creating a new connection to an already connected network"
 msgstr "கண்காணிக்க நிக்குகளைச் சேர்:"
 
-#: src/config/warnings_config.cpp:161
+#: src/config/warnings_config.cpp:160
 #, fuzzy, kde-format
 msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
@@ -2348,7 +2348,7 @@ msgctxt ""
 msgid "... closing a server tab"
 msgstr "தத்தலை மூடு"
 
-#: src/config/warnings_config.cpp:164
+#: src/config/warnings_config.cpp:163
 #, fuzzy, kde-format
 msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
@@ -2356,7 +2356,7 @@ msgctxt ""
 msgid "... closing a channel tab"
 msgstr "வழி பட்டியல்"
 
-#: src/config/warnings_config.cpp:167
+#: src/config/warnings_config.cpp:166
 #, fuzzy, kde-format
 msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
@@ -2364,7 +2364,7 @@ msgctxt ""
 msgid "... closing a query tab"
 msgstr "தத்தலை மூடு"
 
-#: src/config/warnings_config.cpp:170
+#: src/config/warnings_config.cpp:169
 #, fuzzy, kde-format
 msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
@@ -2372,7 +2372,7 @@ msgctxt ""
 msgid "... closing a DCC Chat tab"
 msgstr "வழி பட்டியல்"
 
-#: src/config/warnings_config.cpp:173
+#: src/config/warnings_config.cpp:172
 #, fuzzy, kde-format
 #| msgid "The channel list can only be opened from server-aware tabs"
 msgctxt ""
@@ -2382,7 +2382,7 @@ msgid ""
 "... a source for the channel list cannot be determined from the current tab"
 msgstr "அலைவரிசை பட்டியலை சேவையகம் அறிந்த தத்தலிருந்து மட்டுமே திறக்க முடியும் "
 
-#: src/config/warnings_config.cpp:176
+#: src/config/warnings_config.cpp:175
 #, kde-format
 msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
@@ -2390,7 +2390,7 @@ msgctxt ""
 msgid "... you have chosen to hide the menu bar"
 msgstr ""
 
-#: src/config/warnings_config.cpp:179
+#: src/config/warnings_config.cpp:178
 #, kde-format
 msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
@@ -2398,7 +2398,7 @@ msgctxt ""
 msgid "... a channel listing may cause disconnection due to the download size"
 msgstr ""
 
-#: src/config/warnings_config.cpp:182
+#: src/config/warnings_config.cpp:181
 #, fuzzy, kde-format
 #| msgid "Warning on pasting large portions of text"
 msgctxt ""
@@ -2407,7 +2407,7 @@ msgctxt ""
 msgid "... pasting large portions of text"
 msgstr "எச்சரிக்கை,உரையின் நிறைய பகுதிகள் ஒட்டப்படுகிறது "
 
-#: src/config/warnings_config.cpp:185
+#: src/config/warnings_config.cpp:184
 #, kde-format
 msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
@@ -2415,7 +2415,7 @@ msgctxt ""
 msgid "... quitting Konversation via the tray icon"
 msgstr ""
 
-#: src/config/warnings_config.cpp:188
+#: src/config/warnings_config.cpp:187
 #, kde-format
 msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
@@ -2423,7 +2423,7 @@ msgctxt ""
 msgid "... you have chosen to ignore a nickname"
 msgstr ""
 
-#: src/config/warnings_config.cpp:191
+#: src/config/warnings_config.cpp:190
 #, fuzzy, kde-format
 msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
@@ -2431,7 +2431,7 @@ msgctxt ""
 msgid "... you have chosen to stop ignoring a nickname"
 msgstr "%1ஐ நீக்கவேண்டுமா ?"
 
-#: src/config/warnings_config.cpp:194
+#: src/config/warnings_config.cpp:193
 #, kde-format
 msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
@@ -2439,7 +2439,7 @@ msgctxt ""
 msgid "... quitting Konversation while DCC file transfers are active"
 msgstr ""
 
-#: src/config/warnings_config.cpp:197
+#: src/config/warnings_config.cpp:196
 #, kde-format
 msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
@@ -2448,7 +2448,7 @@ msgid ""
 "... some characters in a message are incompatible with the active encoding"
 msgstr ""
 
-#: src/config/warnings_config.cpp:200
+#: src/config/warnings_config.cpp:199
 #, kde-format
 msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
@@ -2683,53 +2683,53 @@ msgstr "KIO பிழை: %1"
 msgid "getNickname: Server %1 is not found."
 msgstr "சேவையகம் %1 கிடைக்கவில்லை. %2"
 
-#: src/dcc/chat.cpp:98
+#: src/dcc/chat.cpp:97
 #, kde-format
 msgctxt "%1=dcc extension like Chat or Whiteboard"
 msgid "Could not send a DCC %1 request to the partner via the IRC server."
 msgstr ""
 
-#: src/dcc/chat.cpp:119 src/dcc/transfersend.cpp:374
+#: src/dcc/chat.cpp:118 src/dcc/transfersend.cpp:374
 #, kde-format
 msgid "Awaiting acceptance by remote user..."
 msgstr ""
 
-#: src/dcc/chat.cpp:148
+#: src/dcc/chat.cpp:147
 #, kde-format
 msgctxt "%1=partnerNick, %2=Servername, %3=dcc extension as chat or wboard"
 msgid "%1 (on %2) offers to DCC %3 with you"
 msgstr ""
 
-#: src/dcc/chat.cpp:149
+#: src/dcc/chat.cpp:148
 #, kde-format
 msgctxt "%1=dcc extension as Chat or Whiteboard, %2=partnerNick"
 msgid "DCC %1 offer from %2"
 msgstr ""
 
-#: src/dcc/chat.cpp:150
+#: src/dcc/chat.cpp:149
 #, fuzzy, kde-format
 msgid "Accept"
 msgstr "&ஏற்றுக்கொள்"
 
-#: src/dcc/chat.cpp:151
+#: src/dcc/chat.cpp:150
 #, fuzzy, kde-format
 #| msgid "&Reconnect"
 msgid "Reject"
 msgstr "&திரும்ப இணை"
 
-#: src/dcc/chat.cpp:157
+#: src/dcc/chat.cpp:156
 #, kde-format
 msgctxt "%1=dcc extension like Chat or Whiteboard"
 msgid "You rejected the DCC %1 offer."
 msgstr ""
 
-#: src/dcc/chat.cpp:196
+#: src/dcc/chat.cpp:195
 #, kde-format
 msgctxt "%1=dcc extension as Chat or Whiteboard"
 msgid "DCC %1 request was rejected"
 msgstr ""
 
-#: src/dcc/chat.cpp:285
+#: src/dcc/chat.cpp:284
 #, kde-format
 msgctxt "%1=dcc extension like Chat or Whiteboard"
 msgid ""
@@ -2737,14 +2737,14 @@ msgid ""
 "server."
 msgstr ""
 
-#: src/dcc/chat.cpp:303 src/dcc/chat.cpp:335 src/dcc/transferrecv.cpp:589
+#: src/dcc/chat.cpp:302 src/dcc/chat.cpp:334 src/dcc/transferrecv.cpp:589
 #: src/dcc/transfersend.cpp:396
 #, kde-format
 msgid ""
 "Failed to forward port %1. Sending DCC request to remote user regardless."
 msgstr ""
 
-#: src/dcc/chat.cpp:317
+#: src/dcc/chat.cpp:316
 #, kde-format
 msgctxt "%1=extension like Chat or Whiteboard"
 msgid ""
@@ -2752,61 +2752,61 @@ msgid ""
 "server."
 msgstr ""
 
-#: src/dcc/chat.cpp:359
+#: src/dcc/chat.cpp:358
 #, fuzzy, kde-format
 msgid "Could not open a socket for listening: %1"
 msgstr "துளையிடத்தை கோப்பினை திறக்க முடியவில்லை. "
 
-#: src/dcc/chat.cpp:370
+#: src/dcc/chat.cpp:369
 #, fuzzy, kde-format
 #| msgid "Offering DCC Chat connection to %1 on port %2..."
 msgctxt "%1=dcc extension like Chat or Whiteboard,%2=partnerNick, %3=port"
 msgid "Offering DCC %1 connection to %2 on port %3..."
 msgstr "port %2 ல் உள்ள %1க்கு DCC அரட்டை இணைப்பு வழங்கப்படுகிறது..."
 
-#: src/dcc/chat.cpp:431
+#: src/dcc/chat.cpp:430
 #, fuzzy, kde-format
 #| msgid "Open DCC &Chat"
 msgctxt "DCC extension"
 msgid "Whiteboard"
 msgstr "DCC அரட்டையைத் திற"
 
-#: src/dcc/chat.cpp:434
+#: src/dcc/chat.cpp:433
 #, kde-format
 msgctxt "DCC extension"
 msgid "Chat"
 msgstr ""
 
-#: src/dcc/chat.cpp:465
+#: src/dcc/chat.cpp:464
 #, fuzzy, kde-format
 msgctxt ""
 "%1=extension like Chat or Whiteboard ,%2 = nickname, %3 = IP, %4 = port"
 msgid "Establishing DCC %1 connection to %2 (%3:%4)..."
 msgstr "%1(%2:%3)க்கு DCC அரட்டை இணைப்பு துவங்கப்படுகிறது..."
 
-#: src/dcc/chat.cpp:482
+#: src/dcc/chat.cpp:481
 #, fuzzy, kde-format
 msgctxt "%1=extension like Chat or Whiteboard, %2 = partnerNick"
 msgid "Established DCC %1 connection to %2."
 msgstr "%1(%2:%3)க்கு DCC அரட்டை இணைப்பு துவங்கப்படுகிறது..."
 
-#: src/dcc/chat.cpp:489 src/dcc/transfersend.cpp:570
+#: src/dcc/chat.cpp:488 src/dcc/transfersend.cpp:570
 #, kde-format
 msgid "Socket error: %1"
 msgstr "துளைப் பிழை: %1"
 
-#: src/dcc/chat.cpp:550
+#: src/dcc/chat.cpp:549
 #, fuzzy, kde-format
 msgid "Could not accept the client."
 msgstr "கோப்பை திறக்க முடியவில்லை: %1"
 
-#: src/dcc/chat.cpp:572
+#: src/dcc/chat.cpp:571
 #, fuzzy, kde-format
 msgctxt "%1=dcc extension as Chat or Whiteboard, %2=partnerNick"
 msgid "Established DCC %1 connection to %2."
 msgstr "%1(%2:%3)க்கு DCC அரட்டை இணைப்பு துவங்கப்படுகிறது..."
 
-#: src/dcc/chat.cpp:578
+#: src/dcc/chat.cpp:577
 #, fuzzy, kde-format
 msgid "Connection closed."
 msgstr "இணைக்கிறது"
@@ -3272,92 +3272,92 @@ msgstr "குறியிடல்"
 msgid "Outgoing Transfers"
 msgstr ""
 
-#: src/dcc/transferpanel.cpp:36 src/viewer/viewcontainer.cpp:2650
+#: src/dcc/transferpanel.cpp:35 src/viewer/viewcontainer.cpp:2649
 #, kde-format
 msgid "DCC Status"
 msgstr "DCCநிலை"
 
-#: src/dcc/transferpanel.cpp:73
+#: src/dcc/transferpanel.cpp:72
 #, kde-format
 msgid "&Select All Items"
 msgstr "&அனைத்து உருப்படிகளையும் தேர்ந்தெடு"
 
-#: src/dcc/transferpanel.cpp:74
+#: src/dcc/transferpanel.cpp:73
 #, kde-format
 msgid "S&elect All Completed Items"
 msgstr "முடிக்கப்பட்ட அனைத்து உருப்படிகளையும் தேர்ந்தெடு"
 
-#: src/dcc/transferpanel.cpp:76
+#: src/dcc/transferpanel.cpp:75
 #, kde-format
 msgid "&Accept"
 msgstr "&ஏற்றுக்கொள்"
 
-#: src/dcc/transferpanel.cpp:77
+#: src/dcc/transferpanel.cpp:76
 #, kde-format
 msgid "Start receiving"
 msgstr "பெறுதலை துவக்கு"
 
-#: src/dcc/transferpanel.cpp:78
+#: src/dcc/transferpanel.cpp:77
 #, kde-format
 msgid "A&bort"
 msgstr "நிறுத்து"
 
-#: src/dcc/transferpanel.cpp:79
+#: src/dcc/transferpanel.cpp:78
 #, kde-format
 msgid "Abort the transfer(s)"
 msgstr "மாற்றத்தை(ங்களை நிறுத்து"
 
-#: src/dcc/transferpanel.cpp:81
+#: src/dcc/transferpanel.cpp:80
 #, fuzzy, kde-format
 msgid "Resend"
 msgstr "&துவங்கு"
 
-#: src/dcc/transferpanel.cpp:82
+#: src/dcc/transferpanel.cpp:81
 #, fuzzy, kde-format
 #| msgid "&Clear"
 msgctxt "clear selected dcctransfer"
 msgid "&Clear"
 msgstr "&துடை"
 
-#: src/dcc/transferpanel.cpp:83
+#: src/dcc/transferpanel.cpp:82
 #, fuzzy, kde-format
 #| msgid "S&elect All Completed Items"
 msgid "Clear all selected Items"
 msgstr "முடிக்கப்பட்ட அனைத்து உருப்படிகளையும் தேர்ந்தெடு"
 
-#: src/dcc/transferpanel.cpp:84
+#: src/dcc/transferpanel.cpp:83
 #, fuzzy, kde-format
 #| msgid "Clear Logfile"
 msgid "Clear Completed"
 msgstr "பதிவுக் கோப்பினைத் திற"
 
-#: src/dcc/transferpanel.cpp:85
+#: src/dcc/transferpanel.cpp:84
 #, fuzzy, kde-format
 #| msgid "S&elect All Completed Items"
 msgid "Clear Completed Items"
 msgstr "முடிக்கப்பட்ட அனைத்து உருப்படிகளையும் தேர்ந்தெடு"
 
-#: src/dcc/transferpanel.cpp:87
+#: src/dcc/transferpanel.cpp:86
 #, kde-format
 msgid "&Open File"
 msgstr "&கோப்பைத் திற"
 
-#: src/dcc/transferpanel.cpp:88
+#: src/dcc/transferpanel.cpp:87
 #, kde-format
 msgid "Run the file"
 msgstr "கோப்பை இயக்கு"
 
-#: src/dcc/transferpanel.cpp:89
+#: src/dcc/transferpanel.cpp:88
 #, fuzzy, kde-format
 msgid "Open Location"
 msgstr "செயல்:"
 
-#: src/dcc/transferpanel.cpp:90
+#: src/dcc/transferpanel.cpp:89
 #, kde-format
 msgid "Open the file location"
 msgstr ""
 
-#: src/dcc/transferpanel.cpp:423
+#: src/dcc/transferpanel.cpp:422
 #, kde-format
 msgid ""
 "You have selected %1 file to execute, are you sure you want to continue?"
@@ -3366,7 +3366,7 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/dcc/transferpanel.cpp:427
+#: src/dcc/transferpanel.cpp:426
 #, kde-format
 msgctxt "@action:button"
 msgid "Execute %1 File"
@@ -3786,12 +3786,12 @@ msgstr "கோப்புப் பதிவேட்டைச் சேமி"
 msgid "Images (*.png *.xpm *.jpg)"
 msgstr ""
 
-#: src/identitydialog.cpp:37
+#: src/identitydialog.cpp:36
 #, kde-format
 msgid "Identities"
 msgstr "அடையாளங்கள்"
 
-#: src/identitydialog.cpp:54
+#: src/identitydialog.cpp:53
 #, kde-format
 msgid ""
 "This is your list of nicknames. A nickname is the name that other users will "
@@ -3804,135 +3804,135 @@ msgid ""
 "is rejected by the server, Konversation will try the alternate nicknames."
 msgstr ""
 
-#: src/identitydialog.cpp:87
+#: src/identitydialog.cpp:86
 #, kde-format
 msgid "SASL PLAIN"
 msgstr ""
 
-#: src/identitydialog.cpp:88
+#: src/identitydialog.cpp:87
 #, kde-format
 msgctxt "Cert = Certificate"
 msgid "SASL EXTERNAL (Cert)"
 msgstr ""
 
-#: src/identitydialog.cpp:89
+#: src/identitydialog.cpp:88
 #, kde-format
 msgid "Standard NickServ"
 msgstr ""
 
-#: src/identitydialog.cpp:90
+#: src/identitydialog.cpp:89
 #, fuzzy, kde-format
 #| msgid "IRC Operator Password"
 msgid "Server Password"
 msgstr "IRC செயல்படுத்துபவர் கடவுச்சொல்"
 
-#: src/identitydialog.cpp:91
+#: src/identitydialog.cpp:90
 #, kde-format
 msgid "SSL Client Certificate"
 msgstr ""
 
-#: src/identitydialog.cpp:97
+#: src/identitydialog.cpp:96
 #, fuzzy, kde-format
 msgid " minute"
 msgid_plural " minutes"
 msgstr[0] "வரிகள்"
 msgstr[1] "வரிகள்"
 
-#: src/identitydialog.cpp:115
+#: src/identitydialog.cpp:114
 #, kde-format
 msgid "Change identity information"
 msgstr "அடையாள செய்தியை மாற்று"
 
-#: src/identitydialog.cpp:116 src/irc/servergroupdialog.cpp:85
+#: src/identitydialog.cpp:115 src/irc/servergroupdialog.cpp:85
 #: src/viewer/editnotifydialog.cpp:79
 #, kde-format
 msgid "Discards all changes made"
 msgstr "செய்த அனைத்து மாற்றங்களையும் கைவிடும்"
 
-#: src/identitydialog.cpp:260
+#: src/identitydialog.cpp:259
 #, kde-format
 msgid "Add Identity"
 msgstr "அடையாளத்தைச் சேர்"
 
-#: src/identitydialog.cpp:260 src/identitydialog.cpp:283
-#: src/identitydialog.cpp:338
+#: src/identitydialog.cpp:259 src/identitydialog.cpp:282
+#: src/identitydialog.cpp:337
 #, kde-format
 msgid "Identity name:"
 msgstr "அடையாளப் பெயர்:"
 
-#: src/identitydialog.cpp:274 src/identitydialog.cpp:292
-#: src/identitydialog.cpp:351
+#: src/identitydialog.cpp:273 src/identitydialog.cpp:291
+#: src/identitydialog.cpp:350
 #, kde-format
 msgid "You need to give the identity a name."
 msgstr "அடையாள பெயரை குறிப்பிடவேண்டும்."
 
-#: src/identitydialog.cpp:283
+#: src/identitydialog.cpp:282
 #, kde-format
 msgid "Rename Identity"
 msgstr "அடையாளத்தின் பெயரை மாற்று"
 
-#: src/identitydialog.cpp:317
+#: src/identitydialog.cpp:316
 #, kde-format
 msgid ""
 "This identity is in use, if you remove it the network settings using it will "
 "fall back to the default identity. Should it be deleted anyway?"
 msgstr ""
 
-#: src/identitydialog.cpp:322
+#: src/identitydialog.cpp:321
 #, kde-format
 msgid "Are you sure you want to delete all information for this identity?"
 msgstr "இந்த தகவல் தொடர்பான குறிகளை நீக்குதல் வேண்டுமா?"
 
-#: src/identitydialog.cpp:325
+#: src/identitydialog.cpp:324
 #, kde-format
 msgid "Delete Identity"
 msgstr "முன்னிருப்பு அடையாளம்"
 
-#: src/identitydialog.cpp:338
+#: src/identitydialog.cpp:337
 #, kde-format
 msgid "Duplicate Identity"
 msgstr "போலி அடையாளம்"
 
-#: src/identitydialog.cpp:381
+#: src/identitydialog.cpp:380
 #, kde-format
 msgid "You must add at least one nick to the identity."
 msgstr ""
 
-#: src/identitydialog.cpp:393
+#: src/identitydialog.cpp:392
 #, kde-format
 msgid "Nicks must not contain spaces."
 msgstr ""
 
-#: src/identitydialog.cpp:406
+#: src/identitydialog.cpp:405
 #, kde-format
 msgid "Please enter a real name."
 msgstr ""
 
-#: src/identitydialog.cpp:417
+#: src/identitydialog.cpp:416
 #, kde-format
 msgid "Ident must not contain spaces."
 msgstr ""
 
-#: src/identitydialog.cpp:464
+#: src/identitydialog.cpp:463
 #, kde-format
 msgid "NickServ may not function with auto join;  SASL is recommended."
 msgstr ""
 
-#: src/identitydialog.cpp:471
+#: src/identitydialog.cpp:470
 #, kde-format
 msgid ""
 "The password entered here will override the one set in the server settings, "
 "if any."
 msgstr ""
 
-#: src/identitydialog.cpp:482
+#: src/identitydialog.cpp:481
 #, fuzzy, kde-format
 #| msgid "Completion"
 msgctxt "Shown in unfilled line edit"
 msgid "(optional)"
 msgstr "நிறைவு"
 
-#: src/identitydialog.cpp:489
+#: src/identitydialog.cpp:488
 #, kde-format
 msgid ""
 "Certificate-based authentication forces SSL to be enabled for a connection, "
@@ -4434,7 +4434,7 @@ msgstr "(%2) அலைவரிசையிலிருந்து வெளி
 #: src/irc/channel.cpp:1223 src/irc/channel.cpp:1225 src/irc/channel.cpp:1232
 #: src/irc/channel.cpp:1237 src/irc/channel.cpp:1258 src/irc/channel.cpp:1260
 #: src/irc/channel.cpp:1267 src/irc/channel.cpp:1272
-#: src/viewer/irccontextmenus.cpp:402
+#: src/viewer/irccontextmenus.cpp:401
 #, kde-format
 msgid "Kick"
 msgstr "உதை"
@@ -5129,7 +5129,7 @@ msgstr " அலைவரிசை தலைப்பு"
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, ChannelListWidgetUI)
 #: src/irc/channellistpanel.cpp:139 src/irc/channellistpanelui.ui:14
-#: src/viewer/viewcontainer.cpp:2963 src/viewer/viewcontainer.cpp:2984
+#: src/viewer/viewcontainer.cpp:2962 src/viewer/viewcontainer.cpp:2983
 #, kde-format
 msgid "Channel List"
 msgstr "வழி பட்டியல்"
@@ -6119,7 +6119,7 @@ msgid ""
 "Click to remove a nick from the list of nicknames that appear on this screen."
 msgstr "பட்டியலில் இருந்து தேர்ந்தெடுக்கப்பட்ட புனைப்பெயரை நீக்க க்ளிக் செய்யவும்."
 
-#: src/irc/nicksonline.cpp:39 src/viewer/irccontextmenus.cpp:431
+#: src/irc/nicksonline.cpp:39 src/viewer/irccontextmenus.cpp:430
 #, kde-format
 msgid "&Whois"
 msgstr "&யார்"
@@ -6510,8 +6510,8 @@ msgid "Added %1 to your ignore list."
 msgstr "%1ஐ மறக்கப்பட்ட பட்டியலில் சேர்"
 
 #: src/irc/outputfilter.cpp:1540 src/irc/outputfilter.cpp:1609
-#: src/viewer/irccontextmenus.cpp:438 src/viewer/irccontextmenus.cpp:595
-#: src/viewer/irccontextmenus.cpp:596
+#: src/viewer/irccontextmenus.cpp:437 src/viewer/irccontextmenus.cpp:594
+#: src/viewer/irccontextmenus.cpp:595
 #, kde-format
 msgid "Ignore"
 msgstr "மற"
@@ -7175,7 +7175,7 @@ msgstr ""
 #. i18n: ectx: property (text), widget (QPushButton, m_editButton)
 #. i18n: ectx: property (text), widget (QPushButton, m_editIdentityButton)
 #: src/irc/servergroupdialogui.ui:71 src/irc/serverlistdialogui.ui:64
-#: src/viewer/ircinput.cpp:487
+#: src/viewer/ircinput.cpp:486
 #, kde-format
 msgid "&Edit..."
 msgstr "&திருத்து..."
@@ -7422,8 +7422,8 @@ msgstr "ஆர்ட்வொர்க்"
 msgid "Time"
 msgstr "இணைப்பு காலாவதியானது."
 
-#: src/konsolepanel.cpp:26 src/viewer/viewcontainer.cpp:2607
-#: src/viewer/viewcontainer.cpp:2608
+#: src/konsolepanel.cpp:26 src/viewer/viewcontainer.cpp:2606
+#: src/viewer/viewcontainer.cpp:2607
 #, kde-format
 msgid "Konsole"
 msgstr "Konsole"
@@ -8004,7 +8004,7 @@ msgid "&DCC Status"
 msgstr "DCCநிலை"
 
 #: src/mainwindow.cpp:200 src/mainwindow.cpp:847
-#: src/viewer/viewcontainer.cpp:917
+#: src/viewer/viewcontainer.cpp:916
 #, kde-format
 msgid "&Open Logfile"
 msgstr "&பதிவுக் கோப்பைத் திற"
@@ -8014,7 +8014,7 @@ msgstr "&பதிவுக் கோப்பைத் திற"
 msgid "Open the known history for this channel in a new tab"
 msgstr ""
 
-#: src/mainwindow.cpp:209 src/viewer/viewcontainer.cpp:938
+#: src/mainwindow.cpp:209 src/viewer/viewcontainer.cpp:937
 #, fuzzy, kde-format
 msgid "&Channel Settings..."
 msgstr "மற்ற அமைப்புகள்"
@@ -8024,7 +8024,7 @@ msgstr "மற்ற அமைப்புகள்"
 msgid "Open the channel settings dialog for this tab"
 msgstr ""
 
-#: src/mainwindow.cpp:217 src/viewer/viewcontainer.cpp:908
+#: src/mainwindow.cpp:217 src/viewer/viewcontainer.cpp:907
 #, fuzzy, kde-format
 msgid "Channel &List"
 msgstr "வழி பட்டியல்"
@@ -8079,7 +8079,7 @@ msgstr ""
 msgid "Next Active Tab"
 msgstr "&அடுத்த தத்தல்"
 
-#: src/mainwindow.cpp:312 src/viewer/viewcontainer.cpp:296
+#: src/mainwindow.cpp:312 src/viewer/viewcontainer.cpp:295
 #, fuzzy, kde-format
 msgid "Move Tab Up"
 msgstr "இடப்பக்கம் நகர்த்து"
@@ -8090,19 +8090,19 @@ msgstr "இடப்பக்கம் நகர்த்து"
 msgid "Move this tab"
 msgstr ""
 
-#: src/mainwindow.cpp:323 src/viewer/viewcontainer.cpp:304
+#: src/mainwindow.cpp:323 src/viewer/viewcontainer.cpp:303
 #, fuzzy, kde-format
 msgid "Move Tab Down"
 msgstr "இடப்பக்கம் நகர்த்து"
 
 #: src/mainwindow.cpp:334 src/mainwindow.cpp:364
-#: src/viewer/viewcontainer.cpp:350
+#: src/viewer/viewcontainer.cpp:349
 #, fuzzy, kde-format
 msgid "Move Tab Right"
 msgstr "வலப்பக்கம் நகர்த்து"
 
 #: src/mainwindow.cpp:343 src/mainwindow.cpp:355
-#: src/viewer/viewcontainer.cpp:342
+#: src/viewer/viewcontainer.cpp:341
 #, fuzzy, kde-format
 msgid "Move Tab Left"
 msgstr "இடப்பக்கம் நகர்த்து"
@@ -8208,7 +8208,7 @@ msgstr ""
 msgid "Global Away"
 msgstr ""
 
-#: src/mainwindow.cpp:480 src/viewer/irccontextmenus.cpp:330
+#: src/mainwindow.cpp:480 src/viewer/irccontextmenus.cpp:329
 #, kde-format
 msgid "&Join Channel..."
 msgstr "&அலைவரிசையை இணை..."
@@ -8783,7 +8783,7 @@ msgstr "தலைப்பை கீழிறக்க முடியவில�
 msgid "Error parsing router description."
 msgstr ""
 
-#: src/urlcatcher.cpp:69 src/viewer/viewcontainer.cpp:2618
+#: src/urlcatcher.cpp:69 src/viewer/viewcontainer.cpp:2617
 #, kde-format
 msgid "URL Catcher"
 msgstr "URL Catcher"
@@ -8938,7 +8938,7 @@ msgid ""
 "will open for each. Do you really want to save several URLs at once?"
 msgstr ""
 
-#: src/urlcatcher.cpp:266 src/viewer/irccontextmenus.cpp:762
+#: src/urlcatcher.cpp:266 src/viewer/irccontextmenus.cpp:761
 #, fuzzy, kde-format
 msgid "Save link as"
 msgstr "பட்டியலை சேமி ..."
@@ -9355,211 +9355,211 @@ msgid ""
 "to see this.</b></qt>"
 msgstr ""
 
-#: src/viewer/irccontextmenus.cpp:137
+#: src/viewer/irccontextmenus.cpp:136
 #, kde-format
 msgid "Copy Link Address"
 msgstr ""
 
-#: src/viewer/irccontextmenus.cpp:141
+#: src/viewer/irccontextmenus.cpp:140
 #, kde-format
 msgid "Add to Bookmarks"
 msgstr "புத்தகக்குறிப்புகளுக்கு சேர்"
 
-#: src/viewer/irccontextmenus.cpp:142
+#: src/viewer/irccontextmenus.cpp:141
 #, kde-format
 msgid "Open With..."
 msgstr ""
 
-#: src/viewer/irccontextmenus.cpp:143
+#: src/viewer/irccontextmenus.cpp:142
 #, fuzzy, kde-format
 msgid "Save Link As..."
 msgstr "சேமித்த பட்டியல்&"
 
-#: src/viewer/irccontextmenus.cpp:283
+#: src/viewer/irccontextmenus.cpp:282
 #, kde-format
 msgid "Search for '%1' with"
 msgstr ""
 
-#: src/viewer/irccontextmenus.cpp:297
+#: src/viewer/irccontextmenus.cpp:296
 #, kde-format
 msgid "Configure Web Shortcuts..."
 msgstr ""
 
-#: src/viewer/irccontextmenus.cpp:333
+#: src/viewer/irccontextmenus.cpp:332
 #, fuzzy, kde-format
 msgid "Get &topic"
 msgstr "தலைப்பைத் திருத்து"
 
-#: src/viewer/irccontextmenus.cpp:334
+#: src/viewer/irccontextmenus.cpp:333
 #, kde-format
 msgid "Get &user list"
 msgstr ""
 
-#: src/viewer/irccontextmenus.cpp:379
+#: src/viewer/irccontextmenus.cpp:378
 #, kde-format
 msgid "Open Query"
 msgstr "விசாரணையைத் தொடங்கு"
 
-#: src/viewer/irccontextmenus.cpp:391
+#: src/viewer/irccontextmenus.cpp:390
 #, kde-format
 msgid "Modes"
 msgstr "வகைகள்"
 
-#: src/viewer/irccontextmenus.cpp:392
+#: src/viewer/irccontextmenus.cpp:391
 #, kde-format
 msgid "Give Op"
 msgstr "op கொடு"
 
-#: src/viewer/irccontextmenus.cpp:393
+#: src/viewer/irccontextmenus.cpp:392
 #, kde-format
 msgid "Take Op"
 msgstr "op எடு"
 
-#: src/viewer/irccontextmenus.cpp:394
+#: src/viewer/irccontextmenus.cpp:393
 #, fuzzy, kde-format
 msgid "Give HalfOp"
 msgstr "op கொடு"
 
-#: src/viewer/irccontextmenus.cpp:395
+#: src/viewer/irccontextmenus.cpp:394
 #, fuzzy, kde-format
 msgid "Take HalfOp"
 msgstr "op எடு"
 
-#: src/viewer/irccontextmenus.cpp:396
+#: src/viewer/irccontextmenus.cpp:395
 #, kde-format
 msgid "Give Voice"
 msgstr "குரல் கொடு"
 
-#: src/viewer/irccontextmenus.cpp:397
+#: src/viewer/irccontextmenus.cpp:396
 #, kde-format
 msgid "Take Voice"
 msgstr "குரல் எடு"
 
-#: src/viewer/irccontextmenus.cpp:401
+#: src/viewer/irccontextmenus.cpp:400
 #, kde-format
 msgid "Kick / Ban"
 msgstr "உதை/ தடை செய்"
 
-#: src/viewer/irccontextmenus.cpp:403
+#: src/viewer/irccontextmenus.cpp:402
 #, kde-format
 msgid "Kickban"
 msgstr "உதையை தடை செய்"
 
-#: src/viewer/irccontextmenus.cpp:404
+#: src/viewer/irccontextmenus.cpp:403
 #, kde-format
 msgid "Ban Nickname"
 msgstr "புனைப்பெயரைத் தடை செய்"
 
-#: src/viewer/irccontextmenus.cpp:406
+#: src/viewer/irccontextmenus.cpp:405
 #, kde-format
 msgid "Ban *!*@*.host"
 msgstr " தடை  *!*@* புரவலர்"
 
-#: src/viewer/irccontextmenus.cpp:407
+#: src/viewer/irccontextmenus.cpp:406
 #, kde-format
 msgid "Ban *!*@domain"
 msgstr " தடை*!*@domain"
 
-#: src/viewer/irccontextmenus.cpp:408
+#: src/viewer/irccontextmenus.cpp:407
 #, kde-format
 msgid "Ban *!user@*.host"
 msgstr " தடை *!user@*.host"
 
-#: src/viewer/irccontextmenus.cpp:409
+#: src/viewer/irccontextmenus.cpp:408
 #, kde-format
 msgid "Ban *!user@domain"
 msgstr " தடை  *!user@domain"
 
-#: src/viewer/irccontextmenus.cpp:411
+#: src/viewer/irccontextmenus.cpp:410
 #, kde-format
 msgid "Kickban *!*@*.host"
 msgstr "உதையை தடை செய்*!*@*.host"
 
-#: src/viewer/irccontextmenus.cpp:412
+#: src/viewer/irccontextmenus.cpp:411
 #, kde-format
 msgid "Kickban *!*@domain"
 msgstr "உதையை தடை செய் *!*@domain"
 
-#: src/viewer/irccontextmenus.cpp:413
+#: src/viewer/irccontextmenus.cpp:412
 #, kde-format
 msgid "Kickban *!user@*.host"
 msgstr "உதையை தடை செய்  *!user@*.host"
 
-#: src/viewer/irccontextmenus.cpp:414
+#: src/viewer/irccontextmenus.cpp:413
 #, kde-format
 msgid "Kickban *!user@domain"
 msgstr "உதையை தடை செய் *!user@domain"
 
-#: src/viewer/irccontextmenus.cpp:432
+#: src/viewer/irccontextmenus.cpp:431
 #, kde-format
 msgid "&Version"
 msgstr "&பதிப்பு"
 
-#: src/viewer/irccontextmenus.cpp:433
+#: src/viewer/irccontextmenus.cpp:432
 #, kde-format
 msgid "&Ping"
 msgstr "&அணுகல்"
 
-#: src/viewer/irccontextmenus.cpp:440 src/viewer/irccontextmenus.cpp:625
-#: src/viewer/irccontextmenus.cpp:626
+#: src/viewer/irccontextmenus.cpp:439 src/viewer/irccontextmenus.cpp:624
+#: src/viewer/irccontextmenus.cpp:625
 #, fuzzy, kde-format
 msgid "Unignore"
 msgstr "மற"
 
-#: src/viewer/irccontextmenus.cpp:443
+#: src/viewer/irccontextmenus.cpp:442
 #, fuzzy, kde-format
 msgid "Add to Watched Nicks"
 msgstr "கண்காணிக்கப்பட்ட புனைப்பெயரை திருத்து"
 
-#: src/viewer/irccontextmenus.cpp:445
+#: src/viewer/irccontextmenus.cpp:444
 #, fuzzy, kde-format
 msgid "Remove From Watched Nicks"
 msgstr "கண்காணிக்கப்பட்ட புனைப்பெயரை திருத்து"
 
-#: src/viewer/irccontextmenus.cpp:452
+#: src/viewer/irccontextmenus.cpp:451
 #, kde-format
 msgid "Send &File..."
 msgstr "கோப்பினை &அனுப்பு..."
 
-#: src/viewer/irccontextmenus.cpp:454
+#: src/viewer/irccontextmenus.cpp:453
 #, fuzzy, kde-format
 #| msgid "Open DCC &Chat"
 msgid "Open DCC Chat"
 msgstr "DCC அரட்டையைத் திற"
 
-#: src/viewer/irccontextmenus.cpp:455
+#: src/viewer/irccontextmenus.cpp:454
 #, fuzzy, kde-format
 #| msgid "Open DCC &Chat"
 msgid "Open DCC Whiteboard"
 msgstr "DCC அரட்டையைத் திற"
 
-#: src/viewer/irccontextmenus.cpp:588
+#: src/viewer/irccontextmenus.cpp:587
 #, fuzzy, kde-format
 msgid "Do you want to ignore %1?"
 msgstr "%1ஐ நீக்கவேண்டுமா ?"
 
-#: src/viewer/irccontextmenus.cpp:590
+#: src/viewer/irccontextmenus.cpp:589
 #, fuzzy, kde-format
 msgid "Do you want to ignore the selected users?"
 msgstr "தேர்ந்தெடுக்கப்பட்ட வலைப்பின்னல்களை நீக்கவேண்டுமா?"
 
-#: src/viewer/irccontextmenus.cpp:618
+#: src/viewer/irccontextmenus.cpp:617
 #, fuzzy, kde-format
 msgid "Do you want to stop ignoring %1?"
 msgstr "%1ஐ நீக்கவேண்டுமா ?"
 
-#: src/viewer/irccontextmenus.cpp:620
+#: src/viewer/irccontextmenus.cpp:619
 #, fuzzy, kde-format
 msgid "Do you want to stop ignoring the selected users?"
 msgstr "தேர்ந்தெடுக்கப்பட்ட வலைப்பின்னல்களை நீக்கவேண்டுமா?"
 
-#: src/viewer/irccontextmenus.cpp:777
+#: src/viewer/irccontextmenus.cpp:776
 #, kde-format
 msgctxt "Opens a query (private message) window with the author of the topic"
 msgid "Query author"
 msgstr ""
 
-#: src/viewer/ircinput.cpp:54
+#: src/viewer/ircinput.cpp:53
 #, kde-format
 msgid ""
 "<qt><p>The input line is where you type messages to be sent the channel, "
@@ -9576,7 +9576,7 @@ msgid ""
 "p><p>A message cannot contain multiple lines.</p></qt>"
 msgstr ""
 
-#: src/viewer/ircinput.cpp:475
+#: src/viewer/ircinput.cpp:474
 #, fuzzy, kde-format
 #| msgid " bytes"
 msgid "1 byte"
@@ -9584,7 +9584,7 @@ msgid_plural "%1 bytes"
 msgstr[0] "பைட்டுகள்"
 msgstr[1] "பைட்டுகள்"
 
-#: src/viewer/ircinput.cpp:476
+#: src/viewer/ircinput.cpp:475
 #, fuzzy, kde-format
 #| msgid " lines"
 msgid "1 line"
@@ -9592,7 +9592,7 @@ msgid_plural "%1 lines"
 msgstr[0] "வரிகள்"
 msgstr[1] "வரிகள்"
 
-#: src/viewer/ircinput.cpp:482
+#: src/viewer/ircinput.cpp:481
 #, fuzzy, kde-format
 #| msgid ""
 #| "<qt>You are attempting to paste a large portion of text (%1 bytes or %2 "
@@ -9609,12 +9609,12 @@ msgstr ""
 "<qt>நீங்கள் அரட்டைககுள் பெரிய பகுதியை இணைக்க முயலுகிறீர்கள்(%1 பைட்டுகள் அல்லது %2 "
 "வரிகள்). இதனால் இணைப்பு மீட்டமை ஏற்படலாம். நீங்கள் மேலும் தொடர விரும்புகிறீர்களா?</qt>"
 
-#: src/viewer/ircinput.cpp:485
+#: src/viewer/ircinput.cpp:484
 #, kde-format
 msgid "Large Paste Warning"
 msgstr "பெரிய ஒட்டு எச்சரிக்கை"
 
-#: src/viewer/ircinput.cpp:486
+#: src/viewer/ircinput.cpp:485
 #, fuzzy, kde-format
 #| msgid "Part"
 msgid "Paste"
@@ -9731,7 +9731,7 @@ msgstr ""
 msgid "&Remove Newlines"
 msgstr "தலைப்பை நீக்கு"
 
-#: src/viewer/rawlog.cpp:17 src/viewer/viewcontainer.cpp:2743
+#: src/viewer/rawlog.cpp:17 src/viewer/viewcontainer.cpp:2742
 #, kde-format
 msgid "Raw Log"
 msgstr "ரா பதிவு"
@@ -9861,66 +9861,66 @@ msgstr ""
 msgid "IRC Client"
 msgstr ""
 
-#: src/viewer/viewcontainer.cpp:882
+#: src/viewer/viewcontainer.cpp:881
 #, kde-format
 msgid "Find Text..."
 msgstr "உரையைத் தேடு..."
 
-#: src/viewer/viewcontainer.cpp:884
+#: src/viewer/viewcontainer.cpp:883
 #, fuzzy, kde-format
 msgid "Search for text in the current tab"
 msgstr "உரையை தேடு"
 
-#: src/viewer/viewcontainer.cpp:902
+#: src/viewer/viewcontainer.cpp:901
 #, fuzzy, kde-format
 msgid "Channel &List for %1"
 msgstr "%1க்கான வழிமுறை பட்டியல்"
 
-#: src/viewer/viewcontainer.cpp:922
+#: src/viewer/viewcontainer.cpp:921
 #, kde-format
 msgid "&Open Logfile for %1"
 msgstr "%1க்கான பதிவுக் கோப்பைத் திற"
 
-#: src/viewer/viewcontainer.cpp:933
+#: src/viewer/viewcontainer.cpp:932
 #, fuzzy, kde-format
 msgid "&Channel Settings for %1..."
 msgstr "%1க்கு வழிமுறை விருப்பத்தேர்வுகள்"
 
-#: src/viewer/viewcontainer.cpp:2116
+#: src/viewer/viewcontainer.cpp:2115
 #, fuzzy, kde-format
 #| msgid "Rename"
 msgid "Rename Tab"
 msgstr "மாற்று பெயர்"
 
-#: src/viewer/viewcontainer.cpp:2117
+#: src/viewer/viewcontainer.cpp:2116
 #, fuzzy, kde-format
 #| msgid "Enter Filename"
 msgid "Enter new tab name:"
 msgstr "கோப்புப்பெயரை உள்ளிடு"
 
-#: src/viewer/viewcontainer.cpp:2189
+#: src/viewer/viewcontainer.cpp:2188
 #, kde-format
 msgctxt "Default encoding"
 msgid "Default ( %1 )"
 msgstr ""
 
-#: src/viewer/viewcontainer.cpp:2230
+#: src/viewer/viewcontainer.cpp:2229
 #, fuzzy, kde-format
 #| msgid "Rename"
 msgid "&Rename Tab..."
 msgstr "மாற்று பெயர்"
 
-#: src/viewer/viewcontainer.cpp:2379
+#: src/viewer/viewcontainer.cpp:2378
 #, kde-format
 msgid "You can only search in text fields."
 msgstr "நீங்கள் உரைப் புலங்களில் மட்டுமே தேடமுடியும்."
 
-#: src/viewer/viewcontainer.cpp:2380
+#: src/viewer/viewcontainer.cpp:2379
 #, kde-format
 msgid "Find Text Information"
 msgstr "உரைத் தகவலைத் தேடு"
 
-#: src/viewer/viewcontainer.cpp:2980
+#: src/viewer/viewcontainer.cpp:2979
 #, fuzzy, kde-format
 #| msgid ""
 #| "The channel list can only be opened from a query, channel or status "
@@ -9932,7 +9932,7 @@ msgstr ""
 "இந்த பட்டியல் எந்த சேவையகத்தை சேர்ந்தது என்பதை அறிய வழி பட்டியல் ஒரு விசாரணை, வழி "
 "அல்லது நிலை சாளரத்திலிருந்து மட்டுமே திறக்கப்பட முடியும்"
 
-#: src/viewer/viewcontainer.cpp:3010
+#: src/viewer/viewcontainer.cpp:3009
 #, kde-format
 msgid ""
 "Using this function may result in a lot of network traffic. If your "
@@ -9942,12 +9942,12 @@ msgstr ""
 "எச்சரிக்கை: இந்த செயல்பாட்டினால் வலைப்பின்னலின் பயன்பாடு அதிகரிக்கும். உங்கள் இணைப்பு "
 "வேகமாக இல்லை எனில் உங்கள் இணைப்பு சேவையகத்தால் துண்டிக்கப்படலாம்."
 
-#: src/viewer/viewcontainer.cpp:3014
+#: src/viewer/viewcontainer.cpp:3013
 #, kde-format
 msgid "Channel List Warning"
 msgstr "எச்சரிக்கை அலைவரிசை பட்டியல் "
 
-#: src/viewer/viewcontainer.cpp:3044
+#: src/viewer/viewcontainer.cpp:3043
 #, fuzzy, kde-format
 #| msgid "Watched Nicknames"
 msgid "Watched Nicks"
