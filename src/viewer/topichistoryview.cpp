@@ -11,6 +11,7 @@
 
 #include <KCategoryDrawer>
 
+#include <QThread>
 
 constexpr int MARGIN = 2;
 
