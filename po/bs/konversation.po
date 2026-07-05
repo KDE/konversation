@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-03 00:45+0000\n"
+"POT-Creation-Date: 2026-07-05 00:43+0000\n"
 "PO-Revision-Date: 2014-10-20 20:22+0000\n"
 "Last-Translator: Samir Ribić <Unknown>\n"
 "Language-Team: <bs@li.org>\n"
@@ -10184,13 +10184,13 @@ msgstr "Obriši višak teksta"
 msgid "Text past the server limit of %1 bytes is shown in color."
 msgstr "Tekst nakon serverskog ograničenja od %1 znakova je prikazan u boji."
 
-#: src/viewer/topichistoryview.cpp:36
+#: src/viewer/topichistoryview.cpp:37
 #, kde-format
 msgctxt "%1 is a timestamp, %2 is the author's name"
 msgid "On %1 by %2"
 msgstr "Vrijeme %1 autor %2"
 
-#: src/viewer/topichistoryview.cpp:191
+#: src/viewer/topichistoryview.cpp:192
 #, kde-format
 msgid ""
 "This is a list of all topics that have been set for this channel while its "

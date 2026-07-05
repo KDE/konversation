@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-03 00:45+0000\n"
+"POT-Creation-Date: 2026-07-05 00:43+0000\n"
 "PO-Revision-Date: 2024-12-30 17:39+0200\n"
 "Last-Translator: Toms Trasuns <toms.trasuns@posteo.net>\n"
 "Language-Team: Latvian <kde-i18n-doc@kde.org>\n"
@@ -10083,13 +10083,13 @@ msgstr "Dzēš pārmērīgo tekstu"
 msgid "Text past the server limit of %1 bytes is shown in color."
 msgstr "Teksts, kas pārsniedz servera ierobežojumu (%1 baiti), ir iekrāsots."
 
-#: src/viewer/topichistoryview.cpp:36
+#: src/viewer/topichistoryview.cpp:37
 #, kde-format
 msgctxt "%1 is a timestamp, %2 is the author's name"
 msgid "On %1 by %2"
 msgstr "%2 (%1)"
 
-#: src/viewer/topichistoryview.cpp:191
+#: src/viewer/topichistoryview.cpp:192
 #, kde-format
 msgid ""
 "This is a list of all topics that have been set for this channel while its "

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-03 00:45+0000\n"
+"POT-Creation-Date: 2026-07-05 00:43+0000\n"
 "PO-Revision-Date: 2022-08-29 12:52+0100\n"
 "Last-Translator: Pedro Morais<morais@kde.org>\n"
 "Language-Team:  <pt@li.org>\n"
@@ -10208,13 +10208,13 @@ msgid "Text past the server limit of %1 bytes is shown in color."
 msgstr ""
 "O texto que excede o limite de %1 caracteres do servidor aparece colorido."
 
-#: src/viewer/topichistoryview.cpp:36
+#: src/viewer/topichistoryview.cpp:37
 #, kde-format
 msgctxt "%1 is a timestamp, %2 is the author's name"
 msgid "On %1 by %2"
 msgstr "A %1 por %2"
 
-#: src/viewer/topichistoryview.cpp:191
+#: src/viewer/topichistoryview.cpp:192
 #, kde-format
 msgid ""
 "This is a list of all topics that have been set for this channel while its "

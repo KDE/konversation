@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-03 00:45+0000\n"
+"POT-Creation-Date: 2026-07-05 00:43+0000\n"
 "PO-Revision-Date: 2012-07-11 10:37+0700\n"
 "Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
 "Language-Team: Khmer\n"
@@ -10077,13 +10077,13 @@ msgstr "លុប​អត្ថបទ​ដែល​លើស"
 msgid "Text past the server limit of %1 bytes is shown in color."
 msgstr "អត្ថបទ​ចាស់ ព្រំដែន​ម៉ាស៊ីន​បម្រើ​នៃ​តួអក្សរ​របស់ %1 ត្រូវ​បាន​បង្ហាញ​នៅ​ក្នុង​​ពណ៌ ។"
 
-#: src/viewer/topichistoryview.cpp:36
+#: src/viewer/topichistoryview.cpp:37
 #, kde-format
 msgctxt "%1 is a timestamp, %2 is the author's name"
 msgid "On %1 by %2"
 msgstr "លើ %1 ដោយ %2"
 
-#: src/viewer/topichistoryview.cpp:191
+#: src/viewer/topichistoryview.cpp:192
 #, kde-format
 msgid ""
 "This is a list of all topics that have been set for this channel while its "
