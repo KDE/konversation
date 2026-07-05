@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-02 02:39+0000\n"
+"POT-Creation-Date: 2026-07-05 02:35+0000\n"
 "PO-Revision-Date: 2024-12-28 17:41+0100\n"
 "Last-Translator: Oliver Kellogg <olivermkellogg@gmail.com>\n"
 "Language-Team: esperanto <kde-i18n-eo@kde.org>\n"
@@ -10068,13 +10068,13 @@ msgstr "Forigi troan tekston"
 msgid "Text past the server limit of %1 bytes is shown in color."
 msgstr "Teksto preter la servila limo de %1 bajtoj estas montrita en koloro."
 
-#: src/viewer/topichistoryview.cpp:36
+#: src/viewer/topichistoryview.cpp:37
 #, kde-format
 msgctxt "%1 is a timestamp, %2 is the author's name"
 msgid "On %1 by %2"
 msgstr "Je %1 per %2"
 
-#: src/viewer/topichistoryview.cpp:191
+#: src/viewer/topichistoryview.cpp:192
 #, kde-format
 msgid ""
 "This is a list of all topics that have been set for this channel while its "

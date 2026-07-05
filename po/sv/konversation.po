@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-02 02:39+0000\n"
+"POT-Creation-Date: 2026-07-05 02:35+0000\n"
 "PO-Revision-Date: 2026-07-01 15:01+0200\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@gmail.com>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
@@ -10087,13 +10087,13 @@ msgstr "Ta bort överflödig text"
 msgid "Text past the server limit of %1 bytes is shown in color."
 msgstr "Text utanför servergränsen på %1 byte visas färgade."
 
-#: src/viewer/topichistoryview.cpp:36
+#: src/viewer/topichistoryview.cpp:37
 #, kde-format
 msgctxt "%1 is a timestamp, %2 is the author's name"
 msgid "On %1 by %2"
 msgstr "%1 av %2"
 
-#: src/viewer/topichistoryview.cpp:191
+#: src/viewer/topichistoryview.cpp:192
 #, kde-format
 msgid ""
 "This is a list of all topics that have been set for this channel while its "

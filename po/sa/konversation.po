@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-02 02:39+0000\n"
+"POT-Creation-Date: 2026-07-05 02:35+0000\n"
 "PO-Revision-Date: 2024-12-25 19:45+0530\n"
 "Last-Translator: kali <shreekantkalwar@gmail.com>\n"
 "Language-Team: Sanskrit <kde-i18n-doc@kde.org>\n"
@@ -9965,13 +9965,13 @@ msgstr "अतिरिक्तं पाठं विलोपयन्तु"
 msgid "Text past the server limit of %1 bytes is shown in color."
 msgstr "%1 बाइट् इत्यस्य सर्वरसीमायाः अतीतः पाठः वर्णेन दर्शितः अस्ति ।"
 
-#: src/viewer/topichistoryview.cpp:36
+#: src/viewer/topichistoryview.cpp:37
 #, kde-format
 msgctxt "%1 is a timestamp, %2 is the author's name"
 msgid "On %1 by %2"
 msgstr "%1 द्वारा %2 इत्यत्र"
 
-#: src/viewer/topichistoryview.cpp:191
+#: src/viewer/topichistoryview.cpp:192
 #, kde-format
 msgid ""
 "This is a list of all topics that have been set for this channel while its "
