@@ -10,7 +10,6 @@
 #include "queuetuner.h"
 #include "application.h"
 #include "notificationhandler.h"
-#include "launcherentryhandler.h"
 #include "images.h"
 #include "irccharsets.h"
 #include "ircview.h"
@@ -1155,10 +1154,6 @@ void ViewContainer::updateViews(const Konversation::ServerGroupSettingsPtr &serv
 
 void ViewContainer::setUnseenEventsNotification()
 {
-    if (!Application::instance()->launcherEntryHandler()) {
-        return;
-    }
-
     const bool isCountEventsMode = (Preferences::self()->launcherEntryCountMode() == Preferences::CountEvents);
 
     int unseenEventsSummaryCount = 0;
@@ -1181,7 +1176,7 @@ void ViewContainer::setUnseenEventsNotification()
         }
     }
 
-    Application::instance()->launcherEntryHandler()->updateNumber(unseenEventsSummaryCount);
+    Application::instance()->setBadgeNumber(unseenEventsSummaryCount);
 }
 
 void ViewContainer::setViewNotification(ChatWindow* view, const Konversation::TabNotifyType& type)

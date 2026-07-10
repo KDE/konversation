@@ -45,8 +45,6 @@ target_sources(konversation PRIVATE
     konsolepanel.h
     notificationhandler.cpp
     notificationhandler.h
-    launcherentryhandler.cpp
-    launcherentryhandler.h
     awaymanager.cpp
     awaymanager.h
     connectionmanager.cpp

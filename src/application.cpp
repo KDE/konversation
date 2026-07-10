@@ -25,7 +25,6 @@
 #include "channel.h"
 #include "images.h"
 #include "notificationhandler.h"
-#include "launcherentryhandler.h"
 #include "awaymanager.h"
 #include "konversation_log.h"
 #include "konversation_state.h"
@@ -72,7 +71,6 @@ Application::Application(int &argc, char **argv)
     m_sound = nullptr;
     m_dccTransferManager = nullptr;
     m_notificationHandler = nullptr;
-    m_launcherEntryHandler = nullptr;
     m_urlModel = nullptr;
     dbusObject = nullptr;
     identDBus = nullptr;
@@ -266,7 +264,6 @@ void Application::createMainWindow(AutoConnectMode autoConnectMode, WindowRestor
     }
 
     m_notificationHandler = new Konversation::NotificationHandler(this);
-    m_launcherEntryHandler = new Konversation::LauncherEntryHandler(this);
 
     connect(this, &Application::appearanceChanged, this, &Application::updateProxySettings);
 }

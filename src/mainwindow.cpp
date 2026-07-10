@@ -18,7 +18,6 @@
 #include "serverlistdialog.h"
 #include "identitydialog.h"
 #include "notificationhandler.h"
-#include "launcherentryhandler.h"
 #include "irccharsets.h"
 #include "connectionmanager.h"
 #include "awaymanager.h"

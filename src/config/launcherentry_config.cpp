@@ -11,7 +11,6 @@
 #include "application.h"
 #include "mainwindow.h"
 #include "viewcontainer.h"
-#include "launcherentryhandler.h"
 
 LauncherEntry_Config::LauncherEntry_Config( QWidget* parent, const char* name)
     : QWidget(parent)
