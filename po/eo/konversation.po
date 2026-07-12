@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-05 00:43+0000\n"
+"POT-Creation-Date: 2026-07-12 00:44+0000\n"
 "PO-Revision-Date: 2024-12-28 17:41+0100\n"
 "Last-Translator: Oliver Kellogg <olivermkellogg@gmail.com>\n"
 "Language-Team: esperanto <kde-i18n-eo@kde.org>\n"
@@ -142,7 +142,7 @@ msgstr ""
 "\"/media { Player }\" - raporti, kio ludas en la specifita ludilo, se ĝi "
 "estas trovita."
 
-#: src/application.cpp:383 src/irc/server.cpp:1814 src/irc/server.cpp:3847
+#: src/application.cpp:380 src/irc/server.cpp:1814 src/irc/server.cpp:3847
 #: src/irc/server.cpp:3852
 #, kde-format
 msgid "D-Bus"
@@ -2045,7 +2045,7 @@ msgstr "Moknomlisto"
 msgid "Command Aliases"
 msgstr "Komand-Aliasoj"
 
-#: src/config/settingsdialog.cpp:133 src/mainwindow.cpp:522
+#: src/config/settingsdialog.cpp:133 src/mainwindow.cpp:521
 #, kde-format
 msgid "Auto Replace"
 msgstr "Aŭtomate Anstataŭigi"
@@ -3319,7 +3319,7 @@ msgstr "Envenantaj Transigoj"
 msgid "Outgoing Transfers"
 msgstr "Elirantaj Transigoj"
 
-#: src/dcc/transferpanel.cpp:35 src/viewer/viewcontainer.cpp:2649
+#: src/dcc/transferpanel.cpp:35 src/viewer/viewcontainer.cpp:2644
 #, kde-format
 msgid "DCC Status"
 msgstr "DCC-Statuso"
@@ -5223,7 +5223,7 @@ msgstr "Kanala Temo"
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, ChannelListWidgetUI)
 #: src/irc/channellistpanel.cpp:139 src/irc/channellistpanelui.ui:14
-#: src/viewer/viewcontainer.cpp:2962 src/viewer/viewcontainer.cpp:2983
+#: src/viewer/viewcontainer.cpp:2957 src/viewer/viewcontainer.cpp:2978
 #, kde-format
 msgid "Channel List"
 msgstr "Kanala Listo"
@@ -7604,8 +7604,8 @@ msgstr "Aŭtoro"
 msgid "Time"
 msgstr "Tempo"
 
-#: src/konsolepanel.cpp:26 src/viewer/viewcontainer.cpp:2606
-#: src/viewer/viewcontainer.cpp:2607
+#: src/konsolepanel.cpp:26 src/viewer/viewcontainer.cpp:2601
+#: src/viewer/viewcontainer.cpp:2602
 #, kde-format
 msgid "Konsole"
 msgstr "Konsole"
@@ -8112,351 +8112,351 @@ msgid ""
 msgstr ""
 "Agordas KUniqueApplication::NonUniqueInstance (nur sencimigi, uzu singarde)"
 
-#: src/mainwindow.cpp:135
+#: src/mainwindow.cpp:134
 #, kde-format
 msgid "Restart"
 msgstr "Rekomenci"
 
-#: src/mainwindow.cpp:137
+#: src/mainwindow.cpp:136
 #, kde-format
 msgid "Quit and restart the application"
 msgstr "Forlasi kaj rekomenci la aplikaĵon"
 
-#: src/mainwindow.cpp:142
+#: src/mainwindow.cpp:141
 #, kde-format
 msgid "&Server List..."
 msgstr "Listo de &Servilo..."
 
-#: src/mainwindow.cpp:145
+#: src/mainwindow.cpp:144
 #, kde-format
 msgid "Manage networks and servers"
 msgstr "Administri retojn kaj servilojn"
 
-#: src/mainwindow.cpp:150
+#: src/mainwindow.cpp:149
 #, kde-format
 msgid "Quick &Connect..."
 msgstr "Rapide &Konekti..."
 
-#: src/mainwindow.cpp:153
+#: src/mainwindow.cpp:152
 #, kde-format
 msgid "Type in the address of a new IRC server to connect to"
 msgstr "Tajpu la adreson de nova IRC-servilo por konektiĝi"
 
-#: src/mainwindow.cpp:158
+#: src/mainwindow.cpp:157
 #, kde-format
 msgid "&Reconnect"
 msgstr "&Rekonekti"
 
-#: src/mainwindow.cpp:161
+#: src/mainwindow.cpp:160
 #, kde-format
 msgid "Reconnect to the current server."
 msgstr "Rekonekti al la nuna servilo."
 
-#: src/mainwindow.cpp:167
+#: src/mainwindow.cpp:166
 #, kde-format
 msgid "&Disconnect"
 msgstr "&Malkonekti"
 
-#: src/mainwindow.cpp:170
+#: src/mainwindow.cpp:169
 #, kde-format
 msgid "Disconnect from the current server."
 msgstr "Malkonekti de la nuna servilo."
 
-#: src/mainwindow.cpp:175
+#: src/mainwindow.cpp:174
 #, kde-format
 msgid "&Identities..."
 msgstr "&Identecoj..."
 
-#: src/mainwindow.cpp:178
+#: src/mainwindow.cpp:177
 #, kde-format
 msgid "Manage your nick, away and other identity settings"
 msgstr "Administru vian kaŝnomon, for kaj aliajn identecajn agordojn"
 
-#: src/mainwindow.cpp:183
+#: src/mainwindow.cpp:182
 #, kde-format
 msgid "&Watched Nicks"
 msgstr "&Rigarditaj kromnomoj"
 
-#: src/mainwindow.cpp:191
+#: src/mainwindow.cpp:190
 #, kde-format
 msgid "&DCC Status"
 msgstr "&DCC-Stato"
 
-#: src/mainwindow.cpp:200 src/mainwindow.cpp:847
-#: src/viewer/viewcontainer.cpp:916
+#: src/mainwindow.cpp:199 src/mainwindow.cpp:846
+#: src/viewer/viewcontainer.cpp:915
 #, kde-format
 msgid "&Open Logfile"
 msgstr "Malfermi Pr&otokoldosieron"
 
-#: src/mainwindow.cpp:204
+#: src/mainwindow.cpp:203
 #, kde-format
 msgid "Open the known history for this channel in a new tab"
 msgstr "Malfermu la konatan historion por ĉi tiu kanalo en nova langeto"
 
-#: src/mainwindow.cpp:209 src/viewer/viewcontainer.cpp:937
+#: src/mainwindow.cpp:208 src/viewer/viewcontainer.cpp:936
 #, kde-format
 msgid "&Channel Settings..."
 msgstr "&Kanalaj agordoj..."
 
-#: src/mainwindow.cpp:212
+#: src/mainwindow.cpp:211
 #, kde-format
 msgid "Open the channel settings dialog for this tab"
 msgstr "Malfermi la kanalan agorda dialogo por ĉi tiu langeto"
 
-#: src/mainwindow.cpp:217 src/viewer/viewcontainer.cpp:907
+#: src/mainwindow.cpp:216 src/viewer/viewcontainer.cpp:906
 #, kde-format
 msgid "Channel &List"
 msgstr "Kanal-&Listo"
 
-#: src/mainwindow.cpp:221
+#: src/mainwindow.cpp:220
 #, kde-format
 msgid "Show a list of all the known channels on this server"
 msgstr "Montri liston de ĉiuj konataj kanaloj sur ĉi tiu servilo"
 
-#: src/mainwindow.cpp:226
+#: src/mainwindow.cpp:225
 #, kde-format
 msgid "&URL Catcher"
 msgstr "&URL-Kaptilo"
 
-#: src/mainwindow.cpp:229
+#: src/mainwindow.cpp:228
 #, kde-format
 msgid "List all URLs that have been mentioned recently in a new tab"
 msgstr "Listigu ĉiujn URL-ojn kiuj estis menciitaj lastatempe en nova langeto"
 
-#: src/mainwindow.cpp:236
+#: src/mainwindow.cpp:235
 #, kde-format
 msgid "New &Konsole"
 msgstr "Nova &Konzolo"
 
-#: src/mainwindow.cpp:238
+#: src/mainwindow.cpp:237
 #, kde-format
 msgid "Open a terminal in a new tab"
 msgstr "Malfermi terminalon en nova langeto"
 
-#: src/mainwindow.cpp:268
+#: src/mainwindow.cpp:267
 #, kde-format
 msgid "&Next Tab"
 msgstr "Sekva La&ngeto"
 
-#: src/mainwindow.cpp:276
+#: src/mainwindow.cpp:275
 #, kde-format
 msgid "&Previous Tab"
 msgstr "&Antaŭa Langeto"
 
-#: src/mainwindow.cpp:284
+#: src/mainwindow.cpp:283
 #, kde-format
 msgid "Close &Tab"
 msgstr "Fermi Lange&ton"
 
-#: src/mainwindow.cpp:292
+#: src/mainwindow.cpp:291
 #, kde-format
 msgid "Last Focused Tab"
 msgstr "Lasta Enfokusigita Tab"
 
-#: src/mainwindow.cpp:299
+#: src/mainwindow.cpp:298
 #, kde-format
 msgid "Next Active Tab"
 msgstr "Sekva Aktiva Tab"
 
-#: src/mainwindow.cpp:312 src/viewer/viewcontainer.cpp:295
+#: src/mainwindow.cpp:311 src/viewer/viewcontainer.cpp:294
 #, kde-format
 msgid "Move Tab Up"
 msgstr "Movi Langeton Supren"
 
-#: src/mainwindow.cpp:316 src/mainwindow.cpp:321 src/mainwindow.cpp:338
-#: src/mainwindow.cpp:347 src/mainwindow.cpp:359 src/mainwindow.cpp:368
+#: src/mainwindow.cpp:315 src/mainwindow.cpp:320 src/mainwindow.cpp:337
+#: src/mainwindow.cpp:346 src/mainwindow.cpp:358 src/mainwindow.cpp:367
 #, kde-format
 msgid "Move this tab"
 msgstr "Movi ĉi tiun langeton"
 
-#: src/mainwindow.cpp:323 src/viewer/viewcontainer.cpp:303
+#: src/mainwindow.cpp:322 src/viewer/viewcontainer.cpp:302
 #, kde-format
 msgid "Move Tab Down"
 msgstr "Movi Langeton Malsupren"
 
-#: src/mainwindow.cpp:334 src/mainwindow.cpp:364
-#: src/viewer/viewcontainer.cpp:349
+#: src/mainwindow.cpp:333 src/mainwindow.cpp:363
+#: src/viewer/viewcontainer.cpp:348
 #, kde-format
 msgid "Move Tab Right"
 msgstr "Movi Langeton Dekstren"
 
-#: src/mainwindow.cpp:343 src/mainwindow.cpp:355
-#: src/viewer/viewcontainer.cpp:341
+#: src/mainwindow.cpp:342 src/mainwindow.cpp:354
+#: src/viewer/viewcontainer.cpp:340
 #, kde-format
 msgid "Move Tab Left"
 msgstr "Movi Langeton Maldekstren"
 
-#: src/mainwindow.cpp:378
+#: src/mainwindow.cpp:377
 #, kde-format
 msgid "Rejoin Channel"
 msgstr "Aliĝi al Kanalo"
 
-#: src/mainwindow.cpp:384 src/mainwindow.cpp:855
+#: src/mainwindow.cpp:383 src/mainwindow.cpp:854
 #, kde-format
 msgid "Enable Notifications"
 msgstr "Ebligi Sciigojn"
 
-#: src/mainwindow.cpp:390
+#: src/mainwindow.cpp:389
 #, kde-format
 msgid "Join on Connect"
 msgstr "Aliĝi je Konekto"
 
-#: src/mainwindow.cpp:395
+#: src/mainwindow.cpp:394
 #, kde-format
 msgid "Connect at Startup"
 msgstr "Konekti ĉe Ekfunkciiĝo"
 
-#: src/mainwindow.cpp:400
+#: src/mainwindow.cpp:399
 #, kde-format
 msgid "Default"
 msgstr "Defaŭlta"
 
-#: src/mainwindow.cpp:405
+#: src/mainwindow.cpp:404
 #, kde-format
 msgid "Set Encoding"
 msgstr "Agordi Kodigon"
 
-#: src/mainwindow.cpp:414
+#: src/mainwindow.cpp:413
 #, kde-format
 msgid "Go to Tab %1"
 msgstr "Iri al Langeto %1"
 
-#: src/mainwindow.cpp:421
+#: src/mainwindow.cpp:420
 #, kde-format
 msgid "Clear &Marker Lines"
 msgstr "Forigi &Markliniojn"
 
-#: src/mainwindow.cpp:424
+#: src/mainwindow.cpp:423
 #, kde-format
 msgid "Clear marker lines in the current tab"
 msgstr "Malplenigi markliniojn en la nuna langeto"
 
-#: src/mainwindow.cpp:429
+#: src/mainwindow.cpp:428
 #, kde-format
 msgid "Enlarge Font Size"
 msgstr "Pligrandigi Tipargrandon"
 
-#: src/mainwindow.cpp:433
+#: src/mainwindow.cpp:432
 #, kde-format
 msgid "Increase the current font size"
 msgstr "Pliigi la nunan tiparograndon"
 
-#: src/mainwindow.cpp:438
+#: src/mainwindow.cpp:437
 #, kde-format
 msgid "Reset Font Size"
 msgstr "Restarigi Tiparo Grandeco"
 
-#: src/mainwindow.cpp:442
+#: src/mainwindow.cpp:441
 #, kde-format
 msgid "Reset the current font size to settings values"
 msgstr "Restarigi la nunan tiparon al agordaj valoroj"
 
-#: src/mainwindow.cpp:447
+#: src/mainwindow.cpp:446
 #, kde-format
 msgid "Shrink Font Size"
 msgstr "Ŝrumpi Tiparo Grandeco"
 
-#: src/mainwindow.cpp:451
+#: src/mainwindow.cpp:450
 #, kde-format
 msgid "Decrease the current font size"
 msgstr "Malpliigi la nunan tiparograndon"
 
-#: src/mainwindow.cpp:456
+#: src/mainwindow.cpp:455
 #, kde-format
 msgid "&Clear Window"
 msgstr "&Malplenigi Fenestron"
 
-#: src/mainwindow.cpp:459
+#: src/mainwindow.cpp:458
 #, kde-format
 msgid "Clear the contents of the current tab"
 msgstr "Forigi la enhavon de la nuna langeto"
 
-#: src/mainwindow.cpp:464
+#: src/mainwindow.cpp:463
 #, kde-format
 msgid "Clear &All Windows"
 msgstr "Malplenigi Ĉi&ujn Fenestrojn"
 
-#: src/mainwindow.cpp:467
+#: src/mainwindow.cpp:466
 #, kde-format
 msgid "Clear the contents of all open tabs"
 msgstr "Forigu la enhavon de ĉiuj malfermitaj langetoj"
 
-#: src/mainwindow.cpp:472
+#: src/mainwindow.cpp:471
 #, kde-format
 msgid "Global Away"
 msgstr "Ĉiea For"
 
-#: src/mainwindow.cpp:480 src/viewer/irccontextmenus.cpp:329
+#: src/mainwindow.cpp:479 src/viewer/irccontextmenus.cpp:329
 #, kde-format
 msgid "&Join Channel..."
 msgstr "&Aliĝi al Kanalo..."
 
-#: src/mainwindow.cpp:484
+#: src/mainwindow.cpp:483
 #, kde-format
 msgid "Join a new channel on this server"
 msgstr "Aliĝi al nova kanalo sur ĉi tiu servilo"
 
-#: src/mainwindow.cpp:496 src/mainwindow.cpp:857
+#: src/mainwindow.cpp:495 src/mainwindow.cpp:856
 #, kde-format
 msgid "&IRC Color..."
 msgstr "&IRC Koloro..."
 
-#: src/mainwindow.cpp:500
+#: src/mainwindow.cpp:499
 #, kde-format
 msgid "Set the color of your current IRC message"
 msgstr "Agordi la koloron de via nuna IRC-mesaĝo"
 
-#: src/mainwindow.cpp:505 src/mainwindow.cpp:859
+#: src/mainwindow.cpp:504 src/mainwindow.cpp:858
 #, kde-format
 msgid "&Marker Line"
 msgstr "&Marklinio"
 
-#: src/mainwindow.cpp:508
+#: src/mainwindow.cpp:507
 #, kde-format
 msgid "Insert a horizontal line into the current tab that only you can see"
 msgstr "Enigi horizontalan linion en la nunan langeton, kiun nur vi povas vidi"
 
-#: src/mainwindow.cpp:513 src/mainwindow.cpp:858
+#: src/mainwindow.cpp:512 src/mainwindow.cpp:857
 #, kde-format
 msgid "Special &Character..."
 msgstr "Speciala &Signo..."
 
-#: src/mainwindow.cpp:517
+#: src/mainwindow.cpp:516
 #, kde-format
 msgid "Insert any character into your current IRC message"
 msgstr "Enigi ajnan signon en vian nunan IRC-mesaĝon"
 
-#: src/mainwindow.cpp:528
+#: src/mainwindow.cpp:527
 #, kde-format
 msgid "Focus Input Box"
 msgstr "Fokusa Eniga Skatolo"
 
-#: src/mainwindow.cpp:535
+#: src/mainwindow.cpp:534
 #, kde-format
 msgid "Close &All Open Queries"
 msgstr "Fermu Ĉiujn Malferm&ajn Informpetojn"
 
-#: src/mainwindow.cpp:544
+#: src/mainwindow.cpp:543
 #, kde-format
 msgid "Show Nicklist"
 msgstr "Montri Moknomliston"
 
-#: src/mainwindow.cpp:550
+#: src/mainwindow.cpp:549
 #, kde-format
 msgid "Show/Hide Konversation"
 msgstr "Montri/Kaŝi Konversacion"
 
-#: src/mainwindow.cpp:561
+#: src/mainwindow.cpp:560
 #, kde-format
 msgid "Enable On Screen Display"
 msgstr "Ebligi Surekranan Bildigon"
 
-#: src/mainwindow.cpp:568
+#: src/mainwindow.cpp:567
 #, kde-format
 msgid "Bookmarks"
 msgstr "Legosignoj"
 
-#: src/mainwindow.cpp:613
+#: src/mainwindow.cpp:612
 #, kde-format
 msgid ""
 "<qt>You have active DCC file transfers. Are you sure you want to quit "
@@ -8465,17 +8465,17 @@ msgstr ""
 "<qt>Vi havas aktivajn DCC-dosiertransigojn. Ĉu vi certas, ke vi volas ĉesi "
 "<b>Konversation</b>?</qt>"
 
-#: src/mainwindow.cpp:614 src/mainwindow.cpp:624
+#: src/mainwindow.cpp:613 src/mainwindow.cpp:623
 #, kde-format
 msgid "Confirm Quit"
 msgstr "Konfirmi Forlason"
 
-#: src/mainwindow.cpp:623
+#: src/mainwindow.cpp:622
 #, kde-format
 msgid "<qt>Are you sure you want to quit <b>Konversation</b>?</qt>"
 msgstr "<qt>Ĉu vi certas, ke vi volas ĉesi <b>Konversacion</b>?</qt>"
 
-#: src/mainwindow.cpp:660
+#: src/mainwindow.cpp:659
 #, kde-format
 msgid ""
 "<p>Closing the main window will keep Konversation running in the system "
@@ -8486,12 +8486,12 @@ msgstr ""
 "sistempleto. Uzu <b>Elsi</b> el la menuo <b>Konversacio</b> por forlasi la "
 "aplikaĵon.</p>"
 
-#: src/mainwindow.cpp:662
+#: src/mainwindow.cpp:661
 #, kde-format
 msgid "Docking in System Tray"
 msgstr "Fiksigi en Sistempleto"
 
-#: src/mainwindow.cpp:806
+#: src/mainwindow.cpp:805
 #, kde-format
 msgid ""
 "<qt>This will hide the menu bar completely. You can show it again by typing "
@@ -8500,47 +8500,47 @@ msgstr ""
 "<qt>Ĉi tio tute kaŝos la menubreton. Vi povas montri ĝin denove tajpante %1."
 "</qt>"
 
-#: src/mainwindow.cpp:807
+#: src/mainwindow.cpp:806
 #, kde-format
 msgid "Hide menu bar"
 msgstr "Kaŝi menubreton"
 
-#: src/mainwindow.cpp:839
+#: src/mainwindow.cpp:838
 #, kde-format
 msgid "Toggle Notifications"
 msgstr "Ŝalti Sciigojn"
 
-#: src/mainwindow.cpp:840
+#: src/mainwindow.cpp:839
 #, kde-format
 msgid "Toggle Away Globally"
 msgstr "Ŝaltu For Tutmonde"
 
-#: src/mainwindow.cpp:841
+#: src/mainwindow.cpp:840
 #, kde-format
 msgid "Insert &IRC Color..."
 msgstr "Enigi &IRC-Koloron..."
 
-#: src/mainwindow.cpp:842
+#: src/mainwindow.cpp:841
 #, kde-format
 msgid "Insert Special &Character..."
 msgstr "Enigi Specialan &Signon..."
 
-#: src/mainwindow.cpp:843
+#: src/mainwindow.cpp:842
 #, kde-format
 msgid "Insert &Marker Line"
 msgstr "Enigi &Marklinion"
 
-#: src/mainwindow.cpp:845
+#: src/mainwindow.cpp:844
 #, kde-format
 msgid "&Channel List"
 msgstr "&Kanal-Listo"
 
-#: src/mainwindow.cpp:856
+#: src/mainwindow.cpp:855
 #, kde-format
 msgid "Set &Away Globally"
 msgstr "Meti Ĉie&an For"
 
-#: src/mainwindow.cpp:874
+#: src/mainwindow.cpp:873
 #, kde-format
 msgid "Server List"
 msgstr "Listo de Serviloj"
@@ -8963,7 +8963,7 @@ msgstr "Malsukcesis elŝuti %1: %2"
 msgid "Error parsing router description."
 msgstr "Eraro dum analizado de enkursigilo-priskribo."
 
-#: src/urlcatcher.cpp:69 src/viewer/viewcontainer.cpp:2617
+#: src/urlcatcher.cpp:69 src/viewer/viewcontainer.cpp:2612
 #, kde-format
 msgid "URL Catcher"
 msgstr "URL-Kaptilo"
@@ -9964,7 +9964,7 @@ msgstr "Aldoni &Citaĵajn Indikilojn"
 msgid "&Remove Newlines"
 msgstr "Fo&rigi Novliniojn"
 
-#: src/viewer/rawlog.cpp:17 src/viewer/viewcontainer.cpp:2742
+#: src/viewer/rawlog.cpp:17 src/viewer/viewcontainer.cpp:2737
 #, kde-format
 msgid "Raw Log"
 msgstr "Kruda Protokolo"
@@ -10110,63 +10110,63 @@ msgstr ""
 msgid "IRC Client"
 msgstr "IRC-kliento"
 
-#: src/viewer/viewcontainer.cpp:881
+#: src/viewer/viewcontainer.cpp:880
 #, kde-format
 msgid "Find Text..."
 msgstr "Trovi tekston..."
 
-#: src/viewer/viewcontainer.cpp:883
+#: src/viewer/viewcontainer.cpp:882
 #, kde-format
 msgid "Search for text in the current tab"
 msgstr "Serĉu tekston en la nuna langeto"
 
-#: src/viewer/viewcontainer.cpp:901
+#: src/viewer/viewcontainer.cpp:900
 #, kde-format
 msgid "Channel &List for %1"
 msgstr "Kanala &Listo por %1"
 
-#: src/viewer/viewcontainer.cpp:921
+#: src/viewer/viewcontainer.cpp:920
 #, kde-format
 msgid "&Open Logfile for %1"
 msgstr "&Malfermi Protokoldosieron por %1"
 
-#: src/viewer/viewcontainer.cpp:932
+#: src/viewer/viewcontainer.cpp:931
 #, kde-format
 msgid "&Channel Settings for %1..."
 msgstr "&Kanalaj agordoj por %1..."
 
-#: src/viewer/viewcontainer.cpp:2115
+#: src/viewer/viewcontainer.cpp:2110
 #, kde-format
 msgid "Rename Tab"
 msgstr "Renomi la langeton"
 
-#: src/viewer/viewcontainer.cpp:2116
+#: src/viewer/viewcontainer.cpp:2111
 #, kde-format
 msgid "Enter new tab name:"
 msgstr "Enigu la nomon de la nova langeto:"
 
-#: src/viewer/viewcontainer.cpp:2188
+#: src/viewer/viewcontainer.cpp:2183
 #, kde-format
 msgctxt "Default encoding"
 msgid "Default ( %1 )"
 msgstr "Defaŭlta ( %1 )"
 
-#: src/viewer/viewcontainer.cpp:2229
+#: src/viewer/viewcontainer.cpp:2224
 #, kde-format
 msgid "&Rename Tab..."
 msgstr "&Renomi Langeton..."
 
-#: src/viewer/viewcontainer.cpp:2378
+#: src/viewer/viewcontainer.cpp:2373
 #, kde-format
 msgid "You can only search in text fields."
 msgstr "Vi povas serĉi nur en tekstaj kampoj."
 
-#: src/viewer/viewcontainer.cpp:2379
+#: src/viewer/viewcontainer.cpp:2374
 #, kde-format
 msgid "Find Text Information"
 msgstr "Trovi Tekstajn Informojn"
 
-#: src/viewer/viewcontainer.cpp:2979
+#: src/viewer/viewcontainer.cpp:2974
 #, kde-format
 msgid ""
 "To know which server to display the channel list for, the list can only be "
@@ -10175,7 +10175,7 @@ msgstr ""
 "Por scii por kiu servilo montri la kanalliston, la listo povas esti "
 "malfermita nur de demando, kanalo aŭ statusfenestro."
 
-#: src/viewer/viewcontainer.cpp:3009
+#: src/viewer/viewcontainer.cpp:3004
 #, kde-format
 msgid ""
 "Using this function may result in a lot of network traffic. If your "
@@ -10186,12 +10186,12 @@ msgstr ""
 "ne estas sufiĉe rapida, eblas ke via kliento estos malkonektita de la "
 "servilo."
 
-#: src/viewer/viewcontainer.cpp:3013
+#: src/viewer/viewcontainer.cpp:3008
 #, kde-format
 msgid "Channel List Warning"
 msgstr "Averto pri Kanala Listo"
 
-#: src/viewer/viewcontainer.cpp:3043
+#: src/viewer/viewcontainer.cpp:3038
 #, kde-format
 msgid "Watched Nicks"
 msgstr "Rigarditaj Kromnomoj"

@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-05 00:43+0000\n"
+"POT-Creation-Date: 2026-07-12 00:44+0000\n"
 "PO-Revision-Date: 2026-01-18 14:18+0100\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
@@ -160,7 +160,7 @@ msgstr ""
 "\"/media { Player }\" - rapporteert wat wordt afgespeeld in het "
 "gespecificeerde afspeelprogramma als het wordt gevonden."
 
-#: src/application.cpp:383 src/irc/server.cpp:1814 src/irc/server.cpp:3847
+#: src/application.cpp:380 src/irc/server.cpp:1814 src/irc/server.cpp:3847
 #: src/irc/server.cpp:3852
 #, kde-format
 msgid "D-Bus"
@@ -2078,7 +2078,7 @@ msgstr "Schermnamenlijst"
 msgid "Command Aliases"
 msgstr "Commando-aliassen"
 
-#: src/config/settingsdialog.cpp:133 src/mainwindow.cpp:522
+#: src/config/settingsdialog.cpp:133 src/mainwindow.cpp:521
 #, kde-format
 msgid "Auto Replace"
 msgstr "Automatisch vervangen"
@@ -3368,7 +3368,7 @@ msgstr "Inkomende transfers"
 msgid "Outgoing Transfers"
 msgstr "Uitgaande transfers"
 
-#: src/dcc/transferpanel.cpp:35 src/viewer/viewcontainer.cpp:2649
+#: src/dcc/transferpanel.cpp:35 src/viewer/viewcontainer.cpp:2644
 #, kde-format
 msgid "DCC Status"
 msgstr "DCC-status"
@@ -5296,7 +5296,7 @@ msgstr "Onderwerp"
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, ChannelListWidgetUI)
 #: src/irc/channellistpanel.cpp:139 src/irc/channellistpanelui.ui:14
-#: src/viewer/viewcontainer.cpp:2962 src/viewer/viewcontainer.cpp:2983
+#: src/viewer/viewcontainer.cpp:2957 src/viewer/viewcontainer.cpp:2978
 #, kde-format
 msgid "Channel List"
 msgstr "Kanaallijst"
@@ -7693,8 +7693,8 @@ msgstr "Auteur"
 msgid "Time"
 msgstr "Tijd"
 
-#: src/konsolepanel.cpp:26 src/viewer/viewcontainer.cpp:2606
-#: src/viewer/viewcontainer.cpp:2607
+#: src/konsolepanel.cpp:26 src/viewer/viewcontainer.cpp:2601
+#: src/viewer/viewcontainer.cpp:2602
 #, kde-format
 msgid "Konsole"
 msgstr "Konsole"
@@ -8208,354 +8208,354 @@ msgstr ""
 "Stelt KUniqueApplication::NonUniqueInstance in (alleen debug, voorzichtig "
 "gebruiken)"
 
-#: src/mainwindow.cpp:135
+#: src/mainwindow.cpp:134
 #, kde-format
 msgid "Restart"
 msgstr "Herstarten"
 
-#: src/mainwindow.cpp:137
+#: src/mainwindow.cpp:136
 #, kde-format
 msgid "Quit and restart the application"
 msgstr "Sluit af en start de toepassing opnieuw"
 
-#: src/mainwindow.cpp:142
+#: src/mainwindow.cpp:141
 #, kde-format
 msgid "&Server List..."
 msgstr "&Serverlijst..."
 
-#: src/mainwindow.cpp:145
+#: src/mainwindow.cpp:144
 #, kde-format
 msgid "Manage networks and servers"
 msgstr "Netwerken en servers beheren"
 
-#: src/mainwindow.cpp:150
+#: src/mainwindow.cpp:149
 #, kde-format
 msgid "Quick &Connect..."
 msgstr "Snel ver&binden..."
 
-#: src/mainwindow.cpp:153
+#: src/mainwindow.cpp:152
 #, kde-format
 msgid "Type in the address of a new IRC server to connect to"
 msgstr "Voer hier het adres in van de IRC-server waarmee u wilt verbinden"
 
-#: src/mainwindow.cpp:158
+#: src/mainwindow.cpp:157
 #, kde-format
 msgid "&Reconnect"
 msgstr "Opnieuw ve&rbinden"
 
-#: src/mainwindow.cpp:161
+#: src/mainwindow.cpp:160
 #, kde-format
 msgid "Reconnect to the current server."
 msgstr "Opnieuw verbinden met huidige server."
 
-#: src/mainwindow.cpp:167
+#: src/mainwindow.cpp:166
 #, kde-format
 msgid "&Disconnect"
 msgstr "Verbin&ding verbreken"
 
-#: src/mainwindow.cpp:170
+#: src/mainwindow.cpp:169
 #, kde-format
 msgid "Disconnect from the current server."
 msgstr "Verbinding met de huidige server verbreken."
 
-#: src/mainwindow.cpp:175
+#: src/mainwindow.cpp:174
 #, kde-format
 msgid "&Identities..."
 msgstr "&Identiteiten..."
 
-#: src/mainwindow.cpp:178
+#: src/mainwindow.cpp:177
 #, kde-format
 msgid "Manage your nick, away and other identity settings"
 msgstr ""
 "Beheer uw schermnaam, afwezigheidsbericht en andere identiteitsinstellingen"
 
-#: src/mainwindow.cpp:183
+#: src/mainwindow.cpp:182
 #, kde-format
 msgid "&Watched Nicks"
 msgstr "&Gevolgde schermnamen"
 
-#: src/mainwindow.cpp:191
+#: src/mainwindow.cpp:190
 #, kde-format
 msgid "&DCC Status"
 msgstr "&DCC-status"
 
-#: src/mainwindow.cpp:200 src/mainwindow.cpp:847
-#: src/viewer/viewcontainer.cpp:916
+#: src/mainwindow.cpp:199 src/mainwindow.cpp:846
+#: src/viewer/viewcontainer.cpp:915
 #, kde-format
 msgid "&Open Logfile"
 msgstr "Logbestand &openen"
 
-#: src/mainwindow.cpp:204
+#: src/mainwindow.cpp:203
 #, kde-format
 msgid "Open the known history for this channel in a new tab"
 msgstr "De bekende geschiedenis voor dit kanaal in een nieuw tabblad openen"
 
-#: src/mainwindow.cpp:209 src/viewer/viewcontainer.cpp:937
+#: src/mainwindow.cpp:208 src/viewer/viewcontainer.cpp:936
 #, kde-format
 msgid "&Channel Settings..."
 msgstr "&Kanaalinstellingen..."
 
-#: src/mainwindow.cpp:212
+#: src/mainwindow.cpp:211
 #, kde-format
 msgid "Open the channel settings dialog for this tab"
 msgstr "Open de kanaalinstellingendialoog voor dit tabblad"
 
-#: src/mainwindow.cpp:217 src/viewer/viewcontainer.cpp:907
+#: src/mainwindow.cpp:216 src/viewer/viewcontainer.cpp:906
 #, kde-format
 msgid "Channel &List"
 msgstr "Kanaa&llijst"
 
-#: src/mainwindow.cpp:221
+#: src/mainwindow.cpp:220
 #, kde-format
 msgid "Show a list of all the known channels on this server"
 msgstr "Een lijst van alle bekende kanalen op deze server weergeven"
 
-#: src/mainwindow.cpp:226
+#: src/mainwindow.cpp:225
 #, kde-format
 msgid "&URL Catcher"
 msgstr "&URL-lijst"
 
-#: src/mainwindow.cpp:229
+#: src/mainwindow.cpp:228
 #, kde-format
 msgid "List all URLs that have been mentioned recently in a new tab"
 msgstr "Alle pasgenoemde URL-adressen in een nieuw tabblad openen"
 
-#: src/mainwindow.cpp:236
+#: src/mainwindow.cpp:235
 #, kde-format
 msgid "New &Konsole"
 msgstr "Nieuwe &Konsole"
 
-#: src/mainwindow.cpp:238
+#: src/mainwindow.cpp:237
 #, kde-format
 msgid "Open a terminal in a new tab"
 msgstr "Een terminal in een nieuw tabblad openen"
 
-#: src/mainwindow.cpp:268
+#: src/mainwindow.cpp:267
 #, kde-format
 msgid "&Next Tab"
 msgstr "Volge&nd tabblad"
 
-#: src/mainwindow.cpp:276
+#: src/mainwindow.cpp:275
 #, kde-format
 msgid "&Previous Tab"
 msgstr "&Vorig tabblad"
 
-#: src/mainwindow.cpp:284
+#: src/mainwindow.cpp:283
 #, kde-format
 msgid "Close &Tab"
 msgstr "&Tabblad sluiten"
 
-#: src/mainwindow.cpp:292
+#: src/mainwindow.cpp:291
 #, kde-format
 msgid "Last Focused Tab"
 msgstr "Laatste tabblad met focus"
 
-#: src/mainwindow.cpp:299
+#: src/mainwindow.cpp:298
 #, kde-format
 msgid "Next Active Tab"
 msgstr "Volgend actief tabblad"
 
-#: src/mainwindow.cpp:312 src/viewer/viewcontainer.cpp:295
+#: src/mainwindow.cpp:311 src/viewer/viewcontainer.cpp:294
 #, kde-format
 msgid "Move Tab Up"
 msgstr "Tab omhoog"
 
-#: src/mainwindow.cpp:316 src/mainwindow.cpp:321 src/mainwindow.cpp:338
-#: src/mainwindow.cpp:347 src/mainwindow.cpp:359 src/mainwindow.cpp:368
+#: src/mainwindow.cpp:315 src/mainwindow.cpp:320 src/mainwindow.cpp:337
+#: src/mainwindow.cpp:346 src/mainwindow.cpp:358 src/mainwindow.cpp:367
 #, kde-format
 msgid "Move this tab"
 msgstr "Dit tabblad verplaatsen"
 
-#: src/mainwindow.cpp:323 src/viewer/viewcontainer.cpp:303
+#: src/mainwindow.cpp:322 src/viewer/viewcontainer.cpp:302
 #, kde-format
 msgid "Move Tab Down"
 msgstr "Tab omlaag"
 
-#: src/mainwindow.cpp:334 src/mainwindow.cpp:364
-#: src/viewer/viewcontainer.cpp:349
+#: src/mainwindow.cpp:333 src/mainwindow.cpp:363
+#: src/viewer/viewcontainer.cpp:348
 #, kde-format
 msgid "Move Tab Right"
 msgstr "Tab naar rechts"
 
-#: src/mainwindow.cpp:343 src/mainwindow.cpp:355
-#: src/viewer/viewcontainer.cpp:341
+#: src/mainwindow.cpp:342 src/mainwindow.cpp:354
+#: src/viewer/viewcontainer.cpp:340
 #, kde-format
 msgid "Move Tab Left"
 msgstr "Tab naar links"
 
-#: src/mainwindow.cpp:378
+#: src/mainwindow.cpp:377
 #, kde-format
 msgid "Rejoin Channel"
 msgstr "Opnieuw deelnemen aan kanaal"
 
-#: src/mainwindow.cpp:384 src/mainwindow.cpp:855
+#: src/mainwindow.cpp:383 src/mainwindow.cpp:854
 #, kde-format
 msgid "Enable Notifications"
 msgstr "Meldingen inschakelen"
 
-#: src/mainwindow.cpp:390
+#: src/mainwindow.cpp:389
 #, kde-format
 msgid "Join on Connect"
 msgstr "Deelnemen aan kanaal bij verbinden"
 
-#: src/mainwindow.cpp:395
+#: src/mainwindow.cpp:394
 #, kde-format
 msgid "Connect at Startup"
 msgstr "Verbinden bij opstarten"
 
-#: src/mainwindow.cpp:400
+#: src/mainwindow.cpp:399
 #, kde-format
 msgid "Default"
 msgstr "Standaard"
 
-#: src/mainwindow.cpp:405
+#: src/mainwindow.cpp:404
 #, kde-format
 msgid "Set Encoding"
 msgstr "Codering instellen"
 
-#: src/mainwindow.cpp:414
+#: src/mainwindow.cpp:413
 #, kde-format
 msgid "Go to Tab %1"
 msgstr "Ga naar tab %1"
 
-#: src/mainwindow.cpp:421
+#: src/mainwindow.cpp:420
 #, kde-format
 msgid "Clear &Marker Lines"
 msgstr "&Markeerlijnen wissen"
 
-#: src/mainwindow.cpp:424
+#: src/mainwindow.cpp:423
 #, kde-format
 msgid "Clear marker lines in the current tab"
 msgstr "Wis de markeerlijnen in het huidige tabblad"
 
-#: src/mainwindow.cpp:429
+#: src/mainwindow.cpp:428
 #, kde-format
 msgid "Enlarge Font Size"
 msgstr "Tekengrootte vergroten"
 
-#: src/mainwindow.cpp:433
+#: src/mainwindow.cpp:432
 #, kde-format
 msgid "Increase the current font size"
 msgstr "Huidige tekengrootte vergroten"
 
-#: src/mainwindow.cpp:438
+#: src/mainwindow.cpp:437
 #, kde-format
 msgid "Reset Font Size"
 msgstr "Tekengrootte"
 
-#: src/mainwindow.cpp:442
+#: src/mainwindow.cpp:441
 #, kde-format
 msgid "Reset the current font size to settings values"
 msgstr "De huidige tekegrootte terugzetten naar instellingswaarde"
 
-#: src/mainwindow.cpp:447
+#: src/mainwindow.cpp:446
 #, kde-format
 msgid "Shrink Font Size"
 msgstr "Lettertekens verkleinen"
 
-#: src/mainwindow.cpp:451
+#: src/mainwindow.cpp:450
 #, kde-format
 msgid "Decrease the current font size"
 msgstr "Huidige tekengrootte verkleinen"
 
-#: src/mainwindow.cpp:456
+#: src/mainwindow.cpp:455
 #, kde-format
 msgid "&Clear Window"
 msgstr "Ve&nster wissen"
 
-#: src/mainwindow.cpp:459
+#: src/mainwindow.cpp:458
 #, kde-format
 msgid "Clear the contents of the current tab"
 msgstr "Wis de inhoud van het huidige tabblad"
 
-#: src/mainwindow.cpp:464
+#: src/mainwindow.cpp:463
 #, kde-format
 msgid "Clear &All Windows"
 msgstr "&Alle vensters wissen"
 
-#: src/mainwindow.cpp:467
+#: src/mainwindow.cpp:466
 #, kde-format
 msgid "Clear the contents of all open tabs"
 msgstr "Wis de inhoud van alle geopende tabbladen"
 
-#: src/mainwindow.cpp:472
+#: src/mainwindow.cpp:471
 #, kde-format
 msgid "Global Away"
 msgstr "Globaal afwezig"
 
-#: src/mainwindow.cpp:480 src/viewer/irccontextmenus.cpp:329
+#: src/mainwindow.cpp:479 src/viewer/irccontextmenus.cpp:329
 #, kde-format
 msgid "&Join Channel..."
 msgstr "Deelnemen aan &kanaal..."
 
-#: src/mainwindow.cpp:484
+#: src/mainwindow.cpp:483
 #, kde-format
 msgid "Join a new channel on this server"
 msgstr "Doe mee aan een nieuw kanaal op deze server"
 
-#: src/mainwindow.cpp:496 src/mainwindow.cpp:857
+#: src/mainwindow.cpp:495 src/mainwindow.cpp:856
 #, kde-format
 msgid "&IRC Color..."
 msgstr "&IRC-kleur..."
 
-#: src/mainwindow.cpp:500
+#: src/mainwindow.cpp:499
 #, kde-format
 msgid "Set the color of your current IRC message"
 msgstr "De kleur in van uw huidige IRC-bericht instellen"
 
-#: src/mainwindow.cpp:505 src/mainwindow.cpp:859
+#: src/mainwindow.cpp:504 src/mainwindow.cpp:858
 #, kde-format
 msgid "&Marker Line"
 msgstr "&Markeerlijn"
 
-#: src/mainwindow.cpp:508
+#: src/mainwindow.cpp:507
 #, kde-format
 msgid "Insert a horizontal line into the current tab that only you can see"
 msgstr ""
 "Voeg in het huidige tabblad een horizontale lijn in, die alleen voor u "
 "zichtbaar is"
 
-#: src/mainwindow.cpp:513 src/mainwindow.cpp:858
+#: src/mainwindow.cpp:512 src/mainwindow.cpp:857
 #, kde-format
 msgid "Special &Character..."
 msgstr "Spe&ciaal teken..."
 
-#: src/mainwindow.cpp:517
+#: src/mainwindow.cpp:516
 #, kde-format
 msgid "Insert any character into your current IRC message"
 msgstr "Voeg een speciaal teken in in uw huidige IRC-bericht"
 
-#: src/mainwindow.cpp:528
+#: src/mainwindow.cpp:527
 #, kde-format
 msgid "Focus Input Box"
 msgstr "Op invoerveld focussen"
 
-#: src/mainwindow.cpp:535
+#: src/mainwindow.cpp:534
 #, kde-format
 msgid "Close &All Open Queries"
 msgstr "&Alle open conversaties sluiten"
 
-#: src/mainwindow.cpp:544
+#: src/mainwindow.cpp:543
 #, kde-format
 msgid "Show Nicklist"
 msgstr "Lijst met schermnamen tonen"
 
-#: src/mainwindow.cpp:550
+#: src/mainwindow.cpp:549
 #, kde-format
 msgid "Show/Hide Konversation"
 msgstr "Konversation tonen/verbergen"
 
-#: src/mainwindow.cpp:561
+#: src/mainwindow.cpp:560
 #, kde-format
 msgid "Enable On Screen Display"
 msgstr "On Screen Display inschakelen"
 
-#: src/mainwindow.cpp:568
+#: src/mainwindow.cpp:567
 #, kde-format
 msgid "Bookmarks"
 msgstr "Bladwijzers"
 
-#: src/mainwindow.cpp:613
+#: src/mainwindow.cpp:612
 #, kde-format
 msgid ""
 "<qt>You have active DCC file transfers. Are you sure you want to quit "
@@ -8564,17 +8564,17 @@ msgstr ""
 "<qt>U heeft actieve DCC-bestandsoverdrachten lopen. Weet u zeker dat u "
 "<b>Konversation</b> wilt afsluiten?</qt>"
 
-#: src/mainwindow.cpp:614 src/mainwindow.cpp:624
+#: src/mainwindow.cpp:613 src/mainwindow.cpp:623
 #, kde-format
 msgid "Confirm Quit"
 msgstr "Afsluiten bevestigen"
 
-#: src/mainwindow.cpp:623
+#: src/mainwindow.cpp:622
 #, kde-format
 msgid "<qt>Are you sure you want to quit <b>Konversation</b>?</qt>"
 msgstr "<qt>Wilt u <b>Konversation</b> afsluiten?</qt>"
 
-#: src/mainwindow.cpp:660
+#: src/mainwindow.cpp:659
 #, kde-format
 msgid ""
 "<p>Closing the main window will keep Konversation running in the system "
@@ -8585,12 +8585,12 @@ msgstr ""
 "systeemvak draaien. Gebruik <b>Afsluiten</b> uit het menu <b>Bestand</b> om "
 "de toepassing af te sluiten. </p>"
 
-#: src/mainwindow.cpp:662
+#: src/mainwindow.cpp:661
 #, kde-format
 msgid "Docking in System Tray"
 msgstr "Plaatsen in systeemvak"
 
-#: src/mainwindow.cpp:806
+#: src/mainwindow.cpp:805
 #, kde-format
 msgid ""
 "<qt>This will hide the menu bar completely. You can show it again by typing "
@@ -8599,47 +8599,47 @@ msgstr ""
 "<qt>Hierdoor wordt de menubalk geheel verborgen. U kunt die weer zichtbaar "
 "maken door %1 te typen.</qt>"
 
-#: src/mainwindow.cpp:807
+#: src/mainwindow.cpp:806
 #, kde-format
 msgid "Hide menu bar"
 msgstr "Menubalk verbergen"
 
-#: src/mainwindow.cpp:839
+#: src/mainwindow.cpp:838
 #, kde-format
 msgid "Toggle Notifications"
 msgstr "Meldingen aan/uit"
 
-#: src/mainwindow.cpp:840
+#: src/mainwindow.cpp:839
 #, kde-format
 msgid "Toggle Away Globally"
 msgstr "Globaal afwezig aan/uit"
 
-#: src/mainwindow.cpp:841
+#: src/mainwindow.cpp:840
 #, kde-format
 msgid "Insert &IRC Color..."
 msgstr "&IRC-kleur invoegen..."
 
-#: src/mainwindow.cpp:842
+#: src/mainwindow.cpp:841
 #, kde-format
 msgid "Insert Special &Character..."
 msgstr "Spe&ciaal teken invoegen..."
 
-#: src/mainwindow.cpp:843
+#: src/mainwindow.cpp:842
 #, kde-format
 msgid "Insert &Marker Line"
 msgstr "&Markeerlijn invoegen"
 
-#: src/mainwindow.cpp:845
+#: src/mainwindow.cpp:844
 #, kde-format
 msgid "&Channel List"
 msgstr "&Kanaallijst"
 
-#: src/mainwindow.cpp:856
+#: src/mainwindow.cpp:855
 #, kde-format
 msgid "Set &Away Globally"
 msgstr "Globaal op &afwezig zetten"
 
-#: src/mainwindow.cpp:874
+#: src/mainwindow.cpp:873
 #, kde-format
 msgid "Server List"
 msgstr "Serverlijst"
@@ -9064,7 +9064,7 @@ msgstr "Kon %1 niet downloaden: %2"
 msgid "Error parsing router description."
 msgstr "Fout bij het ontleden van de routerbeschrijving."
 
-#: src/urlcatcher.cpp:69 src/viewer/viewcontainer.cpp:2617
+#: src/urlcatcher.cpp:69 src/viewer/viewcontainer.cpp:2612
 #, kde-format
 msgid "URL Catcher"
 msgstr "URL-lijst"
@@ -10073,7 +10073,7 @@ msgstr "Aan&halingstekens toevoegen"
 msgid "&Remove Newlines"
 msgstr "Regeleindes ve&rwijderen"
 
-#: src/viewer/rawlog.cpp:17 src/viewer/viewcontainer.cpp:2742
+#: src/viewer/rawlog.cpp:17 src/viewer/viewcontainer.cpp:2737
 #, kde-format
 msgid "Raw Log"
 msgstr "Rauw log"
@@ -10222,63 +10222,63 @@ msgstr ""
 msgid "IRC Client"
 msgstr "IRC-client"
 
-#: src/viewer/viewcontainer.cpp:881
+#: src/viewer/viewcontainer.cpp:880
 #, kde-format
 msgid "Find Text..."
 msgstr "Tekst zoeken..."
 
-#: src/viewer/viewcontainer.cpp:883
+#: src/viewer/viewcontainer.cpp:882
 #, kde-format
 msgid "Search for text in the current tab"
 msgstr "Naar tekst zoeken in huidig tabblad"
 
-#: src/viewer/viewcontainer.cpp:901
+#: src/viewer/viewcontainer.cpp:900
 #, kde-format
 msgid "Channel &List for %1"
 msgstr "Kanaa&llijst voor %1"
 
-#: src/viewer/viewcontainer.cpp:921
+#: src/viewer/viewcontainer.cpp:920
 #, kde-format
 msgid "&Open Logfile for %1"
 msgstr "Logbestand voor %1 &openen"
 
-#: src/viewer/viewcontainer.cpp:932
+#: src/viewer/viewcontainer.cpp:931
 #, kde-format
 msgid "&Channel Settings for %1..."
 msgstr "&Kanaalinstellingen voor %1..."
 
-#: src/viewer/viewcontainer.cpp:2115
+#: src/viewer/viewcontainer.cpp:2110
 #, kde-format
 msgid "Rename Tab"
 msgstr "Tabblad hernoemen"
 
-#: src/viewer/viewcontainer.cpp:2116
+#: src/viewer/viewcontainer.cpp:2111
 #, kde-format
 msgid "Enter new tab name:"
 msgstr "Nieuwe naam:"
 
-#: src/viewer/viewcontainer.cpp:2188
+#: src/viewer/viewcontainer.cpp:2183
 #, kde-format
 msgctxt "Default encoding"
 msgid "Default ( %1 )"
 msgstr "Standaard (%1)"
 
-#: src/viewer/viewcontainer.cpp:2229
+#: src/viewer/viewcontainer.cpp:2224
 #, kde-format
 msgid "&Rename Tab..."
 msgstr "Tabblad he&rnoemen..."
 
-#: src/viewer/viewcontainer.cpp:2378
+#: src/viewer/viewcontainer.cpp:2373
 #, kde-format
 msgid "You can only search in text fields."
 msgstr "U kunt alleen zoeken in tekstvelden."
 
-#: src/viewer/viewcontainer.cpp:2379
+#: src/viewer/viewcontainer.cpp:2374
 #, kde-format
 msgid "Find Text Information"
 msgstr "Informatie tekst zoeken"
 
-#: src/viewer/viewcontainer.cpp:2979
+#: src/viewer/viewcontainer.cpp:2974
 #, kde-format
 msgid ""
 "To know which server to display the channel list for, the list can only be "
@@ -10288,7 +10288,7 @@ msgstr ""
 "geopend worden, zodat bepaald kan worden van welke server de lijst opgehaald "
 "moet worden."
 
-#: src/viewer/viewcontainer.cpp:3009
+#: src/viewer/viewcontainer.cpp:3004
 #, kde-format
 msgid ""
 "Using this function may result in a lot of network traffic. If your "
@@ -10299,12 +10299,12 @@ msgstr ""
 "uw verbinding niet snel genoeg is kan het zijn dat de verbinding met de "
 "server verloren kan gaan."
 
-#: src/viewer/viewcontainer.cpp:3013
+#: src/viewer/viewcontainer.cpp:3008
 #, kde-format
 msgid "Channel List Warning"
 msgstr "Kanaallijst waarschuwing"
 
-#: src/viewer/viewcontainer.cpp:3043
+#: src/viewer/viewcontainer.cpp:3038
 #, kde-format
 msgid "Watched Nicks"
 msgstr "Gevolgde schermnamen"

@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-05 00:43+0000\n"
+"POT-Creation-Date: 2026-07-12 00:44+0000\n"
 "PO-Revision-Date: 2022-02-26 11:47+0530\n"
 "Last-Translator: Raghavendra Kamath <raghu@raghukamath.com>\n"
 "Language-Team: Hindi <kde-l10n-hi@kde.org>\n"
@@ -142,7 +142,7 @@ msgid ""
 "is found."
 msgstr ""
 
-#: src/application.cpp:383 src/irc/server.cpp:1814 src/irc/server.cpp:3847
+#: src/application.cpp:380 src/irc/server.cpp:1814 src/irc/server.cpp:3847
 #: src/irc/server.cpp:3852
 #, kde-format
 msgid "D-Bus"
@@ -2001,7 +2001,7 @@ msgstr "उपनाम सूची:"
 msgid "Command Aliases"
 msgstr "कमांड अलियास"
 
-#: src/config/settingsdialog.cpp:133 src/mainwindow.cpp:522
+#: src/config/settingsdialog.cpp:133 src/mainwindow.cpp:521
 #, fuzzy, kde-format
 msgid "Auto Replace"
 msgstr "बदला"
@@ -3255,7 +3255,7 @@ msgstr "एनकोडिंग: (&E)"
 msgid "Outgoing Transfers"
 msgstr ""
 
-#: src/dcc/transferpanel.cpp:35 src/viewer/viewcontainer.cpp:2649
+#: src/dcc/transferpanel.cpp:35 src/viewer/viewcontainer.cpp:2644
 #, kde-format
 msgid "DCC Status"
 msgstr "डीसीसी स्थिति"
@@ -5101,7 +5101,7 @@ msgstr "चैनल का विषय"
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, ChannelListWidgetUI)
 #: src/irc/channellistpanel.cpp:139 src/irc/channellistpanelui.ui:14
-#: src/viewer/viewcontainer.cpp:2962 src/viewer/viewcontainer.cpp:2983
+#: src/viewer/viewcontainer.cpp:2957 src/viewer/viewcontainer.cpp:2978
 #, kde-format
 msgid "Channel List"
 msgstr "चैनल सूची"
@@ -7388,8 +7388,8 @@ msgstr "नेटवर्क"
 msgid "Time"
 msgstr "टाइम आउट"
 
-#: src/konsolepanel.cpp:26 src/viewer/viewcontainer.cpp:2606
-#: src/viewer/viewcontainer.cpp:2607
+#: src/konsolepanel.cpp:26 src/viewer/viewcontainer.cpp:2601
+#: src/viewer/viewcontainer.cpp:2602
 #, kde-format
 msgid "Konsole"
 msgstr "कंसोल"
@@ -7888,373 +7888,373 @@ msgid ""
 "Sets KUniqueApplication::NonUniqueInstance (debug only, use with caution)"
 msgstr ""
 
-#: src/mainwindow.cpp:135
+#: src/mainwindow.cpp:134
 #, kde-format
 msgid "Restart"
 msgstr ""
 
-#: src/mainwindow.cpp:137
+#: src/mainwindow.cpp:136
 #, kde-format
 msgid "Quit and restart the application"
 msgstr ""
 
-#: src/mainwindow.cpp:142
+#: src/mainwindow.cpp:141
 #, kde-format
 msgid "&Server List..."
 msgstr "सर्वर सूची... (&S)"
 
-#: src/mainwindow.cpp:145
+#: src/mainwindow.cpp:144
 #, kde-format
 msgid "Manage networks and servers"
 msgstr ""
 
-#: src/mainwindow.cpp:150
+#: src/mainwindow.cpp:149
 #, kde-format
 msgid "Quick &Connect..."
 msgstr "क्विक कनेक्ट... (&C)"
 
-#: src/mainwindow.cpp:153
+#: src/mainwindow.cpp:152
 #, kde-format
 msgid "Type in the address of a new IRC server to connect to"
 msgstr ""
 
-#: src/mainwindow.cpp:158
+#: src/mainwindow.cpp:157
 #, fuzzy, kde-format
 msgid "&Reconnect"
 msgstr "कनेक्ट (&o)"
 
-#: src/mainwindow.cpp:161
+#: src/mainwindow.cpp:160
 #, fuzzy, kde-format
 msgid "Reconnect to the current server."
 msgstr "सर्वर से जुड़ें"
 
-#: src/mainwindow.cpp:167
+#: src/mainwindow.cpp:166
 #, fuzzy, kde-format
 msgid "&Disconnect"
 msgstr "कनेक्ट (&o)"
 
-#: src/mainwindow.cpp:170
+#: src/mainwindow.cpp:169
 #, fuzzy, kde-format
 msgid "Disconnect from the current server."
 msgstr "सर्वर से डिस्कनेक्ट करें"
 
-#: src/mainwindow.cpp:175
+#: src/mainwindow.cpp:174
 #, kde-format
 msgid "&Identities..."
 msgstr "पहचान... (&I)"
 
-#: src/mainwindow.cpp:178
+#: src/mainwindow.cpp:177
 #, kde-format
 msgid "Manage your nick, away and other identity settings"
 msgstr ""
 
-#: src/mainwindow.cpp:183
+#: src/mainwindow.cpp:182
 #, fuzzy, kde-format
 #| msgid "Watched Nicknames"
 msgid "&Watched Nicks"
 msgstr "निगरानी में निकनाम"
 
-#: src/mainwindow.cpp:191
+#: src/mainwindow.cpp:190
 #, fuzzy, kde-format
 msgid "&DCC Status"
 msgstr "डीसीसी स्थिति"
 
-#: src/mainwindow.cpp:200 src/mainwindow.cpp:847
-#: src/viewer/viewcontainer.cpp:916
+#: src/mainwindow.cpp:199 src/mainwindow.cpp:846
+#: src/viewer/viewcontainer.cpp:915
 #, kde-format
 msgid "&Open Logfile"
 msgstr "लॉग-फ़ाइल खोलें (&O)"
 
-#: src/mainwindow.cpp:204
+#: src/mainwindow.cpp:203
 #, kde-format
 msgid "Open the known history for this channel in a new tab"
 msgstr ""
 
-#: src/mainwindow.cpp:209 src/viewer/viewcontainer.cpp:937
+#: src/mainwindow.cpp:208 src/viewer/viewcontainer.cpp:936
 #, fuzzy, kde-format
 msgid "&Channel Settings..."
 msgstr "अन्य विन्यास (&t)"
 
-#: src/mainwindow.cpp:212
+#: src/mainwindow.cpp:211
 #, kde-format
 msgid "Open the channel settings dialog for this tab"
 msgstr ""
 
-#: src/mainwindow.cpp:217 src/viewer/viewcontainer.cpp:907
+#: src/mainwindow.cpp:216 src/viewer/viewcontainer.cpp:906
 #, fuzzy, kde-format
 msgid "Channel &List"
 msgstr "चैनल सूची"
 
-#: src/mainwindow.cpp:221
+#: src/mainwindow.cpp:220
 #, kde-format
 msgid "Show a list of all the known channels on this server"
 msgstr ""
 
-#: src/mainwindow.cpp:226
+#: src/mainwindow.cpp:225
 #, kde-format
 msgid "&URL Catcher"
 msgstr "यूआरएल कैचर (&U)"
 
-#: src/mainwindow.cpp:229
+#: src/mainwindow.cpp:228
 #, kde-format
 msgid "List all URLs that have been mentioned recently in a new tab"
 msgstr ""
 
-#: src/mainwindow.cpp:236
+#: src/mainwindow.cpp:235
 #, fuzzy, kde-format
 msgid "New &Konsole"
 msgstr "नया कंसोल (&N)"
 
-#: src/mainwindow.cpp:238
+#: src/mainwindow.cpp:237
 #, kde-format
 msgid "Open a terminal in a new tab"
 msgstr ""
 
-#: src/mainwindow.cpp:268
+#: src/mainwindow.cpp:267
 #, kde-format
 msgid "&Next Tab"
 msgstr "अगला टैब (&N)"
 
-#: src/mainwindow.cpp:276
+#: src/mainwindow.cpp:275
 #, kde-format
 msgid "&Previous Tab"
 msgstr "पिछला टैब (&P)"
 
-#: src/mainwindow.cpp:284
+#: src/mainwindow.cpp:283
 #, kde-format
 msgid "Close &Tab"
 msgstr "टैब बंद करें (&T)"
 
-#: src/mainwindow.cpp:292
+#: src/mainwindow.cpp:291
 #, kde-format
 msgid "Last Focused Tab"
 msgstr ""
 
-#: src/mainwindow.cpp:299
+#: src/mainwindow.cpp:298
 #, fuzzy, kde-format
 msgid "Next Active Tab"
 msgstr "अगला टैब (&N)"
 
-#: src/mainwindow.cpp:312 src/viewer/viewcontainer.cpp:295
+#: src/mainwindow.cpp:311 src/viewer/viewcontainer.cpp:294
 #, fuzzy, kde-format
 msgid "Move Tab Up"
 msgstr "बाएँ जाएँ (&L)"
 
-#: src/mainwindow.cpp:316 src/mainwindow.cpp:321 src/mainwindow.cpp:338
-#: src/mainwindow.cpp:347 src/mainwindow.cpp:359 src/mainwindow.cpp:368
+#: src/mainwindow.cpp:315 src/mainwindow.cpp:320 src/mainwindow.cpp:337
+#: src/mainwindow.cpp:346 src/mainwindow.cpp:358 src/mainwindow.cpp:367
 #, kde-format
 msgid "Move this tab"
 msgstr ""
 
-#: src/mainwindow.cpp:323 src/viewer/viewcontainer.cpp:303
+#: src/mainwindow.cpp:322 src/viewer/viewcontainer.cpp:302
 #, fuzzy, kde-format
 msgid "Move Tab Down"
 msgstr "बाएँ जाएँ (&L)"
 
-#: src/mainwindow.cpp:334 src/mainwindow.cpp:364
-#: src/viewer/viewcontainer.cpp:349
+#: src/mainwindow.cpp:333 src/mainwindow.cpp:363
+#: src/viewer/viewcontainer.cpp:348
 #, fuzzy, kde-format
 msgid "Move Tab Right"
 msgstr "दाएँ जाएँ (&R)"
 
-#: src/mainwindow.cpp:343 src/mainwindow.cpp:355
-#: src/viewer/viewcontainer.cpp:341
+#: src/mainwindow.cpp:342 src/mainwindow.cpp:354
+#: src/viewer/viewcontainer.cpp:340
 #, fuzzy, kde-format
 msgid "Move Tab Left"
 msgstr "बाएँ जाएँ (&L)"
 
-#: src/mainwindow.cpp:378
+#: src/mainwindow.cpp:377
 #, fuzzy, kde-format
 msgid "Rejoin Channel"
 msgstr "चैनल में शामिल हों (&J)"
 
-#: src/mainwindow.cpp:384 src/mainwindow.cpp:855
+#: src/mainwindow.cpp:383 src/mainwindow.cpp:854
 #, kde-format
 msgid "Enable Notifications"
 msgstr "सूचनाएँ सक्षम करें"
 
-#: src/mainwindow.cpp:390
+#: src/mainwindow.cpp:389
 #, fuzzy, kde-format
 msgid "Join on Connect"
 msgstr "चैनल में शामिल हों (&J)"
 
-#: src/mainwindow.cpp:395
+#: src/mainwindow.cpp:394
 #, fuzzy, kde-format
 msgid "Connect at Startup"
 msgstr "अनुप्रयोग प्रारंभ होने पर कनेक्ट हों (&a)"
 
-#: src/mainwindow.cpp:400
+#: src/mainwindow.cpp:399
 #, fuzzy, kde-format
 #| msgid "Default ( %1 )"
 msgid "Default"
 msgstr "डिफ़ॉल्ट ( %1 )"
 
-#: src/mainwindow.cpp:405
+#: src/mainwindow.cpp:404
 #, fuzzy, kde-format
 msgid "Set Encoding"
 msgstr "एनकोडिंग सेट करें (&E)"
 
-#: src/mainwindow.cpp:414
+#: src/mainwindow.cpp:413
 #, fuzzy, kde-format
 msgid "Go to Tab %1"
 msgstr "टैब संख्या %1 पर जाएँ"
 
-#: src/mainwindow.cpp:421
+#: src/mainwindow.cpp:420
 #, fuzzy, kde-format
 msgid "Clear &Marker Lines"
 msgstr "सूची साफ करें (&l)"
 
-#: src/mainwindow.cpp:424
+#: src/mainwindow.cpp:423
 #, fuzzy, kde-format
 msgid "Clear marker lines in the current tab"
 msgstr "पाठ हेतु ढूँढें"
 
-#: src/mainwindow.cpp:429
+#: src/mainwindow.cpp:428
 #, kde-format
 msgid "Enlarge Font Size"
 msgstr ""
 
-#: src/mainwindow.cpp:433
+#: src/mainwindow.cpp:432
 #, kde-format
 msgid "Increase the current font size"
 msgstr ""
 
-#: src/mainwindow.cpp:438
+#: src/mainwindow.cpp:437
 #, kde-format
 msgid "Reset Font Size"
 msgstr ""
 
-#: src/mainwindow.cpp:442
+#: src/mainwindow.cpp:441
 #, kde-format
 msgid "Reset the current font size to settings values"
 msgstr ""
 
-#: src/mainwindow.cpp:447
+#: src/mainwindow.cpp:446
 #, kde-format
 msgid "Shrink Font Size"
 msgstr ""
 
-#: src/mainwindow.cpp:451
+#: src/mainwindow.cpp:450
 #, kde-format
 msgid "Decrease the current font size"
 msgstr ""
 
-#: src/mainwindow.cpp:456
+#: src/mainwindow.cpp:455
 #, kde-format
 msgid "&Clear Window"
 msgstr "विंडो साफ करें (&C)"
 
-#: src/mainwindow.cpp:459
+#: src/mainwindow.cpp:458
 #, kde-format
 msgid "Clear the contents of the current tab"
 msgstr ""
 
-#: src/mainwindow.cpp:464
+#: src/mainwindow.cpp:463
 #, fuzzy, kde-format
 msgid "Clear &All Windows"
 msgstr "विंडो साफ करें (&C)"
 
-#: src/mainwindow.cpp:467
+#: src/mainwindow.cpp:466
 #, kde-format
 msgid "Clear the contents of all open tabs"
 msgstr ""
 
-#: src/mainwindow.cpp:472
+#: src/mainwindow.cpp:471
 #, kde-format
 msgid "Global Away"
 msgstr ""
 
-#: src/mainwindow.cpp:480 src/viewer/irccontextmenus.cpp:329
+#: src/mainwindow.cpp:479 src/viewer/irccontextmenus.cpp:329
 #, kde-format
 msgid "&Join Channel..."
 msgstr "चैनल में शामिल हों... (&J)"
 
-#: src/mainwindow.cpp:484
+#: src/mainwindow.cpp:483
 #, fuzzy, kde-format
 msgid "Join a new channel on this server"
 msgstr "इसे बदलने के लिए आपको एक ऑपरेटर होना होगा."
 
-#: src/mainwindow.cpp:496 src/mainwindow.cpp:857
+#: src/mainwindow.cpp:495 src/mainwindow.cpp:856
 #, kde-format
 msgid "&IRC Color..."
 msgstr "आईआरसी रंग... (&I)"
 
-#: src/mainwindow.cpp:500
+#: src/mainwindow.cpp:499
 #, kde-format
 msgid "Set the color of your current IRC message"
 msgstr ""
 
-#: src/mainwindow.cpp:505 src/mainwindow.cpp:859
+#: src/mainwindow.cpp:504 src/mainwindow.cpp:858
 #, fuzzy, kde-format
 msgid "&Marker Line"
 msgstr "पंक्ति याद रखें (&R)"
 
-#: src/mainwindow.cpp:508
+#: src/mainwindow.cpp:507
 #, kde-format
 msgid "Insert a horizontal line into the current tab that only you can see"
 msgstr ""
 
-#: src/mainwindow.cpp:513 src/mainwindow.cpp:858
+#: src/mainwindow.cpp:512 src/mainwindow.cpp:857
 #, fuzzy, kde-format
 msgid "Special &Character..."
 msgstr "अक्षर... (&C)"
 
-#: src/mainwindow.cpp:517
+#: src/mainwindow.cpp:516
 #, kde-format
 msgid "Insert any character into your current IRC message"
 msgstr ""
 
-#: src/mainwindow.cpp:528
+#: src/mainwindow.cpp:527
 #, kde-format
 msgid "Focus Input Box"
 msgstr ""
 
-#: src/mainwindow.cpp:535
+#: src/mainwindow.cpp:534
 #, kde-format
 msgid "Close &All Open Queries"
 msgstr "सभी खुले क्वैरीज़ बन्द करें (&A)"
 
-#: src/mainwindow.cpp:544
+#: src/mainwindow.cpp:543
 #, fuzzy, kde-format
 #| msgid "Show last:"
 msgid "Show Nicklist"
 msgstr "अंतिम दिखाएँ:"
 
-#: src/mainwindow.cpp:550
+#: src/mainwindow.cpp:549
 #, fuzzy, kde-format
 #| msgid "Konversation"
 msgid "Show/Hide Konversation"
 msgstr "कनवर्सेसन"
 
-#: src/mainwindow.cpp:561
+#: src/mainwindow.cpp:560
 #, fuzzy, kde-format
 msgid "Enable On Screen Display"
 msgstr "स्क्रीन-पर-प्रदर्शन उपयोग करें (&U)"
 
-#: src/mainwindow.cpp:568
+#: src/mainwindow.cpp:567
 #, fuzzy, kde-format
 #| msgid "Add to Bookmarks"
 msgid "Bookmarks"
 msgstr "पसंद में जोड़ें"
 
-#: src/mainwindow.cpp:613
+#: src/mainwindow.cpp:612
 #, kde-format
 msgid ""
 "<qt>You have active DCC file transfers. Are you sure you want to quit "
 "<b>Konversation</b>?</qt>"
 msgstr ""
 
-#: src/mainwindow.cpp:614 src/mainwindow.cpp:624
+#: src/mainwindow.cpp:613 src/mainwindow.cpp:623
 #, kde-format
 msgid "Confirm Quit"
 msgstr ""
 
-#: src/mainwindow.cpp:623
+#: src/mainwindow.cpp:622
 #, kde-format
 msgid "<qt>Are you sure you want to quit <b>Konversation</b>?</qt>"
 msgstr ""
 
-#: src/mainwindow.cpp:660
+#: src/mainwindow.cpp:659
 #, kde-format
 msgid ""
 "<p>Closing the main window will keep Konversation running in the system "
@@ -8262,59 +8262,59 @@ msgid ""
 "application.</p>"
 msgstr ""
 
-#: src/mainwindow.cpp:662
+#: src/mainwindow.cpp:661
 #, kde-format
 msgid "Docking in System Tray"
 msgstr "तंत्र तश्तरी में डॉक किया जा रहा है"
 
-#: src/mainwindow.cpp:806
+#: src/mainwindow.cpp:805
 #, kde-format
 msgid ""
 "<qt>This will hide the menu bar completely. You can show it again by typing "
 "%1.</qt>"
 msgstr ""
 
-#: src/mainwindow.cpp:807
+#: src/mainwindow.cpp:806
 #, kde-format
 msgid "Hide menu bar"
 msgstr ""
 
-#: src/mainwindow.cpp:839
+#: src/mainwindow.cpp:838
 #, fuzzy, kde-format
 msgid "Toggle Notifications"
 msgstr "सूचनाएँ सक्षम करें"
 
-#: src/mainwindow.cpp:840
+#: src/mainwindow.cpp:839
 #, fuzzy, kde-format
 msgid "Toggle Away Globally"
 msgstr "दूर नियत करें वैश्विक (&A)"
 
-#: src/mainwindow.cpp:841
+#: src/mainwindow.cpp:840
 #, fuzzy, kde-format
 msgid "Insert &IRC Color..."
 msgstr "आईआरसी रंग... (&I)"
 
-#: src/mainwindow.cpp:842
+#: src/mainwindow.cpp:841
 #, fuzzy, kde-format
 msgid "Insert Special &Character..."
 msgstr "अक्षर... (&C)"
 
-#: src/mainwindow.cpp:843
+#: src/mainwindow.cpp:842
 #, fuzzy, kde-format
 msgid "Insert &Marker Line"
 msgstr "पंक्ति याद रखें (&R)"
 
-#: src/mainwindow.cpp:845
+#: src/mainwindow.cpp:844
 #, kde-format
 msgid "&Channel List"
 msgstr "चैनल सूची (&C)"
 
-#: src/mainwindow.cpp:856
+#: src/mainwindow.cpp:855
 #, kde-format
 msgid "Set &Away Globally"
 msgstr "दूर नियत करें वैश्विक (&A)"
 
-#: src/mainwindow.cpp:874
+#: src/mainwindow.cpp:873
 #, kde-format
 msgid "Server List"
 msgstr "सर्वर सूची"
@@ -8730,7 +8730,7 @@ msgstr "प्रसंग डाउनलोड करने में अस�
 msgid "Error parsing router description."
 msgstr ""
 
-#: src/urlcatcher.cpp:69 src/viewer/viewcontainer.cpp:2617
+#: src/urlcatcher.cpp:69 src/viewer/viewcontainer.cpp:2612
 #, kde-format
 msgid "URL Catcher"
 msgstr "यूआरएल कैचर"
@@ -9665,7 +9665,7 @@ msgstr "उद्धरण सूचक जोड़ें (&Q)"
 msgid "&Remove Newlines"
 msgstr "प्रसंग मिटाएँ"
 
-#: src/viewer/rawlog.cpp:17 src/viewer/viewcontainer.cpp:2742
+#: src/viewer/rawlog.cpp:17 src/viewer/viewcontainer.cpp:2737
 #, kde-format
 msgid "Raw Log"
 msgstr "रॉ लॉग"
@@ -9795,73 +9795,73 @@ msgstr ""
 msgid "IRC Client"
 msgstr ""
 
-#: src/viewer/viewcontainer.cpp:881
+#: src/viewer/viewcontainer.cpp:880
 #, kde-format
 msgid "Find Text..."
 msgstr "पाठ ढूंढें..."
 
-#: src/viewer/viewcontainer.cpp:883
+#: src/viewer/viewcontainer.cpp:882
 #, fuzzy, kde-format
 msgid "Search for text in the current tab"
 msgstr "पाठ हेतु ढूँढें"
 
-#: src/viewer/viewcontainer.cpp:901
+#: src/viewer/viewcontainer.cpp:900
 #, fuzzy, kde-format
 msgid "Channel &List for %1"
 msgstr "%1 के लिए चैनल सूची"
 
-#: src/viewer/viewcontainer.cpp:921
+#: src/viewer/viewcontainer.cpp:920
 #, kde-format
 msgid "&Open Logfile for %1"
 msgstr "%1 के लिए लॉगफ़ाइल खोलें (&O)"
 
-#: src/viewer/viewcontainer.cpp:932
+#: src/viewer/viewcontainer.cpp:931
 #, fuzzy, kde-format
 msgid "&Channel Settings for %1..."
 msgstr "%1 के लिए चैनल विकल्प "
 
-#: src/viewer/viewcontainer.cpp:2115
+#: src/viewer/viewcontainer.cpp:2110
 #, fuzzy, kde-format
 #| msgid "Rename"
 msgid "Rename Tab"
 msgstr "नाम बदलें"
 
-#: src/viewer/viewcontainer.cpp:2116
+#: src/viewer/viewcontainer.cpp:2111
 #, fuzzy, kde-format
 #| msgid "Enter Filename"
 msgid "Enter new tab name:"
 msgstr "फ़ाइलनाम भरें"
 
-#: src/viewer/viewcontainer.cpp:2188
+#: src/viewer/viewcontainer.cpp:2183
 #, kde-format
 msgctxt "Default encoding"
 msgid "Default ( %1 )"
 msgstr ""
 
-#: src/viewer/viewcontainer.cpp:2229
+#: src/viewer/viewcontainer.cpp:2224
 #, fuzzy, kde-format
 #| msgid "Rename"
 msgid "&Rename Tab..."
 msgstr "नाम बदलें"
 
-#: src/viewer/viewcontainer.cpp:2378
+#: src/viewer/viewcontainer.cpp:2373
 #, kde-format
 msgid "You can only search in text fields."
 msgstr "आप सिर्फ पाठ फ़ील्ड्स में ढूंढ सकते हैं."
 
-#: src/viewer/viewcontainer.cpp:2379
+#: src/viewer/viewcontainer.cpp:2374
 #, kde-format
 msgid "Find Text Information"
 msgstr "पाठ जानकारी ढूंढें"
 
-#: src/viewer/viewcontainer.cpp:2979
+#: src/viewer/viewcontainer.cpp:2974
 #, kde-format
 msgid ""
 "To know which server to display the channel list for, the list can only be "
 "opened from a query, channel or status window."
 msgstr ""
 
-#: src/viewer/viewcontainer.cpp:3009
+#: src/viewer/viewcontainer.cpp:3004
 #, kde-format
 msgid ""
 "Using this function may result in a lot of network traffic. If your "
@@ -9869,12 +9869,12 @@ msgid ""
 "disconnected by the server."
 msgstr ""
 
-#: src/viewer/viewcontainer.cpp:3013
+#: src/viewer/viewcontainer.cpp:3008
 #, kde-format
 msgid "Channel List Warning"
 msgstr "चैनल सूची चेतावनी"
 
-#: src/viewer/viewcontainer.cpp:3043
+#: src/viewer/viewcontainer.cpp:3038
 #, fuzzy, kde-format
 #| msgid "Watched Nicknames"
 msgid "Watched Nicks"

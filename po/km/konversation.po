@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-05 00:43+0000\n"
+"POT-Creation-Date: 2026-07-12 00:44+0000\n"
 "PO-Revision-Date: 2012-07-11 10:37+0700\n"
 "Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
 "Language-Team: Khmer\n"
@@ -143,7 +143,7 @@ msgid ""
 msgstr ""
 "\"/media { Player }\"  រាយការណ៍​អ្វី​ដែល​កំពុង​ចាក់​នៅ​ក្នុង​កម្មវិធី​ដែល​បាន​បញ្ជាក់ ប្រសិនបើ​រក​ឃើញ ។"
 
-#: src/application.cpp:383 src/irc/server.cpp:1814 src/irc/server.cpp:3847
+#: src/application.cpp:380 src/irc/server.cpp:1814 src/irc/server.cpp:3847
 #: src/irc/server.cpp:3852
 #, kde-format
 msgid "D-Bus"
@@ -2030,7 +2030,7 @@ msgstr "បញ្ជី​សម្មតិនាម"
 msgid "Command Aliases"
 msgstr "ឈ្មោះ​ក្លែងក្លាយ​របស់​​ពាក្យ​បញ្ជា"
 
-#: src/config/settingsdialog.cpp:133 src/mainwindow.cpp:522
+#: src/config/settingsdialog.cpp:133 src/mainwindow.cpp:521
 #, kde-format
 msgid "Auto Replace"
 msgstr "ជំនួស​​ស្វ័យ​ប្រវត្តិ"
@@ -3326,7 +3326,7 @@ msgstr "ផ្ទេរ​ចូល"
 msgid "Outgoing Transfers"
 msgstr "ផ្ទេរ​ចេញ"
 
-#: src/dcc/transferpanel.cpp:35 src/viewer/viewcontainer.cpp:2649
+#: src/dcc/transferpanel.cpp:35 src/viewer/viewcontainer.cpp:2644
 #, kde-format
 msgid "DCC Status"
 msgstr "ស្ថានភាព DCC"
@@ -5217,7 +5217,7 @@ msgstr "ប្រ​ធាន​បទ​​ឆានែល​"
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, ChannelListWidgetUI)
 #: src/irc/channellistpanel.cpp:139 src/irc/channellistpanelui.ui:14
-#: src/viewer/viewcontainer.cpp:2962 src/viewer/viewcontainer.cpp:2983
+#: src/viewer/viewcontainer.cpp:2957 src/viewer/viewcontainer.cpp:2978
 #, kde-format
 msgid "Channel List"
 msgstr "បញ្ជី​ឆានែល​"
@@ -7620,8 +7620,8 @@ msgstr "អ្នក​និពន្ធ​"
 msgid "Time"
 msgstr "កំណត់​ពេលវេលា"
 
-#: src/konsolepanel.cpp:26 src/viewer/viewcontainer.cpp:2606
-#: src/viewer/viewcontainer.cpp:2607
+#: src/konsolepanel.cpp:26 src/viewer/viewcontainer.cpp:2601
+#: src/viewer/viewcontainer.cpp:2602
 #, kde-format
 msgid "Konsole"
 msgstr "Konsole"
@@ -8132,353 +8132,353 @@ msgid ""
 "Sets KUniqueApplication::NonUniqueInstance (debug only, use with caution)"
 msgstr "កំណត់ KUniqueApplication::NonUniqueInstance (បំបាត់​កំហុស ប្រើ​ដោយ​មាន​ការ​ព្រមាន)"
 
-#: src/mainwindow.cpp:135
+#: src/mainwindow.cpp:134
 #, kde-format
 msgid "Restart"
 msgstr "ចាប់ផ្ដើម​ឡើងវិញ"
 
-#: src/mainwindow.cpp:137
+#: src/mainwindow.cpp:136
 #, kde-format
 msgid "Quit and restart the application"
 msgstr "បោះបង់ ហើយ​ចាប់ផ្ដើម​កម្មវិធី​ឡើងវិញ"
 
-#: src/mainwindow.cpp:142
+#: src/mainwindow.cpp:141
 #, kde-format
 msgid "&Server List..."
 msgstr "បញ្ជី​​របស់​ម៉ាស៊ីន​បម្រើ​..."
 
-#: src/mainwindow.cpp:145
+#: src/mainwindow.cpp:144
 #, kde-format
 msgid "Manage networks and servers"
 msgstr "គ្រប់គ្រង​បណ្ដាញ​ និង​ម៉ាស៊ីន​បម្រើ​"
 
-#: src/mainwindow.cpp:150
+#: src/mainwindow.cpp:149
 #, kde-format
 msgid "Quick &Connect..."
 msgstr "តភ្ជាប់​ឆាប់​រហ័ស..."
 
-#: src/mainwindow.cpp:153
+#: src/mainwindow.cpp:152
 #, kde-format
 msgid "Type in the address of a new IRC server to connect to"
 msgstr "ប្រ​ភេទ​នៅ​ក្នុង​អាសយដ្ឋាន​របស់​ម៉ាស៊ីន​បម្រើ​ជជែក​​​តាម​អ៊ីនធឺណិត​ថ្មី​ត្រូវ​​តភ្ជាប់​ទៅកាន់​"
 
-#: src/mainwindow.cpp:158
+#: src/mainwindow.cpp:157
 #, kde-format
 msgid "&Reconnect"
 msgstr "តភ្ជាប់​ឡើងវិញ"
 
-#: src/mainwindow.cpp:161
+#: src/mainwindow.cpp:160
 #, kde-format
 msgid "Reconnect to the current server."
 msgstr "តភ្ជាប់​ឡើង​វិញ​ទៅកាន់​ម៉ាស៊ីន​បម្រើ​បច្ចុប្បន្ន​ ។"
 
-#: src/mainwindow.cpp:167
+#: src/mainwindow.cpp:166
 #, kde-format
 msgid "&Disconnect"
 msgstr "ផ្តាច់"
 
-#: src/mainwindow.cpp:170
+#: src/mainwindow.cpp:169
 #, kde-format
 msgid "Disconnect from the current server."
 msgstr "ផ្ដាច់​ពី​ម៉ាស៊ីន​បម្រើ​បច្ចុប្បន្ន ។"
 
-#: src/mainwindow.cpp:175
+#: src/mainwindow.cpp:174
 #, kde-format
 msgid "&Identities..."
 msgstr "អត្ត​សញ្ញាណ​..."
 
-#: src/mainwindow.cpp:178
+#: src/mainwindow.cpp:177
 #, kde-format
 msgid "Manage your nick, away and other identity settings"
 msgstr "គ្រប់​គ្រង​សម្មតិនាម​របស់​អ្នក​ ឆ្ងាយ​ និង​កំណត់​អត្ត​សញ្ញាណ​ផ្សេងទៀត​"
 
-#: src/mainwindow.cpp:183
+#: src/mainwindow.cpp:182
 #, kde-format
 msgid "&Watched Nicks"
 msgstr "សម្មតិនាម​ដែល​បាន​មើល​"
 
-#: src/mainwindow.cpp:191
+#: src/mainwindow.cpp:190
 #, kde-format
 msgid "&DCC Status"
 msgstr "ស្ថានភាព​របស់​ DCC"
 
-#: src/mainwindow.cpp:200 src/mainwindow.cpp:847
-#: src/viewer/viewcontainer.cpp:916
+#: src/mainwindow.cpp:199 src/mainwindow.cpp:846
+#: src/viewer/viewcontainer.cpp:915
 #, kde-format
 msgid "&Open Logfile"
 msgstr "បើក​ឯកសារ​កំណត់ហេតុ​"
 
-#: src/mainwindow.cpp:204
+#: src/mainwindow.cpp:203
 #, kde-format
 msgid "Open the known history for this channel in a new tab"
 msgstr "បើក​ប្រវត្តិ​ដែល​ស្គាល់​សម្រាប់​ឆានែល​នេះ​ក្នុង​ផ្ទាំង​ថ្មី"
 
-#: src/mainwindow.cpp:209 src/viewer/viewcontainer.cpp:937
+#: src/mainwindow.cpp:208 src/viewer/viewcontainer.cpp:936
 #, kde-format
 msgid "&Channel Settings..."
 msgstr "ការ​កំណត់​ឆានែល..."
 
-#: src/mainwindow.cpp:212
+#: src/mainwindow.cpp:211
 #, kde-format
 msgid "Open the channel settings dialog for this tab"
 msgstr "បើក​ប្រអប់​កំណត់​ឆានែល​សម្រាប់​ផ្ទាំង​នេះ"
 
-#: src/mainwindow.cpp:217 src/viewer/viewcontainer.cpp:907
+#: src/mainwindow.cpp:216 src/viewer/viewcontainer.cpp:906
 #, kde-format
 msgid "Channel &List"
 msgstr "បញ្ជី និង​ឆានែល"
 
-#: src/mainwindow.cpp:221
+#: src/mainwindow.cpp:220
 #, kde-format
 msgid "Show a list of all the known channels on this server"
 msgstr "​​​បង្ហាញ​បញ្ជី​របស់​ឆានែលដែលស្គាល់​​ទាំង​អស់​លើ​ម៉ាស៊ីន​បម្រើ​នេះ​"
 
-#: src/mainwindow.cpp:226
+#: src/mainwindow.cpp:225
 #, kde-format
 msgid "&URL Catcher"
 msgstr "កម្មវិធី​ចាប់​ URL"
 
-#: src/mainwindow.cpp:229
+#: src/mainwindow.cpp:228
 #, kde-format
 msgid "List all URLs that have been mentioned recently in a new tab"
 msgstr "បញ្ជី​ URL ទាំងអស់​ដែល​ត្រូវ​បាន​សម្ដែង​វែកញែក​សេចក្ដី​ បច្ចុប្បន្ន​នៅ​ក្នុង​ផ្ទាំង​ថ្មី​"
 
-#: src/mainwindow.cpp:236
+#: src/mainwindow.cpp:235
 #, kde-format
 msgid "New &Konsole"
 msgstr "Konsole ថ្មី​"
 
-#: src/mainwindow.cpp:238
+#: src/mainwindow.cpp:237
 #, kde-format
 msgid "Open a terminal in a new tab"
 msgstr "បើក​ស្ថានីយ​ក្នុង​ផ្ទាំង​ថ្មី​"
 
-#: src/mainwindow.cpp:268
+#: src/mainwindow.cpp:267
 #, kde-format
 msgid "&Next Tab"
 msgstr "ផ្ទាំង​បន្ទាប់​"
 
-#: src/mainwindow.cpp:276
+#: src/mainwindow.cpp:275
 #, kde-format
 msgid "&Previous Tab"
 msgstr "ផ្ទាំង​មុន​"
 
-#: src/mainwindow.cpp:284
+#: src/mainwindow.cpp:283
 #, kde-format
 msgid "Close &Tab"
 msgstr "បិទ​ផ្ទាំង​"
 
-#: src/mainwindow.cpp:292
+#: src/mainwindow.cpp:291
 #, kde-format
 msgid "Last Focused Tab"
 msgstr "ផ្ទាំង​ដែល​បាន​ផ្ដោត​ចុងក្រោយ"
 
-#: src/mainwindow.cpp:299
+#: src/mainwindow.cpp:298
 #, kde-format
 msgid "Next Active Tab"
 msgstr "ផ្ទាំង​សកម្ម​បន្ទាប់​"
 
-#: src/mainwindow.cpp:312 src/viewer/viewcontainer.cpp:295
+#: src/mainwindow.cpp:311 src/viewer/viewcontainer.cpp:294
 #, kde-format
 msgid "Move Tab Up"
 msgstr "ផ្លាស់​ទី​​ផ្ទាំង​ទៅ​​លើ​"
 
-#: src/mainwindow.cpp:316 src/mainwindow.cpp:321 src/mainwindow.cpp:338
-#: src/mainwindow.cpp:347 src/mainwindow.cpp:359 src/mainwindow.cpp:368
+#: src/mainwindow.cpp:315 src/mainwindow.cpp:320 src/mainwindow.cpp:337
+#: src/mainwindow.cpp:346 src/mainwindow.cpp:358 src/mainwindow.cpp:367
 #, kde-format
 msgid "Move this tab"
 msgstr ""
 
-#: src/mainwindow.cpp:323 src/viewer/viewcontainer.cpp:303
+#: src/mainwindow.cpp:322 src/viewer/viewcontainer.cpp:302
 #, kde-format
 msgid "Move Tab Down"
 msgstr "ផ្លាស់​ទី​​ផ្ទាំង​ចុះ​​ក្រោម​"
 
-#: src/mainwindow.cpp:334 src/mainwindow.cpp:364
-#: src/viewer/viewcontainer.cpp:349
+#: src/mainwindow.cpp:333 src/mainwindow.cpp:363
+#: src/viewer/viewcontainer.cpp:348
 #, kde-format
 msgid "Move Tab Right"
 msgstr "ផ្លាស់​ទី​​ផ្ទាំង​ទៅ​ស្តាំ"
 
-#: src/mainwindow.cpp:343 src/mainwindow.cpp:355
-#: src/viewer/viewcontainer.cpp:341
+#: src/mainwindow.cpp:342 src/mainwindow.cpp:354
+#: src/viewer/viewcontainer.cpp:340
 #, kde-format
 msgid "Move Tab Left"
 msgstr "ផ្លាស់​ទី​ផ្ទាំង​ទៅ​ឆ្វេង​"
 
-#: src/mainwindow.cpp:378
+#: src/mainwindow.cpp:377
 #, kde-format
 msgid "Rejoin Channel"
 msgstr "ភ្ជាប់​ឆានែល​ឡើងវិញ"
 
-#: src/mainwindow.cpp:384 src/mainwindow.cpp:855
+#: src/mainwindow.cpp:383 src/mainwindow.cpp:854
 #, kde-format
 msgid "Enable Notifications"
 msgstr "បើក​ការ​ជូន​ដំណឹង​"
 
-#: src/mainwindow.cpp:390
+#: src/mainwindow.cpp:389
 #, kde-format
 msgid "Join on Connect"
 msgstr "ត​លើ​ការ​តភ្ជាប់​"
 
-#: src/mainwindow.cpp:395
+#: src/mainwindow.cpp:394
 #, fuzzy, kde-format
 #| msgid "Co&nnect on application start up"
 msgid "Connect at Startup"
 msgstr "តភ្ជាប់​នៅ​ពេល​ចាប់ផ្ដើម​កម្មវិធី"
 
-#: src/mainwindow.cpp:400
+#: src/mainwindow.cpp:399
 #, kde-format
 msgid "Default"
 msgstr "លំនាំដើម​"
 
-#: src/mainwindow.cpp:405
+#: src/mainwindow.cpp:404
 #, kde-format
 msgid "Set Encoding"
 msgstr "កំណត់​ការ​អ៊ិនកូដ"
 
-#: src/mainwindow.cpp:414
+#: src/mainwindow.cpp:413
 #, kde-format
 msgid "Go to Tab %1"
 msgstr "ទៅ​ផ្ទាំង​ %1"
 
-#: src/mainwindow.cpp:421
+#: src/mainwindow.cpp:420
 #, kde-format
 msgid "Clear &Marker Lines"
 msgstr "សម្អាត​បន្ទាត់​របស់​អ្នក​គូស​សម្គាល់​"
 
-#: src/mainwindow.cpp:424
+#: src/mainwindow.cpp:423
 #, kde-format
 msgid "Clear marker lines in the current tab"
 msgstr "សម្អាត​​បន្ទាត់​របស់​អ្នក​គូស​សម្គាល់​នៅ​ក្នុង​ផ្ទាំង​បច្ចុប្បន្ន"
 
-#: src/mainwindow.cpp:429
+#: src/mainwindow.cpp:428
 #, kde-format
 msgid "Enlarge Font Size"
 msgstr ""
 
-#: src/mainwindow.cpp:433
+#: src/mainwindow.cpp:432
 #, kde-format
 msgid "Increase the current font size"
 msgstr ""
 
-#: src/mainwindow.cpp:438
+#: src/mainwindow.cpp:437
 #, kde-format
 msgid "Reset Font Size"
 msgstr ""
 
-#: src/mainwindow.cpp:442
+#: src/mainwindow.cpp:441
 #, kde-format
 msgid "Reset the current font size to settings values"
 msgstr ""
 
-#: src/mainwindow.cpp:447
+#: src/mainwindow.cpp:446
 #, kde-format
 msgid "Shrink Font Size"
 msgstr ""
 
-#: src/mainwindow.cpp:451
+#: src/mainwindow.cpp:450
 #, kde-format
 msgid "Decrease the current font size"
 msgstr ""
 
-#: src/mainwindow.cpp:456
+#: src/mainwindow.cpp:455
 #, kde-format
 msgid "&Clear Window"
 msgstr "សម្អាត​បង្អួច​"
 
-#: src/mainwindow.cpp:459
+#: src/mainwindow.cpp:458
 #, kde-format
 msgid "Clear the contents of the current tab"
 msgstr "សម្អាត​​មាតិកា​របស់​ផ្ទាំង​បច្ចុប្បន្ន"
 
-#: src/mainwindow.cpp:464
+#: src/mainwindow.cpp:463
 #, kde-format
 msgid "Clear &All Windows"
 msgstr "សម្អាត​បង្អួច​ទាំងអស់"
 
-#: src/mainwindow.cpp:467
+#: src/mainwindow.cpp:466
 #, kde-format
 msgid "Clear the contents of all open tabs"
 msgstr "សម្អាត​​មាតិកា​រ​នៃ​ការ​បើក​ផ្ទាំង​ទាំង​អស់"
 
-#: src/mainwindow.cpp:472
+#: src/mainwindow.cpp:471
 #, kde-format
 msgid "Global Away"
 msgstr "ឆ្ងាយ​សកល"
 
-#: src/mainwindow.cpp:480 src/viewer/irccontextmenus.cpp:329
+#: src/mainwindow.cpp:479 src/viewer/irccontextmenus.cpp:329
 #, kde-format
 msgid "&Join Channel..."
 msgstr "ត​ឆានែល​..."
 
-#: src/mainwindow.cpp:484
+#: src/mainwindow.cpp:483
 #, fuzzy, kde-format
 #| msgid "Show a list of all the known channels on this server"
 msgid "Join a new channel on this server"
 msgstr "​​​បង្ហាញ​បញ្ជី​របស់​ឆានែលដែលស្គាល់​​ទាំង​អស់​លើ​ម៉ាស៊ីន​បម្រើ​នេះ​"
 
-#: src/mainwindow.cpp:496 src/mainwindow.cpp:857
+#: src/mainwindow.cpp:495 src/mainwindow.cpp:856
 #, kde-format
 msgid "&IRC Color..."
 msgstr "ពណ៌ ​IRC..."
 
-#: src/mainwindow.cpp:500
+#: src/mainwindow.cpp:499
 #, kde-format
 msgid "Set the color of your current IRC message"
 msgstr "កំណត់​ពណ៌​របស់​សារ​ជជែក​​តាម​អ៊ីនធឺណិត​របស់​អ្នក​បច្ចុប្បន្ន​​"
 
-#: src/mainwindow.cpp:505 src/mainwindow.cpp:859
+#: src/mainwindow.cpp:504 src/mainwindow.cpp:858
 #, kde-format
 msgid "&Marker Line"
 msgstr "បន្ទាត់​របស់​អ្នក​គូស​សម្គាល់​"
 
-#: src/mainwindow.cpp:508
+#: src/mainwindow.cpp:507
 #, kde-format
 msgid "Insert a horizontal line into the current tab that only you can see"
 msgstr "បញ្ចូល​ជួរ​ផ្តេក​ទៅ​ក្នុង​ផ្ទាំង​បច្ចុប្បន្ន​ ដែល​អ្នក​អាច​មើល​ឃើញ​តែមួយ​"
 
-#: src/mainwindow.cpp:513 src/mainwindow.cpp:858
+#: src/mainwindow.cpp:512 src/mainwindow.cpp:857
 #, kde-format
 msgid "Special &Character..."
 msgstr "តួអក្សរ​ពិសេស..."
 
-#: src/mainwindow.cpp:517
+#: src/mainwindow.cpp:516
 #, kde-format
 msgid "Insert any character into your current IRC message"
 msgstr "បញ្ចូល​តួអក្សរ​ខ្លះ​ទៅ​ក្នុង​សារ​ជជែក​​របស់​អ្នក​បច្ចុប្បន្ន​"
 
-#: src/mainwindow.cpp:528
+#: src/mainwindow.cpp:527
 #, kde-format
 msgid "Focus Input Box"
 msgstr "ផ្ដោត​ប្រអប់​បញ្ចូល"
 
-#: src/mainwindow.cpp:535
+#: src/mainwindow.cpp:534
 #, kde-format
 msgid "Close &All Open Queries"
 msgstr "បិទ និង​បើក​សំណួរ​ទាំងអស់"
 
-#: src/mainwindow.cpp:544
+#: src/mainwindow.cpp:543
 #, kde-format
 msgid "Show Nicklist"
 msgstr "បង្ហាញ​បញ្ជី​សម្មតិនាម​"
 
-#: src/mainwindow.cpp:550
+#: src/mainwindow.cpp:549
 #, kde-format
 msgid "Show/Hide Konversation"
 msgstr "បង្ហាញ/លាក់ Konversation"
 
-#: src/mainwindow.cpp:561
+#: src/mainwindow.cpp:560
 #, kde-format
 msgid "Enable On Screen Display"
 msgstr "បើក​បង្ហាញ​លើ​អេក្រង់​"
 
-#: src/mainwindow.cpp:568
+#: src/mainwindow.cpp:567
 #, kde-format
 msgid "Bookmarks"
 msgstr "ចំណាំ"
 
-#: src/mainwindow.cpp:613
+#: src/mainwindow.cpp:612
 #, kde-format
 msgid ""
 "<qt>You have active DCC file transfers. Are you sure you want to quit "
@@ -8487,17 +8487,17 @@ msgstr ""
 "<qt>អ្នក​បាន​ផ្ទេរ​​ឯកសារ​របស់ DCC សកម្ម​ ។ តើ​អ្នក​ប្រាកដ​ជា​ចង់​បោះបង់​ <b>Konversation</b> ឬ ?"
 "</qt>"
 
-#: src/mainwindow.cpp:614 src/mainwindow.cpp:624
+#: src/mainwindow.cpp:613 src/mainwindow.cpp:623
 #, kde-format
 msgid "Confirm Quit"
 msgstr "បោះបង់​ការ​អះអាង​"
 
-#: src/mainwindow.cpp:623
+#: src/mainwindow.cpp:622
 #, kde-format
 msgid "<qt>Are you sure you want to quit <b>Konversation</b>?</qt>"
 msgstr "<qt>តើ​អ្នក​ប្រាកដជា​ចង់​បោះបង់​ <b>Konversation</b> ឬ ?</qt>"
 
-#: src/mainwindow.cpp:660
+#: src/mainwindow.cpp:659
 #, kde-format
 msgid ""
 "<p>Closing the main window will keep Konversation running in the system "
@@ -8507,12 +8507,12 @@ msgstr ""
 "<p>ការ​បិទ​បង្អួច​សំខាន់​ នឹង​រក្សាទុក​ការ​ដំណើរ​ការ​របស់​ Konversation នៅ​ក្នុង​ថាស​ប្រព័ន្ធ​ ។  ប្រើ​ "
 "<b>បោះបង់​​</b> ពី​ <b>Konversation</b> ម៉ឺនុយ​ដើម្បី​បោះបង់​កម្មវិធី ។</p>"
 
-#: src/mainwindow.cpp:662
+#: src/mainwindow.cpp:661
 #, kde-format
 msgid "Docking in System Tray"
 msgstr "ការ​ចត​ក្នុង​ថាស​​ប្រព័ន្ធ​"
 
-#: src/mainwindow.cpp:806
+#: src/mainwindow.cpp:805
 #, kde-format
 msgid ""
 "<qt>This will hide the menu bar completely. You can show it again by typing "
@@ -8520,47 +8520,47 @@ msgid ""
 msgstr ""
 "<qt>វា​នឹង​លាក់​របារ​​ម៉ឺនុយ​ដោយ​បញ្ចប់​ទាំងស្រុង​ ។ អ្នក​អាច​បង្ហាញ​វា​ម្ដង​ទៀត​ដោយ​ការ​វាយ​ %1 ។</qt>"
 
-#: src/mainwindow.cpp:807
+#: src/mainwindow.cpp:806
 #, kde-format
 msgid "Hide menu bar"
 msgstr "លាក់​របារ​រមូរ"
 
-#: src/mainwindow.cpp:839
+#: src/mainwindow.cpp:838
 #, kde-format
 msgid "Toggle Notifications"
 msgstr "បិទ/បើក ការ​​ជូនដំណឹង​"
 
-#: src/mainwindow.cpp:840
+#: src/mainwindow.cpp:839
 #, kde-format
 msgid "Toggle Away Globally"
 msgstr "បិទ/​បើក​​ ឆ្ងាយ​ជា​​សកល​"
 
-#: src/mainwindow.cpp:841
+#: src/mainwindow.cpp:840
 #, kde-format
 msgid "Insert &IRC Color..."
 msgstr "បញ្ចូល​​ពណ៌​នៃ​ការ​ជជែក​តាម​អ៊ីនធឺណិត..."
 
-#: src/mainwindow.cpp:842
+#: src/mainwindow.cpp:841
 #, kde-format
 msgid "Insert Special &Character..."
 msgstr "បញ្ចូល​តួអក្សរ​ពិសេស..."
 
-#: src/mainwindow.cpp:843
+#: src/mainwindow.cpp:842
 #, kde-format
 msgid "Insert &Marker Line"
 msgstr "បញ្ចូល​បន្ទាត់​អ្នក​គូស​សម្គាល់"
 
-#: src/mainwindow.cpp:845
+#: src/mainwindow.cpp:844
 #, kde-format
 msgid "&Channel List"
 msgstr "បញ្ជី​របស់​ឆានែល​"
 
-#: src/mainwindow.cpp:856
+#: src/mainwindow.cpp:855
 #, kde-format
 msgid "Set &Away Globally"
 msgstr "កំណត់​ឆ្ងាយ​ជាសាកល"
 
-#: src/mainwindow.cpp:874
+#: src/mainwindow.cpp:873
 #, kde-format
 msgid "Server List"
 msgstr "បញ្ជី​របស់​​ម៉ាស៊ីន​បម្រើ​"
@@ -8986,7 +8986,7 @@ msgstr "បាន​បរាជ័យ​ទៅ​ទាញ​យក​ %1 ៖ %
 msgid "Error parsing router description."
 msgstr "កំហុស​ការ​ញែក​​សេចក្ដី​ពិពណ៌នា​រ៉ោតទ័រ​ ។"
 
-#: src/urlcatcher.cpp:69 src/viewer/viewcontainer.cpp:2617
+#: src/urlcatcher.cpp:69 src/viewer/viewcontainer.cpp:2612
 #, kde-format
 msgid "URL Catcher"
 msgstr "កម្មវិធី​ចាប​យក​របស់ URL"
@@ -9964,7 +9964,7 @@ msgstr "បន្ថែម​ទ្រនិច​បង្ហាញ​សម្
 msgid "&Remove Newlines"
 msgstr "យក​បន្ទាត់​ថ្មី​ចេញ​"
 
-#: src/viewer/rawlog.cpp:17 src/viewer/viewcontainer.cpp:2742
+#: src/viewer/rawlog.cpp:17 src/viewer/viewcontainer.cpp:2737
 #, kde-format
 msgid "Raw Log"
 msgstr "កំណត់​ហេតុ​ដើម​"
@@ -10116,63 +10116,63 @@ msgstr ""
 msgid "IRC Client"
 msgstr ""
 
-#: src/viewer/viewcontainer.cpp:881
+#: src/viewer/viewcontainer.cpp:880
 #, kde-format
 msgid "Find Text..."
 msgstr "ស្វែង​រក​អត្ថបទ​..."
 
-#: src/viewer/viewcontainer.cpp:883
+#: src/viewer/viewcontainer.cpp:882
 #, kde-format
 msgid "Search for text in the current tab"
 msgstr "ស្វែងរក​អត្ថបទ​នៅ​ក្នុង​ផ្ទាំង​បច្ចុប្បន្ន"
 
-#: src/viewer/viewcontainer.cpp:901
+#: src/viewer/viewcontainer.cpp:900
 #, kde-format
 msgid "Channel &List for %1"
 msgstr "ឆានែល​ និង​បញ្ជី​សម្រាប់​ %1"
 
-#: src/viewer/viewcontainer.cpp:921
+#: src/viewer/viewcontainer.cpp:920
 #, kde-format
 msgid "&Open Logfile for %1"
 msgstr "បើក​ឯកសារ​កំណត់ហេតុ​សម្រាប់​ %1"
 
-#: src/viewer/viewcontainer.cpp:932
+#: src/viewer/viewcontainer.cpp:931
 #, kde-format
 msgid "&Channel Settings for %1..."
 msgstr "កំណត់​ឆានែល​សម្រាប់​ %1..."
 
-#: src/viewer/viewcontainer.cpp:2115
+#: src/viewer/viewcontainer.cpp:2110
 #, kde-format
 msgid "Rename Tab"
 msgstr "ប្ដូរ​ឈ្មោះផ្ទាំង​"
 
-#: src/viewer/viewcontainer.cpp:2116
+#: src/viewer/viewcontainer.cpp:2111
 #, kde-format
 msgid "Enter new tab name:"
 msgstr "បញ្ចូល​ឈ្មោះ​ផ្ទាំង​ថ្មី ៖"
 
-#: src/viewer/viewcontainer.cpp:2188
+#: src/viewer/viewcontainer.cpp:2183
 #, kde-format
 msgctxt "Default encoding"
 msgid "Default ( %1 )"
 msgstr "លំនាំដើម​ ( %1 )"
 
-#: src/viewer/viewcontainer.cpp:2229
+#: src/viewer/viewcontainer.cpp:2224
 #, kde-format
 msgid "&Rename Tab..."
 msgstr "ប្ដូរ​ឈ្មោះ​ផ្ទាំង​..."
 
-#: src/viewer/viewcontainer.cpp:2378
+#: src/viewer/viewcontainer.cpp:2373
 #, kde-format
 msgid "You can only search in text fields."
 msgstr "អ្នក​អាច​ស្វែង​រក​នៅ​ក្នុង​វាល​អត្ថបទ​តែប៉ុណ្ណោះ ។"
 
-#: src/viewer/viewcontainer.cpp:2379
+#: src/viewer/viewcontainer.cpp:2374
 #, kde-format
 msgid "Find Text Information"
 msgstr "ស្វែង​រក​ព័ត៌មាន​អត្ថបទ​"
 
-#: src/viewer/viewcontainer.cpp:2979
+#: src/viewer/viewcontainer.cpp:2974
 #, kde-format
 msgid ""
 "To know which server to display the channel list for, the list can only be "
@@ -10181,7 +10181,7 @@ msgstr ""
 "ដើម្បី​ស្គាល់​​ម៉ាស៊ីន​បម្រើ​ណាមួយ​​ត្រូវ​បង្ហាញ​បញ្ជី​ឆានែល​សម្រាប់​ បញ្ជី​​អាច​ត្រូវ​បាន​បើក​ចេញ​ពី​សំណួរ​ ឆានែល​ ឬ​បង្អួច​"
 "ស្ថាន​ភាព​​ ។"
 
-#: src/viewer/viewcontainer.cpp:3009
+#: src/viewer/viewcontainer.cpp:3004
 #, kde-format
 msgid ""
 "Using this function may result in a lot of network traffic. If your "
@@ -10191,12 +10191,12 @@ msgstr ""
 "ការ​ប្រើ​មុខងារ​នេះ​អាច​មាន​លទ្ធផល​នៅ​ក្នុង​ចរាចរ​របស់​បណ្ដាញ​ជាច្រើន​ ។ ប្រសិន​បើ​ ការ​តភ្ជាប់​របស់​អ្នក​មិន​"
 "លឿន​គ្រប់​គ្រាន់​ វា​អាច​ធ្វើ​ទៅ​បាន ប៉ុន្តែ​​​ម៉ាស៊ីន​ភ្ញៀវ​របស់​អ្នក​នឹង​ត្រូវ​បាន​ផ្តាច់​ដោយ​ម៉ាស៊ីន​បម្រើ​ ។"
 
-#: src/viewer/viewcontainer.cpp:3013
+#: src/viewer/viewcontainer.cpp:3008
 #, kde-format
 msgid "Channel List Warning"
 msgstr "ការ​ព្រមាន​បញ្ជី​ឆានែល​"
 
-#: src/viewer/viewcontainer.cpp:3043
+#: src/viewer/viewcontainer.cpp:3038
 #, kde-format
 msgid "Watched Nicks"
 msgstr "សម្មតិនាម​ដែល​បាន​មើល​​"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-05 00:43+0000\n"
+"POT-Creation-Date: 2026-07-12 00:44+0000\n"
 "PO-Revision-Date: 2025-11-28 19:43+0100\n"
 "Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
 "Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
@@ -143,7 +143,7 @@ msgstr ""
 "\"/media { Player }\" - съобщава какво се изпълнява в посочения плейър, ако "
 "бъде намерен."
 
-#: src/application.cpp:383 src/irc/server.cpp:1814 src/irc/server.cpp:3847
+#: src/application.cpp:380 src/irc/server.cpp:1814 src/irc/server.cpp:3847
 #: src/irc/server.cpp:3852
 #, kde-format
 msgid "D-Bus"
@@ -2058,7 +2058,7 @@ msgstr "Списък с псевдоними"
 msgid "Command Aliases"
 msgstr "Командни псевдоними"
 
-#: src/config/settingsdialog.cpp:133 src/mainwindow.cpp:522
+#: src/config/settingsdialog.cpp:133 src/mainwindow.cpp:521
 #, kde-format
 msgid "Auto Replace"
 msgstr "Автозаместване"
@@ -3342,7 +3342,7 @@ msgstr "Входящи трансфери"
 msgid "Outgoing Transfers"
 msgstr "Изходящи трансфери"
 
-#: src/dcc/transferpanel.cpp:35 src/viewer/viewcontainer.cpp:2649
+#: src/dcc/transferpanel.cpp:35 src/viewer/viewcontainer.cpp:2644
 #, kde-format
 msgid "DCC Status"
 msgstr "DCC статус"
@@ -5259,7 +5259,7 @@ msgstr "Тема на канал"
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, ChannelListWidgetUI)
 #: src/irc/channellistpanel.cpp:139 src/irc/channellistpanelui.ui:14
-#: src/viewer/viewcontainer.cpp:2962 src/viewer/viewcontainer.cpp:2983
+#: src/viewer/viewcontainer.cpp:2957 src/viewer/viewcontainer.cpp:2978
 #, kde-format
 msgid "Channel List"
 msgstr "Списък с канали"
@@ -7642,8 +7642,8 @@ msgstr "Автор"
 msgid "Time"
 msgstr "време"
 
-#: src/konsolepanel.cpp:26 src/viewer/viewcontainer.cpp:2606
-#: src/viewer/viewcontainer.cpp:2607
+#: src/konsolepanel.cpp:26 src/viewer/viewcontainer.cpp:2601
+#: src/viewer/viewcontainer.cpp:2602
 #, kde-format
 msgid "Konsole"
 msgstr "Конзола"
@@ -8157,353 +8157,353 @@ msgstr ""
 "Задава KUniqueApplication::NonUniqueInstance (само за отстраняване на "
 "грешки, използвайте с повишено внимание)"
 
-#: src/mainwindow.cpp:135
+#: src/mainwindow.cpp:134
 #, kde-format
 msgid "Restart"
 msgstr "Рестартиране"
 
-#: src/mainwindow.cpp:137
+#: src/mainwindow.cpp:136
 #, kde-format
 msgid "Quit and restart the application"
 msgstr "Изход и рестартиране на приложението"
 
-#: src/mainwindow.cpp:142
+#: src/mainwindow.cpp:141
 #, kde-format
 msgid "&Server List..."
 msgstr "Списък със &сървъри..."
 
-#: src/mainwindow.cpp:145
+#: src/mainwindow.cpp:144
 #, kde-format
 msgid "Manage networks and servers"
 msgstr "Управление на мрежи и сървъри"
 
-#: src/mainwindow.cpp:150
+#: src/mainwindow.cpp:149
 #, kde-format
 msgid "Quick &Connect..."
 msgstr "&Бързо свързване..."
 
-#: src/mainwindow.cpp:153
+#: src/mainwindow.cpp:152
 #, kde-format
 msgid "Type in the address of a new IRC server to connect to"
 msgstr "Въведете адреса на новия IRC сървър, към който искате да се свържете"
 
-#: src/mainwindow.cpp:158
+#: src/mainwindow.cpp:157
 #, kde-format
 msgid "&Reconnect"
 msgstr "&Ново свързване"
 
-#: src/mainwindow.cpp:161
+#: src/mainwindow.cpp:160
 #, kde-format
 msgid "Reconnect to the current server."
 msgstr "Ново свързване към сървъра."
 
-#: src/mainwindow.cpp:167
+#: src/mainwindow.cpp:166
 #, kde-format
 msgid "&Disconnect"
 msgstr "&Прекъсване на връзката"
 
-#: src/mainwindow.cpp:170
+#: src/mainwindow.cpp:169
 #, kde-format
 msgid "Disconnect from the current server."
 msgstr "Прекъсване на връзката със сървъра."
 
-#: src/mainwindow.cpp:175
+#: src/mainwindow.cpp:174
 #, kde-format
 msgid "&Identities..."
 msgstr "&Самоличности..."
 
-#: src/mainwindow.cpp:178
+#: src/mainwindow.cpp:177
 #, kde-format
 msgid "Manage your nick, away and other identity settings"
 msgstr "Управление на псевдоним, настройки за отсъствие и самоличност"
 
-#: src/mainwindow.cpp:183
+#: src/mainwindow.cpp:182
 #, kde-format
 msgid "&Watched Nicks"
 msgstr "&Наблюдавани псевдоними"
 
-#: src/mainwindow.cpp:191
+#: src/mainwindow.cpp:190
 #, kde-format
 msgid "&DCC Status"
 msgstr "&DCC статус"
 
-#: src/mainwindow.cpp:200 src/mainwindow.cpp:847
-#: src/viewer/viewcontainer.cpp:916
+#: src/mainwindow.cpp:199 src/mainwindow.cpp:846
+#: src/viewer/viewcontainer.cpp:915
 #, kde-format
 msgid "&Open Logfile"
 msgstr "&Отваряне на файл-регистър"
 
-#: src/mainwindow.cpp:204
+#: src/mainwindow.cpp:203
 #, kde-format
 msgid "Open the known history for this channel in a new tab"
 msgstr "Отваряне на историята за този канала в нов подпрозорец"
 
-#: src/mainwindow.cpp:209 src/viewer/viewcontainer.cpp:937
+#: src/mainwindow.cpp:208 src/viewer/viewcontainer.cpp:936
 #, kde-format
 msgid "&Channel Settings..."
 msgstr "Настройки на &канали..."
 
-#: src/mainwindow.cpp:212
+#: src/mainwindow.cpp:211
 #, kde-format
 msgid "Open the channel settings dialog for this tab"
 msgstr "Отваряне на прозореца за настройка на канал за този подпрозорец"
 
-#: src/mainwindow.cpp:217 src/viewer/viewcontainer.cpp:907
+#: src/mainwindow.cpp:216 src/viewer/viewcontainer.cpp:906
 #, kde-format
 msgid "Channel &List"
 msgstr "&Списък с канали"
 
-#: src/mainwindow.cpp:221
+#: src/mainwindow.cpp:220
 #, kde-format
 msgid "Show a list of all the known channels on this server"
 msgstr "Показване на списък със всички канали на сървъра"
 
-#: src/mainwindow.cpp:226
+#: src/mainwindow.cpp:225
 #, kde-format
 msgid "&URL Catcher"
 msgstr "&Ловец на URL"
 
-#: src/mainwindow.cpp:229
+#: src/mainwindow.cpp:228
 #, kde-format
 msgid "List all URLs that have been mentioned recently in a new tab"
 msgstr "Показване на всички адреси, които са били в нов подпрозорец"
 
-#: src/mainwindow.cpp:236
+#: src/mainwindow.cpp:235
 #, kde-format
 msgid "New &Konsole"
 msgstr "Нова &конзола"
 
-#: src/mainwindow.cpp:238
+#: src/mainwindow.cpp:237
 #, kde-format
 msgid "Open a terminal in a new tab"
 msgstr "Отваряне на терминал в нов подпрозорец"
 
-#: src/mainwindow.cpp:268
+#: src/mainwindow.cpp:267
 #, kde-format
 msgid "&Next Tab"
 msgstr "&Следващ подпрозорец"
 
-#: src/mainwindow.cpp:276
+#: src/mainwindow.cpp:275
 #, kde-format
 msgid "&Previous Tab"
 msgstr "&Предишен подпрозорец"
 
-#: src/mainwindow.cpp:284
+#: src/mainwindow.cpp:283
 #, kde-format
 msgid "Close &Tab"
 msgstr "Затваряне на &подпрозорец"
 
-#: src/mainwindow.cpp:292
+#: src/mainwindow.cpp:291
 #, kde-format
 msgid "Last Focused Tab"
 msgstr "Последно фокусиран раздел"
 
-#: src/mainwindow.cpp:299
+#: src/mainwindow.cpp:298
 #, kde-format
 msgid "Next Active Tab"
 msgstr "Следващ активен подпрозорец"
 
-#: src/mainwindow.cpp:312 src/viewer/viewcontainer.cpp:295
+#: src/mainwindow.cpp:311 src/viewer/viewcontainer.cpp:294
 #, kde-format
 msgid "Move Tab Up"
 msgstr "Подпрозорец - преместване нагоре"
 
-#: src/mainwindow.cpp:316 src/mainwindow.cpp:321 src/mainwindow.cpp:338
-#: src/mainwindow.cpp:347 src/mainwindow.cpp:359 src/mainwindow.cpp:368
+#: src/mainwindow.cpp:315 src/mainwindow.cpp:320 src/mainwindow.cpp:337
+#: src/mainwindow.cpp:346 src/mainwindow.cpp:358 src/mainwindow.cpp:367
 #, kde-format
 msgid "Move this tab"
 msgstr "Преместване на този раздел"
 
-#: src/mainwindow.cpp:323 src/viewer/viewcontainer.cpp:303
+#: src/mainwindow.cpp:322 src/viewer/viewcontainer.cpp:302
 #, kde-format
 msgid "Move Tab Down"
 msgstr "Подпрозорец - преместване надолу"
 
-#: src/mainwindow.cpp:334 src/mainwindow.cpp:364
-#: src/viewer/viewcontainer.cpp:349
+#: src/mainwindow.cpp:333 src/mainwindow.cpp:363
+#: src/viewer/viewcontainer.cpp:348
 #, kde-format
 msgid "Move Tab Right"
 msgstr "Подпрозорец - преместване надясно"
 
-#: src/mainwindow.cpp:343 src/mainwindow.cpp:355
-#: src/viewer/viewcontainer.cpp:341
+#: src/mainwindow.cpp:342 src/mainwindow.cpp:354
+#: src/viewer/viewcontainer.cpp:340
 #, kde-format
 msgid "Move Tab Left"
 msgstr "Подпрозорец - преместване наляво"
 
-#: src/mainwindow.cpp:378
+#: src/mainwindow.cpp:377
 #, kde-format
 msgid "Rejoin Channel"
 msgstr "Присъединете се отново към канала"
 
-#: src/mainwindow.cpp:384 src/mainwindow.cpp:855
+#: src/mainwindow.cpp:383 src/mainwindow.cpp:854
 #, kde-format
 msgid "Enable Notifications"
 msgstr "Включване на известяванията"
 
-#: src/mainwindow.cpp:390
+#: src/mainwindow.cpp:389
 #, kde-format
 msgid "Join on Connect"
 msgstr "Присъединете се към Connect"
 
-#: src/mainwindow.cpp:395
+#: src/mainwindow.cpp:394
 #, kde-format
 msgid "Connect at Startup"
 msgstr "Свързване при стартиране"
 
-#: src/mainwindow.cpp:400
+#: src/mainwindow.cpp:399
 #, kde-format
 msgid "Default"
 msgstr "По подразбиране"
 
-#: src/mainwindow.cpp:405
+#: src/mainwindow.cpp:404
 #, kde-format
 msgid "Set Encoding"
 msgstr "Задаване на кодировка"
 
-#: src/mainwindow.cpp:414
+#: src/mainwindow.cpp:413
 #, kde-format
 msgid "Go to Tab %1"
 msgstr "Отиване на подпрозорец %1"
 
-#: src/mainwindow.cpp:421
+#: src/mainwindow.cpp:420
 #, kde-format
 msgid "Clear &Marker Lines"
 msgstr "Изчистване на &маркиращи линии"
 
-#: src/mainwindow.cpp:424
+#: src/mainwindow.cpp:423
 #, kde-format
 msgid "Clear marker lines in the current tab"
 msgstr "Изчистване на маркерните линии в текущия раздел"
 
-#: src/mainwindow.cpp:429
+#: src/mainwindow.cpp:428
 #, kde-format
 msgid "Enlarge Font Size"
 msgstr "Увеличаване на размера на шрифта"
 
-#: src/mainwindow.cpp:433
+#: src/mainwindow.cpp:432
 #, kde-format
 msgid "Increase the current font size"
 msgstr "Увеличаване на текущия размер на шрифта"
 
-#: src/mainwindow.cpp:438
+#: src/mainwindow.cpp:437
 #, kde-format
 msgid "Reset Font Size"
 msgstr "Нулиране на размера на шрифта"
 
-#: src/mainwindow.cpp:442
+#: src/mainwindow.cpp:441
 #, kde-format
 msgid "Reset the current font size to settings values"
 msgstr "Нулиране на текущия размер на шрифта до стандартните стойности"
 
-#: src/mainwindow.cpp:447
+#: src/mainwindow.cpp:446
 #, kde-format
 msgid "Shrink Font Size"
 msgstr "Свиване на размера на шрифта"
 
-#: src/mainwindow.cpp:451
+#: src/mainwindow.cpp:450
 #, kde-format
 msgid "Decrease the current font size"
 msgstr "Намаляване на текущия размер на шрифта"
 
-#: src/mainwindow.cpp:456
+#: src/mainwindow.cpp:455
 #, kde-format
 msgid "&Clear Window"
 msgstr "&Изчистване на прозореца"
 
-#: src/mainwindow.cpp:459
+#: src/mainwindow.cpp:458
 #, kde-format
 msgid "Clear the contents of the current tab"
 msgstr "Изчистване на съдържанието на текущия прозорец"
 
-#: src/mainwindow.cpp:464
+#: src/mainwindow.cpp:463
 #, kde-format
 msgid "Clear &All Windows"
 msgstr "Изчистване на &всички прозорци"
 
-#: src/mainwindow.cpp:467
+#: src/mainwindow.cpp:466
 #, kde-format
 msgid "Clear the contents of all open tabs"
 msgstr "Изчистване на съдържанието на всички отворени подпрозорци"
 
-#: src/mainwindow.cpp:472
+#: src/mainwindow.cpp:471
 #, kde-format
 msgid "Global Away"
 msgstr "Отсъствие глобално"
 
-#: src/mainwindow.cpp:480 src/viewer/irccontextmenus.cpp:329
+#: src/mainwindow.cpp:479 src/viewer/irccontextmenus.cpp:329
 #, kde-format
 msgid "&Join Channel..."
 msgstr "&Присъединяване към канал..."
 
-#: src/mainwindow.cpp:484
+#: src/mainwindow.cpp:483
 #, kde-format
 msgid "Join a new channel on this server"
 msgstr "Присъединете се към нов канал на този сървър"
 
-#: src/mainwindow.cpp:496 src/mainwindow.cpp:857
+#: src/mainwindow.cpp:495 src/mainwindow.cpp:856
 #, kde-format
 msgid "&IRC Color..."
 msgstr "&Цвят на IRC..."
 
-#: src/mainwindow.cpp:500
+#: src/mainwindow.cpp:499
 #, kde-format
 msgid "Set the color of your current IRC message"
 msgstr "Задаване на цвят на текущото IRC съобщение"
 
-#: src/mainwindow.cpp:505 src/mainwindow.cpp:859
+#: src/mainwindow.cpp:504 src/mainwindow.cpp:858
 #, kde-format
 msgid "&Marker Line"
 msgstr "&Маркерна линия"
 
-#: src/mainwindow.cpp:508
+#: src/mainwindow.cpp:507
 #, kde-format
 msgid "Insert a horizontal line into the current tab that only you can see"
 msgstr ""
 "Добавяне на хоризонтална линия в подпрозореца, която само вие можете да "
 "виждате"
 
-#: src/mainwindow.cpp:513 src/mainwindow.cpp:858
+#: src/mainwindow.cpp:512 src/mainwindow.cpp:857
 #, kde-format
 msgid "Special &Character..."
 msgstr "Специален &символ..."
 
-#: src/mainwindow.cpp:517
+#: src/mainwindow.cpp:516
 #, kde-format
 msgid "Insert any character into your current IRC message"
 msgstr "Вмъкване на символ в текущото IRC съобщение"
 
-#: src/mainwindow.cpp:528
+#: src/mainwindow.cpp:527
 #, kde-format
 msgid "Focus Input Box"
 msgstr "Фокусиране на полето за въвеждане"
 
-#: src/mainwindow.cpp:535
+#: src/mainwindow.cpp:534
 #, kde-format
 msgid "Close &All Open Queries"
 msgstr "Затваряне на &всички отворени лични разговори"
 
-#: src/mainwindow.cpp:544
+#: src/mainwindow.cpp:543
 #, kde-format
 msgid "Show Nicklist"
 msgstr "Показване на списък с псевдоними"
 
-#: src/mainwindow.cpp:550
+#: src/mainwindow.cpp:549
 #, kde-format
 msgid "Show/Hide Konversation"
 msgstr "Показване/скриване на Konversation"
 
-#: src/mainwindow.cpp:561
+#: src/mainwindow.cpp:560
 #, kde-format
 msgid "Enable On Screen Display"
 msgstr "Активиране на екранните надписи"
 
-#: src/mainwindow.cpp:568
+#: src/mainwindow.cpp:567
 #, kde-format
 msgid "Bookmarks"
 msgstr "Отметки"
 
-#: src/mainwindow.cpp:613
+#: src/mainwindow.cpp:612
 #, kde-format
 msgid ""
 "<qt>You have active DCC file transfers. Are you sure you want to quit "
@@ -8512,17 +8512,17 @@ msgstr ""
 "<qt>Имате активни DCC прехвърляния на файлове. Сигурни ли сте, че искате да "
 "излезете от <b>Konversation</b>?</qt>"
 
-#: src/mainwindow.cpp:614 src/mainwindow.cpp:624
+#: src/mainwindow.cpp:613 src/mainwindow.cpp:623
 #, kde-format
 msgid "Confirm Quit"
 msgstr "Потвърдете излизането"
 
-#: src/mainwindow.cpp:623
+#: src/mainwindow.cpp:622
 #, kde-format
 msgid "<qt>Are you sure you want to quit <b>Konversation</b>?</qt>"
 msgstr "<qt>Сигурни ли сте, че искате да излезете от <b>Konversation</b>?</qt>"
 
-#: src/mainwindow.cpp:660
+#: src/mainwindow.cpp:659
 #, kde-format
 msgid ""
 "<p>Closing the main window will keep Konversation running in the system "
@@ -8533,12 +8533,12 @@ msgstr ""
 "системния панел. Използвайте <b>Изход</b> от менюто на <b>Konversation</b>, "
 "за да излезете от програмата.</p>"
 
-#: src/mainwindow.cpp:662
+#: src/mainwindow.cpp:661
 #, kde-format
 msgid "Docking in System Tray"
 msgstr "Поставяне в системния панел"
 
-#: src/mainwindow.cpp:806
+#: src/mainwindow.cpp:805
 #, kde-format
 msgid ""
 "<qt>This will hide the menu bar completely. You can show it again by typing "
@@ -8547,47 +8547,47 @@ msgstr ""
 "<qt>Това напълно ще скрие менюто. Можете да го накарате да се покаже отново "
 "като напишете: %1.</qt>"
 
-#: src/mainwindow.cpp:807
+#: src/mainwindow.cpp:806
 #, kde-format
 msgid "Hide menu bar"
 msgstr "Скриване на менюто"
 
-#: src/mainwindow.cpp:839
+#: src/mainwindow.cpp:838
 #, kde-format
 msgid "Toggle Notifications"
 msgstr "Превключване на известяванията"
 
-#: src/mainwindow.cpp:840
+#: src/mainwindow.cpp:839
 #, kde-format
 msgid "Toggle Away Globally"
 msgstr "Превключване на глобално отсъствие"
 
-#: src/mainwindow.cpp:841
+#: src/mainwindow.cpp:840
 #, kde-format
 msgid "Insert &IRC Color..."
 msgstr "Вмъкване на IRC &цвят..."
 
-#: src/mainwindow.cpp:842
+#: src/mainwindow.cpp:841
 #, kde-format
 msgid "Insert Special &Character..."
 msgstr "Вмъкване на специален &символ..."
 
-#: src/mainwindow.cpp:843
+#: src/mainwindow.cpp:842
 #, kde-format
 msgid "Insert &Marker Line"
 msgstr "Вмъкване на &маркираща линия"
 
-#: src/mainwindow.cpp:845
+#: src/mainwindow.cpp:844
 #, kde-format
 msgid "&Channel List"
 msgstr "&Списък с канали"
 
-#: src/mainwindow.cpp:856
+#: src/mainwindow.cpp:855
 #, kde-format
 msgid "Set &Away Globally"
 msgstr "Глобално задаване на &отсъствие"
 
-#: src/mainwindow.cpp:874
+#: src/mainwindow.cpp:873
 #, kde-format
 msgid "Server List"
 msgstr "Списък със сървъри"
@@ -9011,7 +9011,7 @@ msgstr "Грешка при изтегляне на %1: %2"
 msgid "Error parsing router description."
 msgstr "Грешка при анализа на описанието на рутера."
 
-#: src/urlcatcher.cpp:69 src/viewer/viewcontainer.cpp:2617
+#: src/urlcatcher.cpp:69 src/viewer/viewcontainer.cpp:2612
 #, kde-format
 msgid "URL Catcher"
 msgstr "Ловец на URL"
@@ -10015,7 +10015,7 @@ msgstr "Добавяне на индикатори за &цитат"
 msgid "&Remove Newlines"
 msgstr "Премахване на &новите редове"
 
-#: src/viewer/rawlog.cpp:17 src/viewer/viewcontainer.cpp:2742
+#: src/viewer/rawlog.cpp:17 src/viewer/viewcontainer.cpp:2737
 #, kde-format
 msgid "Raw Log"
 msgstr "Необработен файл-регистър"
@@ -10161,63 +10161,63 @@ msgstr ""
 msgid "IRC Client"
 msgstr "IRC клиент"
 
-#: src/viewer/viewcontainer.cpp:881
+#: src/viewer/viewcontainer.cpp:880
 #, kde-format
 msgid "Find Text..."
 msgstr "Търсене на текст..."
 
-#: src/viewer/viewcontainer.cpp:883
+#: src/viewer/viewcontainer.cpp:882
 #, kde-format
 msgid "Search for text in the current tab"
 msgstr "Търсене на текст в текущия подпрозорец"
 
-#: src/viewer/viewcontainer.cpp:901
+#: src/viewer/viewcontainer.cpp:900
 #, kde-format
 msgid "Channel &List for %1"
 msgstr "&Списък с канали за %1"
 
-#: src/viewer/viewcontainer.cpp:921
+#: src/viewer/viewcontainer.cpp:920
 #, kde-format
 msgid "&Open Logfile for %1"
 msgstr "&Отваряне на файл-регистър за %1"
 
-#: src/viewer/viewcontainer.cpp:932
+#: src/viewer/viewcontainer.cpp:931
 #, kde-format
 msgid "&Channel Settings for %1..."
 msgstr "Настройки на &канала за %1..."
 
-#: src/viewer/viewcontainer.cpp:2115
+#: src/viewer/viewcontainer.cpp:2110
 #, kde-format
 msgid "Rename Tab"
 msgstr "Преименуване на подпрозорец"
 
-#: src/viewer/viewcontainer.cpp:2116
+#: src/viewer/viewcontainer.cpp:2111
 #, kde-format
 msgid "Enter new tab name:"
 msgstr "Въведете ново име на подпрозореца:"
 
-#: src/viewer/viewcontainer.cpp:2188
+#: src/viewer/viewcontainer.cpp:2183
 #, kde-format
 msgctxt "Default encoding"
 msgid "Default ( %1 )"
 msgstr "По подразбиране ( %1 )"
 
-#: src/viewer/viewcontainer.cpp:2229
+#: src/viewer/viewcontainer.cpp:2224
 #, kde-format
 msgid "&Rename Tab..."
 msgstr "Преимен&уване на подпрозорец..."
 
-#: src/viewer/viewcontainer.cpp:2378
+#: src/viewer/viewcontainer.cpp:2373
 #, kde-format
 msgid "You can only search in text fields."
 msgstr "Може да търсите само в текстови полета."
 
-#: src/viewer/viewcontainer.cpp:2379
+#: src/viewer/viewcontainer.cpp:2374
 #, kde-format
 msgid "Find Text Information"
 msgstr "Търсене на текстова информация"
 
-#: src/viewer/viewcontainer.cpp:2979
+#: src/viewer/viewcontainer.cpp:2974
 #, kde-format
 msgid ""
 "To know which server to display the channel list for, the list can only be "
@@ -10226,7 +10226,7 @@ msgstr ""
 "За да откриете към кой сървър принадлежи този списък с канали, можете да го "
 "отворите само от заявка, канал или статус прозорец."
 
-#: src/viewer/viewcontainer.cpp:3009
+#: src/viewer/viewcontainer.cpp:3004
 #, kde-format
 msgid ""
 "Using this function may result in a lot of network traffic. If your "
@@ -10236,12 +10236,12 @@ msgstr ""
 "Използването на тази функция може да доведе до голям мрежов трафик. Ако "
 "връзката ви не е достатъчно бърза, възможно е да бъдете изключен от сървъра."
 
-#: src/viewer/viewcontainer.cpp:3013
+#: src/viewer/viewcontainer.cpp:3008
 #, kde-format
 msgid "Channel List Warning"
 msgstr "Предупреждение на списъка с канали"
 
-#: src/viewer/viewcontainer.cpp:3043
+#: src/viewer/viewcontainer.cpp:3038
 #, kde-format
 msgid "Watched Nicks"
 msgstr "Наблюдавани псевдоними"
