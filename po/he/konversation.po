@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-07-12 00:44+0000\n"
-"PO-Revision-Date: 2026-06-06 06:46+0300\n"
+"PO-Revision-Date: 2026-07-14 09:31+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -7064,7 +7064,7 @@ msgstr "חיבור מ&אובטח (SSL)"
 msgid ""
 "Check if you want to use the global proxy configuration to communicate with "
 "this server."
-msgstr ""
+msgstr "יש לסמן כדי להשתמש בהגדרות המתווך הכלליות כדי לתקשר עם השרת הזה."
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_proxyChBox)
 #: src/irc/serverdialogui.ui:108
@@ -7366,6 +7366,10 @@ msgid ""
 "Konversation is started for the first time, the Libera network and the "
 "<i>#kde</i> channel are already entered for you."
 msgstr ""
+"מציג את רשימת רשתות ה־IRC המוגדרות. רשת IRC היא אוסף של שרתים שמשתפים ביניהם "
+"פעולה. צריך להתחבר רק לאחר מהשרתים ברשת כדי להתחבר לכל רשת ה־IRC. לאחר "
+"החיבור, Konversation יצטרף אוטומטית לערוצים שמופיעים. כש־Konversation מופעל "
+"לראשונה, רשת Libera והערוץ <i>‎#kde</i> כבר מולאו עבורך."
 
 #. i18n: ectx: property (text), widget (ServerListView, m_serverList)
 #: src/irc/serverlistdialogui.ui:147
@@ -8680,6 +8684,9 @@ msgid ""
 "special privileges, such as the ability to kick and ban users, change the "
 "channel modes, make other users operators</p></qt>"
 msgstr ""
+"<qt><p>מציג את מספר המשתמשים בחדר, ואת מספר המפעילים (ops).</p><p>למפעילי "
+"חדרים יש משתמש עם הרשאות מיוחדות, כגון היכולת לבעוט במשתמשים החוצה ולחסום "
+"אותה, לשנות את מצבי הערוץ ולהפוך משתמשים אחרים למפעילים</p></qt>"
 
 #: src/statusbar.cpp:44 src/statusbar.cpp:145 src/statusbar.cpp:161
 #, kde-format
