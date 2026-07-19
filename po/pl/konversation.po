@@ -1,5 +1,5 @@
 # translation of konversation.po to Polish
-# SPDX-FileCopyrightText: 2011, 2012, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025 Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>
+# SPDX-FileCopyrightText: 2011-2012, 2014-2026 Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>
 # Pawel Wnuk <p.wnuk@mchtr.pw.edu.pl>, 2004.
 # Paweł Wnuk <czeslavus@tlen.pl>, 2004.
 # Cezary Morga <cezarym@pf.pl>, 2004.
@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-07-12 00:44+0000\n"
-"PO-Revision-Date: 2025-12-06 14:59+0100\n"
+"PO-Revision-Date: 2026-07-18 16:47+0200\n"
 "Last-Translator: Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>\n"
 "Language-Team: pl\n"
 "Language: pl\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
-"X-Generator: Lokalize 25.08.2\n"
+"X-Generator: Lokalize 26.04.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1622,7 +1622,8 @@ msgstr "Otwórz listę śledzonych rozmówców po uruchomieniu"
 #, kde-format
 msgid "&Enable Display of Unseen Events Count On Launcher Entry"
 msgstr ""
-"Włącz wyświetlani&e licznika niewyświetlonych wydarzeń na wpisie uruchamiacza"
+"Włącz wyświetlani&e licznika niewyświetlonych wydarzeń na wpisie na pasku "
+"zadań"
 
 #. i18n: ectx: property (text), widget (QLabel, modeLbl)
 #: src/config/launcherentry_config.ui:45
@@ -2105,7 +2106,7 @@ msgstr "Powiadomienia ekranowe (OSD)"
 #: src/config/settingsdialog.cpp:180
 #, kde-format
 msgid "Launcher Entry"
-msgstr "Wpis uruchamiacza"
+msgstr "Wpis w menu"
 
 #: src/config/settingsdialog.cpp:186
 #, kde-format
