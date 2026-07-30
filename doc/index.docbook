@@ -82,7 +82,7 @@ Do NOT change these in the translation. -->
 
 <abstract>
 <para>
-&konversation; is a user-friendly &irc; client built on &Qt; and &kf5-full;.
+&konversation; is a user-friendly &irc; client built on &Qt; and &kde-frameworks;.
 </para>
 </abstract>
 
@@ -158,7 +158,7 @@ problems. Basically a long version of the abstract.  Don't include a
 revision history. (see installation appendix comment) -->
 
 <para>
-&konversation; is an &irc; client built on &Qt; and &kf5-full;.  It offers the following features:
+&konversation; is an &irc; client built on &Qt; and &kde-frameworks;.  It offers the following features:
 </para>
 
 <para>
