@@ -527,14 +527,14 @@ msgid ""
 "text bold."
 msgstr ""
 "Variablen beim Senden an den Server nicht erweitern. Eine Variable beginnt "
-"mit „%“; z. B. wird „%B“ zu den Zeichen erweitert, die zum Fettdrucken eines "
+"mit „%“; z. B. wird „%B“ zu den Zeichen erweitert, die zum Fettdrucken eines "
 "Textes benötigt werden."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_DisableExpansion)
 #: src/config/chatwindowbehaviour_config.ui:55
 #, no-c-format, kde-format
 msgid "Disable variable (e.g. %C, %B, %G...) e&xpansion"
-msgstr "Variablen-Erweiterungen (wie z. B. %C, %B, %G, ...) &deaktivieren"
+msgstr "Variablen-Erweiterungen (wie z. B. %C, %B, %G, ...) &deaktivieren"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_RedirectServerAndAppMsgToStatusPane)
 #: src/config/chatwindowbehaviour_config.ui:62
@@ -559,7 +559,7 @@ msgstr ""
 #, kde-format
 msgid "Show raw mode characters (e.g. +o) instead of descriptions"
 msgstr ""
-"Kennbuchstaben (z. B. +o) anstatt Beschreibungen der Kanalmodi anzeigen"
+"Kennbuchstaben (z. B. +o) anstatt Beschreibungen der Kanalmodi anzeigen"
 
 #. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, kcfg_ScrollbackMax)
 #. i18n: ectx: property (whatsThis), widget (QLabel, textLabel1)
@@ -965,7 +965,7 @@ msgid ""
 "are saying."
 msgstr ""
 "Der ECB-Modus (Electronic Codebook) wird von vielen "
-"Verschlüsselungsprogrammen wie z. B. FiSH oder Mircryption unterstützt, muss "
+"Verschlüsselungsprogrammen wie z. B. FiSH oder Mircryption unterstützt, muss "
 "aber im Allgemeinen als unsicher angesehen werden.\n"
 "\n"
 "Der CBC-Modus (Cipher-Block Chaining) wird von Mircryption unterstützt, "
@@ -1139,7 +1139,7 @@ msgstr ""
 #: src/config/dcc_configui.ui:127
 #, kde-format
 msgid "Fallback to an IPv&4 interface for DCC send:"
-msgstr "IPv&4-Schnittstelle für DCC-Versand benutzen:"
+msgstr "IPv&4-Schnittstelle für DCC-Versand verwenden:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel7)
 #: src/config/dcc_configui.ui:156
@@ -1225,7 +1225,7 @@ msgstr ""
 #: src/config/fontappearance_config.ui:79
 #, kde-format
 msgid "Enable fi&xed font for MOTD messages"
-msgstr "Schriftart mit &fester Breite für MOTD-Nachrichten benutzen"
+msgstr "Schriftart mit &fester Breite für MOTD-Nachrichten verwenden"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_UseBoldNicks)
 #: src/config/fontappearance_config.ui:86
@@ -2600,7 +2600,7 @@ msgstr ""
 "<p>Ein Doppelklick auf einen Spitznamen im Unterfenster <b>Beobachtete "
 "Spitznamen</b>\n"
 "schreibt diesen Befehl in die <b>Eingabezeile</b> des Statusfensters.</p>\n"
-"<p>Die folgenden Platzhalter können im Befehl benutzt werden:</p><ul>\n"
+"<p>Die folgenden Platzhalter können im Befehl verwendet werden:</p><ul>\n"
 "<li>%u: Der gewählte Spitzname</li>\n"
 "<li>%K: Das Serverpasswort</li>\n"
 "<li>%n: Schickt den Befehl direkt zum Server statt in die Eingabezeile</li>\n"
@@ -2634,7 +2634,7 @@ msgstr ""
 "<p>Ein Doppelklick auf einen Spitznamen im Fenster <b>Beobachtete "
 "Spitznamen</b>\n"
 "schreibt diesen Befehl in die <b>Eingabezeile</b> des Statusfensters.</p>\n"
-"<p>Die folgenden Platzhalter können im Befehl benutzt werden:</p><ul>\n"
+"<p>Die folgenden Platzhalter können im Befehl verwendet werden:</p><ul>\n"
 "<li>%u: Der gewählte Spitzname</li>\n"
 "<li>%K: Das Serverpasswort</li>\n"
 "<li>%n: Schickt den Befehl direkt zum Server statt in die Eingabezeile</li>\n"
@@ -4003,7 +4003,7 @@ msgid ""
 "This identity is in use, if you remove it the network settings using it will "
 "fall back to the default identity. Should it be deleted anyway?"
 msgstr ""
-"Diese Identität wird derzeit benutzt. Netzwerkeinstellungen, die diese "
+"Diese Identität wird derzeit verwendet. Netzwerkeinstellungen, die diese "
 "Identität verwenden, werden auf die Standard-Identität zurückgesetzt. Soll "
 "die Identität trotzdem gelöscht werden?"
 
@@ -5767,7 +5767,7 @@ msgstr "%1: Kanal unbekannt."
 #: src/irc/inputfilter.cpp:1565
 #, kde-format
 msgid "Nickname already in use, try a different one."
-msgstr "Der Spitzname wird bereits benutzt, bitte wählen Sie einen anderen."
+msgstr "Der Spitzname wird bereits verwendet, bitte wählen Sie einen anderen."
 
 #: src/irc/inputfilter.cpp:1578
 #, kde-format
@@ -5781,7 +5781,7 @@ msgstr ""
 #: src/irc/inputfilter.cpp:1586
 #, kde-format
 msgid "Nickname already in use. Trying %1."
-msgstr "Spitzname wird bereits benutzt. %1 wird versucht."
+msgstr "Spitzname wird bereits verwendet. %1 wird versucht."
 
 #: src/irc/inputfilter.cpp:1615
 #, kde-format
@@ -8964,7 +8964,7 @@ msgstr "Der Name des Servers."
 #: src/quickconnectdialog.cpp:53
 #, kde-format
 msgid "The port that the IRC server is using."
-msgstr "Der Port, den dieser Server benutzt."
+msgstr "Der Port, den dieser Server verwendet."
 
 #: src/quickconnectdialog.cpp:60
 #, kde-format
@@ -9035,10 +9035,10 @@ msgid ""
 "The delay is the time it takes for messages from you to reach the server, "
 "and from the server back to you.</qt>"
 msgstr ""
-"<qt>Die Statuszeile zeigt diverse Meldungen an, wie z. B. Probleme bei der "
+"<qt>Die Statuszeile zeigt diverse Meldungen an, wie z. B. Probleme bei der "
 "Verbindung zum Server. Auf der rechten Seite ist die Zeitverzögerung zum "
 "Server (Lag) zu sehen. Dies gibt die Zeit an, die eine Nachricht von Dir zum "
-"Server und zurück braucht.</qt>"
+"Server und zurück benötigt.</qt>"
 
 #: src/statusbar.cpp:147
 #, kde-format
