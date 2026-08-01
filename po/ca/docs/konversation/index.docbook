@@ -99,7 +99,7 @@ Do NOT change these in the translation. -->
 
 <abstract>
 <para
->El &konversation; és un client d'&irc; fàcil d'emprar construït sobre les &Qt; i els &kf5-full;. </para>
+>El &konversation; és un client d'&irc; fàcil d'emprar construït amb les &Qt; i els &kde-frameworks;. </para>
 </abstract>
 
 <!-- This is a set of Keywords for indexing by search engines.
@@ -242,7 +242,7 @@ problems. Basically a long version of the abstract.  Don't include a
 revision history. (see installation appendix comment) -->
 
 <para
->El &konversation; és un client d'&irc; fàcil d'emprar construït sobre les &Qt; i els &kf5-full;. Ofereix les següents característiques: </para>
+>El &konversation; és un client d'&irc; fàcil d'emprar construït amb les &Qt; i els &kde-frameworks;. Ofereix les característiques següents: </para>
 
 <para>
 <itemizedlist>
@@ -403,7 +403,7 @@ revision history. (see installation appendix comment) -->
 <para
 >Quan feu clic al botó <guibutton
 >Connecta</guibutton
->, la primera vegada s'obrirà el &konversation;, és possible que aparegui el següent missatge, dient-vos que la vostra <guilabel
+>, la primera vegada s'obrirà el &konversation;, és possible que aparegui el missatge següent, dient-vos que la vostra <guilabel
 >identitat</guilabel
 > predeterminada no està configurada correctament.</para>
 
@@ -1527,7 +1527,7 @@ Settings->Configure Konversation->Notifications->Tabs->Use colored LEDs needs to
 >plafó de sobrenoms</interface
 >. Es mostra sempre que la pestanya actual sigui un canal. Llista els &i18n-Nickname; de tots els usuaris que s'han unit al canal, inclòs el vostre. Manteniu el punter del ratolí sobre un &i18n-nickname; per a mostrar informació addicional sobre l'usuari. Podeu canviar la visualització de les icones al costat de cada &i18n-nickname; canviant el tema d'icones per als &i18n-Nickname;. Per a més informació, vegeu <link linkend="nickthemes"
 >Configurar els temes del &i18n-nickname;</link
->. El tema predeterminat, com es mostra a la pantalla de dalt, utilitza les següents icones: <itemizedlist>
+>. El tema predeterminat, com es mostra a la pantalla de dalt, utilitza les icones següents: <itemizedlist>
 <listitem>
 <para
 ><inlinemediaobject
@@ -1675,7 +1675,7 @@ Settings->Configure Konversation->Notifications->Tabs->Use colored LEDs needs to
 >Connectar ràpidament</title>
 
 <para
->A vegades voleu connectar a un servidor sense passar per la molèstia de crear un nou servidor a la <link linkend="serverlist"
+>A vegades voleu connectar a un servidor sense passar per la molèstia de crear un servidor nou a la <link linkend="serverlist"
 >llista de servidors</link
 >. </para>
 
@@ -1732,7 +1732,7 @@ Settings->Configure Konversation->Notifications->Tabs->Use colored LEDs needs to
 >Ordres de l'&irc; emprades més freqüentment</title>
 
 <para
->La següent és una breu llista de les ordres de l'&irc; d'ús freqüent. Vegeu la <ulink url="http://www.faqs.org/rfcs/rfc2812.html"
+>La següent és una llista breu de les ordres de l'&irc; d'ús freqüent. Vegeu la <ulink url="http://www.faqs.org/rfcs/rfc2812.html"
 >RFC 2812</ulink
 > per a obtenir una llista completa de totes les ordres, o visiteu <ulink url="https://www.irchelp.org/"
 >irchelp.org</ulink
@@ -3349,7 +3349,7 @@ part of the listing.
 ></callout>
 <callout arearefs="pt-logviewer-3"
 ><para
->Feu clic per a actualitzar la visualització del fitxer de registre. Mentre esteu veient un fitxer de registre, els nous missatges a la sessió corresponent <emphasis
+>Feu clic per a actualitzar la visualització del fitxer de registre. Mentre esteu veient un fitxer de registre, els missatges nous a la sessió corresponent <emphasis
 >no</emphasis
 > s'afegiran automàticament a la vista del fitxer de registre. Utilitzeu aquest botó per a veure els missatges més recents.</para
 ></callout>
@@ -3359,7 +3359,7 @@ part of the listing.
 ></callout>
 <callout arearefs="pt-logviewer-5"
 ><para
->Utilitzeu aquesta casella per a establir la mida màxima de l'historial. Aquesta opció no només té efecte per a les pestanyes de registre obertes recentment. En el següent inici el &konversation; s'utilitzarà l'últim valor modificat per a la mida de l'historial. Cada fitxer de registre pot tenir una opció diferent.</para
+>Utilitzeu aquesta casella per a establir la mida màxima de l'historial. Aquesta opció no només té efecte per a les pestanyes de registre obertes recentment. En l'inici següent, el &konversation; s'utilitzarà l'últim valor modificat per a la mida de l'historial. Cada fitxer de registre pot tenir una opció diferent.</para
 ></callout>
 </calloutlist>
 </para>
@@ -3405,7 +3405,7 @@ part of the listing.
 >Ordres del &konversation;</title>
 <!--FIXME commands in src/irc/outputfilter.[h|cpp]-->
 <para
->Les següents ordres són interpretades pel &konversation; i poden diferir de les ordres de l'&irc; estàndards. Els elements entre claudàtors són opcionals. Els elements separats per una barra (|) són formes alternatives de l'ordre. Les ordres no llistades aquí són enviades al servidor tal com s'introdueixen. </para>
+>Les ordres següents són interpretades pel &konversation; i poden diferir de les ordres de l'&irc; estàndards. Els elements entre claudàtors són opcionals. Els elements separats per una barra (|) són formes alternatives de l'ordre. Les ordres no llistades aquí són enviades al servidor tal com s'introdueixen. </para>
 
 <para>
 <variablelist>
@@ -3697,7 +3697,7 @@ part of the listing.
 <para
 ><userinput
 ><replaceable
->/msg #konversation Hi ha disponible una nova versió del Konvi!</replaceable
+>/msg #konversation Hi ha disponible una versió nova del Konvi!</replaceable
 ></userinput
 ></para>
 
@@ -4443,7 +4443,7 @@ part of the listing.
 >.</para>
 
 <para
->Per exemple, escriviu la següent ordre en una pestanya de canal</para>
+>Per exemple, escriviu l'ordre següent en una pestanya de canal</para>
 
 <para
 ><userinput
@@ -4479,7 +4479,7 @@ part of the listing.
 >.</para>
 
 <para
->Per a obtenir una llista de tots els scripts disponibles, escriviu la següent ordre en una pantalla del &konversation;.</para>
+>Per a obtenir una llista de tots els scripts disponibles, escriviu l'ordre següent en una pantalla del &konversation;.</para>
 
 <para
 ><userinput
@@ -4693,7 +4693,7 @@ $@ | while read line; do qdbus org.kde.konversation /irc say $SERVER "$TARGET" "
 >vídeo</replaceable
 > de l'ordre. A més, és possible especificar el reproductor multimèdia que voleu consultar.</para>
 <para
->Estan implementats els següents reproductors multimèdia: Amarok (àudio), JuK (àudio), Kaffeine (vídeo, àudio), KMPlayer (vídeo, àudio), kdetv (vídeo), Yammi (àudio), Audacious (àudio), MPD (àudio).</para>
+>Estan implementats els reproductors multimèdia següents: Amarok (àudio), JuK (àudio), Kaffeine (vídeo, àudio), KMPlayer (vídeo, àudio), kdetv (vídeo), Yammi (àudio), Audacious (àudio), MPD (àudio).</para>
 <para
 >Exemple: Per a emetre la cançó que està sonant des de l'Amarok.</para>
 <para
@@ -5246,7 +5246,7 @@ Reset Font Size Ctrl+O
 ><para
 ><action
 >Afegeix</action
-> tots els canals com un nou element de menú al final del menú adreces d'interès. </para
+> tots els canals com un element de menú nou al final del menú adreces d'interès. </para
 ></listitem>
 	</varlistentry>
 	<varlistentry>
@@ -5383,7 +5383,7 @@ Reset Font Size Ctrl+O
 		<listitem
 ><para>
 				<action
->Mostra la pantalla corresponent a la següent pestanya.</action>
+>Mostra la pantalla corresponent a la pestanya següent.</action>
 			</para
 ></listitem>
 	</varlistentry>
@@ -5671,7 +5671,7 @@ application work. -->
 </listitem>
 <listitem>
 <para
->Si esteu al darrere d'un tallafoc, assegureu-vos que estan habilitats els ports correctes. El &konversation; necessita els següents ports habilitats: </para>
+>Si esteu al darrere d'un tallafoc, assegureu-vos que estan habilitats els ports correctes. El &konversation; necessita els ports habilitats següents: </para>
 
 <para>
 <itemizedlist>

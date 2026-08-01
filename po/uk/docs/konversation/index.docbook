@@ -113,7 +113,7 @@ Do NOT change these in the translation. -->
 
 <abstract>
 <para
->&konversation; — дружній до користувачів &irc;-клієнт, побудований на основі &Qt; та &kf5-full;. </para>
+>&konversation; — дружній до користувачів &irc;-клієнт, побудований на основі &Qt; та &kde-frameworks;. </para>
 </abstract>
 
 <!-- This is a set of Keywords for indexing by search engines.
@@ -256,7 +256,7 @@ problems. Basically a long version of the abstract.  Don't include a
 revision history. (see installation appendix comment) -->
 
 <para
->&konversation; — це клієнт балачок &irc;, побудований на основі &Qt; та &kf5-full;. У програмі передбачено такі можливості: </para>
+>&konversation; — це клієнт балачок &irc;, побудований на основі &Qt; та &kde-frameworks;. У програмі передбачено такі можливості: </para>
 
 <para>
 <itemizedlist>

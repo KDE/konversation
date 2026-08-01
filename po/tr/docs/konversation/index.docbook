@@ -127,7 +127,7 @@ Do NOT change these in the translation. -->
 
 <abstract>
 <para
->&konversation;, &Qt; ve &kf5-full; üzerine yapılı, kullanıcı dostu bir &irc; istemcisidir. </para>
+>&konversation;; &Qt; ve &kde-frameworks; üzerine yapılı, kullanıcı dostu bir &irc; istemcisidir. </para>
 </abstract>
 
 <!-- This is a set of Keywords for indexing by search engines.
@@ -270,7 +270,7 @@ problems. Basically a long version of the abstract.  Don't include a
 revision history. (see installation appendix comment) -->
 
 <para
->&konversation;, &Qt; ve &kf5-full; üzerine yapılı bir &irc; istemcisidir. Aşağıdaki özellikleri sunar: </para>
+>&konversation;; &Qt; ve &kde-frameworks; üzerine yapılı bir &irc; istemcisidir. Aşağıdaki özellikleri sunar: </para>
 
 <para>
 <itemizedlist>
