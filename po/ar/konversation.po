@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-07-05 00:43+0000\n"
-"PO-Revision-Date: 2026-06-21 19:00+0400\n"
+"PO-Revision-Date: 2026-08-10 18:12+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
-"X-Generator: Lokalize 23.08.5\n"
+"X-Generator: Lokalize 25.12.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -4802,42 +4802,42 @@ msgstr "أخذ %1 امتيازات نصف مُعامِل للقناة من %2."
 #: src/irc/channel.cpp:1583
 #, kde-format
 msgid "You give yourself permission to talk."
-msgstr "أعطيت لنفسك صلاحية التحدّث."
+msgstr "أعطيت لنفسك أذن التحدّث."
 
 #: src/irc/channel.cpp:1584
 #, kde-format
 msgid "You give %1 permission to talk."
-msgstr "أعطيت %1 صلاحية التحدّث."
+msgstr "أعطيت %1 أذن التحدّث."
 
 #: src/irc/channel.cpp:1588
 #, kde-format
 msgid "%1 gives you permission to talk."
-msgstr "أعطاك %1 صلاحية التحدّث."
+msgstr "أعطاك %1 أذن التحدّث."
 
 #: src/irc/channel.cpp:1589
 #, kde-format
 msgid "%1 gives %2 permission to talk."
-msgstr "أعطى %1 صلاحية التحدّث ل‍%2."
+msgstr "أعطى %1 أذن التحدّث ل‍%2."
 
 #: src/irc/channel.cpp:1596
 #, kde-format
 msgid "You take the permission to talk from yourself."
-msgstr "أخذت من نفسك صلاحية التحدّث."
+msgstr "أخذت من نفسك أذن التحدّث."
 
 #: src/irc/channel.cpp:1597
 #, kde-format
 msgid "You take the permission to talk from %1."
-msgstr "أخذت من %1 صلاحية التحدّث."
+msgstr "أخذت من %1 أذن التحدّث."
 
 #: src/irc/channel.cpp:1601
 #, kde-format
 msgid "%1 takes the permission to talk from you."
-msgstr "أخذ %1 منك صلاحية التحدّث."
+msgstr "أخذ %1 منك أذن التحدّث."
 
 #: src/irc/channel.cpp:1602
 #, kde-format
 msgid "%1 takes the permission to talk from %2."
-msgstr "أخذ %1 من %2 صلاحية التحدّث."
+msgstr "أخذ %1 من %2 أذن التحدّث."
 
 #: src/irc/channel.cpp:1614
 #, kde-format
@@ -6209,16 +6209,16 @@ msgid ""
 "p></qt>"
 msgstr ""
 "<qt><p>يُظهر هذا جميع الأشخاص في القناة. يُظهر اسم المستعار لكل شخص، مع صورة "
-"تبين حالته.<br /></p><table><tr><th>%1</th><td>يمتلك هذا الشخص صلاحيات "
-"المشرف.</td></tr><tr><th>%2</th><td>هذا الشخص هو مالك القناة.</td></"
-"tr><tr><th>%3</th><td>هذا الشخص هو مشغّل القناة.</td></tr><tr><th>%4</"
-"th><td>هذا الشخص هو مشغّل نصفى للقناة.</td></tr><tr><th>%5</th><td>هذا الشخص "
-"لديه صوت، وبالتالي يمكنه التحدث في قناة مُشرفة.</td></tr><tr><th>%6</"
-"th><td>ليس لهذا الشخص أي صلاحيات خاصة.</td></tr><tr><th>%7</th><td>هذا، عند "
-"وضعه فوق أي من الأيقونات أعلاه، يشير إلى أن هذا الشخص غائب حالياً.</td></tr></"
-"table><p>يختلف معنى المشرف و المالك و المشغّل النصفي بين خوادم IRC المختلفة.</"
-"p><p>السر بالفأرة فوق أي اسم مستعار يظهر حالته الحالية. اطّلع على دليل محادثك "
-"لمزيد من المعلومات.</p></qt>"
+"تبين حالته.<br /></p><table><tr><th>%1</th><td>يمتلك هذا الشخص أذون المشرف.</"
+"td></tr><tr><th>%2</th><td>هذا الشخص هو مالك القناة.</td></tr><tr><th>%3</"
+"th><td>هذا الشخص هو مشغّل القناة.</td></tr><tr><th>%4</th><td>هذا الشخص هو "
+"مشغّل نصفى للقناة.</td></tr><tr><th>%5</th><td>هذا الشخص لديه صوت، وبالتالي "
+"يمكنه التحدث في قناة مُشرفة.</td></tr><tr><th>%6</th><td>ليس لهذا الشخص أي "
+"أذون خاصة.</td></tr><tr><th>%7</th><td>هذا، عند وضعه فوق أي من الأيقونات "
+"أعلاه، يشير إلى أن هذا الشخص غائب حالياً.</td></tr></table><p>يختلف معنى "
+"المشرف و المالك و المشغّل النصفي بين خوادم IRC المختلفة.</p><p>السر بالفأرة "
+"فوق أي اسم مستعار يظهر حالته الحالية. اطّلع على دليل محادثك لمزيد من "
+"المعلومات.</p></qt>"
 
 #: src/irc/nicksonline.cpp:29
 #, kde-format
@@ -6585,7 +6585,7 @@ msgstr "الإخطار"
 #: src/irc/outputfilter.cpp:1331
 #, kde-format
 msgid "Enter username and password for IRC operator privileges:"
-msgstr "أدِخل اسم المستخدم وكلمة السر للحصول على صلاحيات مشغّل IRC:"
+msgstr "أدِخل اسم المستخدم وكلمة السر للحصول على أذون مشغّل IRC:"
 
 #: src/irc/outputfilter.cpp:1333
 #, kde-format
@@ -7131,7 +7131,7 @@ msgstr "خطأ: تعذّر العثور على السكرِبت \"%1\"."
 #: src/irc/server.cpp:3852
 #, kde-format
 msgid "Error: Could not execute script \"%1\". Check file permissions."
-msgstr "خطأ: تعذّر تنفيذ السكرِبت \"%1\". تحقّق صلاحيات الملف."
+msgstr "خطأ: تعذّر تنفيذ السكرِبت \"%1\". تحقّق أذون الملف."
 
 #: src/irc/server.cpp:4063
 #, kde-format
@@ -8884,7 +8884,7 @@ msgid ""
 "channel modes, make other users operators</p></qt>"
 msgstr ""
 "<qt><p>يُظهر هذا عدد المستخدمين في القناة، وعدد أولئك الذين هم مشغّلون (ops).</"
-"p><p>مشغّل القناة هو مستخدم لديه صلاحيات خاصة، مثل القدرة على طرد وحظر "
+"p><p>مشغّل القناة هو مستخدم لديه أذون خاصة، مثل القدرة على طرد وحظر "
 "المستخدمين، وتغيير أنماط القناة، وجعل مستخدمين آخرين مشغّلين</p></qt>"
 
 #: src/statusbar.cpp:44 src/statusbar.cpp:145 src/statusbar.cpp:161
@@ -9621,22 +9621,22 @@ msgstr "الأوضاع"
 #: src/viewer/irccontextmenus.cpp:391
 #, kde-format
 msgid "Give Op"
-msgstr "امنح صلاحيات المشغّل Op"
+msgstr "امنح أذون المشغّل Op"
 
 #: src/viewer/irccontextmenus.cpp:392
 #, kde-format
 msgid "Take Op"
-msgstr "اسحب صلاحيات المشغّل Op"
+msgstr "اسحب أذون المشغّل Op"
 
 #: src/viewer/irccontextmenus.cpp:393
 #, kde-format
 msgid "Give HalfOp"
-msgstr "امنح صلاحيات المشغّل النصفي HalfOp"
+msgstr "امنح أذون المشغّل النصفي HalfOp"
 
 #: src/viewer/irccontextmenus.cpp:394
 #, kde-format
 msgid "Take HalfOp"
-msgstr "اسحب صلاحيات المشغّل النصفي HalfOp"
+msgstr "اسحب أذون المشغّل النصفي HalfOp"
 
 #: src/viewer/irccontextmenus.cpp:395
 #, kde-format
