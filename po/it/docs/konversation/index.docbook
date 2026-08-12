@@ -113,7 +113,7 @@ Do NOT change these in the translation. -->
 
 <abstract>
 <para
->&konversation; è un programma &irc; facile da usare basato su &Qt; e &kf5-full;. </para>
+>&konversation; è un programma &irc; facile da usare basato su &Qt; e &kde-frameworks;. </para>
 </abstract>
 
 <!-- This is a set of Keywords for indexing by search engines.
@@ -256,7 +256,7 @@ problems. Basically a long version of the abstract.  Don't include a
 revision history. (see installation appendix comment) -->
 
 <para
->&konversation; è un programma &irc; basato su &Qt; e &kf5-full;. Offre le seguenti funzionalità: </para>
+>&konversation; è un programma &irc; basato su &Qt; e &kde-frameworks;. Offre le seguenti funzionalità: </para>
 
 <para>
 <itemizedlist>
