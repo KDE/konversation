@@ -4,33 +4,36 @@
 # SPDX-FileCopyrightText: 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2023, 2024, 2025 Vít Pelčák <vit@pelcak.org>
 # Tomáš Chvátal <tomas.chvatal@gmail.com>, 2012, 2013.
 # SPDX-FileCopyrightText: 2021, 2022, 2023, 2024, 2025 Vit Pelcak <vit@pelcak.org>
+# SPDX-FileCopyrightText: 2026 Libor Filípek <libor.filipek@gmail.com>
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-07-05 00:43+0000\n"
-"PO-Revision-Date: 2025-05-16 14:53+0200\n"
-"Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
+"PO-Revision-Date: 2026-08-13 23:59+0200\n"
+"Last-Translator: Libor Filípek <libor.filipek@gmail.com>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Lokalize 25.08.3\n"
+"X-Generator: Poedit 3.9\n"
 "X-Language: cs_CZ\n"
 "X-Source-Language: en_US\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "Klára Cihlářová, Lukáš Tinkl, Tomáš Chvátal,Vít Pelčák"
+msgstr "Klára Cihlářová,Lukáš Tinkl,Tomáš Chvátal,Vít Pelčák,Libor Filípek"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "koty@seznam.cz, lukas@kde.org, tomas.chvatal@gmail.com,vit@pelcak.org"
+msgstr ""
+"koty@seznam.cz,lukas@kde.org,tomas.chvatal@gmail.com,vit@pelcak.org,libor."
+"filipek@gmail.com"
 
 #. i18n: ectx: Menu (insert)
 #: data/konversationui.rc:26
@@ -109,10 +112,11 @@ msgctxt "REGEX_FIXUP is the name of a config key in a config file."
 msgid ""
 "There is a problem with the regular expression specified in REGEX_FIXUP."
 msgstr ""
+"V regulárním výrazu zadaném v proměnné REGEX_FIXUP se vyskytuje problém."
 
 #: data/scripts/media:266
 msgid "%1 did not report the metadata needed to output a message."
-msgstr ""
+msgstr "%1 neposkytl metadata potřebná k zobrazení zprávy."
 
 #: data/scripts/media:282
 msgid "There is a problem in the output format configuration."
@@ -120,7 +124,7 @@ msgstr "Vyskytl se problém v nastavení výstupního formátu."
 
 #: data/scripts/media:302
 msgid "media v%1 for Konversation."
-msgstr ""
+msgstr "média v%1 pro Konversation."
 
 #: data/scripts/media:303
 msgid "Usage:"
@@ -128,19 +132,23 @@ msgstr "Použití:"
 
 #: data/scripts/media:304
 msgid "\"/media\" - report what the first player found is playing."
-msgstr ""
+msgstr "\"/media\" – zobrazí, co právě přehrává první přehrávač."
 
 #: data/scripts/media:305
 msgid ""
 "\"/media [ 'audio' | 'video' ]\" - report what is playing in a known audio "
 "or video player."
 msgstr ""
+"\"/media [ 'audio' | 'video' ]\" – zobrazí, co se právě přehrává ve známém "
+"přehrávači zvuku nebo videa."
 
 #: data/scripts/media:306
 msgid ""
 "\"/media { Player }\" - report what is playing in the specified player if it "
 "is found."
 msgstr ""
+"\"/media { Player }\" – zobrazí, co se právě přehrává v uvedeném přehrávači, "
+"pokud je nalezen."
 
 #: src/application.cpp:383 src/irc/server.cpp:1814 src/irc/server.cpp:3847
 #: src/irc/server.cpp:3852
@@ -156,6 +164,10 @@ msgid ""
 "provider plugin. Diffie-Hellman key exchange support is usually provided by "
 "the qca-ossl plugin."
 msgstr ""
+"Vaše instalace Qt Cryptographic Architecture (QCA) nepodporuje výměnu klíčů "
+"podle algoritmu Diffie-Hellman. Pravděpodobně budete muset nainstalovat "
+"další modul poskytovatele. Podporu výměny klíčů podle algoritmu Diffie-"
+"Hellman obvykle zajišťuje modul qca-ossl."
 
 #: src/cipher.cpp:490
 #, kde-format
@@ -165,6 +177,10 @@ msgid ""
 "install an additional provider plugin for QCA. Blowfish support is usually "
 "provided by the qca-ossl plugin."
 msgstr ""
+"Vaše instalace Qt Cryptographic Architecture (QCA) nepodporuje šifrovací "
+"algoritmus Blowfish v režimu CBC (Cipher-Block Chaining). Pravděpodobně "
+"budete muset nainstalovat další modul poskytující podporu pro QCA. Podporu "
+"algoritmu Blowfish obvykle zajišťuje modul qca-ossl."
 
 #: src/cipher.cpp:502
 #, kde-format
@@ -174,6 +190,10 @@ msgid ""
 "install an additional provider plugin for QCA. Blowfish support is usually "
 "provided by the qca-ossl plugin."
 msgstr ""
+"Vaše instalace Qt Cryptographic Architecture (QCA) nepodporuje algoritmus "
+"Blowfish v režimu elektronické šifrovací knihy (ECB). Pravděpodobně budete "
+"muset nainstalovat další modul poskytovatele pro QCA. Podporu algoritmu "
+"Blowfish obvykle zajišťuje modul qca-ossl."
 
 #: src/common.cpp:25
 #, kde-format
@@ -474,7 +494,7 @@ msgstr "Obecné"
 #, kde-format
 msgid ""
 "Sounds the system bell when you receive an ASCII BEL (0x07) control character"
-msgstr ""
+msgstr "Při přijetí řídicího znaku ASCII BEL (0x07) spustí systémový zvonek"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_Beep)
 #: src/config/chatwindowbehaviour_config.ui:38
@@ -496,6 +516,8 @@ msgid ""
 "with '%'; for example, %B will expand to the characters needed to make a "
 "text bold."
 msgstr ""
+"Při odesílání textu na server proměnné nerozšiřujte. Proměnná začíná znakem "
+"'%'; například %B se rozbalí na znaky potřebné k tučnému zobrazení textu."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_DisableExpansion)
 #: src/config/chatwindowbehaviour_config.ui:55
@@ -517,6 +539,9 @@ msgid ""
 "translating them into human readable words. E.g. '*** Channel modes: no "
 "messages from outside' will become '*** Channel modes: n'"
 msgstr ""
+"Řetězec popisující režimy kanálu ponechte jako kombinaci znaků, místo toho, "
+"abyste jej převáděli na slova srozumitelná pro člověka. Např. '*** Režimy "
+"kanálu: žádné zprávy zvenčí' se změní na '*** Režimy kanálu: n'"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_UseLiteralModes)
 #: src/config/chatwindowbehaviour_config.ui:72
@@ -553,6 +578,8 @@ msgid ""
 "If checked, only events concerning active and watched nicks will be "
 "displayed."
 msgstr ""
+"Je-li tato položka zaškrtnuta, budou zobrazeny pouze události týkající se "
+"aktivních a sledovaných přezdívek."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_HideUnimportantEventsExcludeActive)
 #: src/config/chatwindowbehaviour_config.ui:138
@@ -605,6 +632,8 @@ msgid ""
 "Inserts a remember line into the chat window when you switch to another chat "
 "window or minimize the application."
 msgstr ""
+"Vloží do okna rozhovoru připomínku, když přepnete do jiného okna rozhovoru "
+"nebo minimalizujete aplikaci."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_AutomaticRememberLine)
 #: src/config/chatwindowbehaviour_config.ui:205
@@ -798,6 +827,9 @@ msgid ""
 "in your chat window as colored text. You can add color codes to your "
 "messages, by selecting Insert -> IRC Color"
 msgstr ""
+"Pokud tuto možnost zapnete, budou barevné kódy přidané do zpráv IRC "
+"zobrazeny ve vašem okně rozhovoru jako barevný text. Barevné kódy můžete do "
+"svých zpráv přidat výběrem možnosti Vložit -> Barva IRC"
 
 #. i18n: ectx: property (title), widget (QGroupBox, kcfg_AllowColorCodes)
 #: src/config/colorsappearance_config.ui:747
@@ -917,6 +949,14 @@ msgid ""
 "able to see what they are saying, but they will not be able to read what you "
 "are saying."
 msgstr ""
+"Režim ECB (Electronic Codebook) podporuje řada šifrovacích klientů, jako "
+"jsou FiSH a Mircryption, obecně se však považuje za nezabezpečený.\n"
+"\n"
+"Režim CBC (Cipher Block Chaining) není podporován aplikací FiSH, ale je "
+"podporován aplikací Mircryption. Pokud hodláte používat výměnu klíčů, je "
+"nejlepší nejprve zjistit, zda váš protějšek používá klienta, který podporuje "
+"režim CBC; v opačném případě budete moci vidět, co píše, ale on nebude moci "
+"číst to, co píšete vy."
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_EncryptionType)
 #: src/config/connectionbehavior_config.ui:122
@@ -1077,6 +1117,8 @@ msgid ""
 "If this option enabled dcc transfers for IPv6 connections will be done over "
 "IPv4 interface set here"
 msgstr ""
+"Pokud je tato možnost zapnutá, budou přenosy DCC pro připojení IPv6 probíhat "
+"přes rozhraní IPv4 nastavené zde"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_DccIPv4Fallback)
 #: src/config/dcc_configui.ui:127
@@ -1161,7 +1203,7 @@ msgstr "Panel karet:"
 #: src/config/fontappearance_config.ui:76
 #, kde-format
 msgid "Show MOTD (Message Of The Day) message in fixed font"
-msgstr ""
+msgstr "Zobrazit zprávu MOTD (Message Of The Day) písmem s pevnou šířkou"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_FixedMOTD)
 #: src/config/fontappearance_config.ui:79
@@ -1201,6 +1243,9 @@ msgid ""
 "\", which will cause it to become visible in tray implementations that only "
 "offer access \"active\" icons."
 msgstr ""
+"Po zavření okna Konversation se ikona v oznamovací oblasti nastaví na stav "
+"\"aktivní\", díky čemuž bude viditelná v těch implementacích oznamovací "
+"oblasti, které umožňují přístup pouze k \"aktivním\" ikonám."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_TrayActivateNoWindow)
 #: src/config/generalbehavior_configui.ui:78
@@ -1299,6 +1344,8 @@ msgid ""
 "<qt>Here you can set a custom reply for <b>CTCP <i>VERSION</i></b> requests."
 "</qt>"
 msgstr ""
+"<qt>Zde můžete nastavit vlastní odpověď na požadavky <b>CTCP <i>VERSION</i></"
+"b>.</qt>"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_UseMultiRowInputBox)
 #: src/config/generalbehavior_configui.ui:273
@@ -1403,6 +1450,9 @@ msgid ""
 "name, or in all chat windows if the field is left empty. Multiple names have "
 "to be separated by commas."
 msgstr ""
+"Tento výraz bude vyhledáván pouze v oknech rozhovoru uvedených zde podle "
+"názvu, nebo ve všech oknech rozhovoru, pokud pole zůstane prázdné. Více "
+"názvů je třeba oddělit čárkami."
 
 #. i18n: ectx: property (text), widget (QLabel, enableNotificationsLabel)
 #: src/config/highlight_configui.ui:381
@@ -1511,6 +1561,8 @@ msgstr "Skrýt posuvník"
 msgid ""
 "Enable if you want all the IRC input lines to check your spelling as you type"
 msgstr ""
+"Tuto možnost zapněte, pokud chcete, aby se ve všech vstupních řádcích v IRC "
+"kontroloval pravopis během psaní"
 
 #. i18n: ectx: whatsthis, entry, group (General Options)
 #: src/config/konversation.kcfg:232
@@ -1518,12 +1570,14 @@ msgstr ""
 msgid ""
 "Enabling this will cause the input box to grow vertically when it fills up."
 msgstr ""
+"Pokud tuto funkci zapnete, vstupní pole se bude při zaplnění zvětšovat na "
+"výšku."
 
 #. i18n: ectx: label, entry, group (General Options)
 #: src/config/konversation.kcfg:266
 #, kde-format
 msgid "Start with hidden main window"
-msgstr ""
+msgstr "Spustit se skrytým hlavním oknem"
 
 #. i18n: ectx: label, entry, group (General Options)
 #: src/config/konversation.kcfg:309
@@ -1543,7 +1597,7 @@ msgstr "Všechny události"
 #: src/config/konversation.kcfg:446 src/config/launcherentry_config.ui:61
 #, kde-format
 msgid "Channels and queries with events"
-msgstr ""
+msgstr "Kanály a dotazy s událostmi"
 
 #. i18n: ectx: label, entry (OpenWatchedNicksAtStartup), group (Notify List)
 #: src/config/konversation.kcfg:577
@@ -1555,19 +1609,19 @@ msgstr "Otevřít kartu se sledovanými přezdívkami při spuštění aplikace"
 #: src/config/launcherentry_config.ui:29
 #, kde-format
 msgid "&Enable Display of Unseen Events Count On Launcher Entry"
-msgstr ""
+msgstr "&Zapnout zobrazení počtu neprohlédnutých událostí u položky spouštěče"
 
 #. i18n: ectx: property (text), widget (QLabel, modeLbl)
 #: src/config/launcherentry_config.ui:45
 #, kde-format
 msgid "Count &mode:"
-msgstr ""
+msgstr "&Režim počítání:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, countedEventsGroupBox)
 #: src/config/launcherentry_config.ui:72
 #, kde-format
 msgid "Counted Events"
-msgstr ""
+msgstr "Počet událostí"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_LauncherEntryCountUseMsgs)
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_TabNotificationsMsgs)
@@ -1591,7 +1645,7 @@ msgstr "Soukromá zpráva"
 #: src/config/tabnotifications_config.ui:166
 #, kde-format
 msgid "Current nick used"
-msgstr "Použita aktuální přezdívka"
+msgstr "Aktuálně použitá přezdívka"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_LauncherEntryCountUseHighlights)
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_TabNotificationsHighlights)
@@ -1608,6 +1662,8 @@ msgstr "Zvýraznění"
 #, kde-format
 msgid "Channel events are mode changes or users joining/leaving a channel."
 msgstr ""
+"Události v kanálu představují změny režimu nebo připojení či odhlášení "
+"uživatelů z kanálu."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_LauncherEntryCountUseChannelEvents)
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_TabNotificationsEvents)
@@ -1626,6 +1682,8 @@ msgid ""
 "Application events occur in Konsole tabs, the DCC Status tab and other "
 "application tabs not used directly for chatting."
 msgstr ""
+"Události aplikace se zobrazují na kartách v Konzoli, na kartě Stav DCC a na "
+"dalších kartách aplikace, které neslouží přímo k rozhovoru."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_LauncherEntryCountUseSystem)
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_TabNotificationsSystem)
@@ -1645,7 +1703,7 @@ msgstr "Povolit záznam&y"
 #: src/config/log_config.ui:33
 #, kde-format
 msgid "Only log private conversations (queries, DCC chats)"
-msgstr ""
+msgstr "Zaznamenávat pouze soukromé konverzace (dotazy, rozhovory DCC)"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_LowerLog)
 #: src/config/log_config.ui:40
@@ -1867,6 +1925,14 @@ msgid ""
 "%s<term>%: term used to separate nicknames in %u\n"
 "%u: List of selected nicknames"
 msgstr ""
+"%c: Aktuální kanál\n"
+"%i: Obsah vstupního pole\n"
+"%k: Klíč kanálu\n"
+"%K: Heslo serveru\n"
+"%n: Odeslat příkaz přímo na server namísto do vstupního pole\n"
+"%o: Aktuální přezdívka\n"
+"%s<term>%: termín používaný k oddělení přezdívek v %u\n"
+"%u: Seznam vybraných přezdívek"
 
 #. i18n: ectx: property (text), widget (QTreeWidget, buttonListView)
 #: src/config/quickbuttons_configui.ui:74
@@ -1906,6 +1972,8 @@ msgstr "Činnost tlačítka:"
 #, kde-format
 msgid "Show quick buttons that operate on nicknames in nickname context menus"
 msgstr ""
+"Zobrazit rychlá tlačítka pro práci s přezdívkami v kontextových nabídkách "
+"přezdívek"
 
 #: src/config/settingsdialog.cpp:47
 #, kde-format
@@ -2024,7 +2092,7 @@ msgstr "On Screen Display"
 #: src/config/settingsdialog.cpp:180
 #, kde-format
 msgid "Launcher Entry"
-msgstr ""
+msgstr "Položka spouštěče"
 
 #: src/config/settingsdialog.cpp:186
 #, kde-format
@@ -2063,6 +2131,9 @@ msgid ""
 "If you select this, the colors you chose in the Highlights preferences page "
 "will override the colors for \"Current nick used\" and \"Highlight\"."
 msgstr ""
+"Pokud tuto možnost vyberete, barvy, které jste nastavili na stránce "
+"předvoleb Zvýraznění, přepíšou barvy pro položky \"Aktuálně použitá přezdívka"
+"\" a \"Zvýraznění\"."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_TabNotificationsOverride)
 #: src/config/tabnotifications_config.ui:211
@@ -2438,6 +2509,14 @@ msgid ""
 "all the watched nicknames.</p>\n"
 "</qt>"
 msgstr ""
+"<qt>\n"
+"<p>\n"
+"Je-li sledování přezdívek zapnuto, budete informováni, když se přezdívky "
+"uvedené v seznamu <b>Sledované sítě/přezdívky</b> připojí k síti nebo se od "
+"ní odpojí.</p>\n"
+"<p>Můžete také otevřít okno <b>Sledované přezdívky</b> a zobrazit stav všech "
+"sledovaných přezdívek.</p>\n"
+"</qt>"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_UseNotify)
 #: src/config/watchednicknames_configui.ui:27
@@ -2452,6 +2531,8 @@ msgid ""
 "<qt>When checked, the <b>Watched Nicks</b> window will be automatically "
 "opened when starting Konversation.</qt>"
 msgstr ""
+"<qt>Je-li tato možnost zaškrtnuta, při spuštění Konversation se automaticky "
+"otevře okno <b>Sledované přezdívky</b>.</qt>"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_OpenWatchedNicksAtStartup)
 #: src/config/watchednicknames_configui.ui:40
@@ -2475,6 +2556,17 @@ msgid ""
 "</ul>\n"
 "</qt>"
 msgstr ""
+"<qt>\n"
+"<p>Když dvakrát kliknete na přezdívku v okně <b>Sledované přezdívky</b>, "
+"tento\n"
+"příkaz se vloží do <b>zadávacího řádku</b> v okně serveru.</p>\n"
+"<p>V příkazu lze použít následující symboly:</p><ul>\n"
+"<li>%u: Přezdívka, na kterou jste dvakrát klikli.</li>\n"
+"<li>%K: Heslo k serveru.</li>\n"
+"<li>%n: Odeslat příkaz přímo na server namísto do vašeho vstupního řádku.</"
+"li>\"\n"
+"</ul>\n"
+"</qt>"
 
 #. i18n: ectx: property (text), widget (QLabel, notifyActionLabel)
 #: src/config/watchednicknames_configui.ui:69
@@ -2498,6 +2590,17 @@ msgid ""
 "</ul>\n"
 "</qt>"
 msgstr ""
+"<qt>\n"
+"<p>Když dvakrát kliknete na přezdívku v okně <b>Sledované přezdívky</b>, "
+"tento\n"
+" příkaz se vloží do <b>zadávacího řádku</b> v okně serveru.</p>\n"
+"<p>V příkazu lze použít následující symboly:</p><ul>\n"
+"<li>%u: Přezdívka, na kterou jste dvakrát klikli.</li>\n"
+"<li>%K: Heslo k serveru.</li>\n"
+"<li>%n: Odeslat příkaz přímo na server namísto do vašeho vstupního řádku.</"
+"li>\n"
+"</ul>\n"
+"</qt>"
 
 #. i18n: ectx: property (whatsThis), widget (QLabel, notifyDelayLabel)
 #. i18n: ectx: property (whatsThis), widget (QSpinBox, kcfg_NotifyDelay)
@@ -2508,6 +2611,8 @@ msgid ""
 "Konversation will check the status of the nicknames listed below at this "
 "interval."
 msgstr ""
+"Konversation bude v tomto intervalu kontrolovat stav níže uvedených "
+"přezdívek."
 
 #. i18n: ectx: property (text), widget (QLabel, notifyDelayLabel)
 #: src/config/watchednicknames_configui.ui:112
@@ -2532,6 +2637,8 @@ msgstr "Info"
 #, kde-format
 msgid "Network is down, will reconnect automatically when it is back up."
 msgstr ""
+"Síť je mimo provoz, připojení se obnoví automaticky, jakmile bude síť opět "
+"funkční."
 
 #: src/connectionmanager.cpp:252
 #, kde-format
@@ -2577,7 +2684,7 @@ msgstr "Počet pokusů o připojení překročen."
 #, kde-format
 msgid ""
 "You are already connected to %1. Do you want to open another connection?"
-msgstr ""
+msgstr "Jste již připojeni k %1. Chcete navázat další připojení?"
 
 #: src/connectionmanager.cpp:512 src/connectionmanager.cpp:533
 #, kde-format
@@ -2595,6 +2702,8 @@ msgid ""
 "You are presently connected to %1 via '%2' (port %3). Do you want to switch "
 "to '%4' (port %5) instead?"
 msgstr ""
+"V současné době jste připojeni k %1 přes '%2' (port %3). Chcete místo toho "
+"přepnout na '%4' (port %5)?"
 
 #: src/connectionmanager.cpp:534
 #, kde-format
@@ -2650,18 +2759,18 @@ msgstr "getNickname: Server %1 nenalezen."
 #, kde-format
 msgctxt "%1=dcc extension like Chat or Whiteboard"
 msgid "Could not send a DCC %1 request to the partner via the IRC server."
-msgstr ""
+msgstr "Nepodařilo se odeslat požadavek DCC %1 partnerovi přes server IRC."
 
 #: src/dcc/chat.cpp:118 src/dcc/transfersend.cpp:374
 #, kde-format
 msgid "Awaiting acceptance by remote user..."
-msgstr ""
+msgstr "Čeká se na potvrzení od vzdáleného uživatele..."
 
 #: src/dcc/chat.cpp:147
 #, kde-format
 msgctxt "%1=partnerNick, %2=Servername, %3=dcc extension as chat or wboard"
 msgid "%1 (on %2) offers to DCC %3 with you"
-msgstr ""
+msgstr "%1 (z %2) nabízí DCC %3 s vámi"
 
 #: src/dcc/chat.cpp:148
 #, kde-format
@@ -2683,13 +2792,13 @@ msgstr "Odmítnout"
 #, kde-format
 msgctxt "%1=dcc extension like Chat or Whiteboard"
 msgid "You rejected the DCC %1 offer."
-msgstr ""
+msgstr "Odmítli jste nabídku DCC %1."
 
 #: src/dcc/chat.cpp:195
 #, kde-format
 msgctxt "%1=dcc extension as Chat or Whiteboard"
 msgid "DCC %1 request was rejected"
-msgstr ""
+msgstr "Požadavek DCC %1 byl zamítnut"
 
 #: src/dcc/chat.cpp:284
 #, kde-format
@@ -2698,6 +2807,7 @@ msgid ""
 "Could not send Reverse DCC %1 acknowledgement to the partner via the IRC "
 "server."
 msgstr ""
+"Nepodařilo se odeslat zpětné potvrzení DCC %1 partnerovi přes server IRC."
 
 #: src/dcc/chat.cpp:302 src/dcc/chat.cpp:334 src/dcc/transferrecv.cpp:589
 #: src/dcc/transfersend.cpp:396
@@ -2705,6 +2815,8 @@ msgstr ""
 msgid ""
 "Failed to forward port %1. Sending DCC request to remote user regardless."
 msgstr ""
+"Nepodařilo se přesměrovat port %1. Přesto se odesílá požadavek DCC "
+"vzdálenému uživateli."
 
 #: src/dcc/chat.cpp:316
 #, kde-format
@@ -2713,6 +2825,7 @@ msgid ""
 "Could not send Reverse DCC %1 acknowledgement to the partner via the IRC "
 "server."
 msgstr ""
+"Nepodařilo se odeslat zpětné potvrzení DCC %1 partnerovi přes server IRC."
 
 #: src/dcc/chat.cpp:358
 #, kde-format
@@ -2758,7 +2871,7 @@ msgstr "Chyba socketu: %1"
 #: src/dcc/chat.cpp:549
 #, kde-format
 msgid "Could not accept the client."
-msgstr ""
+msgstr "Klienta nebylo možné přijmout."
 
 #: src/dcc/chat.cpp:571
 #, kde-format
@@ -2832,7 +2945,7 @@ msgstr "Neznámý příkaz."
 #: src/dcc/chatcontainer.cpp:310
 #, kde-format
 msgid "Received unknown CTCP-%1 request from %2"
-msgstr ""
+msgstr "Obdržen neznámý požadavek CTCP-%1 od %2"
 
 #: src/dcc/dcccommon.cpp:152
 #, kde-format
@@ -2848,7 +2961,7 @@ msgstr "Nelze otevřít socket"
 #, kde-format
 msgctxt "passive dcc send"
 msgid "Passive Send"
-msgstr ""
+msgstr "Pasivní odeslání"
 
 #: src/dcc/dccfiledialog.cpp:47 src/notificationhandler.cpp:79
 #: src/notificationhandler.cpp:132 src/notificationhandler.cpp:182
@@ -2874,7 +2987,7 @@ msgstr "Zavřít okno beze změn"
 #: src/dcc/resumedialog.cpp:48
 #, kde-format
 msgid "DCC Receive Question"
-msgstr ""
+msgstr "Dotaz příjmu DCC"
 
 #: src/dcc/resumedialog.cpp:96
 #, kde-format
@@ -2889,7 +3002,7 @@ msgstr "&Navrhnout nový název"
 #: src/dcc/resumedialog.cpp:111
 #, kde-format
 msgid "Use as new default download folder"
-msgstr ""
+msgstr "Použít jako novou výchozí složku pro stahování"
 
 #: src/dcc/resumedialog.cpp:122
 #, kde-format
@@ -3161,57 +3274,57 @@ msgstr "Přerušeno"
 #: src/dcc/transferlistmodel.cpp:506
 #, kde-format
 msgid "Queued - Transfer is waiting for you to accept or reject it"
-msgstr ""
+msgstr "Ve frontě – Přenos čeká na vaše přijetí nebo odmítnutí"
 
 #: src/dcc/transferlistmodel.cpp:511
 #, kde-format
 msgid "Preparing - Transfer is checking for resumable files"
-msgstr ""
+msgstr "Příprava – Přenos provádí kontrolu obnovitelných souborů"
 
 #: src/dcc/transferlistmodel.cpp:513
 #, kde-format
 msgid "Preparing - Transfer is acquiring the data to send"
-msgstr ""
+msgstr "Příprava – Přenos načítá data určená k odeslání"
 
 #: src/dcc/transferlistmodel.cpp:519
 #, kde-format
 msgid "Pending - Transfer is waiting for the partner to accept or reject it"
-msgstr ""
+msgstr "Příprava – Přenos čeká na to, až jej partner přijme nebo odmítne"
 
 #: src/dcc/transferlistmodel.cpp:521
 #, kde-format
 msgid "Connecting - Transfer is connecting to the partner"
-msgstr ""
+msgstr "Připojování – Přenos se připojuje k partnerovi"
 
 #: src/dcc/transferlistmodel.cpp:526
 #, kde-format
 msgid "Receiving - Transfer is receiving data from the partner"
-msgstr ""
+msgstr "Příjem – Přenos příjímá data od partnera"
 
 #: src/dcc/transferlistmodel.cpp:528
 #, kde-format
 msgid "Sending - Transfer is sending data to partner"
-msgstr ""
+msgstr "Odesílání – Přenos odesílá data partnerovi"
 
 #: src/dcc/transferlistmodel.cpp:534
 #, kde-format
 msgid "Done - Transfer has completed successfully"
-msgstr ""
+msgstr "Hotovo – Přenos proběhl úspěšně"
 
 #: src/dcc/transferlistmodel.cpp:538
 #, kde-format
 msgid "Failed - Transfer failed with 'unknown reason'"
-msgstr ""
+msgstr "Selhání – Přenos se nezdařil z 'neznámého důvodu'"
 
 #: src/dcc/transferlistmodel.cpp:542
 #, kde-format
 msgid "Failed - Transfer failed with reason '%1'"
-msgstr ""
+msgstr "Selhání – Přenos se nezdařil z důvodu '%1'"
 
 #: src/dcc/transferlistmodel.cpp:545
 #, kde-format
 msgid "Aborted - Transfer was aborted by the User"
-msgstr ""
+msgstr "Přerušeno – Přenos byl přerušen uživatelem"
 
 #: src/dcc/transferlistmodel.cpp:637
 #, kde-format
@@ -8924,7 +9037,7 @@ msgstr "&Téma"
 #: src/viewer/channeloptionsui.ui:69 src/viewer/channeloptionsui.ui:266
 #, kde-format
 msgid "Search:"
-msgstr "Hledat>"
+msgstr "Hledat:"
 
 #. i18n: ectx: attribute (title), widget (QWidget, modesPage)
 #: src/viewer/channeloptionsui.ui:111
