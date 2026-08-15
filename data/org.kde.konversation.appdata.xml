@@ -107,6 +107,7 @@
     <p xml:lang="bg">Konversation е удобен за потребителя Internet Relay Chat (IRC) клиент от KDE. Осигурява лесен достъп до стандартни IRC мрежи като Libera, където могат да бъдат намерени IRC каналите на KDE.</p>
     <p xml:lang="ca">El Konversation és un client fàcil d'emprar de l'Internet Relay Chat (IRC), creat per la comunitat KDE. Proporciona un accés senzill a les xarxes IRC estàndards, com Libera, a on es poden trobar els canals IRC de KDE.</p>
     <p xml:lang="ca-valencia">Konversation és un client fàcil d'emprar d'Internet Relay Chat (IRC), creat per la comunitat KDE. Proporciona un accés senzill a les xarxes IRC estàndards, com Libera, a on es troben els canals IRC de KDE.</p>
+    <p xml:lang="cs">Konversation je uživatelsky přívětivý klient pro Internet Relay Chat (IRC) od KDE. Umožňuje snadný přístup ke standardním sítím IRC, jako je například Libera, kde se nacházejí kanály KDE IRC.</p>
     <p xml:lang="de">Konversation ist ein benutzerfreundliches Internet-Relay-Chat (IRC)-Programm von KDE. Es bietet einen einfachen Zugang zu Standard-IRC-Netzwerken wie Libera, wo die KDE-IRC-Kanäle zu finden sind.</p>
     <p xml:lang="el">Το Konversation είναι μια φιλική στον χρήστη εφαρμογή-πελάτης για την προώθηση συνομιλίας στο Διαδίκτυο (Internet Relay Chat, IRC) από το KDE. Παρέχει εύκολη πρόσβαση σε τυπικά IRC δίκτυα όπως το Libera, όπου μπορείτε να βρείτε τους διαύλους IRC του KDE.</p>
     <p xml:lang="en-GB">Konversation is a user-friendly Internet Relay Chat (IRC) client by KDE. It provides easy access to standard IRC networks such as Libera, where the KDE IRC channels can be found.</p>
@@ -189,6 +190,7 @@
       <li xml:lang="bg">Стандартни IRC функции</li>
       <li xml:lang="ca">Característiques estàndard de l'IRC</li>
       <li xml:lang="ca-valencia">Característiques estàndard de l'IRC</li>
+      <li xml:lang="cs">Standardní funkce IRC</li>
       <li xml:lang="da">Standard IRC-funktioner</li>
       <li xml:lang="de">Standard-IRC-Funktionen</li>
       <li xml:lang="el">Τυπικές IRC λειτουργίες</li>
@@ -231,6 +233,7 @@
       <li xml:lang="bg">Поддръжка на SSL сървър</li>
       <li xml:lang="ca">Permet servidors SSL</li>
       <li xml:lang="ca-valencia">Permet servidors SSL</li>
+      <li xml:lang="cs">Podpora SSL serverů</li>
       <li xml:lang="da">Understøttelse af SSL-server</li>
       <li xml:lang="de">Unterstützung für SSL-Server</li>
       <li xml:lang="el">Υποστήριξη διακομιστή SSL</li>
@@ -274,6 +277,7 @@
       <li xml:lang="bg">Поддръжка на отметки</li>
       <li xml:lang="ca">Permet les adreces d'interès</li>
       <li xml:lang="ca-valencia">Permet les adreces d'interés</li>
+      <li xml:lang="cs">Podpora záložek</li>
       <li xml:lang="da">Understøttelse af bogmærker</li>
       <li xml:lang="de">Unterstützung für Lesezeichen</li>
       <li xml:lang="el">Υποστήριξη σελιδοδεικτών</li>
@@ -316,6 +320,7 @@
       <li xml:lang="bg">Лесен за използване графичен потребителски интерфейс</li>
       <li xml:lang="ca">Interfície gràfica d'usuari fàcil d'utilitzar</li>
       <li xml:lang="ca-valencia">Interfície gràfica d'usuari fàcil d'utilitzar</li>
+      <li xml:lang="cs">Snadno ovladatelné grafické uživatelské rozhraní</li>
       <li xml:lang="da">Brugervenlig grafisk brugerflade</li>
       <li xml:lang="de">Einfach zu bedienende grafische Benutzeroberfläche</li>
       <li xml:lang="el">Ευκολόχρηστο γραφικό περιβάλλον χρήστη</li>
@@ -357,6 +362,7 @@
       <li xml:lang="bg">Множество сървъри и канали в един прозорец</li>
       <li xml:lang="ca">Múltiples servidors i canals en una única finestra</li>
       <li xml:lang="ca-valencia">Múltiples servidors i canals en una única finestra</li>
+      <li xml:lang="cs">Více serverů a kanálů v jediném okně</li>
       <li xml:lang="da">Flere servere og kanaler i et enkelt vindue</li>
       <li xml:lang="de">Mehrere Server und Kanäle in einem einzelnen Fenster</li>
       <li xml:lang="el">Πολλοί εξυπηρετητές και κανάλια σε ένα μόνο παράθυρο</li>
@@ -398,6 +404,7 @@
       <li xml:lang="bg">DCC прехвърляне на файлове</li>
       <li xml:lang="ca">Transferència DCC de fitxers</li>
       <li xml:lang="ca-valencia">Transferència DCC de fitxers</li>
+      <li xml:lang="cs">Přenos souborů DCC</li>
       <li xml:lang="da">DCC-filoverførsel</li>
       <li xml:lang="de">DCC-Dateiübertragung</li>
       <li xml:lang="el">Μεταφορά αρχείων DCC</li>
@@ -440,6 +447,7 @@
       <li xml:lang="bg">Множество самоличности за различни сървъри</li>
       <li xml:lang="ca">Múltiples identitats per a servidors diferents</li>
       <li xml:lang="ca-valencia">Múltiples identitats per a servidors diferents</li>
+      <li xml:lang="cs">Více identit pro různé servery</li>
       <li xml:lang="da">Flere identiteter til forskellige servere</li>
       <li xml:lang="de">Unterschiedliche Identitäten für verschiedene Server</li>
       <li xml:lang="el">Πολλές ταυτότητες για διαφορετικούς διακομιστές</li>
@@ -481,6 +489,7 @@
       <li xml:lang="bg">Текстови декорации и цветове</li>
       <li xml:lang="ca">Decoracions i colors del text</li>
       <li xml:lang="ca-valencia">Decoracions i colors del text</li>
+      <li xml:lang="cs">Textové dekorace a barvy</li>
       <li xml:lang="da">Tekstdekorationer og farver</li>
       <li xml:lang="de">Textdekoration und -farben</li>
       <li xml:lang="el">Διακόσμηση κειμένου και χρώματα</li>
@@ -524,6 +533,7 @@
       <li xml:lang="bg">Показване на екранни известия</li>
       <li xml:lang="ca">Mostra les notificacions en pantalla</li>
       <li xml:lang="ca-valencia">Mostra les notificacions en pantalla</li>
+      <li xml:lang="cs">Zobrazení na obrazovce pro oznámení</li>
       <li xml:lang="da">On-screen-display til bekendtgørelser</li>
       <li xml:lang="de">OnScreen-Anzeige fir Benachrichtigungen</li>
       <li xml:lang="el">Εμφάνιση ειδοποιήσεων στην οθόνη</li>
@@ -565,6 +575,7 @@
       <li xml:lang="bg">Автоматично откриване на UTF-8</li>
       <li xml:lang="ca">Detecció automàtica d'UTF-8</li>
       <li xml:lang="ca-valencia">Detecció automàtica d'UTF-8</li>
+      <li xml:lang="cs">Automatická detekce UTF-8</li>
       <li xml:lang="da">Automatisk UTF-8-detektion</li>
       <li xml:lang="de">Automatische UTF-8-Erkennung</li>
       <li xml:lang="el">Αυτόματος εντοπισμός UTF-8</li>
@@ -608,6 +619,7 @@
       <li xml:lang="bg">Поддръжка на отделно кодиране за всеки канал</li>
       <li xml:lang="ca">Permet codificació per canal</li>
       <li xml:lang="ca-valencia">Permet codificació per canal</li>
+      <li xml:lang="cs">Podpora kódování pro jednotlivé kanály</li>
       <li xml:lang="da">Understøttelse af forskellige tegnsæt pr. kanal</li>
       <li xml:lang="de">Unterstützung für Kodierung pro Kanal</li>
       <li xml:lang="el">Υποστήριξη κωδικοποίησης ανά κανάλι</li>
@@ -650,6 +662,7 @@
       <li xml:lang="bg">Поддръжка на тема за икони значки</li>
       <li xml:lang="ca">Permet temes per a les icones de sobrenom</li>
       <li xml:lang="ca-valencia">Permet temes per a les icones de sobrenom</li>
+      <li xml:lang="cs">Podpora motivů pro ikony přezdívek</li>
       <li xml:lang="da">Temaunderstøttelse for kaldenavn-ikoner</li>
       <li xml:lang="de">Unterstützung für Spitznamen-Symbol-Designs</li>
       <li xml:lang="el">Υποστήριξη θεμάτων για εικονίδια ψευδωνύμων</li>
@@ -691,6 +704,7 @@
       <li xml:lang="bg">С множество възможности за настройване</li>
       <li xml:lang="ca">Altament configurable</li>
       <li xml:lang="ca-valencia">Altament configurable</li>
+      <li xml:lang="cs">Vysoce přizpůsobitelné</li>
       <li xml:lang="da">Meget konfigurerbar</li>
       <li xml:lang="de">Sehr anpassbar</li>
       <li xml:lang="el">Πλήρως διαμορφώσιμο</li>
