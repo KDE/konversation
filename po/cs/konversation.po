@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-07-05 00:43+0000\n"
-"PO-Revision-Date: 2026-08-15 00:05+0200\n"
+"PO-Revision-Date: 2026-08-16 00:08+0200\n"
 "Last-Translator: Libor Filípek <libor.filipek@gmail.com>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
 "Language: cs\n"
@@ -1317,7 +1317,7 @@ msgstr "Různé"
 #: src/config/generalbehavior_configui.ui:201
 #, kde-format
 msgid "Disable notifications while &away"
-msgstr "Z&akázat upozorňování při stavu \"pryč\""
+msgstr "Zakázat oznámení při nepřítomnosti"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_UseCustomBrowser)
 #: src/config/generalbehavior_configui.ui:210
@@ -2029,7 +2029,7 @@ msgstr "Obecné chování"
 #: src/config/settingsdialog.cpp:107
 #, kde-format
 msgid "Connection"
-msgstr "Spojení"
+msgstr "Připojení"
 
 #: src/config/settingsdialog.cpp:114
 #, kde-format
@@ -2366,7 +2366,7 @@ msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
 "concludes sentence \"Show a warning dialog when...\""
 msgid "... switching a connection to a different server in the same network"
-msgstr "... přepínáte spojení na jiný server ve stejné síti"
+msgstr "... přepínáte připojení na jiný server ve stejné síti"
 
 #: src/config/warnings_config.cpp:157
 #, kde-format
@@ -2374,7 +2374,7 @@ msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
 "concludes sentence \"Show a warning dialog when...\""
 msgid "... creating a new connection to an already connected network"
-msgstr "... se vytváří nové spojení k již existující síti"
+msgstr "... se vytváří nové připojení k již existující síti"
 
 #: src/config/warnings_config.cpp:160
 #, kde-format
@@ -2694,7 +2694,7 @@ msgstr "Již připojen k %1"
 #: src/connectionmanager.cpp:513
 #, kde-format
 msgid "Create connection"
-msgstr "Vytvořit spojení"
+msgstr "Vytvořit připojení"
 
 #: src/connectionmanager.cpp:527
 #, kde-format
@@ -2836,7 +2836,7 @@ msgstr "Nelze otevřít socket pro naslouchání: %1"
 #, kde-format
 msgctxt "%1=dcc extension like Chat or Whiteboard,%2=partnerNick, %3=port"
 msgid "Offering DCC %1 connection to %2 on port %3..."
-msgstr "Nabízím spojení DCC %1 k %2 na portu %3..."
+msgstr "Nabízení připojení DCC %1 k %2 na portu %3..."
 
 #: src/dcc/chat.cpp:430
 #, kde-format
@@ -2861,7 +2861,7 @@ msgstr "Navazování DCC %1 připojení s %2 (%3:%4)..."
 #, kde-format
 msgctxt "%1=extension like Chat or Whiteboard, %2 = partnerNick"
 msgid "Established DCC %1 connection to %2."
-msgstr "Navázáno DCC %1 spojení s %2."
+msgstr "Navázáno DCC %1 připojení s %2."
 
 #: src/dcc/chat.cpp:488 src/dcc/transfersend.cpp:570
 #, kde-format
@@ -2877,12 +2877,12 @@ msgstr "Klienta nebylo možné přijmout."
 #, kde-format
 msgctxt "%1=dcc extension as Chat or Whiteboard, %2=partnerNick"
 msgid "Established DCC %1 connection to %2."
-msgstr "Navázáno DCC %1 spojení s %2."
+msgstr "Navázáno DCC %1 připojení s %2."
 
 #: src/dcc/chat.cpp:577
 #, kde-format
 msgid "Connection closed."
-msgstr "Spojení uzavřeno."
+msgstr "Připojení uzavřeno."
 
 #: src/dcc/chatcontainer.cpp:110
 #, kde-format
@@ -3513,7 +3513,7 @@ msgstr ""
 #: src/dcc/transferrecv.cpp:593
 #, kde-format
 msgid "Waiting for connection"
-msgstr "Čekání na spojení"
+msgstr "Čekání na připojení"
 
 #: src/dcc/transferrecv.cpp:602
 #, kde-format
@@ -3536,7 +3536,7 @@ msgstr "Neočekávaná odpověď od vzdáleného počítače"
 #: src/dcc/transferrecv.cpp:697 src/dcc/transfersend.cpp:455
 #, kde-format
 msgid "Could not accept the connection (socket error)."
-msgstr "Nelze přijmout spojení (chyba socketu)."
+msgstr "Nelze přijmout připojení (chyba socketu)."
 
 #: src/dcc/transferrecv.cpp:788
 #, kde-format
@@ -4117,7 +4117,7 @@ msgstr "Soubor PEM:"
 #, kde-format
 msgctxt "@title:tab"
 msgid "Away"
-msgstr "Pryč"
+msgstr "Nepřítomnost"
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, m_insertRememberLineOnAwayChBox)
 #: src/identitydialog.ui:333
@@ -4141,7 +4141,7 @@ msgstr "Označit poslední pozici v oknech rozhovoru při odchodu"
 #: src/identitydialog.ui:343
 #, kde-format
 msgid "Default away message:"
-msgstr "Výchozí zpráva pro \"pryč\":"
+msgstr "Výchozí zpráva o nepřítomnosti:"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_awayMessageEdit)
 #: src/identitydialog.ui:353
@@ -4160,7 +4160,7 @@ msgstr ""
 #: src/identitydialog.ui:360
 #, kde-format
 msgid "Away nickname:"
-msgstr "Přezdívka pro \"pryč\":"
+msgstr "Přezdívka pro nepřítomnost:"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_awayNickEdit)
 #: src/identitydialog.ui:370
@@ -4174,14 +4174,14 @@ msgid ""
 "will automatically change your nickname back to the original. If you do not "
 "wish to automatically change your nickname when going away, leave blank."
 msgstr ""
-"Zadejte přezdívku, která označuje, že jste pryč. Kdykoli zadáte příkaz <b>/"
-"away msg</b> v jakémkoli kanálu, do kterého jste se přihlásili pod touto "
-"identitou, Konversation automaticky změní vaši přezdívku na přezdívku Pryč. "
-"Ostatní uživatelé tak budou vědět, že nejste u počítače. Kdykoli zadáte "
-"příkaz <b>/away</b> v jakémkoli kanálu, ve kterém jste označeni jako Pryč, "
-"Konversation automaticky změní vaši přezdívku zpět na původní. Pokud si "
-"nepřejete, aby se vaše přezdívka při odchodu automaticky měnila, ponechte "
-"pole prázdné."
+"Zadejte přezdívku, která označuje, že jste nepřítomní. Kdykoli zadáte příkaz "
+"<b>/away msg</b> v jakémkoli kanálu, do kterého jste se přihlásili pod touto "
+"identitou, Konversation automaticky změní vaši přezdívku na přezdívku pro "
+"nepřítomnost. Ostatní uživatelé tak budou vědět, že nejste u počítače. "
+"Kdykoli zadáte příkaz <b>/away</b> v jakémkoli kanálu, ve kterém jste "
+"označeni jako nepřítomní, Konversation automaticky změní vaši přezdívku zpět "
+"na původní. Pokud si nepřejete, aby se vaše přezdívka při odchodu "
+"automaticky měnila, ponechte pole prázdné."
 
 #. i18n: ectx: property (whatsThis), widget (QGroupBox, automaticAwayGroup)
 #: src/identitydialog.ui:383
@@ -4199,13 +4199,13 @@ msgstr ""
 #: src/identitydialog.ui:386
 #, kde-format
 msgid "Automatic Away"
-msgstr "Automatické pryč"
+msgstr "Automatická nepřítomnost"
 
 #. i18n: ectx: property (text), widget (QLabel, setAwayAfterLabel)
 #: src/identitydialog.ui:404
 #, kde-format
 msgid "Set away after"
-msgstr "Nastavit \"pryč\" po"
+msgstr "Nastavit nepřítomnost po"
 
 #. i18n: ectx: property (text), widget (QLabel, timeOfUserInactivityLabel)
 #: src/identitydialog.ui:430
@@ -4242,22 +4242,21 @@ msgid ""
 "you were away."
 msgstr ""
 "Pokud zaškrtnete toto políčko, Konversation automaticky spustí příkaz away "
-"ve všech záložkách kanálů, které používají tuto identitu. <b>%s</b> v "
-"příkazu away se nahradí zprávou o nepřítomnosti. Po návratu se spustí příkaz "
-"return. <b>%t</b> v příkazu return se nahradí dobou, po kterou jste byli "
-"nepřítomni."
+"ve všech kartách kanálů, které používají tuto identitu. <b>%s</b> v příkazu "
+"away se nahradí zprávou o nepřítomnosti. Po návratu se spustí příkaz return. "
+"<b>%t</b> v příkazu return se nahradí dobou, po kterou jste byli nepřítomni."
 
 #. i18n: ectx: property (title), widget (QGroupBox, awayCommandsGroup)
 #: src/identitydialog.ui:459
 #, kde-format
 msgid "Away Commands"
-msgstr "Příkazy pro \"pryč\""
+msgstr "Příkazy pro nepřítomnost"
 
 #. i18n: ectx: property (text), widget (QLabel, awayLabel)
 #: src/identitydialog.ui:471
 #, kde-format
 msgid "Away command:"
-msgstr "Příkaz pro \"pryč\":"
+msgstr "Příkaz pro nepřítomnost:"
 
 #. i18n: ectx: property (text), widget (QLabel, unAwayLabel)
 #: src/identitydialog.ui:484
@@ -4285,7 +4284,7 @@ msgid ""
 "starts<br>If you have multiple servers in this identity this command will be "
 "executed for each server"
 msgstr ""
-"Zde můžete zadat příkaz, který se má provést před navázáním spojení se "
+"Zde můžete zadat příkaz, který se má provést před navázáním připojení se "
 "serverem <br>Pokud máte v této identitě více serverů, bude se tento příkaz "
 "provádět pro každý server zvlášť"
 
@@ -5781,12 +5780,12 @@ msgstr "Aktuální uživatelé v %1: %2."
 #: src/irc/server.cpp:4132
 #, kde-format
 msgid "Away"
-msgstr "Pryč"
+msgstr "Nepřítomnost"
 
 #: src/irc/inputfilter.cpp:1746
 #, kde-format
 msgid "%1 is away: %2"
-msgstr "%1 je pryč: %2"
+msgstr "%1 je nepřítomný: %2"
 
 #: src/irc/inputfilter.cpp:1757
 #, kde-format
@@ -5826,7 +5825,7 @@ msgstr "%1 je identifikovaný uživatel."
 #: src/irc/inputfilter.cpp:1854
 #, kde-format
 msgid "%1 is using a secure connection."
-msgstr "%1 používá zabezpečené spojení."
+msgstr "%1 používá zabezpečené připojení."
 
 #: src/irc/inputfilter.cpp:1899 src/irc/inputfilter.cpp:1924
 #, kde-format
@@ -5841,7 +5840,7 @@ msgstr "%1 je %2@%3 (%4)%5"
 #: src/irc/inputfilter.cpp:1904
 #, kde-format
 msgid " (Away)"
-msgstr " (pryč)"
+msgstr " (nepřítomný)"
 
 #: src/irc/inputfilter.cpp:1925
 #, kde-format
@@ -5988,7 +5987,7 @@ msgstr " (IRC operátor)"
 #: src/irc/inputfilter.cpp:2237
 #, kde-format
 msgid " (away)"
-msgstr " (pryč)"
+msgstr " (nepřítomný)"
 
 #: src/irc/inputfilter.cpp:2255 src/irc/inputfilter.cpp:2268
 #: src/irc/inputfilter.cpp:2284
@@ -6168,7 +6167,7 @@ msgstr "Odstranit kanál"
 #: src/irc/joinchannelui.ui:67
 #, kde-format
 msgid "Connection:"
-msgstr "Spojení:"
+msgstr "Připojení:"
 
 #. i18n: ectx: property (text), widget (QLabel, passwordLabel)
 #: src/irc/joinchannelui.ui:80
@@ -6185,7 +6184,7 @@ msgstr "Maska hostitele:"
 #: src/irc/nickinfo.cpp:224
 #, kde-format
 msgid "Away&nbsp;Message:"
-msgstr "Zpráva pro pryč:"
+msgstr "Zpráva pro nepřítomnost:"
 
 #: src/irc/nickinfo.cpp:228
 #, kde-format
@@ -6218,12 +6217,12 @@ msgstr ""
 "uvedena přezdívka a obrázek znázorňující jeho stav.<br /></p><table><tr><th>"
 "%1</th><td>Tato osoba má oprávnění správce.</td></tr><tr><th>%2</th><td>Tato "
 "osoba je vlastníkem kanálu.</td></tr><tr><th>%3</th><td>Tato osoba je "
-"operátorem kanálu.</td></tr><tr><th>%4</th><td>Tato osoba je polovičním "
-"operátorem kanálu.</td></tr><tr><th>%5</th><td>Tato osoba má právo mluvit, a "
-"může tedy mluvit v moderovaném kanálu.</td></tr><tr><th>%6</th><td>Tato "
-"osoba nemá žádná zvláštní oprávnění.</td></tr><tr><th>%7</th><td>Tento "
-"symbol, zobrazený nad kterýmkoli z výše uvedených, označuje, že tato osoba "
-"je momentálně nepřítomná.</td></tr></table><p>Význam pojmů admin, owner a "
+"operátorem kanálu.</td></tr><tr><th>%4</th><td>Tato osoba je polooperátorem "
+"kanálu.</td></tr><tr><th>%5</th><td>Tato osoba má právo mluvit, a může tedy "
+"mluvit v moderovaném kanálu.</td></tr><tr><th>%6</th><td>Tato osoba nemá "
+"žádná zvláštní oprávnění.</td></tr><tr><th>%7</th><td>Tento symbol, "
+"zobrazený nad kterýmkoli z výše uvedených, označuje, že tato osoba je "
+"momentálně nepřítomná.</td></tr></table><p>Význam pojmů admin, owner a "
 "halfop se liší v závislosti na konkrétním IRC serveru.</p><p>Při najetí myší "
 "na jakoukoli přezdívku se zobrazí její aktuální stav. Více informací najdete "
 "v příručce Konversation.</p></qt>"
@@ -6295,6 +6294,14 @@ msgid ""
 "the network.</p><p>Right-click with the mouse on a nickname to perform "
 "additional functions.</p>"
 msgstr ""
+"<p>Zde jsou uvedeny všechny přezdívky z vašeho seznamu sledovaných "
+"přezdívek, seřazené podle sítě serverů, ke kterým jsou připojeny.</"
+"p><p>Sloupec <b>Další informace</b> zobrazuje informace, které jsou o "
+"jednotlivých přezdívkách známy.</p><p>Kanály, ke kterým se přezdívka "
+"připojila, jsou uvedeny pod každou přezdívkou.</p><p>Přezdívky zobrazené pod "
+"položkou <b>Offline</b> nejsou připojeny k žádnému ze serverů v síti.</"
+"p><p>Kliknutím pravým tlačítkem myši na přezdívku můžete provést další "
+"funkce.</p>"
 
 #: src/irc/nicksonline.cpp:217
 #, kde-format
@@ -6314,7 +6321,7 @@ msgstr " Hlas"
 #: src/irc/nicksonline.cpp:306
 #, kde-format
 msgid " HalfOp"
-msgstr ""
+msgstr " Polooperátor"
 
 #: src/irc/nicksonline.cpp:307
 #, kde-format
@@ -6338,11 +6345,14 @@ msgid ""
 "current encoding. If you choose to continue anyway those characters will be "
 "replaced by a '?'."
 msgstr ""
+"Zpráva, kterou odesíláte, obsahuje znaky, které ve vašem aktuálním kódování "
+"neexistují. Pokud se i přesto rozhodnete pokračovat, budou tyto znaky "
+"nahrazeny znakem '?'."
 
 #: src/irc/outputfilter.cpp:218
 #, kde-format
 msgid "Encoding Conflict Warning"
-msgstr ""
+msgstr "Upozornění na konflikt kódování"
 
 #: src/irc/outputfilter.cpp:323
 #, kde-format
@@ -6370,21 +6380,22 @@ msgid ""
 "%1PART and %1LEAVE without parameters only work from within a channel or a "
 "query."
 msgstr ""
+"%1PART a %1LEAVE bez parametrů fungují pouze v rámci kanálu nebo dotazu."
 
 #: src/irc/outputfilter.cpp:479
 #, kde-format
 msgid "%1PART without channel name only works from within a channel."
-msgstr ""
+msgstr "%1PART bez názvu kanálu funguje pouze v rámci kanálu."
 
 #: src/irc/outputfilter.cpp:503
 #, kde-format
 msgid "%1TOPIC without parameters only works from within a channel."
-msgstr ""
+msgstr "%1TOPIC bez parametrů funguje pouze v rámci kanálu."
 
 #: src/irc/outputfilter.cpp:540
 #, kde-format
 msgid "%1TOPIC without channel name only works from within a channel."
-msgstr ""
+msgstr "%1TOPIC bez názvu kanálu funguje pouze v rámci kanálu."
 
 #: src/irc/outputfilter.cpp:596
 #, kde-format
@@ -6392,6 +6403,8 @@ msgid ""
 "%1NAMES with no target may disconnect you from the server. Specify '*' if "
 "you really want this."
 msgstr ""
+"%1NAMES bez zadání cíle může způsobit odpojení od serveru. Pokud to opravdu "
+"chcete, zadejte znak '*'."
 
 #: src/irc/outputfilter.cpp:619
 #, kde-format
@@ -6399,6 +6412,8 @@ msgid ""
 "Usage: %1close [window] closes the named channel or query tab, or the "
 "current tab if none specified."
 msgstr ""
+"Použití: %1close [okno] zavře uvedený kanál nebo kartu dotazu, případně "
+"aktuální kartu, pokud není uvedeno jinak."
 
 #: src/irc/outputfilter.cpp:655
 #, kde-format
@@ -6409,32 +6424,32 @@ msgstr "Použití: %1NOTICE <příjemce> <zpráva>"
 #, kde-format
 msgctxt "%1 is the message, %2 the recipient nickname"
 msgid "Sending notice \"%1\" to %2."
-msgstr ""
+msgstr "Odesílání oznámení \"%1\" pro %2."
 
 #: src/irc/outputfilter.cpp:674
 #, kde-format
 msgid "%1ME only works from a channel, query or DCC chat tab."
-msgstr ""
+msgstr "%1ME funguje pouze v kartě kanálu, dotazu nebo DCC chatu."
 
 #: src/irc/outputfilter.cpp:741
 #, kde-format
 msgid "You need to specify a recipient."
-msgstr ""
+msgstr "Je třeba zadat příjemce."
 
 #: src/irc/outputfilter.cpp:746
 #, kde-format
 msgid "You cannot open queries to channels."
-msgstr ""
+msgstr "Dotazy na kanály nelze otevřít."
 
 #: src/irc/outputfilter.cpp:752
 #, kde-format
 msgid "You need to specify a message."
-msgstr ""
+msgstr "Je třeba zadat zprávu."
 
 #: src/irc/outputfilter.cpp:835 src/irc/outputfilter.cpp:840
 #, kde-format
 msgid "Sending CTCP-%1 request to %2."
-msgstr ""
+msgstr "Odesílání požadavku CTCP-%1 pro %2."
 
 #: src/irc/outputfilter.cpp:852
 #, kde-format
@@ -6454,7 +6469,7 @@ msgstr "Použití: %1OMSG text"
 #: src/irc/outputfilter.cpp:896
 #, kde-format
 msgid "Sending notice \"%1\" to %2."
-msgstr ""
+msgstr "Odesílání oznámení \"%1\" pro %2."
 
 #: src/irc/outputfilter.cpp:899
 #, kde-format
@@ -6502,6 +6517,8 @@ msgid ""
 "Unrecognized command %1DCC %2. Possible commands are SEND, CHAT, CLOSE, GET, "
 "WHITEBOARD."
 msgstr ""
+"Neznámý příkaz %1DCC %2. Možné příkazy jsou SEND, CHAT, CLOSE, GET, "
+"WHITEBOARD."
 
 #: src/irc/outputfilter.cpp:1186
 #, kde-format
@@ -6511,7 +6528,7 @@ msgstr "Použití: %1INVITE <přezdívka> [kanál]"
 #: src/irc/outputfilter.cpp:1197
 #, kde-format
 msgid "%1INVITE without channel name works only from within channels."
-msgstr ""
+msgstr "%1INVITE bez názvu kanálu funguje pouze v rámci kanálů."
 
 #: src/irc/outputfilter.cpp:1206
 #, kde-format
@@ -6527,12 +6544,12 @@ msgstr "Použití: %1EXEC [-SHOWPATH] <script> [seznam parametrů]"
 #, kde-format
 msgctxt "%2 is a filesystem path to the script file"
 msgid "The script file '%1' was found at: %2"
-msgstr ""
+msgstr "Soubor skriptu '%1' byl nalezen v adresáři: %2"
 
 #: src/irc/outputfilter.cpp:1234
 #, kde-format
 msgid "The script name may not contain \"../\"."
-msgstr ""
+msgstr "Název skriptu nesmí obsahovat \"../\"."
 
 #: src/irc/outputfilter.cpp:1249
 #, kde-format
@@ -6543,36 +6560,36 @@ msgstr "Použití: %1RAW [OPEN | CLOSE]"
 #, kde-format
 msgctxt "%1 = Comma-separated list of nicknames"
 msgid "The notify list has been emptied (removed %1)."
-msgstr ""
+msgstr "Seznam oznámení byl vyprázdněn (odstraněno %1)."
 
 #: src/irc/outputfilter.cpp:1292
 #, kde-format
 msgid "The notify list is currently empty."
-msgstr ""
+msgstr "Seznam oznámení je momentálně prázdný."
 
 #: src/irc/outputfilter.cpp:1298
 #, kde-format
 msgctxt "%1 and %2 = Comma-separated lists of nicknames"
 msgid "Current notify list: %1 (added %2)."
-msgstr ""
+msgstr "Aktuální seznam oznámení: %1 (přidáno %2)."
 
 #: src/irc/outputfilter.cpp:1302
 #, kde-format
 msgctxt "%1 and %2 = Comma-separated lists of nicknames"
 msgid "Current notify list: %1 (removed %2)."
-msgstr ""
+msgstr "Aktuální seznam oznámení: %1 (odstraněno %2)."
 
 #: src/irc/outputfilter.cpp:1306
 #, kde-format
 msgctxt "%1, %2 and %3 = Comma-separated lists of nicknames"
 msgid "Current notify list: %1 (added %2, removed %3)."
-msgstr ""
+msgstr "Aktuální seznam oznámení: %1 (přidáno %2, odstraněno %3)."
 
 #: src/irc/outputfilter.cpp:1310
 #, kde-format
 msgctxt "%1 = Comma-separated list of nicknames"
 msgid "Current notify list: %1."
-msgstr ""
+msgstr "Aktuální seznam oznámení: %1."
 
 #: src/irc/outputfilter.cpp:1315 src/irc/server.cpp:3170
 #: src/irc/server.cpp:3184
@@ -6584,7 +6601,7 @@ msgstr "Upozornit"
 #: src/irc/outputfilter.cpp:1331
 #, kde-format
 msgid "Enter username and password for IRC operator privileges:"
-msgstr ""
+msgstr "Zadejte uživatelské jméno a heslo pro oprávnění operátora IRC:"
 
 #: src/irc/outputfilter.cpp:1333
 #, kde-format
@@ -6594,7 +6611,7 @@ msgstr "Heslo IRC operátora"
 #: src/irc/outputfilter.cpp:1396
 #, kde-format
 msgid "%1BAN without channel name works only from inside a channel."
-msgstr ""
+msgstr "%1BAN bez názvu kanálu funguje pouze v rámci kanálu."
 
 #: src/irc/outputfilter.cpp:1399
 #, kde-format
@@ -6622,7 +6639,7 @@ msgstr ""
 #: src/irc/outputfilter.cpp:1479
 #, kde-format
 msgid "%1UNBAN without channel name works only from inside a channel."
-msgstr ""
+msgstr "%1UNBAN bez názvu kanálu funguje pouze v rámci kanálu."
 
 #: src/irc/outputfilter.cpp:1493
 #, kde-format
@@ -6660,9 +6677,9 @@ msgstr "%1 odstraněn ze seznamu ignorovaných."
 #, kde-format
 msgid "No such ignore: %2"
 msgid_plural "No such ignores: %2"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "Takové ignorování neexistuje: %2"
+msgstr[1] "Taková ignorování neexistují: %2"
+msgstr[2] "Taková ignorování neexistují: %2"
 
 #: src/irc/outputfilter.cpp:1648
 #, kde-format
@@ -6691,6 +6708,14 @@ msgid ""
 "Default Encryption Type, with the default for that setting being Electronic "
 "Codebook (ECB)."
 msgstr ""
+"Použití: %1setkey <nick|channel> <key> nastaví šifrovací klíč pro přezdívku "
+"nebo kanál. Příkaz %1setkey <key> v kanálu nebo na kartě dotazů nastaví klíč "
+"pro daný kanál či kartu. Pole pro klíč rozpoznává předpony \"cbc:\" a \"ecb:"
+"\", které nastavují režim blokové šifry na Cipher-Block Chaining (CBC) nebo "
+"Electronic Codebook (ECB). Výchozí režim, který se použije, pokud není "
+"zadána žádná předpona, lze změnit v konfiguračním dialogovém okně v části "
+"Chování -> Připojení -> Šifrování -> Výchozí typ šifrování, přičemž výchozí "
+"hodnotou tohoto nastavení je Electronic Codebook (ECB)."
 
 #: src/irc/outputfilter.cpp:1692
 #, kde-format
@@ -6710,22 +6735,28 @@ msgid ""
 "distributor about a Konversation package with QCA support, or rebuild "
 "Konversation with QCA present."
 msgstr ""
+"Nastavení šifrovacího klíče vyžaduje, aby byl program Konversation sestaven "
+"s podporou knihovny Qt Cryptographic Architecture (QCA). Ohledně balíčku "
+"programu Konversation s podporou QCA se obraťte na svého distributora, "
+"případně program Konversation znovu sestavte s podporou QCA."
 
 #: src/irc/outputfilter.cpp:1719
 #, kde-format
 msgid ""
 "Usage: %1keyx <nick|channel> triggers DH1080 key exchange with the target."
 msgstr ""
+"Použití: %1keyx <přezdívka|kanál> spustí výměnu klíčů DH1080 s cílovým "
+"uživatelem."
 
 #: src/irc/outputfilter.cpp:1722
 #, kde-format
 msgid "Unable to request a key exchange from %1."
-msgstr ""
+msgstr "Nelze požádat %1 o výměnu klíčů."
 
 #: src/irc/outputfilter.cpp:1726
 #, kde-format
 msgid "Beginning DH1080 key exchange with %1."
-msgstr ""
+msgstr "Zahájení výměny klíčů DH1080 s %1."
 
 #: src/irc/outputfilter.cpp:1745
 #, kde-format
@@ -6733,16 +6764,18 @@ msgid ""
 "Usage: %1delkey <nick> or <channel> deletes the encryption key for nick or "
 "channel"
 msgstr ""
+"Použití: %1delkey  <přezdívka> nebo <kanál> odstraní šifrovací klíč pro "
+"přezdívku nebo kanál"
 
 #: src/irc/outputfilter.cpp:1757
 #, kde-format
 msgid "The key for %1 has been deleted."
-msgstr ""
+msgstr "Klíč pro %1 byl smazán."
 
 #: src/irc/outputfilter.cpp:1760 src/irc/outputfilter.cpp:1780
 #, kde-format
 msgid "No key has been set for %1."
-msgstr ""
+msgstr "Pro %1 nebyl nastaven žádný klíč."
 
 #: src/irc/outputfilter.cpp:1777
 #, kde-format
@@ -6767,7 +6800,7 @@ msgstr "Použití: %1DNS <nick>"
 #: src/irc/outputfilter.cpp:1834
 #, kde-format
 msgid "Usage: %1queuetuner [on | off]"
-msgstr ""
+msgstr "Použití: %1queuetuner[zapnout | vypnout]"
 
 #: src/irc/outputfilter.cpp:1895
 #, kde-format
@@ -6777,17 +6810,17 @@ msgstr "%1CYCLE [-APP | -SERVER] [kanál | přezdívka]"
 #: src/irc/outputfilter.cpp:1926
 #, kde-format
 msgid "%1CLEAR [-ALL] [channel | nickname]"
-msgstr ""
+msgstr "%1CLEAR [-ALL] [kanál | přezdívka]"
 
 #: src/irc/outputfilterresolvejob.cpp:66
 #, kde-format
 msgid "Resolved %1 to: %2"
-msgstr ""
+msgstr "%1 bylo přeloženo jako: %2"
 
 #: src/irc/outputfilterresolvejob.cpp:68
 #, kde-format
 msgid "Unable to resolve %1."
-msgstr ""
+msgstr "Nelze přeložit %1."
 
 #: src/irc/query.cpp:49
 #, kde-format
@@ -6797,6 +6830,10 @@ msgid ""
 "<i>Konversation Handbook</i> for an explanation of what the hostmask is.</"
 "p></qt>"
 msgstr ""
+"<qt><p>V tomto pruhu se zobrazují některé údaje o osobě, se kterou v tomto "
+"dotazu komunikujete. Zobrazuje se celé jméno a šablona hostitele.</"
+"p><p>Vysvětlení pojmu šablona hostitele najdete v <i>Příručce Konversation</"
+"i>.</p></qt>"
 
 #: src/irc/query.cpp:410
 #, kde-format
@@ -6824,18 +6861,18 @@ msgstr "%1 (%2) opustil tento server (%3)."
 #, kde-format
 msgctxt "The command mentioned is executed in a shell prior to connecting."
 msgid "Running pre-connect shell command..."
-msgstr ""
+msgstr "Spouštění příkazu shellu před připojením..."
 
 #: src/irc/server.cpp:413
 #, kde-format
 msgid "Pre-shell command executed successfully!"
-msgstr ""
+msgstr "Příkaz před spuštěním shellu byl úspěšně proveden!"
 
 #: src/irc/server.cpp:416 src/irc/server.cpp:428
 #, kde-format
 msgctxt "An error message from KDE or Qt is appended."
 msgid "There was a problem while executing the command: "
-msgstr ""
+msgstr "Při provádění příkazu došlo k problému: "
 
 #: src/irc/server.cpp:417 src/irc/server.cpp:429
 #, kde-format
@@ -6855,7 +6892,7 @@ msgstr "Server nalezen, připojování..."
 #: src/irc/server.cpp:728
 #, kde-format
 msgid "Negotiating capabilities with server..."
-msgstr ""
+msgstr "Probíhá vyjednávání možností se serverem..."
 
 #: src/irc/server.cpp:771
 #, kde-format
@@ -6863,32 +6900,35 @@ msgid ""
 "Server does not support %1 as SASL authentication mechanism, skipping SASL "
 "authentication."
 msgstr ""
+"Server nepodporuje %1 jako mechanismus ověřování SASL, ověřování SASL se "
+"proto přeskočí."
 
 #: src/irc/server.cpp:792
 #, kde-format
 msgid "Requesting capabilities: %1"
-msgstr ""
+msgstr "Požadované funkce: %1"
 
 #: src/irc/server.cpp:809
 #, kde-format
 msgid "Closing capabilities negotiation."
-msgstr ""
+msgstr "Ukončení vyjednávání možností."
 
 #: src/irc/server.cpp:817
 #, kde-format
 msgid "Capabilities negotiation failed: Appears not supported by server."
 msgstr ""
+"Vyjednávání o možnostech selhalo: Zdá se, že server tuto funkci nepodporuje."
 
 #: src/irc/server.cpp:827
 #, kde-format
 msgid ""
 "SASL capability acknowledged by server, attempting SASL %1 authentication..."
-msgstr ""
+msgstr "Server potvrdil podporu SASL, provádí se ověření pomocí SASL %1..."
 
 #: src/irc/server.cpp:840
 #, kde-format
 msgid "SASL capability denied or not supported by server."
-msgstr ""
+msgstr "Funkce SASL byla odmítnuta nebo není serverem podporována."
 
 #: src/irc/server.cpp:940 src/irc/server.cpp:1048
 #, kde-format
@@ -6901,11 +6941,14 @@ msgid ""
 "Connection to server %1 (port %2) lost while waiting for user response to an "
 "SSL error. Will automatically reconnect if error is ignored."
 msgstr ""
+"Během čekání na odpověď uživatele na chybu SSL došlo ke ztrátě připojení k "
+"serveru %1 (port %2). Pokud bude chyba ignorována, dojde k automatickému "
+"obnovení připojení."
 
 #: src/irc/server.cpp:961
 #, kde-format
 msgid "Connection to server %1 (port %2) lost: %3."
-msgstr "Spojení se serverem %1 (port %2) ztraceno: %3."
+msgstr "Připojení se serverem %1 (port %2) ztraceno: %3."
 
 #: src/irc/server.cpp:1010
 #, kde-format
@@ -6917,7 +6960,7 @@ msgstr "SSL certifikát pro server %1 (port %2) nesplnil test autenticity."
 #: src/irc/server.cpp:1014
 #, kde-format
 msgid "SSL Connection Warning"
-msgstr ""
+msgstr "Varování o SSL připojení"
 
 #: src/irc/server.cpp:1043
 #, kde-format
@@ -6926,11 +6969,14 @@ msgid ""
 "does not support SSL (did you use the correct port?) or you rejected the "
 "certificate. %3"
 msgstr ""
+"Nepodařilo se navázat spojení s %1 (port %2) pomocí šifrování SSL. Buď "
+"server nepodporuje protokol SSL (použili jste správný port?), nebo jste "
+"odmítli certifikát. %3"
 
 #: src/irc/server.cpp:1151
 #, kde-format
 msgid "Delayed connect aborted."
-msgstr ""
+msgstr "Přerušení zpožděného připojení."
 
 #: src/irc/server.cpp:1181
 #, kde-format
@@ -6944,6 +6990,8 @@ msgid ""
 "\"%2\".\n"
 "Please enter a new one or press Cancel to disconnect:"
 msgstr ""
+"Připojení \"%2\" nepřijalo žádnou přezdívku z identity \"%1\".\n"
+"Zadejte prosím novou přezdívku nebo stiskněte tlačítko Zrušit pro odpojení:"
 
 #: src/irc/server.cpp:1340
 #, kde-format
@@ -6959,12 +7007,12 @@ msgstr "Zvolte soubor k odeslání pro '%1'"
 #, kde-format
 msgctxt "%1=nickname"
 msgid "Received invalid DCC SEND request from %1."
-msgstr ""
+msgstr "Byl přijat neplatný požadavek DCC SEND od %1."
 
 #: src/irc/server.cpp:2384
 #, kde-format
 msgid "%1 offers to send you \"%2\" (%3)..."
-msgstr ""
+msgstr "%1 vám nabízí odeslat \"%2\" (%3)..."
 
 #: src/irc/server.cpp:2387 src/irc/server.cpp:2517 src/irc/server.cpp:2529
 #: src/irc/server.cpp:2678 src/irc/server.cpp:2734 src/irc/server.cpp:2843
@@ -6976,29 +7024,29 @@ msgstr "neznámá velikost"
 #, kde-format
 msgctxt "%1=nickname"
 msgid "Received invalid DCC CHAT request from %1."
-msgstr ""
+msgstr "Byl přijat neplatný požadavek DCC CHAT od %1."
 
 #: src/irc/server.cpp:2514
 #, kde-format
 msgid "Asking %1 to accept upload of \"%2\" (%3)..."
-msgstr ""
+msgstr "Žádá se %1 o schválení nahrání souboru \"%2\" (%3)..."
 
 #: src/irc/server.cpp:2526
 #, kde-format
 msgid "Asking %1 to accept passive upload of \"%2\" (%3)..."
-msgstr ""
+msgstr "Žádá se %1 o souhlas s pasivním nahráním souboru \"%2\" (%3)..."
 
 #: src/irc/server.cpp:2538
 #, kde-format
 msgctxt "%1=name, %2=dcc extension, chat or wboard for example"
 msgid "Asking %1 to accept %2..."
-msgstr ""
+msgstr "Žádá se %1 o schválení %2..."
 
 #: src/irc/server.cpp:2597
 #, kde-format
 msgctxt "%1 = nickname"
 msgid "Received invalid passive DCC chat acceptance message from %1."
-msgstr ""
+msgstr "Byla přijata neplatná pasivní zpráva o přijetí chatu DCC od %1."
 
 #: src/irc/server.cpp:2633
 #, kde-format
@@ -7006,6 +7054,8 @@ msgctxt "%1 = file name, %2 = nickname"
 msgid ""
 "Received invalid passive DCC send acceptance message for \"%1\" from %2."
 msgstr ""
+"Byla přijata neplatná pasivní zpráva o potvrzení odeslání DCC pro \"%1\" od "
+"%2."
 
 #: src/irc/server.cpp:2674
 #, kde-format
@@ -7013,13 +7063,13 @@ msgctxt ""
 "%1 = file name, %2 = nickname of sender, %3 = percentage of file size, %4 = "
 "file size"
 msgid "Resuming download of \"%1\" from %2 starting at %3% of %4..."
-msgstr ""
+msgstr "Obnovení stahování souboru \"%1\" z %2, počínaje %3% z %4..."
 
 #: src/irc/server.cpp:2684
 #, kde-format
 msgctxt "%1 = file name, %2 = nickname"
 msgid "Received invalid resume acceptance message for \"%1\" from %2."
-msgstr ""
+msgstr "Od %2 byla přijata neplatná zpráva o přijetí požadavku pro \"%1\"."
 
 #: src/irc/server.cpp:2730
 #, kde-format
@@ -7027,61 +7077,61 @@ msgctxt ""
 "%1 = file name, %2 = nickname of recipient, %3 = percentage of file size, %4 "
 "= file size"
 msgid "Resuming upload of \"%1\" to %2 starting at %3% of %4..."
-msgstr ""
+msgstr "Obnovení nahrávání souboru \"%1\" na %2, počínaje %3% z %4..."
 
 #: src/irc/server.cpp:2752
 #, kde-format
 msgctxt "%1 = file name, %2 = nickname"
 msgid "Received invalid resume request for \"%1\" from %2."
-msgstr ""
+msgstr "Byla přijat neplatný požadavek na obnovení pro \"%1\" od %2."
 
 #: src/irc/server.cpp:2771
 #, kde-format
 msgctxt "%1 = file name, %2 = nickname"
 msgid "Received invalid reject request for \"%1\" from %2."
-msgstr ""
+msgstr "Byla přijat neplatný požadavek na zamítnutí pro \"%1\" od %2."
 
 #: src/irc/server.cpp:2787
 #, kde-format
 msgctxt "%1 = nickname"
 msgid "Received invalid reject request from %1."
-msgstr ""
+msgstr "Byla přijat neplatný požadavek na zamítnutí od %1."
 
 #: src/irc/server.cpp:2800
 #, kde-format
 msgctxt "%1 = file name, %2 = nickname of sender"
 msgid "Download of \"%1\" from %2 finished."
-msgstr ""
+msgstr "Stahování \"%1\" z %2 bylo dokončeno."
 
 #: src/irc/server.cpp:2805
 #, kde-format
 msgctxt "%1 = file name, %2 = nickname of sender"
 msgid "Download of \"%1\" from %2 failed. Reason: %3."
-msgstr ""
+msgstr "Stahování \"%1\" z %2 se nezdařilo. Důvod: %3."
 
 #: src/irc/server.cpp:2817
 #, kde-format
 msgctxt "%1 = file name, %2 = nickname of recipient"
 msgid "Upload of \"%1\" to %2 finished."
-msgstr ""
+msgstr "Nahrávání \"%1\" do %2 bylo dokončeno."
 
 #: src/irc/server.cpp:2820
 #, kde-format
 msgctxt "%1 = file name, %2 = nickname of recipient"
 msgid "Upload of \"%1\" to %2 failed. Reason: %3."
-msgstr ""
+msgstr "Nahrání \"%1\" do %2 se nezdařilo. Důvod: %3."
 
 #: src/irc/server.cpp:2834
 #, kde-format
 msgctxt "%1 = file name, %2 nickname of recipient"
 msgid "Sending \"%1\" to %2..."
-msgstr ""
+msgstr "Odesílání \"%1\" pro %2..."
 
 #: src/irc/server.cpp:2841
 #, kde-format
 msgctxt "%1 = file name, %2 = file size, %3 = nickname of sender"
 msgid "Downloading \"%1\" (%2) from %3..."
-msgstr ""
+msgstr "Stahování \"%1\" (%2) z %3..."
 
 #: src/irc/server.cpp:3170 src/notificationhandler.cpp:348
 #, kde-format
@@ -7096,52 +7146,52 @@ msgstr "%1 je offline (%2)."
 #: src/irc/server.cpp:3847
 #, kde-format
 msgid "Error: Could not find script \"%1\"."
-msgstr ""
+msgstr "Chyba: Nelze najít skript \"%1\"."
 
 #: src/irc/server.cpp:3852
 #, kde-format
 msgid "Error: Could not execute script \"%1\". Check file permissions."
-msgstr ""
+msgstr "Chyba: Nelze spustit skript \"%1\". Zkontrolujte oprávnění souboru."
 
 #: src/irc/server.cpp:4063
 #, kde-format
 msgid "Gone away for now"
-msgstr ""
+msgstr "Prozatím jsem nepřítomný"
 
 #: src/irc/server.cpp:4094
 #, kde-format
 msgid "You are now marked as being away (reason: %1)."
-msgstr ""
+msgstr "Nyní jste označeni jako nepřítomní (důvod: %1)."
 
 #: src/irc/server.cpp:4096
 #, kde-format
 msgid "You are now marked as being away."
-msgstr ""
+msgstr "Nyní jste označeni jako nepřítomní."
 
 #: src/irc/server.cpp:4122
 #, kde-format
 msgid "You are no longer marked as being away."
-msgstr "Již nejste označeni jako \"pryč\"."
+msgstr "Už nejste označeni jako nepřítomní."
 
 #: src/irc/server.cpp:4132
 #, kde-format
 msgid "You are not marked as being away."
-msgstr "Nejste označeni jako \"pryč\"."
+msgstr "Nejste označeni jako nepřítomní."
 
 #: src/irc/server.cpp:4278
 #, kde-format
 msgid "Failed to initiate key exchange with %1."
-msgstr ""
+msgstr "Nepodařilo se zahájit výměnu klíčů s %1."
 
 #: src/irc/server.cpp:4290
 #, kde-format
 msgid "Unable to perform key exchange with %1."
-msgstr ""
+msgstr "Nelze provést výměnu klíčů s %1."
 
 #: src/irc/server.cpp:4314
 #, kde-format
 msgid "Failed to parse the DH1080_INIT of %1. Key exchange failed."
-msgstr ""
+msgstr "Nepodařilo se zpracovat DH1080_INIT pro %1. Selhala výměna klíčů."
 
 #: src/irc/server.cpp:4320
 #, kde-format
@@ -7149,11 +7199,13 @@ msgid ""
 "Your key is set and your messages will now be encrypted, sending "
 "DH1080_FINISH to %1."
 msgstr ""
+"Váš klíč je nastaven a vaše zprávy budou nyní šifrovány; odesílá se "
+"DH1080_FINISH na %1."
 
 #: src/irc/server.cpp:4337
 #, kde-format
 msgid "Unable to complete key exchange with %1."
-msgstr ""
+msgstr "Nelze dokončit výměnu klíčů s %1."
 
 #: src/irc/server.cpp:4349
 #, kde-format
@@ -7161,11 +7213,15 @@ msgid ""
 "Successfully parsed DH1080_FINISH sent by %1. Your key is set and your "
 "messages will now be encrypted."
 msgstr ""
+"DH1080_FINISH odeslaný uživatelem %1 byl úspěšně zpracován. Váš klíč je "
+"nastaven a vaše zprávy budou nyní šifrovány."
 
 #: src/irc/server.cpp:4353
 #, kde-format
 msgid "Failed to parse DH1080_FINISH sent by %1. Key exchange failed."
 msgstr ""
+"Nepodařilo se zpracovat DH1080_FINISH odeslaný uživatelem %1. Selhala výměna "
+"klíčů."
 
 #. i18n: ectx: property (text), widget (QLabel, serverLbl)
 #: src/irc/serverdialogui.ui:26
@@ -7179,6 +7235,8 @@ msgstr "&Server:"
 msgid ""
 "The name or IP number of the server. irchelp.org maintains a list of servers."
 msgstr ""
+"Název nebo IP adresa serveru. Seznam serverů je k dispozici na stránkách "
+"irchelp.org."
 
 #. i18n: ectx: property (text), widget (QLabel, portLbl)
 #: src/irc/serverdialogui.ui:46 src/quickconnectdialog.cpp:52
@@ -7193,6 +7251,8 @@ msgid ""
 "Enter the port number required to connect to the server. For most servers, "
 "this should be <b>6667</b>."
 msgstr ""
+"Zadejte číslo portu potřebné pro připojení k serveru. U většiny serverů by "
+"to mělo být <b>6667</b>."
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, m_sslChBox)
 #: src/irc/serverdialogui.ui:95
@@ -7204,6 +7264,11 @@ msgid ""
 "support SSL protocol for this to work. In most cases, if the server does not "
 "support SSL, the connection will fail."
 msgstr ""
+"Zaškrtněte toto políčko, pokud chcete pro komunikaci se serverem používat "
+"protokol Secure Socket Layer (SSL). Tím zajistíte ochranu soukromí při "
+"komunikaci mezi vaším počítačem a serverem IRC. Aby tato funkce fungovala, "
+"musí server podporovat protokol SSL. Ve většině případů, pokud server "
+"protokol SSL nepodporuje, dojde k selhání připojení."
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_sslChBox)
 #: src/irc/serverdialogui.ui:98
@@ -7218,12 +7283,14 @@ msgid ""
 "Check if you want to use the global proxy configuration to communicate with "
 "this server."
 msgstr ""
+"Zkontrolujte, zda chcete pro komunikaci s tímto serverem použít globální "
+"nastavení proxy."
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_proxyChBox)
 #: src/irc/serverdialogui.ui:108
 #, kde-format
 msgid "&Use global proxy"
-msgstr ""
+msgstr "&Použít globální proxy"
 
 #: src/irc/servergroupdialog.cpp:84
 #, kde-format
@@ -7258,7 +7325,7 @@ msgstr "Je vyžadován název sítě sítě."
 #: src/irc/servergroupdialog.cpp:424
 #, kde-format
 msgid "You need to add at least one server to the network."
-msgstr ""
+msgstr "Do sítě je třeba přidat alespoň jeden server."
 
 #: src/irc/servergroupdialog.cpp:493
 #, kde-format
@@ -7290,6 +7357,9 @@ msgid ""
 "or edit an existing one. The Identity will identify you and determine your "
 "nickname when you connect to the network."
 msgstr ""
+"Vyberte existující identitu nebo klikněte na tlačítko Upravit, abyste "
+"přidali novou identitu nebo upravili stávající. Identita vás bude "
+"identifikovat a určí vaši přezdívku při připojení k síti."
 
 #. i18n: ectx: property (text), widget (QPushButton, m_editButton)
 #. i18n: ectx: property (text), widget (QPushButton, m_editIdentityButton)
@@ -7316,6 +7386,12 @@ msgid ""
 "the nickname given in Identity. You may enter more than one command by "
 "separating them with semicolons.</qt>"
 msgstr ""
+"<qt>Volitelné. Tento příkaz bude odeslán na server po navázání připojení. "
+"Příklad: <b>/msg NickServ IDENTIFY <i>konvirocks</i></b>. Tento příklad se "
+"týká sítě Libera, která vyžaduje, aby si uživatelé zaregistrovali svou "
+"přezdívku spolu s heslem a při připojení se přihlásili. <i>konvirocks</i> je "
+"heslo pro přezdívku zadanou v Identity. Můžete zadat více než jeden příkaz, "
+"pokud je oddělíte středníky.</qt>"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_nameEdit)
 #: src/irc/servergroupdialogui.ui:101
@@ -7324,6 +7400,8 @@ msgid ""
 "Enter the name of the Network here. You may create as many entries in the "
 "Server List screen with the same Network as you like."
 msgstr ""
+"Zde zadejte název sítě. Na obrazovce Seznam serverů můžete vytvořit "
+"libovolný počet záznamů se stejným názvem sítě."
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: src/irc/servergroupdialogui.ui:108
@@ -7344,6 +7422,8 @@ msgid ""
 "Check here if you want Konversation to automatically connect to this network "
 "whenever you open Konversation."
 msgstr ""
+"Zde zaškrtněte, pokud chcete, aby se aplikace Konversation při každém "
+"spuštění automaticky připojovala k této síti."
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_autoConnectCBox)
 #: src/irc/servergroupdialogui.ui:131
@@ -7361,6 +7441,11 @@ msgid ""
 "attempt the third, and so on. At least one server must be specified. Click a "
 "server to highlight it."
 msgstr ""
+"Toto je seznam serverů IRC v síti. Při připojování k síti se program "
+"Konversation nejprve pokusí připojit k prvnímu serveru v seznamu. Pokud se "
+"to nepodaří, zkusí druhý server. Pokud ani to nevyjde, zkusí třetí a tak "
+"dále. Je nutné zadat alespoň jeden server. Kliknutím na server jej "
+"zvýrazníte."
 
 #. i18n: ectx: property (text), widget (QPushButton, m_addServerButton)
 #: src/irc/servergroupdialogui.ui:151
@@ -7389,6 +7474,9 @@ msgid ""
 "once Konversation has connected to a server. You may leave this blank if you "
 "wish to not automatically join any channels."
 msgstr ""
+"Volitelné. Jedná se o seznam kanálů, ke kterým se aplikace Konversation "
+"automaticky připojí, jakmile se připojí k serveru. Pokud se nechcete "
+"automaticky připojovat k žádným kanálům, můžete toto pole nechat prázdné."
 
 #. i18n: ectx: property (text), widget (QPushButton, m_addChannelButton)
 #: src/irc/servergroupdialogui.ui:239
@@ -7415,7 +7503,7 @@ msgstr "Připojit se na server"
 #: src/irc/serverlistdialog.cpp:53
 #, kde-format
 msgid "Click here to connect to the selected IRC network and channel."
-msgstr ""
+msgstr "Klikněte sem a připojte se k vybrané síti a kanálu IRC."
 
 #: src/irc/serverlistdialog.cpp:121
 #, kde-format
@@ -7434,6 +7522,9 @@ msgid ""
 "\n"
 "The network %2 needs to have at least one server."
 msgstr ""
+"%1 nelze odstranit.\n"
+"\n"
+"Síť %2 musí obsahovat alespoň jeden server."
 
 #: src/irc/serverlistdialog.cpp:203
 #, kde-format
@@ -7446,8 +7537,17 @@ msgid_plural ""
 "\n"
 "The network %2 needs to have at least one server."
 msgstr[0] ""
+"Vybraný server nelze odstranit.\n"
+"\n"
+"Síť %2 musí obsahovat alespoň jeden server."
 msgstr[1] ""
+"Vybrané servery nelze odstranit.\n"
+"\n"
+"Síť %2 musí obsahovat alespoň jeden server."
 msgstr[2] ""
+"Vybrané servery nelze odstranit.\n"
+"\n"
+"Síť %2 musí obsahovat alespoň jeden server."
 
 #: src/irc/serverlistdialog.cpp:219
 #, kde-format
@@ -7466,6 +7566,8 @@ msgid ""
 "Click here to define a new Network, including the server to connect to, and "
 "the Channels to automatically join once connected."
 msgstr ""
+"Klikněte sem a nastavte novou síť, včetně serveru, ke kterému se chcete "
+"připojit, a kanálů, ke kterým se po připojení automaticky připojíte."
 
 #. i18n: ectx: property (text), widget (QPushButton, m_addButton)
 #: src/irc/serverlistdialogui.ui:26
@@ -7490,6 +7592,11 @@ msgid ""
 "Konversation is started for the first time, the Libera network and the "
 "<i>#kde</i> channel are already entered for you."
 msgstr ""
+"Zde je zobrazen seznam nakonfigurovaných sítí IRC. Síť IRC je soubor "
+"spolupracujících serverů. Stačí se připojit k jednomu ze serverů v síti a "
+"budete připojeni k celé síti IRC. Jakmile se připojíte, Konversation se "
+"automaticky připojí k zobrazeným kanálům. Při prvním spuštění aplikace "
+"Konversation jsou již předem vyplněny síť Libera a kanál <i>#kde</i>."
 
 #. i18n: ectx: property (text), widget (ServerListView, m_serverList)
 #: src/irc/serverlistdialogui.ui:147
@@ -7569,6 +7676,10 @@ msgid ""
 "Meet friends on the net, make new acquaintances and lose yourself in talk "
 "about your favorite subject."
 msgstr ""
+"Konversation je klient pro protokol Internet Relay Chat (IRC).\n"
+"\n"
+"Setkávejte se s přáteli na internetu, navazujte nové známosti a ponořte se "
+"do diskuzí o svém oblíbeném tématu."
 
 #: src/main.cpp:36
 #, kde-format
@@ -7601,6 +7712,8 @@ msgid ""
 "Maintainer, Release Manager, User interface, Connection management, Protocol "
 "handling, Auto-away"
 msgstr ""
+"Správce, manažer verzí, uživatelské rozhraní, správa připojení, zpracování "
+"protokolů, automatická nepřítomnost"
 
 #: src/main.cpp:39
 #, kde-format
@@ -7610,7 +7723,7 @@ msgstr "Shintaro Matsuoka"
 #: src/main.cpp:39
 #, kde-format
 msgid "DCC, Encoding handling, OSD positioning"
-msgstr ""
+msgstr "DCC, zpracování kódování, umístění OSD"
 
 #: src/main.cpp:40
 #, kde-format
@@ -7620,7 +7733,7 @@ msgstr "Eli MacKenzie"
 #: src/main.cpp:40
 #, kde-format
 msgid "Protocol handling, Input line"
-msgstr ""
+msgstr "Zpracování protokolu, vstupní linka"
 
 #: src/main.cpp:41
 #, kde-format
@@ -7631,6 +7744,8 @@ msgstr "İsmail Dönmez"
 #, kde-format
 msgid "Blowfish, SSL support, KNetwork port, Colored nicks, Nicklist themes"
 msgstr ""
+"Blowfish, podpora SSL, port KNetwork, barevné přezdívky, motivy seznamu "
+"přezdívek"
 
 #: src/main.cpp:42
 #, kde-format
@@ -7640,7 +7755,7 @@ msgstr "John Tapsell"
 #: src/main.cpp:42
 #, kde-format
 msgid "Refactoring, KAddressBook/Kontact integration"
-msgstr ""
+msgstr "Refaktoring, integrace KAddressBook/Kontact"
 
 #: src/main.cpp:43
 #, kde-format
@@ -7650,7 +7765,7 @@ msgstr "Bernd Buschinski"
 #: src/main.cpp:43
 #, kde-format
 msgid "DCC port to KDE 4, various DCC improvements"
-msgstr ""
+msgstr "Portování DCC do KDE 4, různá vylepšení DCC"
 
 #: src/main.cpp:45
 #, kde-format
@@ -7680,7 +7795,7 @@ msgstr "Christian Muehlhaeuser"
 #: src/main.cpp:47
 #, kde-format
 msgid "Multiple modes extension, Close widget placement, OSD functionality"
-msgstr ""
+msgstr "Rozšíření o více režimů, umístění widgetu Zavřít, funkce OSD"
 
 #: src/main.cpp:48
 #, kde-format
@@ -7691,6 +7806,8 @@ msgstr "Gary Cramblitt"
 #, kde-format
 msgid "Documentation, Watched Nicks improvements, Custom web browser extension"
 msgstr ""
+"Dokumentace, vylepšení funkce sledovaných přezdívek, vlastní rozšíření pro "
+"webový prohlížeč"
 
 #: src/main.cpp:49
 #, kde-format
@@ -7700,7 +7817,7 @@ msgstr "Matthias Gierlings"
 #: src/main.cpp:49
 #, kde-format
 msgid "Color configurator, Highlight dialog"
-msgstr ""
+msgstr "Konfigurátor barev, dialogové okno zvýraznění"
 
 #: src/main.cpp:50
 #, kde-format
@@ -7720,7 +7837,7 @@ msgstr "Stanislav Karchebny"
 #: src/main.cpp:51
 #, kde-format
 msgid "Non-Latin1-Encodings"
-msgstr ""
+msgstr "Kódování jiná než Latin1"
 
 #: src/main.cpp:52
 #, kde-format
@@ -7730,7 +7847,7 @@ msgstr "Mickael Marchand"
 #: src/main.cpp:52
 #, kde-format
 msgid "Konsole part view"
-msgstr ""
+msgstr "Zobrazení části Konzole"
 
 #: src/main.cpp:53
 #, kde-format
@@ -7740,7 +7857,7 @@ msgstr "Michael Goettsche"
 #: src/main.cpp:53
 #, kde-format
 msgid "Quick connect, Ported new OSD, other features and bugfixes"
-msgstr ""
+msgstr "Rychlé připojení, nové OSD s porty, další funkce a opravy chyb"
 
 #: src/main.cpp:54
 #, kde-format
@@ -7750,7 +7867,7 @@ msgstr "Benjamin Meyer"
 #: src/main.cpp:54
 #, kde-format
 msgid "A Handful of fixes and code cleanup"
-msgstr ""
+msgstr "Několik oprav a úprava kódu"
 
 #: src/main.cpp:55
 #, kde-format
@@ -7760,7 +7877,7 @@ msgstr "Jakub Stachowski"
 #: src/main.cpp:55
 #, kde-format
 msgid "Drag&Drop improvements"
-msgstr ""
+msgstr "Vylepšení funkce přetahování"
 
 #: src/main.cpp:56
 #, kde-format
@@ -7780,7 +7897,7 @@ msgstr "Renchi Raju"
 #: src/main.cpp:57
 #, kde-format
 msgid "Firefox style searchbar"
-msgstr ""
+msgstr "Vyhledávací lišta ve stylu Firefoxu"
 
 #: src/main.cpp:58
 #, kde-format
@@ -7791,6 +7908,7 @@ msgstr "Michael Kreitzer"
 #, kde-format
 msgid "Raw modes, Tab grouping per server, Ban list"
 msgstr ""
+"Režimy Raw, seskupování karet podle serveru, seznam zablokovaných uživatelů"
 
 #: src/main.cpp:59
 #, kde-format
@@ -7800,7 +7918,7 @@ msgstr "Frauke Oster"
 #: src/main.cpp:59
 #, kde-format
 msgid "System tray patch"
-msgstr ""
+msgstr "Oprava v systémové liště"
 
 #: src/main.cpp:60
 #, kde-format
@@ -7820,7 +7938,7 @@ msgstr "Sascha Cunz"
 #: src/main.cpp:61
 #, kde-format
 msgid "Extended user modes patch"
-msgstr ""
+msgstr "Oprava rozšířených uživatelských režimů"
 
 #: src/main.cpp:62
 #, kde-format
@@ -7830,7 +7948,7 @@ msgstr "Steve Wollkind"
 #: src/main.cpp:62
 #, kde-format
 msgid "Close visible tab with shortcut patch"
-msgstr ""
+msgstr "Zavření viditelné karty pomocí zkrácené opravy"
 
 #: src/main.cpp:63
 #, kde-format
@@ -7840,7 +7958,7 @@ msgstr "Thomas Nagy"
 #: src/main.cpp:63
 #, kde-format
 msgid "Cycle tabs with mouse scroll wheel"
-msgstr ""
+msgstr "Přepínání záložek pomocí kolečka myši"
 
 #: src/main.cpp:64
 #, kde-format
@@ -7850,7 +7968,7 @@ msgstr "Tobias Olry"
 #: src/main.cpp:64
 #, kde-format
 msgid "Channel ownership mode patch"
-msgstr ""
+msgstr "Oprava režimu vlastnictví kanálu"
 
 #: src/main.cpp:65
 #, kde-format
@@ -7860,7 +7978,7 @@ msgstr "Ruud Nabben"
 #: src/main.cpp:65
 #, kde-format
 msgid "Option to enable IRC color filtering"
-msgstr ""
+msgstr "Možnost zapnout barevné filtrování v IRC"
 
 #: src/main.cpp:66
 #, kde-format
@@ -7875,7 +7993,7 @@ msgstr "Ivor Hewitt"
 #: src/main.cpp:67
 #, kde-format
 msgid "Bug fixes, OSD work, clearing topics"
-msgstr ""
+msgstr "Opravy chyb, úpravy OSD, mazání témat"
 
 #: src/main.cpp:68
 #, kde-format
@@ -7900,7 +8018,7 @@ msgstr "Juan Carlos Torres"
 #: src/main.cpp:70
 #, kde-format
 msgid "Auto-join context menu"
-msgstr ""
+msgstr "Kontextové menu automatického připojení"
 
 #: src/main.cpp:71
 #, kde-format
@@ -7912,6 +8030,8 @@ msgstr "Travis McHenry"
 msgid ""
 "Various fixes, ported encryption to QCA2, added DH1080 key exchange support."
 msgstr ""
+"Různé opravy, portování šifrování na QCA2, přidána podpora výměny klíčů "
+"DH1080."
 
 #: src/main.cpp:72
 #, kde-format
@@ -7921,7 +8041,7 @@ msgstr "Modestas Vainius"
 #: src/main.cpp:72
 #, kde-format
 msgid "Bug fixes and enhancements."
-msgstr ""
+msgstr "Opravy chyb a vylepšení."
 
 #: src/main.cpp:73
 #, kde-format
@@ -7931,7 +8051,7 @@ msgstr "Abdurrahman AVCI"
 #: src/main.cpp:73
 #, kde-format
 msgid "Various bug fixes and enhancements."
-msgstr ""
+msgstr "Různé opravy chyb a vylepšení."
 
 #: src/main.cpp:74
 #, kde-format
@@ -7941,12 +8061,12 @@ msgstr "Martin Blumenstingl"
 #: src/main.cpp:74
 #, kde-format
 msgid "KStatusNotifierItem support, KIdleTime support, other enhancements"
-msgstr ""
+msgstr "Podpora KStatusNotifierItem, podpora KIdleTime, další vylepšení"
 
 #: src/main.cpp:84
 #, kde-format
 msgid "irc:// URL or server hostname"
-msgstr ""
+msgstr "URL adresa irc:// nebo název hostitele serveru"
 
 #: src/main.cpp:85
 #, kde-format
@@ -7971,7 +8091,7 @@ msgstr "port"
 #: src/main.cpp:87
 #, kde-format
 msgid "Channel to join after connection"
-msgstr ""
+msgstr "Kanál, ke kterému se připojit po navázání připojení"
 
 #: src/main.cpp:87
 #, kde-format
@@ -8001,18 +8121,20 @@ msgstr "heslo"
 #: src/main.cpp:90
 #, kde-format
 msgid "Use SSL for connection"
-msgstr "Pro spojení použít SSL"
+msgstr "Pro připojení použít SSL"
 
 #: src/main.cpp:91
 #, kde-format
 msgid "Disable auto-connecting to any IRC networks"
-msgstr ""
+msgstr "Zakázat automatické připojování k jakýmkoli sítím IRC"
 
 #: src/main.cpp:92
 #, kde-format
 msgid ""
 "Delay D-Bus activity and UI creation by the specified amount of milliseconds"
 msgstr ""
+"Odložit aktivitu D-Bus a vytvoření uživatelského rozhraní o zadaný počet "
+"milisekund"
 
 #: src/main.cpp:92
 #, kde-format
@@ -8030,6 +8152,8 @@ msgstr ""
 msgid ""
 "Sets KUniqueApplication::NonUniqueInstance (debug only, use with caution)"
 msgstr ""
+"Nastaví KUniqueApplication::NonUniqueInstance (pouze pro ladění, používejte "
+"s opatrností)"
 
 #: src/mainwindow.cpp:135
 #, kde-format
@@ -8110,7 +8234,7 @@ msgstr "&Otevřít soubor se záznamem"
 #: src/mainwindow.cpp:204
 #, kde-format
 msgid "Open the known history for this channel in a new tab"
-msgstr ""
+msgstr "Otevřít historii tohoto kanálu v nové kartě"
 
 #: src/mainwindow.cpp:209 src/viewer/viewcontainer.cpp:937
 #, kde-format
@@ -8141,6 +8265,8 @@ msgstr "Odchytávač &URL"
 #, kde-format
 msgid "List all URLs that have been mentioned recently in a new tab"
 msgstr ""
+"Zobrazit seznam všech URL adres, které byly v poslední době zmíněny, v nové "
+"kartě"
 
 #: src/mainwindow.cpp:236
 #, kde-format
@@ -8303,7 +8429,7 @@ msgstr "Vyprázdnit obsah všech karet"
 #: src/mainwindow.cpp:472
 #, kde-format
 msgid "Global Away"
-msgstr "Globálně pryč"
+msgstr "Globální nepřítomnost"
 
 #: src/mainwindow.cpp:480 src/viewer/irccontextmenus.cpp:329
 #, kde-format
@@ -8323,7 +8449,7 @@ msgstr "&IRC barva..."
 #: src/mainwindow.cpp:500
 #, kde-format
 msgid "Set the color of your current IRC message"
-msgstr ""
+msgstr "Nastavit barvu aktuální zprávy v IRC"
 
 #: src/mainwindow.cpp:505 src/mainwindow.cpp:859
 #, kde-format
@@ -8333,7 +8459,7 @@ msgstr "Připo&mínací čára"
 #: src/mainwindow.cpp:508
 #, kde-format
 msgid "Insert a horizontal line into the current tab that only you can see"
-msgstr ""
+msgstr "Vložit do aktuální karty vodorovnou čáru, kterou uvidíte pouze vy"
 
 #: src/mainwindow.cpp:513 src/mainwindow.cpp:858
 #, kde-format
@@ -8343,12 +8469,12 @@ msgstr "Spe&ciální znak..."
 #: src/mainwindow.cpp:517
 #, kde-format
 msgid "Insert any character into your current IRC message"
-msgstr ""
+msgstr "Vložit libovolný znak do své aktuální zprávy v IRC"
 
 #: src/mainwindow.cpp:528
 #, kde-format
 msgid "Focus Input Box"
-msgstr ""
+msgstr "Zaměřit vstupní pole"
 
 #: src/mainwindow.cpp:535
 #, kde-format
@@ -8363,7 +8489,7 @@ msgstr "Zobrazit seznam kontaktů"
 #: src/mainwindow.cpp:550
 #, kde-format
 msgid "Show/Hide Konversation"
-msgstr ""
+msgstr "Zobrazit/skrýt Konversation"
 
 #: src/mainwindow.cpp:561
 #, kde-format
@@ -8401,6 +8527,9 @@ msgid ""
 "tray. Use <b>Quit</b> from the <b>Konversation</b> menu to quit the "
 "application.</p>"
 msgstr ""
+"<p>Po zavření hlavního okna bude aplikace Konversation nadále běžet v "
+"systémové liště. Chcete-li aplikaci ukončit, použijte příkaz <b>Ukončit</b> "
+"z nabídky <b>Konversation</b>.</p>"
 
 #: src/mainwindow.cpp:662
 #, kde-format
@@ -8429,7 +8558,7 @@ msgstr "Přepnout upozornění"
 #: src/mainwindow.cpp:840
 #, kde-format
 msgid "Toggle Away Globally"
-msgstr "Přepnout globálně \"pryč\""
+msgstr "Přepnout globálně nepřítomnost"
 
 #: src/mainwindow.cpp:841
 #, kde-format
@@ -8454,7 +8583,7 @@ msgstr "Seznam &kanálů"
 #: src/mainwindow.cpp:856
 #, kde-format
 msgid "Set &Away Globally"
-msgstr "N&astavit globálně \"pryč\""
+msgstr "N&astavit globálně nepřítomnost"
 
 #: src/mainwindow.cpp:874
 #, kde-format
@@ -8544,7 +8673,7 @@ msgstr "Otevřít"
 #: src/notificationhandler.cpp:318
 #, kde-format
 msgid "%1 changed modes in %2: %3"
-msgstr ""
+msgstr "%1 změnil režim v %2: %3"
 
 #: src/notificationhandler.cpp:334
 #, kde-format
@@ -8565,13 +8694,13 @@ msgstr "%1 s vámi zahájil DCC rozhovor"
 #, kde-format
 msgctxt "Notification title; see Event/highlight in konversation.notifyrc"
 msgid "Highlight triggered in %1"
-msgstr ""
+msgstr "Zvýraznění aktivováno v %1"
 
 #: src/notificationhandler.cpp:419
 #, kde-format
 msgctxt "Notification title; see Event/highlight in konversation.notifyrc"
 msgid "Highlight triggered by %2 in %1"
-msgstr ""
+msgstr "Zvýraznění aktivováno %2 v %1"
 
 #: src/notificationhandler.cpp:430
 #, kde-format
@@ -8597,7 +8726,7 @@ msgstr "Obnovit..."
 #, kde-format
 msgid ""
 "This cannot be undone, are you sure you wish to reset to default values?"
-msgstr ""
+msgstr "Tuto akci nelze vrátit zpět. Opravdu chcete obnovit výchozí hodnoty?"
 
 #: src/queuetuner.cpp:231
 #, kde-format
@@ -8727,13 +8856,13 @@ msgstr "Přijato:"
 #: src/queuetunerbase.ui:662
 #, kde-format
 msgid "Bytes (Raw):"
-msgstr ""
+msgstr "Bajty (raw):"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel4_3)
 #: src/queuetunerbase.ui:672
 #, kde-format
 msgid "Bytes (Encoded):"
-msgstr ""
+msgstr "Bajtů (kódované):"
 
 #: src/quickconnectdialog.cpp:36
 #, kde-format
@@ -8748,7 +8877,7 @@ msgstr "&Server:"
 #: src/quickconnectdialog.cpp:45
 #, kde-format
 msgid "Enter the host of the network here."
-msgstr "Zde zadejte server IRC sítě."
+msgstr "Zde zadejte IRC server sítě."
 
 #: src/quickconnectdialog.cpp:53
 #, kde-format
@@ -8797,6 +8926,10 @@ msgid ""
 "special privileges, such as the ability to kick and ban users, change the "
 "channel modes, make other users operators</p></qt>"
 msgstr ""
+"<qt><p>Zde se zobrazuje počet uživatelů v kanálu a počet těch, kteří jsou "
+"operátory (ops).</p><p>Operátor kanálu je uživatel, který má zvláštní "
+"oprávnění, jako je například možnost vyhazovat a blokovat uživatele, měnit "
+"režimy kanálu nebo jmenovat další uživatele operátory.</p></qt>"
 
 #: src/statusbar.cpp:44 src/statusbar.cpp:145 src/statusbar.cpp:161
 #, kde-format
@@ -8820,6 +8953,10 @@ msgid ""
 "The delay is the time it takes for messages from you to reach the server, "
 "and from the server back to you.</qt>"
 msgstr ""
+"<qt>Na stavovém řádku se zobrazují různé zprávy, včetně případných problémů "
+"s připojením k serveru.  Zcela vpravo je uvedeno aktuální zpoždění při "
+"komunikaci se serverem.  Zpoždění představuje dobu, za kterou se zprávy od "
+"vás dostanou na server a zpět k vám.</qt>"
 
 #: src/statusbar.cpp:147
 #, kde-format
@@ -8894,6 +9031,10 @@ msgid ""
 "<b>Settings</b>, under <b>Behavior</b> | <b>General</b>, you can specify a "
 "custom web browser for web URLs.</p>"
 msgstr ""
+"<p>Vyberte jednu nebo více <b>URL adres</b> níže a poté kliknutím na toto "
+"tlačítko spusťte aplikaci přiřazenou k MIME typu dané URL adresy.</p>-<p>V "
+"<b>Nastavení</b>, v části <b>Chování</b> | <b>Obecné</b>, můžete pro webové "
+"URL adresy nastavit vlastní webový prohlížeč.</p>"
 
 #: src/urlcatcher.cpp:97
 #, kde-format
@@ -8927,6 +9068,8 @@ msgid ""
 "Select one or several <b>URLs</b> above, then click this button to copy them "
 "to the clipboard."
 msgstr ""
+"Vyberte jednu nebo více <b>URL adres</b> výše a poté kliknutím na toto "
+"tlačítko je zkopírujte do schránky."
 
 #: src/urlcatcher.cpp:118
 #, kde-format
@@ -8940,6 +9083,8 @@ msgid ""
 "Select one or several <b>URLs</b> above, then click this button to delete "
 "them from the list."
 msgstr ""
+"Vyberte jednu nebo více <b>URL adres</b> uvedených výše a poté kliknutím na "
+"toto tlačítko je ze seznamu odstraňte."
 
 #: src/urlcatcher.cpp:122
 #, kde-format
@@ -8960,7 +9105,7 @@ msgstr "Uložit seznam."
 #: src/urlcatcher.cpp:131
 #, kde-format
 msgid "Click to save the entire list to a file."
-msgstr ""
+msgstr "Kliknutím uložíte celý seznam do souboru."
 
 #: src/urlcatcher.cpp:134
 #, kde-format
@@ -8976,7 +9121,7 @@ msgstr "Vyčistit seznam."
 #: src/urlcatcher.cpp:137
 #, kde-format
 msgid "Click to erase the entire list."
-msgstr ""
+msgstr "Kliknutím vymažete celý seznam."
 
 #: src/urlcatcher.cpp:155
 #, kde-format
@@ -8984,6 +9129,8 @@ msgid ""
 "List of Uniform Resource Locators mentioned in any of the Konversation "
 "windows during this session."
 msgstr ""
+"Seznam adres URL (Uniform Resource Locators), které se během této relace "
+"objevily v některém z oken aplikace Konversation."
 
 #: src/urlcatcher.cpp:168
 #, kde-format
@@ -9001,6 +9148,8 @@ msgid ""
 "You have selected more than one URL. Do you really want to open several URLs "
 "at once?"
 msgstr ""
+"Vybrali jste více než jednu URL adresu. Opravdu chcete otevřít několik URL "
+"adres najednou?"
 
 #: src/urlcatcher.cpp:231 src/urlcatcher.cpp:253
 #, kde-format
@@ -9013,6 +9162,9 @@ msgid ""
 "You have selected more than one URL. A file dialog to set the destination "
 "will open for each. Do you really want to save several URLs at once?"
 msgstr ""
+"Vybrali jste více než jednu URL adresu. Pro každou z nich se otevře "
+"dialogové okno pro výběr cílového umístění. Opravdu chcete uložit několik "
+"URL adres najednou?"
 
 #: src/urlcatcher.cpp:266 src/viewer/irccontextmenus.cpp:761
 #, kde-format
@@ -9036,27 +9188,27 @@ msgstr ""
 #: src/viewer/awaylabel.cpp:16
 #, kde-format
 msgid "(away)"
-msgstr "(pryč)"
+msgstr "(nepřítomný)"
 
 #: src/viewer/awaylabel.cpp:19
 #, kde-format
 msgid "&Unaway"
-msgstr ""
+msgstr "Zrušit &nepřítomnost"
 
 #: src/viewer/awaylabel.cpp:22
 #, kde-format
 msgid "&Change away message..."
-msgstr ""
+msgstr "&Změnit zprávu o nepřítomnosti..."
 
 #: src/viewer/awaylabel.cpp:33
 #, kde-format
 msgid "Change away message"
-msgstr ""
+msgstr "Změnit zprávu o nepřítomnosti"
 
 #: src/viewer/awaylabel.cpp:33
 #, kde-format
 msgid "Enter new away message:"
-msgstr "Zadejte novou zprávu pro pryč:"
+msgstr "Zadejte novou zprávu pro nepřítomnost:"
 
 #: src/viewer/channeloptionsdialog.cpp:34
 #, kde-format
@@ -9091,6 +9243,9 @@ msgid ""
 "change these.</p><p>The <b>T</b>opic mode means that only the channel "
 "operator can change the topic for the channel.</p></qt>"
 msgstr ""
+"<qt><p>Tyto parametry určují <em>režim</em> kanálu.  Změnit je může pouze "
+"operátor.</p><p>Režim <b>T</b>éma znamená, že téma kanálu může změnit pouze "
+"operátor kanálu.</p></qt>"
 
 #: src/viewer/channeloptionsdialog.cpp:611
 #, kde-format
@@ -9100,6 +9255,11 @@ msgid ""
 "in the channel cannot send messages for everybody in the channel to see.  "
 "Almost all channels have this set to prevent nuisance messages.</p></qt>"
 msgstr ""
+"<qt><p>Tyto parametry určují <em>režim</em> kanálu.  Změnit je může pouze "
+"operátor.</p><p><b>Ž</b>ádné zprávy zvenčí znamenají, že uživatelé, kteří "
+"nejsou v kanálu, nemohou posílat zprávy, které by viděli všichni v kanálu.  "
+"Toto nastavení mají téměř všechny kanály, aby se zabránilo obtěžujícím "
+"zprávám.</p></qt>"
 
 #: src/viewer/channeloptionsdialog.cpp:613
 #, kde-format
@@ -9111,6 +9271,12 @@ msgid ""
 "same channel will know that you are in this channel, if this mode is set.</"
 "p></qt>"
 msgstr ""
+"<qt><p>Tyto parametry určují <em>režim</em> kanálu. Změnit je může pouze "
+"operátor.</p><p><b>T</b>ajný kanál se nezobrazí v seznamu kanálů a žádný "
+"uživatel nebude schopen zjistit, že se v kanálu nacházíte, ani pomocí "
+"příkazu <em>WHOIS</em> ani žádným podobným způsobem.  Pokud je tento režim "
+"nastaven, budou o vaší přítomnosti v kanálu vědět pouze lidé, kteří se "
+"nacházejí ve stejném kanálu.</p></qt>"
 
 #: src/viewer/channeloptionsdialog.cpp:615
 #, kde-format
@@ -9121,6 +9287,10 @@ msgid ""
 "needs to issue the command <em>/invite nick</em> from within the channel.</"
 "p></qt>"
 msgstr ""
+"<qt><p>Tyto parametry určují <em>režim</em> kanálu.  Změnit je může pouze "
+"operátor.</p><p>Kanál typu <b>P</b>ouze na pozvánku znamená, že se k němu "
+"mohou připojit pouze pozvaní uživatelé.  Chce-li operátor kanálu někoho "
+"pozvat, musí v rámci kanálu zadat příkaz <em>/invite nick</em>.</p></qt>"
 
 #: src/viewer/channeloptionsdialog.cpp:617
 #, kde-format
@@ -9131,6 +9301,11 @@ msgid ""
 "not show them as being in a private channel depending on the IRC server.</"
 "p></qt>"
 msgstr ""
+"<qt><p>Tyto parametry určují <em>režim</em> kanálu. Změnit je může pouze "
+"operátor.</p><p><b>P</b>rivátní kanál se zobrazuje v seznamu všech kanálů, "
+"ale jeho téma se nezobrazuje.  V závislosti na IRC serveru se v <em>WHOIS</"
+"em> uživatele může nebo nemusí zobrazovat, že se nachází v privátním kanálu."
+"</p></qt>"
 
 #: src/viewer/channeloptionsdialog.cpp:619
 #, kde-format
@@ -9139,6 +9314,9 @@ msgid ""
 "change these.</p><p>A <b>M</b>oderated channel is one where only operators, "
 "half-operators and those with voice can talk.</p></qt>"
 msgstr ""
+"<qt><p>Tyto parametry určují <em>režim</em> kanálu.  Změnit je může pouze "
+"operátor.</p><p><b>M</b>oderovaný kanál je takový, ve kterém mohou mluvit "
+"pouze operátoři, polooperátoři a uživatelé s oprávnění mluvit.</p></qt>"
 
 #: src/viewer/channeloptionsdialog.cpp:621
 #, kde-format
@@ -9147,6 +9325,9 @@ msgid ""
 "change these.</p><p>A protected channel requires users to enter a password "
 "in order to join.</p></qt>"
 msgstr ""
+"<qt><p>Tyto parametry určují <em>režim</em> kanálu.  Změnit je může pouze "
+"operátor.</p><p>U chráněného kanálu musí uživatelé pro připojení zadat heslo."
+"</p></qt>"
 
 #: src/viewer/channeloptionsdialog.cpp:623
 #, kde-format
@@ -9157,6 +9338,11 @@ msgid ""
 "bot that sits in the channel and changes this automatically depending on how "
 "busy the channel is.</p></qt>"
 msgstr ""
+"<qt><p>Tyto parametry určují <em>režim</em> kanálu.  Změnit je může pouze "
+"operátor.</p><p>Kanál s <b>L</b>imitem pro uživatele znamená, že v kanálu "
+"může být najednou přítomno pouze dané množství uživatelů.  Některé kanály "
+"mají bota, který v kanálu zůstává a tento limit automaticky upravuje v "
+"závislosti na vytíženosti kanálu.</p></qt>"
 
 #. i18n: ectx: attribute (title), widget (QWidget, topicTab)
 #: src/viewer/channeloptionsui.ui:36
@@ -9305,6 +9491,7 @@ msgstr "&Přezdívka:"
 msgid ""
 "<qt>The nickname to watch for when connected to a server in the network.</qt>"
 msgstr ""
+"<qt>Při připojení k serveru v síti je třeba sledovat tuto přezdívku.</qt>"
 
 #: src/viewer/editnotifydialog.cpp:65
 #, kde-format
@@ -9314,7 +9501,7 @@ msgstr "Všechny sítě"
 #: src/viewer/editnotifydialog.cpp:78
 #, kde-format
 msgid "Change notify information"
-msgstr ""
+msgstr "Změnit informace o oznámení"
 
 #: src/viewer/ignorelistviewitem.cpp:41
 #, kde-format
@@ -9350,7 +9537,7 @@ msgstr "Nic"
 #: src/viewer/irccolorchooserui.ui:17
 #, kde-format
 msgid "This is how your message will look with these colors"
-msgstr ""
+msgstr "Takto bude vaše zpráva vypadat s těmito barvami"
 
 #. i18n: ectx: property (whatsThis), widget (QLabel, m_previewLbl)
 #: src/viewer/irccolorchooserui.ui:22
@@ -9362,6 +9549,11 @@ msgid ""
 "ignore your color changes.</b>\n"
 "</qt>"
 msgstr ""
+"<qt>Toto je náhled toho, jak by vaši čtenáři mohli vidět vaši zprávu, pokud "
+"zvolíte tyto barvy.<br>\n"
+"<b>Poznámka: Ne všichni klienti tuto funkci podporují a někteří uživatelé se "
+"možná rozhodli vaše změny barev ignorovat.</b>\n"
+"</qt>"
 
 #. i18n: ectx: property (text), widget (QLabel, m_previewLbl)
 #: src/viewer/irccolorchooserui.ui:31
@@ -9374,7 +9566,7 @@ msgstr "Náhled"
 #: src/viewer/irccolorchooserui.ui:50 src/viewer/irccolorchooserui.ui:67
 #, kde-format
 msgid "The chosen text color is added to the input line."
-msgstr ""
+msgstr "Zvolená barva textu se přidá do vstupního řádku."
 
 #. i18n: ectx: property (whatsThis), widget (KComboBox, m_fgColorCBox)
 #. i18n: ectx: property (whatsThis), widget (QLabel, m_fgColorLbl)
@@ -9387,6 +9579,11 @@ msgid ""
 "until you change the color again.<br>\n"
 "<b>Note:  Not all users turn on the option to see this.</b></qt>"
 msgstr ""
+"<qt>Zde si vyberete, jakou barvu textu chcete mít v další zprávě, kterou "
+"odešlete. Pokud vyberete barvu a kliknete na OK, zvolená barva se přidá do "
+"vstupního řádku. Veškerý text zadaný poté bude mít zvolenou barvu, dokud "
+"barvu znovu nezměníte.<br>\n"
+"<b>Poznámka: Ne všichni uživatelé mají tuto možnost zapnutou.</b></qt>"
 
 #. i18n: ectx: property (text), widget (QLabel, m_fgColorLbl)
 #: src/viewer/irccolorchooserui.ui:74
@@ -9399,7 +9596,7 @@ msgstr "&Barva popředí:"
 #: src/viewer/irccolorchooserui.ui:99 src/viewer/irccolorchooserui.ui:113
 #, kde-format
 msgid "The chosen text-background color is added to the input line."
-msgstr ""
+msgstr "Zvolená barva pozadí textu se přidá do vstupního řádku."
 
 #. i18n: ectx: property (whatsThis), widget (KComboBox, m_bgColorCBox)
 #. i18n: ectx: property (whatsThis), widget (QLabel, m_bgColorLbl)
@@ -9418,6 +9615,17 @@ msgid ""
 "<b>Note:  Not all clients support this, and not all users turn on the option "
 "to see this.</b></qt>"
 msgstr ""
+"<qt>Zde si vyberete, jakou barvu pozadí chcete použít pro text v další "
+"zprávě, kterou odešlete.\n"
+"Pokud vyberete barvu a kliknete na OK, zvolená barva se přidá do vstupního "
+"řádku.\n"
+"Veškerý text zadaný poté bude mít zvolenou barvu, dokud barvu znovu "
+"nezměníte.<br>\n"
+"Pokud zvolíte výchozí možnost \"<i>Žádná</i>\", barva pozadí vaší zprávy se "
+"nezmění, takže vaši čtenáři uvidí vaši zprávu s běžnou barvou pozadí textu."
+"<br>\n"
+"<b>Poznámka:  Ne všichni klienti tuto funkci podporují a ne všichni "
+"uživatelé mají tuto možnost zapnutou.</b></qt>"
 
 #: src/viewer/irccontextmenus.cpp:136
 #, kde-format
@@ -9578,7 +9786,7 @@ msgstr "Přidat ke sledovaným kontaktům"
 #: src/viewer/irccontextmenus.cpp:444
 #, kde-format
 msgid "Remove From Watched Nicks"
-msgstr ""
+msgstr "Odstranit ze sledovaných přezdívek"
 
 #: src/viewer/irccontextmenus.cpp:451
 #, kde-format
@@ -9619,7 +9827,7 @@ msgstr "Přejete si přestat ignorovat vybrané uživatele?"
 #, kde-format
 msgctxt "Opens a query (private message) window with the author of the topic"
 msgid "Query author"
-msgstr ""
+msgstr "Autor dotazu"
 
 #: src/viewer/ircinput.cpp:53
 #, kde-format
@@ -9637,6 +9845,18 @@ msgid ""
 "in.</td></tr></table><p>For more commands, see the Konversation Handbook.</"
 "p><p>A message cannot contain multiple lines.</p></qt>"
 msgstr ""
+"<qt><p>Do vstupního řádku zadáváte zprávy, které chcete odeslat do kanálu, "
+"dotazu nebo na server.  Zpráva odeslaná do kanálu je viditelná pro všechny "
+"účastníky kanálu, zatímco zpráva v dotazu je odeslána pouze osobě, se kterou "
+"dotaz sdílíte.</p><p>Chcete-li automaticky doplnit přezdívku, kterou jste "
+"začali psát, stiskněte klávesu Tab. Pokud jste ještě nezačali psát, použije "
+"se poslední úspěšně zadaná přezdívka.</p><p>Můžete také odesílat speciální "
+"příkazy:</p><table><tr><th>/me <i>akce</i></th><td>se zobrazí jako akce v "
+"kanálu nebo dotazu.  Například:  <em>/me zpívá píseň</em> se v kanálu "
+"zobrazí jako 'Nick zpívá píseň'.</td></tr><tr><th>/whois <i>přezdívka</i></"
+"th><td>zobrazí informace o této osobě, včetně kanálů, ve kterých se nachází."
+"</td></tr></table><p>Další příkazy najdete v příručce Konversation.</"
+"p><p>Zpráva nemůže obsahovat více řádků.</p></qt>"
 
 #: src/viewer/ircinput.cpp:474
 #, kde-format
@@ -9664,11 +9884,14 @@ msgid ""
 "chat. This can cause connection resets or flood kills. Do you really want to "
 "continue?</qt>"
 msgstr ""
+"<qt>Snažíte se vložit do chatu rozsáhlý úsek textu (%1 nebo %2). To může "
+"způsobit přerušení připojení nebo zablokování účtu kvůli zahlcení. Opravdu "
+"chcete pokračovat?</qt>"
 
 #: src/viewer/ircinput.cpp:484
 #, kde-format
 msgid "Large Paste Warning"
-msgstr ""
+msgstr "Upozornění na rozsáhlý vložený text"
 
 #: src/viewer/ircinput.cpp:485
 #, kde-format
@@ -9698,7 +9921,7 @@ msgstr "Znovu načíst"
 #: src/viewer/logfilereader.cpp:40 src/viewer/logfilereader.cpp:136
 #, kde-format
 msgid "Clear Logfile"
-msgstr "Vyčistit soubor se záznamem"
+msgstr "Vyčistit soubor s protokolem"
 
 #: src/viewer/logfilereader.cpp:42
 #, kde-format
@@ -9712,6 +9935,9 @@ msgid ""
 "take effect until you restart Konversation. Each log file may have a "
 "separate setting."
 msgstr ""
+"V tomto poli můžete nastavit maximální velikost souboru protokolu. Toto "
+"nastavení se projeví až po restartování aplikace Konversation. Pro každý "
+"soubor protokolu lze nastavit samostatnou velikost."
 
 #: src/viewer/logfilereader.cpp:50
 #, kde-format
@@ -9724,12 +9950,15 @@ msgid ""
 "The messages in the log file are displayed here. The oldest messages are at "
 "the top and the most recent are at the bottom."
 msgstr ""
+"Zde se zobrazují záznamy ze souborů s protokoly. Nejstarší záznamy jsou "
+"nahoře a nejnovější dole."
 
 #: src/viewer/logfilereader.cpp:135
 #, kde-format
 msgid ""
 "Do you really want to permanently discard all log information of this file?"
 msgstr ""
+"Opravdu chcete trvale smazat všechny informace z protokolu tohoto souboru?"
 
 #: src/viewer/logfilereader.cpp:149
 #, kde-format
@@ -9737,11 +9966,13 @@ msgid ""
 "Note: By saving the logfile you will save all data in the file, not only the "
 "part you can see in this viewer."
 msgstr ""
+"Poznámka: Uložením souboru protokolu uložíte všechna data obsažená v "
+"souboru, nikoli pouze tu část, kterou vidíte v tomto prohlížeči."
 
 #: src/viewer/logfilereader.cpp:150
 #, kde-format
 msgid "Save Logfile"
-msgstr "Uložit soubor se záznamem"
+msgstr "Uložit soubor s protokolem"
 
 #: src/viewer/logfilereader.cpp:154
 #, kde-format
@@ -9767,7 +9998,7 @@ msgstr "Ode&slat"
 #: src/viewer/pasteeditor.ui:14
 #, kde-format
 msgid "Paste Editor"
-msgstr ""
+msgstr "Editor vkládání"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_addQuotesButton)
 #: src/viewer/pasteeditor.ui:23
@@ -9883,7 +10114,7 @@ msgstr "Smazat přebytečný text"
 #: src/viewer/topicedit.cpp:203
 #, kde-format
 msgid "Text past the server limit of %1 bytes is shown in color."
-msgstr ""
+msgstr "Text, který překračuje limit serveru o %1 bajtů, se zobrazí barevně."
 
 #: src/viewer/topichistoryview.cpp:37
 #, kde-format
@@ -9908,6 +10139,18 @@ msgid ""
 "a synchronized edit field, undo back to the original text or close and "
 "reopen the dialog."
 msgstr ""
+"Toto je seznam všech témat, která byla pro tento kanál nastavena v době, kdy "
+"byla jeho karta otevřená.\n"
+"\n"
+"Pokud někdo nastaví stejné téma několikrát za sebou, zobrazí se pouze "
+"poslední výskyt.\n"
+"\n"
+"Když v seznamu vyberete téma, do editačního pole pod ním se vloží jeho text. "
+"Jakmile však začnete upravovat obsah pole, seznam přepne z běžného režimu "
+"výběru položek do režimu, který umožňuje výběr textu z položek pro případ, "
+"že byste chtěli část jejich textu začlenit do nového tématu. Chcete-li se "
+"vrátit do režimu výběru položek a synchronizovaného editačního pole, vraťte "
+"se zpět k původnímu textu nebo zavřete a znovu otevřete dialogové okno."
 
 #: src/viewer/trayicon.cpp:23
 #, kde-format
@@ -9976,6 +10219,8 @@ msgid ""
 "To know which server to display the channel list for, the list can only be "
 "opened from a query, channel or status window."
 msgstr ""
+"Aby bylo možné určit, pro který server se má seznam kanálů zobrazit, lze "
+"tento seznam otevřít pouze z okna dotazu, kanálu nebo stavu."
 
 #: src/viewer/viewcontainer.cpp:3009
 #, kde-format
@@ -9984,6 +10229,8 @@ msgid ""
 "connection is not fast enough, it is possible that your client will be "
 "disconnected by the server."
 msgstr ""
+"Použití této funkce může způsobit značný síťový provoz. Pokud vaše připojení "
+"není dostatečně rychlé, může se stát, že server odpojí vašeho klienta."
 
 #: src/viewer/viewcontainer.cpp:3013
 #, kde-format
