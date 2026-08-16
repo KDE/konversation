@@ -155,7 +155,7 @@ Do NOT change these in the translation. -->
 
 <abstract>
 <para
->&konversation; es un cliente de &irc; fácil de usar generado sobre &Qt; and &kf5-full;. </para>
+>&konversation; es un cliente de &irc; fácil de usar generado sobre &Qt; y &kde-frameworks;. </para>
 </abstract>
 
 <!-- This is a set of Keywords for indexing by search engines.
@@ -298,7 +298,7 @@ problems. Basically a long version of the abstract.  Don't include a
 revision history. (see installation appendix comment) -->
 
 <para
->&konversation; es un cliente &irc; generado sobre &Qt; and &kf5-full;. Ofrece las siguientes características: </para>
+>&konversation; es un cliente &irc; generado sobre &Qt; and &kde-frameworks;. Ofrece las siguientes características: </para>
 
 <para>
 <itemizedlist>
