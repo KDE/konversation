@@ -5,5 +5,4 @@ include:
   - project: sysadmin/ci-utilities
     file:
       - /gitlab-templates/linux-qt6-lts.yml
-      - /gitlab-templates/flatpak.yml
       - /gitlab-templates/craft-windows-x86-64-qt6.yml
