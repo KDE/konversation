@@ -3,9 +3,9 @@
 #
 # SPDX-FileCopyrightText: 2006 Albert Astals Cid <aacid@kde.org>
 # SPDX-FileCopyrightText: 2009 Carles Ferrando Garcia. <carles.ferrando@gmail.com>
-# SPDX-FileCopyrightText: 2009, 2010 Joan Maspons <joanmaspons@gmail.com>
+# SPDX-FileCopyrightText: 2009-2010 Joan Maspons <joanmaspons@gmail.com>
 # SPDX-FileCopyrightText: 2009 Manuel Tortosa <manutortosa@gmail.com>
-# SPDX-FileCopyrightText: 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2022 Antoni Bella Pérez <antonibella5@yahoo.com>
+# SPDX-FileCopyrightText: 2013-2020, 2022 Antoni Bella Pérez <antonibella5@yahoo.com>
 # SPDX-FileCopyrightText: 2009-2026 Josep M. Ferrer <txemaq@gmail.com>
 msgid ""
 msgstr ""
