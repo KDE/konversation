@@ -5352,12 +5352,12 @@ msgstr "Cliquez ici pour enregistrer la liste des canaux."
 #, kde-format
 msgctxt "refresh list"
 msgid "&Refresh List"
-msgstr "&Rafraîchir la liste"
+msgstr "&Rafraichir la liste"
 
 #: src/irc/channellistpanel.cpp:159
 #, kde-format
 msgid "Click here to refresh the channel list."
-msgstr "Cliquez ici pour rafraîchir la liste des canaux."
+msgstr "Cliquez ici pour rafraichir la liste des canaux."
 
 #: src/irc/channellistpanel.cpp:161
 #, kde-format
@@ -5374,7 +5374,7 @@ msgstr ""
 #: src/irc/channellistpanel.cpp:230 src/irc/channellistpanel.cpp:328
 #, kde-format
 msgid "Refreshing."
-msgstr "Rafraîchissement."
+msgstr "Rafraichissement."
 
 #: src/irc/channellistpanel.cpp:345
 #, kde-format
