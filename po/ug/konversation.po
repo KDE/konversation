@@ -8,9 +8,9 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-07-12 00:44+0000\n"
-"PO-Revision-Date: 2026-05-31 19:22-0400\n"
+"PO-Revision-Date: 2026-09-22 18:03+0900\n"
 "Last-Translator: Abduqadir Abliz <sahranbay@gmail.com>\n"
-"Language-Team: Uyghur Computer Science Association <UKIJ@yahoogroups.com>\n"
+"Language-Team: Uyghur <kde-i18n-doc@kde.org>\n"
 "Language: ug\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -947,7 +947,7 @@ msgstr ""
 #: src/config/connectionbehavior_config.ui:166
 #, kde-format
 msgid "HTTP"
-msgstr "HTTP"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, addressLabel)
 #: src/config/connectionbehavior_config.ui:174
@@ -1108,7 +1108,7 @@ msgstr ""
 #: src/config/dcc_configui.ui:248
 #, kde-format
 msgid "Ports"
-msgstr ""
+msgstr "ئېغىز"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_DccSpecificSendPorts)
 #: src/config/dcc_configui.ui:254
@@ -1831,7 +1831,7 @@ msgstr ""
 #: src/config/osd_configui.ui:265
 #, kde-format
 msgid " ms"
-msgstr " ms"
+msgstr ""
 
 #: src/config/preferences.cpp:56
 #, kde-format
@@ -1957,7 +1957,7 @@ msgstr "باغلىنىش"
 #, kde-format
 msgid " line"
 msgid_plural " lines"
-msgstr[0] " قۇر"
+msgstr[0] " سىزىقلار"
 
 #: src/config/settingsdialog.cpp:115
 #, kde-format
@@ -3498,7 +3498,7 @@ msgstr ""
 #: src/dcc/transfersend.cpp:632
 #, kde-format
 msgid "Unknown error. Code %1"
-msgstr ""
+msgstr "نامەلۇم خاتالىق. Code %1"
 
 #: src/dcc/transferview.cpp:302
 #, kde-format
@@ -3521,7 +3521,7 @@ msgstr ""
 #: src/dcc/whiteboardfontchooserui.ui:60
 #, kde-format
 msgid "7"
-msgstr "7"
+msgstr ""
 
 #. i18n: ectx: property (text), item, widget (KComboBox, m_fontPointComboBox)
 #: src/dcc/whiteboardfontchooserui.ui:65
@@ -3545,7 +3545,7 @@ msgstr ""
 #: src/dcc/whiteboardfontchooserui.ui:80
 #, kde-format
 msgid "11"
-msgstr "11"
+msgstr ""
 
 #. i18n: ectx: property (text), item, widget (KComboBox, m_fontPointComboBox)
 #: src/dcc/whiteboardfontchooserui.ui:85
@@ -3581,7 +3581,7 @@ msgstr ""
 #: src/dcc/whiteboardfontchooserui.ui:110
 #, kde-format
 msgid "22"
-msgstr "22"
+msgstr ""
 
 #. i18n: ectx: property (text), item, widget (KComboBox, m_fontPointComboBox)
 #: src/dcc/whiteboardfontchooserui.ui:115
@@ -5640,7 +5640,7 @@ msgstr[0] "%1 كۈن"
 #, kde-format
 msgid "1 hour"
 msgid_plural "%1 hours"
-msgstr[0] "‏%1‎‏ سائەت"
+msgstr[0] "%1 سائەت"
 
 #: src/irc/inputfilter.cpp:2137 src/irc/inputfilter.cpp:2150
 #: src/irc/inputfilter.cpp:2160 src/statusbar.cpp:179 src/statusbar.cpp:187
@@ -5872,7 +5872,7 @@ msgstr ""
 #, kde-format
 msgctxt "network (nickname)"
 msgid "%1 (%2)"
-msgstr "%1 (%2)"
+msgstr ""
 
 #: src/irc/joinchanneldialog.cpp:216
 #, kde-format
@@ -7234,7 +7234,7 @@ msgstr "ۋاقىت"
 #: src/viewer/viewcontainer.cpp:2602
 #, kde-format
 msgid "Konsole"
-msgstr "Konsole"
+msgstr ""
 
 #: src/konsolepanel.cpp:59
 #, kde-format
@@ -7288,7 +7288,7 @@ msgstr "ئاسرىغۇچى"
 #: src/main.cpp:38
 #, kde-format
 msgid "Eike Hein"
-msgstr "Eike Hein"
+msgstr ""
 
 #: src/main.cpp:38
 #, kde-format
@@ -7380,7 +7380,7 @@ msgstr ""
 #: src/main.cpp:48
 #, kde-format
 msgid "Gary Cramblitt"
-msgstr "Gary Cramblitt"
+msgstr ""
 
 #: src/main.cpp:48
 #, kde-format
@@ -7410,7 +7410,7 @@ msgstr "DCOP ئارايۈز"
 #: src/main.cpp:51
 #, kde-format
 msgid "Stanislav Karchebny"
-msgstr "Stanislav Karchebny"
+msgstr ""
 
 #: src/main.cpp:51
 #, kde-format
@@ -8105,8 +8105,6 @@ msgid ""
 "<qt>This will hide the menu bar completely. You can show it again by typing "
 "%1.</qt>"
 msgstr ""
-"<qt>بۇ مەشغۇلات تىزىملىك بالداقنى پۈتۈنلەي يوشۇرىدۇ. %1 نى بېسىپ قايتا "
-"كۆرسىتەلەيسىز.</qt>"
 
 #: src/mainwindow.cpp:806
 #, kde-format
@@ -8766,7 +8764,7 @@ msgstr "پارامېتىر"
 #, kde-format
 msgctxt "<mode character> (<mode description>)"
 msgid "%1 (%2)"
-msgstr "%1 (%2)"
+msgstr ""
 
 #: src/viewer/channeloptionsdialog.cpp:609
 #, kde-format
