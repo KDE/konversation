@@ -169,7 +169,7 @@ Do NOT change these in the translation. -->
 
 <abstract>
 <para
->&konversation; — это &irc;-клиент для KDE с дружественным интерфейсом. </para>
+>&konversation; — это &irc;-клиент с дружественным интерфейсом, основанный на &Qt; и &kde-frameworks;. </para>
 </abstract>
 
 <!-- This is a set of Keywords for indexing by search engines.
@@ -312,7 +312,7 @@ problems. Basically a long version of the abstract.  Don't include a
 revision history. (see installation appendix comment) -->
 
 <para
->&konversation; — это &irc;-клиент для KDE. Он предоставляет следующие возможности: </para>
+>&konversation; — это &irc;-клиент, основанный на &Qt; и &kde-frameworks;. Он предоставляет следующие возможности: </para>
 
 <para>
 <itemizedlist>
@@ -537,7 +537,7 @@ revision history. (see installation appendix comment) -->
 <callout arearefs="pt-first-channel-1"
 ><para
 >Это <interface
->cтрока ввода</interface
+>строка ввода</interface
 >. Чтобы отправить сообщение, которое увидят все пользователи на канале, наберите его в этой строке и нажмите клавишу &Enter;. Сообщения появляются в окне канала. Перед каждым сообщением указаны время отправки и ник пользователя.</para
 ></callout>
 
@@ -681,7 +681,7 @@ revision history. (see installation appendix comment) -->
 
 <para
 >В соответствии с RFC 2812, максимальная длина ника — 9 символов, но на самом деле она определяется сервером. Чтобы определить максимальную длину, поддерживаемую сервером, подключитесь к нему. На вкладке <interface
->cообщений сервера</interface
+>сообщений сервера</interface
 > найдите сообщение <computeroutput
 >[Поддержка]</computeroutput
 >. Например:</para>
@@ -1087,7 +1087,7 @@ here, all the <guilabel
 ><para
 >Используйте эти кнопки, чтобы <guibutton
 >добавить</guibutton
-> cервер, <guibutton
+> сервер, <guibutton
 >изменить</guibutton
 > или <guibutton
 >удалить</guibutton
@@ -2909,7 +2909,7 @@ part of the listing.
 <para>
 <screenshot>
 <screeninfo
->Вкладка «Cостояние DCC»</screeninfo>
+>Вкладка «Состояние DCC»</screeninfo>
 	<mediaobjectco>
 		<imageobjectco>
 			<areaspec units="calspair">
@@ -3079,7 +3079,7 @@ part of the listing.
 > <guisubmenu
 >Настроить Konversation...</guisubmenu
 ></menuchoice
->. Разверните группу параметров  <guilabel
+>. Разверните группу параметров <guilabel
 >Поведение</guilabel
 > и выберите пункт <guilabel
 >DCC</guilabel
@@ -5709,7 +5709,7 @@ application work. -->
 >Сообщения сервера</link
 > на предмет сообщений об ошибках. Не отказал ли сервер в подключении из-за неверного пароля? Не было ли отказа в подключении из-за того, что сервером отправлен запрос <acronym
 >IDENTD</acronym
-> (идентификации), а  компьютер не ответил на него? Возможно, используется протокол SSL, а сервер его не поддерживает? </para>
+> (идентификации), а компьютер не ответил на него? Возможно, используется протокол SSL, а сервер его не поддерживает? </para>
 </listitem>
 <listitem>
 <para
