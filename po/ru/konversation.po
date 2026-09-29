@@ -4499,7 +4499,6 @@ msgstr "Вы изменили имя на %1."
 msgid "%1 is now known as %2."
 msgstr "%1 меняет имя на %2."
 
-# BUGME: add context string (split strings)
 #: src/irc/channel.cpp:1083 src/irc/channel.cpp:1111 src/viewer/ircview.cpp:836
 #, kde-format
 msgctxt "Message type"
@@ -4518,7 +4517,6 @@ msgctxt "%1 is the nick joining and %2 the hostmask of that nick"
 msgid "%1 (%2) has joined this channel."
 msgstr "%1 (%2) входит на этот канал."
 
-# BUGME: add context string (split strings)
 #: src/irc/channel.cpp:1138 src/irc/channel.cpp:1140 src/irc/channel.cpp:1162
 #: src/irc/channel.cpp:1165 src/irc/query.cpp:453 src/irc/query.cpp:461
 #: src/viewer/ircview.cpp:841
