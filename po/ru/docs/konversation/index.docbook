@@ -2621,9 +2621,17 @@ part of the listing.
 <para
 >Возможно выделять цветом сообщения, отправляемые на каналы. Начните набирать сообщение в <interface
 >строке ввода</interface
-> любого канала. Нажмите кнопку <guibutton
+> любого канала. Нажмите кнопку <inlinemediaobject
+> <imageobject
+> <imagedata fileref="format-text-color.png" format="PNG"/> </imageobject
+> <textobject
+> <phrase
+>Кнопка вставки цвета &irc;</phrase
+> </textobject
+> </inlinemediaobject
+> <guibutton
 >Цвет &irc;...</guibutton
->, чтобы добавить цвет, или выберите в главном меню пункт <menuchoice
+>, или выберите в главном меню пункт <menuchoice
 ><guisubmenu
 >Вставка</guisubmenu
 ><guisubmenu
@@ -5548,7 +5556,7 @@ Set Encoding
 		<listitem
 ><para>
 			<action
->Открывает вкладку <link linkend="identity"
+>Открывает вкладку <link linkend="dcc"
 >Состояние DCC</link
 > с информацией о переданных файлах.</action>
 		</para
