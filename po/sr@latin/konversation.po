@@ -4,13 +4,14 @@
 # Chusslove Illich <caslav.ilic@gmx.net>, 2004, 2005, 2008, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017.
 # Slobodan Simic <slsimic@gmail.com>, 2005, 2007, 2008, 2010.
 # Dalibor Djuric <daliborddjuric@gmail.com>, 2010, 2011.
+# Nemanja Hiršl <nemhirsl@gmail.com>, 2026.
 msgid ""
 msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-07-12 00:44+0000\n"
-"PO-Revision-Date: 2017-09-28 17:57+0200\n"
-"Last-Translator: Chusslove Illich <caslav.ilic@gmx.net>\n"
+"PO-Revision-Date: 2026-10-05 12:49+0200\n"
+"Last-Translator: Nemanja Hiršl <nemhirsl@gmail.com>\n"
 "Language-Team: Serbian <kde-i18n-sr@kde.org>\n"
 "Language: sr@latin\n"
 "MIME-Version: 1.0\n"
@@ -22,17 +23,17 @@ msgstr ""
 "X-Accelerator-Marker: &\n"
 "X-Text-Markup: kde4\n"
 "X-Environment: kde\n"
-"X-Associated-UI-Catalogs: kconfigwidgets5 kxmlgui5 kwidgetsaddons5_qt\n"
+"X-Associated-UI-Catalogs: kconfigwidgets6 kxmlgui6 kwidgetsaddons6_qt\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "Časlav Ilić,Slobodan Simić"
+msgstr "Časlav Ilić,Slobodan Simić,Nemanja Hiršl"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "caslav.ilic@gmx.net,slsimic@gmail.com"
+msgstr "caslav.ilic@gmx.net,slsimic@gmail.com,nemhirsl@gmail.com"
 
 #. i18n: ectx: Menu (insert)
 #: data/konversationui.rc:26
@@ -407,7 +408,7 @@ msgstr "Sa &datumom"
 #: src/config/chatwindowappearance_config.ui:69
 #, kde-format
 msgid "Show date marker when date changes"
-msgstr ""
+msgstr "Prikaži oznaku datuma kada se datum promeni"
 
 #. i18n: ectx: property (title), widget (QGroupBox, kcfg_ShowBacklog)
 #: src/config/chatwindowappearance_config.ui:79
@@ -1258,12 +1259,15 @@ msgid ""
 "\", which will cause it to become visible in tray implementations that only "
 "offer access \"active\" icons."
 msgstr ""
+"Kada se prozor Konverzacije zatvori, ikonica u kaseti biće postavljena na "
+"„aktivna“, tako da postaje vidljiva u izvedbama kasete koje nude pristup "
+"samo „aktivnim“ ikonicama."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_TrayActivateNoWindow)
 #: src/config/generalbehavior_configui.ui:78
 #, kde-format
 msgid "Tray icon becomes \"active\" when the window is closed"
-msgstr ""
+msgstr "Ikonica u kaseti postaje „aktivna“ kada se prozor zatvori"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_HideToTrayOnStartup)
 #: src/config/generalbehavior_configui.ui:85
@@ -1601,17 +1605,16 @@ msgstr "Prikaži &prava imena pored nadimaka"
 #. i18n: ectx: label, entry (LauncherEntryCountMode), group (LauncherEntry)
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_LauncherEntryCountMode)
 #: src/config/konversation.kcfg:443 src/config/launcherentry_config.ui:56
-#, fuzzy, kde-format
-#| msgid "All Queues"
+#, kde-format
 msgid "All events"
-msgstr "Svi redovi"
+msgstr "svi događaji"
 
 #. i18n: ectx: label, entry (LauncherEntryCountMode), group (LauncherEntry)
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_LauncherEntryCountMode)
 #: src/config/konversation.kcfg:446 src/config/launcherentry_config.ui:61
 #, kde-format
 msgid "Channels and queries with events"
-msgstr ""
+msgstr "kanali i upiti sa događajima"
 
 #. i18n: ectx: label, entry (OpenWatchedNicksAtStartup), group (Notify List)
 #: src/config/konversation.kcfg:577
@@ -1623,20 +1626,19 @@ msgstr "Otvori po pokretanju jezičak nadgledanih nadimaka"
 #: src/config/launcherentry_config.ui:29
 #, kde-format
 msgid "&Enable Display of Unseen Events Count On Launcher Entry"
-msgstr ""
+msgstr "&Uključi prikaz broja neviđenih događaja na unosu pokretača"
 
 #. i18n: ectx: property (text), widget (QLabel, modeLbl)
 #: src/config/launcherentry_config.ui:45
-#, fuzzy, kde-format
-#| msgid "Completion &mode:"
+#, kde-format
 msgid "Count &mode:"
-msgstr "Režim do&vršavanja:"
+msgstr "&Režim brojanja:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, countedEventsGroupBox)
 #: src/config/launcherentry_config.ui:72
 #, kde-format
 msgid "Counted Events"
-msgstr ""
+msgstr "Brojani događaji"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_LauncherEntryCountUseMsgs)
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_TabNotificationsMsgs)
@@ -2111,7 +2113,7 @@ msgstr "Ekranski prikaz"
 #: src/config/settingsdialog.cpp:180
 #, kde-format
 msgid "Launcher Entry"
-msgstr ""
+msgstr "Unos pokretača"
 
 #: src/config/settingsdialog.cpp:186
 #, kde-format
@@ -2281,17 +2283,15 @@ msgstr "Podešavanje teme"
 
 #. i18n: ectx: property (text), widget (KNSWidgets::Button, getButton)
 #: src/config/theme_configui.ui:28
-#, fuzzy, kde-format
-#| msgid "I&nstall Theme..."
+#, kde-format
 msgid "G&et New Themes..."
-msgstr "&Instaliraj temu..."
+msgstr "&Dobavi nove teme..."
 
 #. i18n: ectx: property (text), widget (QPushButton, installButton)
 #: src/config/theme_configui.ui:35
-#, fuzzy, kde-format
-#| msgid "I&nstall Theme..."
+#, kde-format
 msgid "I&nstall from File..."
-msgstr "&Instaliraj temu..."
+msgstr "&Instaliraj iz fajla..."
 
 #. i18n: ectx: property (text), widget (QPushButton, removeButton)
 #: src/config/theme_configui.ui:45
@@ -3484,16 +3484,14 @@ msgstr[3] "Izabrali ste fajl za izvršavanje. Želite li da nastavite?"
 
 # >> @title:window
 #: src/dcc/transferpanel.cpp:426
-#, fuzzy, kde-format
-#| msgid "Execute %1 file"
-#| msgid_plural "Execute %1 files"
+#, kde-format
 msgctxt "@action:button"
 msgid "Execute %1 File"
 msgid_plural "Execute %1 Files"
-msgstr[0] "Izvršavanje %1 fajla"
-msgstr[1] "Izvršavanje %1 fajla"
-msgstr[2] "Izvršavanje %1 fajlova"
-msgstr[3] "Izvršavanje fajla"
+msgstr[0] "Izvrši %1 fajl"
+msgstr[1] "Izvrši %1 fajla"
+msgstr[2] "Izvrši %1 fajlova"
+msgstr[3] "Izvrši fajl"
 
 #: src/dcc/transferrecv.cpp:197
 #, kde-format
@@ -4048,7 +4046,7 @@ msgstr "Identitetu morate dodati bar jedan nadimak."
 #: src/identitydialog.cpp:392
 #, kde-format
 msgid "Nicks must not contain spaces."
-msgstr ""
+msgstr "Nadimci ne smeju da sadrže razmake."
 
 #: src/identitydialog.cpp:405
 #, kde-format
@@ -4058,12 +4056,13 @@ msgstr "Unesite pravo ime."
 #: src/identitydialog.cpp:416
 #, kde-format
 msgid "Ident must not contain spaces."
-msgstr ""
+msgstr "IDENT ne sme da sadrži razmake."
 
 #: src/identitydialog.cpp:463
 #, kde-format
 msgid "NickServ may not function with auto join;  SASL is recommended."
 msgstr ""
+"NickServ možda neće raditi uz automatsko pridruživanje; preporučuje se SASL."
 
 #: src/identitydialog.cpp:470
 #, kde-format
@@ -4391,11 +4390,7 @@ msgstr "&IDENT:"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_loginEdit)
 #: src/identitydialog.ui:582
-#, fuzzy, kde-format
-#| msgid ""
-#| "When you connect, many servers query your computer for an IDENT response. "
-#| "If you computer is not running an IDENT server, this response is sent by "
-#| "Konversation. No spaces are allowed."
+#, kde-format
 msgid ""
 "When you connect, many servers query your computer for an IDENT response. If "
 "your computer is not running an IDENT server, this response is sent by "
@@ -5436,14 +5431,7 @@ msgstr "Naj&manje korisnika:"
 
 #. i18n: ectx: property (whatsThis), widget (QTreeView, m_channelListView)
 #: src/irc/channellistpanelui.ui:64
-#, fuzzy, kde-format
-#| msgid ""
-#| "The filtered list of channels is displayed here. Notice that if you do "
-#| "not use regular expressions, Konversation lists any channel whose name "
-#| "contains the filter string you entered. The channel name does not have to "
-#| "start with the string you entered.\\n\\nSelect a channel you want to join "
-#| "by clicking on it. Right click on the channel to get a list of all web "
-#| "addresses mentioned in the channel's topic."
+#, kde-format
 msgid ""
 "<p>The filtered list of channels is displayed here. Notice that if you do "
 "not use regular expressions, Konversation lists any channel whose name "
@@ -5452,12 +5440,12 @@ msgid ""
 "by clicking on it. Right click on the channel to get a list of all web "
 "addresses mentioned in the channel's topic.</p>"
 msgstr ""
-"Ovde je prikazana filtrirana lista kanala. Ako ne koristite regularne "
+"<p>Ovde je prikazan filtrirani spisak kanala. Ako ne koristite regularne "
 "izraze, Konverzacija će izlistati svaki kanal čije ime sadrži filtersku "
-"nisku koju ste uneli. Ime kanala ne mora počinjati tom niskom.\n"
-"\n"
-"Izaberite kanal kojem želite da se pridružite klikom na njega. Desnim klikom "
-"na kanal dobijate listu svih veb adresa koje se pominju u temi kanala."
+"nisku koju ste uneli. Ime kanala ne mora počinjati tom niskom.</"
+"p><p>Izaberite kanal kojem želite da se pridružite klikom na njega. Desnim "
+"klikom na kanal dobijate spisak svih veb adresa koje se pominju u temi "
+"kanala.</p>"
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_channelBox)
 #: src/irc/channellistpanelui.ui:92
@@ -5653,7 +5641,7 @@ msgctxt ""
 "We asked the server for available capabilities and got an empty list. This "
 "isn't an error, and isn't permanent"
 msgid "No configurable server capabilities are currently available."
-msgstr ""
+msgstr "Trenutno nema dostupnih podesivih sposobnosti servera."
 
 #: src/irc/inputfilter.cpp:847
 #, kde-format
@@ -6267,16 +6255,14 @@ msgid "%1 (%2)"
 msgstr "%1 (%2)"
 
 #: src/irc/joinchanneldialog.cpp:216
-#, fuzzy, kde-format
-#| msgid "Are you sure you want to delete all information for this identity?"
+#, kde-format
 msgid "Are you sure you want to remove this channel from your history?"
-msgstr "Želite li zaista da obrišete sve podatke ovog identiteta?"
+msgstr "Želite li zaista da uklonite ovaj kanal iz istorijata?"
 
 #: src/irc/joinchanneldialog.cpp:218
-#, fuzzy, kde-format
-#| msgid "Remove Ban"
+#, kde-format
 msgid "Remove channel"
-msgstr "Ukloni zabranu"
+msgstr "Uklanjanje kanala"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel8)
 #: src/irc/joinchannelui.ui:67
@@ -6314,23 +6300,7 @@ msgid "Online&nbsp;Since:"
 msgstr "Na&nbsp;vezi&nbsp;od:"
 
 #: src/irc/nicklistview.cpp:146
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt><p>This shows all the people in the channel.  The nick for each "
-#| "person is shown, with a picture showing their status.<br /></"
-#| "p><table><tr><th><img src=\"%1\"/></th><td>This person has administrator "
-#| "privileges.</td></tr><tr><th><img src=\"%2\"/></th><td>This person is a "
-#| "channel owner.</td></tr><tr><th><img src=\"%3\"/></th><td>This person is "
-#| "a channel operator.</td></tr><tr><th><img src=\"%4\"/></th><td>This "
-#| "person is a channel half-operator.</td></tr><tr><th><img src=\"%5\"/></"
-#| "th><td>This person has voice, and can therefore talk in a moderated "
-#| "channel.</td></tr><tr><th><img src=\"%6\"/></th><td>This person does not "
-#| "have any special privileges.</td></tr><tr><th><img src=\"%7\"/></"
-#| "th><td>This, overlaid on any of the above, indicates that this person is "
-#| "currently away.</td></tr></table><p>The meaning of admin, owner and "
-#| "halfop varies between different IRC servers.</p><p>Hovering over any nick "
-#| "shows their current status. See the Konversation Handbook for more "
-#| "information.</p></qt>"
+#, kde-format
 msgid ""
 "<qt><p>This shows all the people in the channel.  The nick for each person "
 "is shown, with a picture showing their status.<br /></p><table><tr><th>%1</"
@@ -6347,19 +6317,17 @@ msgid ""
 "p></qt>"
 msgstr ""
 "<qt><p>Ovo prikazuje sve osobe na kanalu, po njihovim nadimcima, i sa slikom "
-"koja označava njihovo stanje.</p><table><tr><th><img src=\"%1\"/></"
-"th><td>Ova osoba ima administratorska ovlašćenja.</td></tr><tr><th><img src="
-"\"%2\"/></th><td>Ova osoba je vlasnik kanala.</td></tr><tr><th><img src="
-"\"%3\"/></th><td>Ova osoba je operater kanala.</td></tr><tr><th><img src="
-"\"%4\"/></th><td>Ova osoba je poluoperater kanala.</td></tr><tr><th><img src="
-"\"%5\"/></th><td>Ova osoba ima glas i stoga može pričati na moderisanom "
-"kanalu.</td></tr><tr><th><img src=\"%6\"/></th><td>Ova osoba nema nikakva "
-"posebna ovlašćenja.</td></tr><tr><th><img src=\"%7\"/></th><td>Ovo, "
-"preklopljeno preko bilo kojeg iznad, pokazuje da je osoba trenutno odsutna.</"
-"td></tr></table><p>Značenje administratora, vlasnika i poluopa razlikuje se "
-"između različitih IRC servera.</p><p>Lebdenjem iznad nekog nadimka dobijate "
-"njegovo trenutno stanje, kao i eventualne podatke koje imate u adresaru za "
-"ovu osobu. Pogledajte priručnik Konverzacije za više detalja.</p></qt>"
+"koja označava njihovo stanje.<br /></p><table><tr><th>%1</th><td>Ova osoba "
+"ima administratorska ovlašćenja.</td></tr><tr><th>%2</th><td>Ova osoba je "
+"vlasnik kanala.</td></tr><tr><th>%3</th><td>Ova osoba je operater kanala.</"
+"td></tr><tr><th>%4</th><td>Ova osoba je poluoperater kanala.</td></"
+"tr><tr><th>%5</th><td>Ova osoba ima glas i stoga može pričati na moderisanom "
+"kanalu.</td></tr><tr><th>%6</th><td>Ova osoba nema nikakva posebna "
+"ovlašćenja.</td></tr><tr><th>%7</th><td>Ovo, preklopljeno preko bilo kojeg "
+"iznad, pokazuje da je osoba trenutno odsutna.</td></tr></table><p>Značenje "
+"administratora, vlasnika i poluopa razlikuje se između različitih IRC "
+"servera.</p><p>Lebdenjem iznad nekog nadimka dobijate njegovo trenutno "
+"stanje. Pogledajte priručnik Konverzacije za više detalja.</p></qt>"
 
 #: src/irc/nicksonline.cpp:29
 #, kde-format
@@ -7050,6 +7018,8 @@ msgid ""
 "Server does not support %1 as SASL authentication mechanism, skipping SASL "
 "authentication."
 msgstr ""
+"Server ne podržava %1 kao mehanizam SASL autentifikacije, preskačem SASL "
+"autentifikaciju."
 
 #: src/irc/server.cpp:792
 #, kde-format
@@ -7529,14 +7499,7 @@ msgstr "Naredbe:"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_commandEdit)
 #: src/irc/servergroupdialogui.ui:94
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt>Optional. This command will be sent to the server after connecting. "
-#| "Example: <b>/msg NickServ IDENTIFY <i>konvirocks</i></b>. This example is "
-#| "for the freenode network, which requires users to register their nickname "
-#| "with a password and login when connecting. <i>konvirocks</i> is the "
-#| "password for the nickname given in Identity. You may enter more than one "
-#| "command by separating them with semicolons.</qt>"
+#, kde-format
 msgid ""
 "<qt>Optional. This command will be sent to the server after connecting. "
 "Example: <b>/msg NickServ IDENTIFY <i>konvirocks</i></b>. This example is "
@@ -7546,11 +7509,10 @@ msgid ""
 "separating them with semicolons.</qt>"
 msgstr ""
 "<qt>Opciono. Ova naredba će biti poslata serveru nakon povezivanja. Primer: "
-"<tt>/msg NickServ IDENTIFY <i>nekalozinka</i></tt>. Ovo je primer za mrežu "
-"Freenode, koja zahteva da korisnici registruju svoj nadimak sa lozinkom i "
-"prijave se pri povezivanju (<tt><i>nekalozinka</i></tt> je lozinka za "
-"nadimak naveden u identitetu). Možete navesti više naredbi razdvajajući ih "
-"tačka-zapetom.</qt>"
+"<b>/msg NickServ IDENTIFY <i>nekalozinka</i></b>. Ovo je primer za mrežu "
+"Libera, koja zahteva da korisnici registruju svoj nadimak sa lozinkom i "
+"prijave se pri povezivanju. <i>nekalozinka</i> je lozinka za nadimak naveden "
+"u identitetu. Možete navesti više naredbi razdvajajući ih tačka-zapetom.</qt>"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_nameEdit)
 #: src/irc/servergroupdialogui.ui:101
@@ -7750,14 +7712,7 @@ msgstr "&Obriši"
 # skip-rule: t-collection
 #. i18n: ectx: property (whatsThis), widget (ServerListView, m_serverList)
 #: src/irc/serverlistdialogui.ui:86
-#, fuzzy, kde-format
-#| msgid ""
-#| "This shows the list of configured IRC networks. An IRC network is a "
-#| "collection of cooperating servers. You need only connect to one of the "
-#| "servers in the network to be connected to the entire IRC network. Once "
-#| "connected, Konversation will automatically join the channels shown. When "
-#| "Konversation is started for the first time, the Freenode network and the "
-#| "<i>#kde</i> channel are already entered for you."
+#, kde-format
 msgid ""
 "This shows the list of configured IRC networks. An IRC network is a "
 "collection of cooperating servers. You need only connect to one of the "
@@ -7766,11 +7721,11 @@ msgid ""
 "Konversation is started for the first time, the Libera network and the "
 "<i>#kde</i> channel are already entered for you."
 msgstr ""
-"Ovde je prikazana lista podešenih IRC mreža. IRC mreža je skup servera koji "
+"Ovde je prikazan spisak podešenih IRC mreža. IRC mreža je skup servera koji "
 "sarađuju. Dovoljno je da se povežete samo na jedan server u mreži da biste "
 "bili povezani sa celom IRC mrežom. Kada se povežete, Konverzacija će se "
 "automatski pridružiti prikazanim kanalima. Kada se Konverzacija pokrene po "
-"prvi put, biće već uneta mreža Freenode i kanal <tt>#kde</tt>."
+"prvi put, biće već uneti mreža Libera i kanal <i>#kde</i>."
 
 # >> @title:column
 #. i18n: ectx: property (text), widget (ServerListView, m_serverList)
@@ -7845,10 +7800,9 @@ msgid "A user-friendly IRC client"
 msgstr "Predusretljivi IRC klijent"
 
 #: src/main.cpp:31
-#, fuzzy, kde-format
-#| msgid "(C) 2002-2017 by the Konversation team"
+#, kde-format
 msgid "Copyright 2002-%1 by the Konversation team"
-msgstr "© 2002–2017, tim Konverzacije"
+msgstr "© 2002–%1, tim Konverzacije"
 
 #: src/main.cpp:32
 #, kde-format
@@ -8579,10 +8533,9 @@ msgid "Reset the current font size to settings values"
 msgstr "Resetuj trenutnu veličinu fonta na vrednost iz postavki"
 
 #: src/mainwindow.cpp:446
-#, fuzzy, kde-format
-#| msgid "Enlarge Font Size"
+#, kde-format
 msgid "Shrink Font Size"
-msgstr "Povećaj veličinu fonta"
+msgstr "Smanji veličinu fonta"
 
 #: src/mainwindow.cpp:450
 #, kde-format
@@ -9118,10 +9071,9 @@ msgid "&Use SSL"
 msgstr "&Koristi SSL"
 
 #: src/statusbar.cpp:36 src/statusbar.cpp:72 src/statusbar.cpp:140
-#, fuzzy, kde-format
-#| msgid "Ready."
+#, kde-format
 msgid "Ready"
-msgstr "Spreman."
+msgstr "Spreman"
 
 #: src/statusbar.cpp:42
 #, kde-format
@@ -10038,11 +9990,10 @@ msgid "Do you want to stop ignoring the selected users?"
 msgstr "Želite li da obustavite ignorisanje izabranih korisnika?"
 
 #: src/viewer/irccontextmenus.cpp:776
-#, fuzzy, kde-format
-#| msgid "Query author"
+#, kde-format
 msgctxt "Opens a query (private message) window with the author of the topic"
 msgid "Query author"
-msgstr "Upit sa autorom"
+msgstr "Otvori upit sa autorom"
 
 #: src/viewer/ircinput.cpp:53
 #, kde-format
@@ -10062,7 +10013,7 @@ msgid ""
 msgstr ""
 "<qt><p>U ulaznoj liniji pišete poruke za slanje na kanal, upit ili server. "
 "Poruku poslatu na kanal vide svi na kanalu, dok se poruka u upitu šalje samo "
-"osobi u upitu sa vama.</p><p>Da biste automatski dovršili, nadimak započnite "
+"osobi u upitu sa vama.</p><p>Da biste automatski dovršili nadimak, započnite "
 "kucanje i pritisnite Tab. Ako niste započeli kucanje, upotrebiće se "
 "poslednji dovršeni nadimak.</p><p>Možete slati i specijalne naredbe:</"
 "p><table><tr><th><tt>/me <i>radnja</i></tt></th><td>prikazuje se kao radnja "
@@ -10379,7 +10330,7 @@ msgstr ""
 #: src/viewer/trayicon.cpp:23
 #, kde-format
 msgid "IRC Client"
-msgstr ""
+msgstr "IRC klijent"
 
 #: src/viewer/viewcontainer.cpp:880
 #, kde-format
@@ -10468,15 +10419,3 @@ msgstr "Upozorenje o listi kanala"
 #, kde-format
 msgid "Watched Nicks"
 msgstr "Nadgledani nadimci"
-
-#~ msgid "Konversation Bookmarks Editor"
-#~ msgstr "Konverzacijin uređivač obeleživača"
-
-#~ msgid "audio/x-wav audio/x-mp3 application/ogg audio/x-adpcm"
-#~ msgstr "audio/x-wav audio/x-mp3 application/ogg audio/x-adpcm"
-
-#~ msgid "*.pem"
-#~ msgstr "*.pem"
-
-#~ msgid "Konversation - IRC Client"
-#~ msgstr "Konverzacija — IRC klijent"
