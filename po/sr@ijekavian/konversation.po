@@ -4,13 +4,14 @@
 # Chusslove Illich <caslav.ilic@gmx.net>, 2004, 2005, 2008, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017.
 # Slobodan Simic <slsimic@gmail.com>, 2005, 2007, 2008, 2010.
 # Dalibor Djuric <daliborddjuric@gmail.com>, 2010, 2011.
+# Nemanja Hiršl <nemhirsl@gmail.com>, 2026.
 msgid ""
 msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-07-05 00:43+0000\n"
-"PO-Revision-Date: 2017-09-28 17:57+0200\n"
-"Last-Translator: Chusslove Illich <caslav.ilic@gmx.net>\n"
+"PO-Revision-Date: 2026-10-05 12:49+0200\n"
+"Last-Translator: Nemanja Hiršl <nemhirsl@gmail.com>\n"
 "Language-Team: Serbian <kde-i18n-sr@kde.org>\n"
 "Language: sr@ijekavian\n"
 "MIME-Version: 1.0\n"
@@ -22,17 +23,17 @@ msgstr ""
 "X-Accelerator-Marker: &\n"
 "X-Text-Markup: kde4\n"
 "X-Environment: kde\n"
-"X-Associated-UI-Catalogs: kconfigwidgets5 kxmlgui5 kwidgetsaddons5_qt\n"
+"X-Associated-UI-Catalogs: kconfigwidgets6 kxmlgui6 kwidgetsaddons6_qt\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "Часлав Илић,Слободан Симић"
+msgstr "Часлав Илић,Слободан Симић,Немања Хиршл"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "caslav.ilic@gmx.net,slsimic@gmail.com"
+msgstr "caslav.ilic@gmx.net,slsimic@gmail.com,nemhirsl@gmail.com"
 
 #. i18n: ectx: Menu (insert)
 #: data/konversationui.rc:26
@@ -56,7 +57,7 @@ msgid ""
 "The command executed successfully, but did not return any output or only "
 "whitespace."
 msgstr ""
-"Наредба је успешно извршена али није произвела никакав излаз (или само "
+"Наредба је успјешно извршена али није произвела никакав излаз (или само "
 "празнине)."
 
 #: data/scripts/media:103
@@ -166,8 +167,8 @@ msgid ""
 "the qca-ossl plugin."
 msgstr ""
 "Ваша инсталација КуТ‑ове криптографске архитектуре (КуЦА) не подржава "
-"Дифи‑Хелманову размену кључева. Вероватно треба да инсталирате додатни "
-"прикључак. Дифи‑Хелманову размену обично пружа прикључак „qca-ossl“."
+"Дифи‑Хелманову размјену кључева. Вјероватно треба да инсталирате додатни "
+"прикључак. Дифи‑Хелманову размјену обично пружа прикључак „qca-ossl“."
 
 # rewrite-msgid: /provider//
 #: src/cipher.cpp:490
@@ -179,7 +180,7 @@ msgid ""
 "provided by the qca-ossl plugin."
 msgstr ""
 "Ваша инсталација КуТ‑ове криптографске архитектуре (КуЦА) не подржава "
-"блоуфиш у режиму уланчавања шифрарских блокова (ЦБЦ). Вероватно треба да "
+"блоуфиш у режиму уланчавања шифрарских блокова (ЦБЦ). Вјероватно треба да "
 "инсталирате додатни прикључак. Подршку за блоуфиш обично пружа прикључак "
 "„qca-ossl“."
 
@@ -193,7 +194,7 @@ msgid ""
 "provided by the qca-ossl plugin."
 msgstr ""
 "Ваша инсталација КуТ‑ове криптографске архитектуре (КуЦА) не подржава "
-"блоуфиш у режиму електронске кодне књиге (⁠ЕЦБ). Вероватно треба да "
+"блоуфиш у режиму електронске кодне књиге (⁠ЕЦБ). Вјероватно треба да "
 "инсталирате додатни прикључак. Подршку за блоуфиш обично пружа прикључак "
 "„qca-ossl“."
 
@@ -408,7 +409,7 @@ msgstr "Са &датумом"
 #: src/config/chatwindowappearance_config.ui:69
 #, kde-format
 msgid "Show date marker when date changes"
-msgstr ""
+msgstr "Прикажи ознаку датума када се датум промијени"
 
 #. i18n: ectx: property (title), widget (QGroupBox, kcfg_ShowBacklog)
 #: src/config/chatwindowappearance_config.ui:79
@@ -557,7 +558,7 @@ msgstr ""
 #: src/config/chatwindowbehaviour_config.ui:72
 #, kde-format
 msgid "Show raw mode characters (e.g. +o) instead of descriptions"
-msgstr "Сирови знакови режима (нпр. +o) уместо описа"
+msgstr "Сирови знакови режима (нпр. +o) умјесто описа"
 
 #. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, kcfg_ScrollbackMax)
 #. i18n: ectx: property (whatsThis), widget (QLabel, textLabel1)
@@ -962,7 +963,7 @@ msgid ""
 "are saying."
 msgstr ""
 "<p>⁠ЕЦБ или режим „електронске кодне књиге“ подржавају многи клијенти, као "
-"што су ФИСХ и Мирцкрипција, али се генерално сматра небезбедним.</p><p>ЦБЦ "
+"што су ФИСХ и Мирцкрипција, али се генерално сматра небезбједним.</p><p>ЦБЦ "
 "или режим „уланчавање шифрарских блокова“ није подржан у ФИСХ‑у али јесте у "
 "Мирцкрипцији. Ако планирате да користите размјену кључева најбоље је да прво "
 "сазнате да ли ваш саговорник има клијент који може да користи ЦБЦ, јер у "
@@ -1258,12 +1259,15 @@ msgid ""
 "\", which will cause it to become visible in tray implementations that only "
 "offer access \"active\" icons."
 msgstr ""
+"Када се прозор Конверзације затвори, иконица у касети биће постављена на "
+"„активна“, тако да постаје видљива у изведбама касете које нуде приступ само "
+"„активним“ иконицама."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_TrayActivateNoWindow)
 #: src/config/generalbehavior_configui.ui:78
 #, kde-format
 msgid "Tray icon becomes \"active\" when the window is closed"
-msgstr ""
+msgstr "Иконица у касети постаје „активна“ када се прозор затвори"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_HideToTrayOnStartup)
 #: src/config/generalbehavior_configui.ui:85
@@ -1463,7 +1467,7 @@ msgid ""
 "name, or in all chat windows if the field is left empty. Multiple names have "
 "to be separated by commas."
 msgstr ""
-"Ово истицање ће бити тражено само у прозорима ћаскања овде набројаним по "
+"Ово истицање ће бити тражено само у прозорима ћаскања овдје набројаним по "
 "имену, или у свим прозорима ако се поље остави празним. Више имена задају се "
 "раздвојена запетама."
 
@@ -1601,17 +1605,16 @@ msgstr "Прикажи &права имена поред надимака"
 #. i18n: ectx: label, entry (LauncherEntryCountMode), group (LauncherEntry)
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_LauncherEntryCountMode)
 #: src/config/konversation.kcfg:443 src/config/launcherentry_config.ui:56
-#, fuzzy, kde-format
-#| msgid "All Queues"
+#, kde-format
 msgid "All events"
-msgstr "Сви редови"
+msgstr "сви догађаји"
 
 #. i18n: ectx: label, entry (LauncherEntryCountMode), group (LauncherEntry)
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_LauncherEntryCountMode)
 #: src/config/konversation.kcfg:446 src/config/launcherentry_config.ui:61
 #, kde-format
 msgid "Channels and queries with events"
-msgstr ""
+msgstr "канали и упити са догађајима"
 
 #. i18n: ectx: label, entry (OpenWatchedNicksAtStartup), group (Notify List)
 #: src/config/konversation.kcfg:577
@@ -1623,20 +1626,19 @@ msgstr "Отвори по покретању језичак надгледани
 #: src/config/launcherentry_config.ui:29
 #, kde-format
 msgid "&Enable Display of Unseen Events Count On Launcher Entry"
-msgstr ""
+msgstr "&Укључи приказ броја невиђених догађаја на уносу покретача"
 
 #. i18n: ectx: property (text), widget (QLabel, modeLbl)
 #: src/config/launcherentry_config.ui:45
-#, fuzzy, kde-format
-#| msgid "Completion &mode:"
+#, kde-format
 msgid "Count &mode:"
-msgstr "Режим до&вршавања:"
+msgstr "&Режим бројања:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, countedEventsGroupBox)
 #: src/config/launcherentry_config.ui:72
 #, kde-format
 msgid "Counted Events"
-msgstr ""
+msgstr "Бројани догађаји"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_LauncherEntryCountUseMsgs)
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_TabNotificationsMsgs)
@@ -2111,7 +2113,7 @@ msgstr "Екрански приказ"
 #: src/config/settingsdialog.cpp:180
 #, kde-format
 msgid "Launcher Entry"
-msgstr ""
+msgstr "Унос покретача"
 
 #: src/config/settingsdialog.cpp:186
 #, kde-format
@@ -2281,17 +2283,15 @@ msgstr "Подешавање теме"
 
 #. i18n: ectx: property (text), widget (KNSWidgets::Button, getButton)
 #: src/config/theme_configui.ui:28
-#, fuzzy, kde-format
-#| msgid "I&nstall Theme..."
+#, kde-format
 msgid "G&et New Themes..."
-msgstr "&Инсталирај тему..."
+msgstr "&Добави нове теме..."
 
 #. i18n: ectx: property (text), widget (QPushButton, installButton)
 #: src/config/theme_configui.ui:35
-#, fuzzy, kde-format
-#| msgid "I&nstall Theme..."
+#, kde-format
 msgid "I&nstall from File..."
-msgstr "&Инсталирај тему..."
+msgstr "&Инсталирај из фајла..."
 
 #. i18n: ectx: property (text), widget (QPushButton, removeButton)
 #: src/config/theme_configui.ui:45
@@ -2361,7 +2361,7 @@ msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
 "concludes sentence \"Show a warning dialog when...\""
 msgid "... saving a log file would save only the visible portion"
-msgstr "...када би уписивање дневничког фајла сачувало само видљиви део"
+msgstr "...када би уписивање дневничког фајла сачувало само видљиви дио"
 
 #: src/config/warnings_config.cpp:148
 #, kde-format
@@ -2369,7 +2369,7 @@ msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
 "concludes sentence \"Show a warning dialog when...\""
 msgid "... a log file is about to be deleted"
-msgstr "...када следи брисање дневничког фајла"
+msgstr "...када слиједи брисање дневничког фајла"
 
 #: src/config/warnings_config.cpp:151
 #, kde-format
@@ -2461,7 +2461,7 @@ msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
 "concludes sentence \"Show a warning dialog when...\""
 msgid "... pasting large portions of text"
-msgstr "...при налепљивању велике количине текста"
+msgstr "...при наљепљивању велике количине текста"
 
 #: src/config/warnings_config.cpp:184
 #, kde-format
@@ -2534,8 +2534,8 @@ msgid ""
 msgstr ""
 "<qt><p>Када је надгледање надимака укључено, бићете обавјештавани при "
 "доласку и одласку ван везе надимака у листи <i>Надгледани надимци на вези</"
-"i>.</p><p>Можете отворити и прозор <i>Надгледани надимци</i> да бисте видели "
-"стања свих надгледаних надимака.</p></qt>"
+"i>.</p><p>Можете отворити и прозор <i>Надгледани надимци</i> да бисте "
+"видјели стања свих надгледаних надимака.</p></qt>"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_UseNotify)
 #: src/config/watchednicknames_configui.ui:27
@@ -3033,7 +3033,7 @@ msgstr "Предложи &ново име"
 #: src/dcc/resumedialog.cpp:111
 #, kde-format
 msgid "Use as new default download folder"
-msgstr "Ово је нова подразумевана фасцикла преузимања"
+msgstr "Ово је нова подразумијевана фасцикла преузимања"
 
 #: src/dcc/resumedialog.cpp:122
 #, kde-format
@@ -3373,7 +3373,7 @@ msgstr "неуспјело — пренос није успио из „непо
 #: src/dcc/transferlistmodel.cpp:542
 #, kde-format
 msgid "Failed - Transfer failed with reason '%1'"
-msgstr "неуспјело — пренос није успео због: „%1“"
+msgstr "неуспјело — пренос није успио због: „%1“"
 
 #: src/dcc/transferlistmodel.cpp:545
 #, kde-format
@@ -3484,16 +3484,14 @@ msgstr[3] "Изабрали сте фајл за извршавање. Жели�
 
 # >> @title:window
 #: src/dcc/transferpanel.cpp:426
-#, fuzzy, kde-format
-#| msgid "Execute %1 file"
-#| msgid_plural "Execute %1 files"
+#, kde-format
 msgctxt "@action:button"
 msgid "Execute %1 File"
 msgid_plural "Execute %1 Files"
-msgstr[0] "Извршавање %1 фајла"
-msgstr[1] "Извршавање %1 фајла"
-msgstr[2] "Извршавање %1 фајлова"
-msgstr[3] "Извршавање фајла"
+msgstr[0] "Изврши %1 фајл"
+msgstr[1] "Изврши %1 фајла"
+msgstr[2] "Изврши %1 фајлова"
+msgstr[3] "Изврши фајл"
 
 #: src/dcc/transferrecv.cpp:197
 #, kde-format
@@ -3538,13 +3536,13 @@ msgid_plural ""
 "<b>A partial file exists:</b><br/>%2<br/>Size of the partial file: %1 bytes."
 "<br/>"
 msgstr[0] ""
-"<b>Постоји дјелимични фајл.</b><br/>%2<br/>Величина делимичног фајла: %1 "
+"<b>Постоји дјелимични фајл.</b><br/>%2<br/>Величина дјелимичног фајла: %1 "
 "бајт<br/>"
 msgstr[1] ""
-"<b>Постоји дјелимични фајл.</b><br/>%2<br/>Величина делимичног фајла: %1 "
+"<b>Постоји дјелимични фајл.</b><br/>%2<br/>Величина дјелимичног фајла: %1 "
 "бајта<br/>"
 msgstr[2] ""
-"<b>Постоји дјелимични фајл.</b><br/>%2<br/>Величина делимичног фајла: %1 "
+"<b>Постоји дјелимични фајл.</b><br/>%2<br/>Величина дјелимичног фајла: %1 "
 "бајтова<br/>"
 msgstr[3] ""
 "<b>Постоји дјелимични фајл.</b><br/>%2<br/>Величина дјелимичног фајла: 1 "
@@ -3641,7 +3639,7 @@ msgid ""
 "transfer</qt>"
 msgstr ""
 "<qt>Фајл који шаљете кориснику <i>%1</i> нема име.<br/>Унесите име фајла "
-"које ће видети прималац, или откажите ДЦЦ пренос.</qt>"
+"које ће видјети прималац, или откажите ДЦЦ пренос.</qt>"
 
 #: src/dcc/transfersend.cpp:197
 #, kde-format
@@ -3928,8 +3926,8 @@ msgid ""
 "that nickname. Enter alternate nicknames for yourself. If your first choice "
 "is rejected by the server, Konversation will try the alternate nicknames."
 msgstr ""
-"Ово је списак ваших надимака. Надимак је име под којим ће вас видети други "
-"корисници. Можете унети какво год име желите, само први знак мора бити "
+"Ово је списак ваших надимака. Надимак је име под којим ће вас видјети други "
+"корисници. Можете унијети какво год име желите, само први знак мора бити "
 "слово.\n"
 "\n"
 "Пошто надимци морају бити јединствени на цијелој ИРЦ мрежи, сервер може "
@@ -4047,7 +4045,7 @@ msgstr "Идентитету морате додати бар један над�
 #: src/identitydialog.cpp:392
 #, kde-format
 msgid "Nicks must not contain spaces."
-msgstr ""
+msgstr "Надимци не смију да садрже размаке."
 
 #: src/identitydialog.cpp:405
 #, kde-format
@@ -4057,12 +4055,13 @@ msgstr "Унесите право име."
 #: src/identitydialog.cpp:416
 #, kde-format
 msgid "Ident must not contain spaces."
-msgstr ""
+msgstr "IDENT не смије да садржи размаке."
 
 #: src/identitydialog.cpp:463
 #, kde-format
 msgid "NickServ may not function with auto join;  SASL is recommended."
 msgstr ""
+"NickServ можда неће радити уз аутоматско придруживање; препоручује се САСЛ."
 
 #: src/identitydialog.cpp:470
 #, kde-format
@@ -4070,7 +4069,7 @@ msgid ""
 "The password entered here will override the one set in the server settings, "
 "if any."
 msgstr ""
-"Овде унета лозинка потиснуће ону задату у поставкама сервера, ако је има."
+"Овдје унијета лозинка потиснуће ону задату у поставкама сервера, ако је има."
 
 #: src/identitydialog.cpp:481
 #, kde-format
@@ -4209,13 +4208,13 @@ msgstr ""
 #: src/identitydialog.ui:336
 #, kde-format
 msgid "Mark the last position in chat windows when going away"
-msgstr "Означи у прозору ћаскања посљедњи положај пре одласка"
+msgstr "Означи у прозору ћаскања посљедњи положај прије одласка"
 
 #. i18n: ectx: property (text), widget (QLabel, awayMessageLabel)
 #: src/identitydialog.ui:343
 #, kde-format
 msgid "Default away message:"
-msgstr "Подразумевана порука одсутности:"
+msgstr "Подразумијевана порука одсутности:"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_awayMessageEdit)
 #: src/identitydialog.ui:353
@@ -4225,9 +4224,9 @@ msgid ""
 "entered as an argument to the <b>/away</b> or <b>/aaway</b> commands, and "
 "also when Global Away is toggled from the menu or via the keyboard shortcut."
 msgstr ""
-"Овде унети текст користи се као порука о одсутности када се порука не зада "
-"као аргумент наредбе <tt>/away</tt> или <tt>/aaway</tt>, као и када се "
-"примени <i>Глобална одсутност</i> кроз мени или пречицом са тастатуре."
+"Овдје унијети текст користи се као порука о одсутности када се порука не "
+"зада као аргумент наредбе <tt>/away</tt> или <tt>/aaway</tt>, као и када се "
+"примијени <i>Глобална одсутност</i> кроз мени или пречицом са тастатуре."
 
 #. i18n: ectx: property (text), widget (QLabel, awayNicknameLabel)
 #: src/identitydialog.ui:360
@@ -4315,8 +4314,8 @@ msgid ""
 msgstr ""
 "Ако попуните ово, Конверзација ће аутоматски извршити наредбу одсутности у "
 "свим језичцима канала под овим идентитетом. <tt>%s</tt> у наредби одсутности "
-"мења се поруком о одсутности. Када се вратите, извршиће се наредба повратка. "
-"<tt>%t</tt> у наредби повратка мења се трајањем одсутности."
+"мијења се поруком о одсутности. Када се вратите, извршиће се наредба "
+"повратка. <tt>%t</tt> у наредби повратка мијења се трајањем одсутности."
 
 #. i18n: ectx: property (title), widget (QGroupBox, awayCommandsGroup)
 #: src/identitydialog.ui:459
@@ -4346,7 +4345,7 @@ msgstr "Напредно"
 #: src/identitydialog.ui:526
 #, kde-format
 msgid "&Pre-shell command:"
-msgstr "Наредба &пре шкољке:"
+msgstr "Наредба &прије шкољке:"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_sCommandEdit)
 #: src/identitydialog.ui:536
@@ -4356,7 +4355,7 @@ msgid ""
 "starts<br>If you have multiple servers in this identity this command will be "
 "executed for each server"
 msgstr ""
-"<p>Овде можете унети наредбу за извршавање прије почетка повезивања са "
+"<p>Овдје можете унијети наредбу за извршавање прије почетка повезивања са "
 "сервером.</p><p>Ако имате више сервера у овом идентитету, наредба ће бити "
 "извршена за сваки од њих.</p>"
 
@@ -4390,11 +4389,7 @@ msgstr "&IDENT:"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_loginEdit)
 #: src/identitydialog.ui:582
-#, fuzzy, kde-format
-#| msgid ""
-#| "When you connect, many servers query your computer for an IDENT response. "
-#| "If you computer is not running an IDENT server, this response is sent by "
-#| "Konversation. No spaces are allowed."
+#, kde-format
 msgid ""
 "When you connect, many servers query your computer for an IDENT response. If "
 "your computer is not running an IDENT server, this response is sent by "
@@ -4472,9 +4467,10 @@ msgid ""
 "can also view the history of topics there.</p></qt>"
 msgstr ""
 "<qt><p>Сваки канал на ИРЦ‑у има придружену тему. То је једноставно порука "
-"коју сви могу видети.</p><p>Ако сте оператер, или режим канала <tt>Т</tt> "
+"коју сви могу видјети.</p><p>Ако сте оператер, или режим канала <tt>Т</tt> "
 "није постављен, тему можете промијенити кликом на дугме <i>Уреди поставке "
-"канала</i> лево од ње. Овде такође можете видјети и историјат тема.</p></qt>"
+"канала</i> лијево од ње. Овдје такође можете видјети и историјат тема.</p></"
+"qt>"
 
 #: src/irc/channel.cpp:182
 #, kde-format
@@ -5436,14 +5432,7 @@ msgstr "Нај&мање корисника:"
 
 #. i18n: ectx: property (whatsThis), widget (QTreeView, m_channelListView)
 #: src/irc/channellistpanelui.ui:64
-#, fuzzy, kde-format
-#| msgid ""
-#| "The filtered list of channels is displayed here. Notice that if you do "
-#| "not use regular expressions, Konversation lists any channel whose name "
-#| "contains the filter string you entered. The channel name does not have to "
-#| "start with the string you entered.\\n\\nSelect a channel you want to join "
-#| "by clicking on it. Right click on the channel to get a list of all web "
-#| "addresses mentioned in the channel's topic."
+#, kde-format
 msgid ""
 "<p>The filtered list of channels is displayed here. Notice that if you do "
 "not use regular expressions, Konversation lists any channel whose name "
@@ -5452,12 +5441,12 @@ msgid ""
 "by clicking on it. Right click on the channel to get a list of all web "
 "addresses mentioned in the channel's topic.</p>"
 msgstr ""
-"Овде је приказана филтрирана листа канала. Ако не користите регуларне "
+"<p>Овдје је приказан филтрирани списак канала. Ако не користите регуларне "
 "изразе, Конверзација ће излистати сваки канал чије име садржи филтерску "
-"ниску коју сте унијели. Име канала не мора почињати том ниском.\n"
-"\n"
-"Изаберите канал којем желите да се придружите кликом на њега. Десним кликом "
-"на канал добијате листу свих веб адреса које се помињу у теми канала."
+"ниску коју сте унијели. Име канала не мора почињати том ниском.</"
+"p><p>Изаберите канал којем желите да се придружите кликом на њега. Десним "
+"кликом на канал добијате списак свих веб адреса које се помињу у теми канала."
+"</p>"
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_channelBox)
 #: src/irc/channellistpanelui.ui:92
@@ -5653,7 +5642,7 @@ msgctxt ""
 "We asked the server for available capabilities and got an empty list. This "
 "isn't an error, and isn't permanent"
 msgid "No configurable server capabilities are currently available."
-msgstr ""
+msgstr "Тренутно нема доступних подесивих способности сервера."
 
 #: src/irc/inputfilter.cpp:847
 #, kde-format
@@ -5817,7 +5806,7 @@ msgid ""
 "The nickname %1 was already in use, but the connection failed before you "
 "responded."
 msgstr ""
-"Надимак %1 је већ у употреби, али је веза прекинута пре него што сте "
+"Надимак %1 је већ у употреби, али је веза прекинута прије него што сте "
 "одговорили."
 
 #: src/irc/inputfilter.cpp:1586
@@ -5917,7 +5906,7 @@ msgstr "Разријешен %1 (%2) на адреси: %3"
 #: src/irc/inputfilter.cpp:1814
 #, kde-format
 msgid "Unable to resolve address for %1 (%2)"
-msgstr "Не могу да разрешим адресу за %1 (%2)"
+msgstr "Не могу да разријешим адресу за %1 (%2)"
 
 #: src/irc/inputfilter.cpp:1844
 #, kde-format
@@ -5927,7 +5916,7 @@ msgstr "%1 је препознати корисник."
 #: src/irc/inputfilter.cpp:1854
 #, kde-format
 msgid "%1 is using a secure connection."
-msgstr "%1 користи безбедну везу."
+msgstr "%1 користи безбједну везу."
 
 #: src/irc/inputfilter.cpp:1899 src/irc/inputfilter.cpp:1924
 #, kde-format
@@ -6196,7 +6185,7 @@ msgstr "Сада сте пријављени као %1."
 #: src/irc/inputfilter.cpp:2499
 #, kde-format
 msgid "SASL authentication successful."
-msgstr "САСЛ аутентификација успешна."
+msgstr "САСЛ аутентификација успјешна."
 
 #: src/irc/inputfilter.cpp:2512
 #, kde-format
@@ -6267,16 +6256,14 @@ msgid "%1 (%2)"
 msgstr "%1 (%2)"
 
 #: src/irc/joinchanneldialog.cpp:216
-#, fuzzy, kde-format
-#| msgid "Are you sure you want to delete all information for this identity?"
+#, kde-format
 msgid "Are you sure you want to remove this channel from your history?"
-msgstr "Желите ли заиста да обришете све податке овог идентитета?"
+msgstr "Желите ли заиста да уклоните овај канал из историјата?"
 
 #: src/irc/joinchanneldialog.cpp:218
-#, fuzzy, kde-format
-#| msgid "Remove Ban"
+#, kde-format
 msgid "Remove channel"
-msgstr "Уклони забрану"
+msgstr "Уклањање канала"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel8)
 #: src/irc/joinchannelui.ui:67
@@ -6314,23 +6301,7 @@ msgid "Online&nbsp;Since:"
 msgstr "На&nbsp;вези&nbsp;од:"
 
 #: src/irc/nicklistview.cpp:146
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt><p>This shows all the people in the channel.  The nick for each "
-#| "person is shown, with a picture showing their status.<br /></"
-#| "p><table><tr><th><img src=\"%1\"/></th><td>This person has administrator "
-#| "privileges.</td></tr><tr><th><img src=\"%2\"/></th><td>This person is a "
-#| "channel owner.</td></tr><tr><th><img src=\"%3\"/></th><td>This person is "
-#| "a channel operator.</td></tr><tr><th><img src=\"%4\"/></th><td>This "
-#| "person is a channel half-operator.</td></tr><tr><th><img src=\"%5\"/></"
-#| "th><td>This person has voice, and can therefore talk in a moderated "
-#| "channel.</td></tr><tr><th><img src=\"%6\"/></th><td>This person does not "
-#| "have any special privileges.</td></tr><tr><th><img src=\"%7\"/></"
-#| "th><td>This, overlaid on any of the above, indicates that this person is "
-#| "currently away.</td></tr></table><p>The meaning of admin, owner and "
-#| "halfop varies between different IRC servers.</p><p>Hovering over any nick "
-#| "shows their current status. See the Konversation Handbook for more "
-#| "information.</p></qt>"
+#, kde-format
 msgid ""
 "<qt><p>This shows all the people in the channel.  The nick for each person "
 "is shown, with a picture showing their status.<br /></p><table><tr><th>%1</"
@@ -6347,18 +6318,16 @@ msgid ""
 "p></qt>"
 msgstr ""
 "<qt><p>Ово приказује све особе на каналу, по њиховим надимцима, и са сликом "
-"која означава њихово стање.</p><table><tr><th><img src=\"%1\"/></th><td>Ова "
-"особа има администраторска овлашћења.</td></tr><tr><th><img src=\"%2\"/></"
-"th><td>Ова особа је власник канала.</td></tr><tr><th><img src=\"%3\"/></"
-"th><td>Ова особа је оператер канала.</td></tr><tr><th><img src=\"%4\"/></"
-"th><td>Ова особа је полуоператер канала.</td></tr><tr><th><img src=\"%5\"/></"
+"која означава њихово стање.<br /></p><table><tr><th>%1</th><td>Ова особа има "
+"администраторска овлашћења.</td></tr><tr><th>%2</th><td>Ова особа је власник "
+"канала.</td></tr><tr><th>%3</th><td>Ова особа је оператер канала.</td></"
+"tr><tr><th>%4</th><td>Ова особа је полуоператер канала.</td></tr><tr><th>%5</"
 "th><td>Ова особа има глас и стога може причати на модерисаном каналу.</td></"
-"tr><tr><th><img src=\"%6\"/></th><td>Ова особа нема никаква посебна "
-"овлашћења.</td></tr><tr><th><img src=\"%7\"/></th><td>Ово, преклопљено преко "
-"било којег изнад, показује да је особа тренутно одсутна.</td></tr></"
-"table><p>Значење администратора, власника и полуопа разликује се између "
-"различитих ИРЦ сервера.</p><p>Лебдјењем изнад неког надимка добијате његово "
-"тренутно стање, као и евентуалне податке које имате у адресару за ову особу. "
+"tr><tr><th>%6</th><td>Ова особа нема никаква посебна овлашћења.</td></"
+"tr><tr><th>%7</th><td>Ово, преклопљено преко било којег изнад, показује да "
+"је особа тренутно одсутна.</td></tr></table><p>Значење администратора, "
+"власника и полуопа разликује се између различитих ИРЦ сервера.</"
+"p><p>Лебдјењем изнад неког надимка добијате његово тренутно стање. "
 "Погледајте приручник Конверзације за више детаља.</p></qt>"
 
 #: src/irc/nicksonline.cpp:29
@@ -6895,7 +6864,7 @@ msgstr ""
 msgid ""
 "Usage: %1keyx <nick|channel> triggers DH1080 key exchange with the target."
 msgstr ""
-"Употреба: %1keyx <надимак|канал> окида ДХ1080 размену кључева са корисником."
+"Употреба: %1keyx <надимак|канал> окида ДХ1080 размјену кључева са корисником."
 
 #: src/irc/outputfilter.cpp:1722
 #, kde-format
@@ -6965,7 +6934,7 @@ msgstr "%1CLEAR [-ALL] [канал | надимак]"
 #: src/irc/outputfilterresolvejob.cpp:66
 #, kde-format
 msgid "Resolved %1 to: %2"
-msgstr "%1 разрешено на: %2"
+msgstr "%1 разријешено на: %2"
 
 #: src/irc/outputfilterresolvejob.cpp:68
 #, kde-format
@@ -7050,11 +7019,13 @@ msgid ""
 "Server does not support %1 as SASL authentication mechanism, skipping SASL "
 "authentication."
 msgstr ""
+"Сервер не подржава %1 као механизам САСЛ аутентификације, прескачем САСЛ "
+"аутентификацију."
 
 #: src/irc/server.cpp:792
 #, kde-format
 msgid "Requesting capabilities: %1"
-msgstr "Захтевам способности: %1"
+msgstr "Захтијевам способности: %1"
 
 #: src/irc/server.cpp:809
 #, kde-format
@@ -7092,7 +7063,7 @@ msgid ""
 "SSL error. Will automatically reconnect if error is ignored."
 msgstr ""
 "Веза са сервером %1 (порт %2) изгубљена током чекања одговора корисника на "
-"ССЛ грешку. Следи аутоматско повезивање ако се грешка занемари."
+"ССЛ грешку. Слиједи аутоматско повезивање ако се грешка занемари."
 
 #: src/irc/server.cpp:961
 #, kde-format
@@ -7105,7 +7076,7 @@ msgid ""
 "The SSL certificate for the server %1 (port %2) failed the authenticity "
 "check."
 msgstr ""
-"ССЛ сертификат за сервер %1 (порт %2) није прошао проверу аутентичности."
+"ССЛ сертификат за сервер %1 (порт %2) није прошао провјеру аутентичности."
 
 #: src/irc/server.cpp:1014
 #, kde-format
@@ -7300,7 +7271,7 @@ msgstr "Грешка: Не могу да нађем скрипту „%1“."
 #: src/irc/server.cpp:3852
 #, kde-format
 msgid "Error: Could not execute script \"%1\". Check file permissions."
-msgstr "Грешка: Не могу да извршим скрипту „%1“. Проверите дозволе фајла."
+msgstr "Грешка: Не могу да извршим скрипту „%1“. Провјерите дозволе фајла."
 
 #: src/irc/server.cpp:4063
 #, kde-format
@@ -7442,7 +7413,7 @@ msgstr "Користи &глобални прокси"
 #: src/irc/servergroupdialog.cpp:84
 #, kde-format
 msgid "Change network information"
-msgstr "Измена података о мрежи"
+msgstr "Измјена података о мрежи"
 
 # >> @title:window
 #: src/irc/servergroupdialog.cpp:165
@@ -7528,14 +7499,7 @@ msgstr "Наредбе:"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_commandEdit)
 #: src/irc/servergroupdialogui.ui:94
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt>Optional. This command will be sent to the server after connecting. "
-#| "Example: <b>/msg NickServ IDENTIFY <i>konvirocks</i></b>. This example is "
-#| "for the freenode network, which requires users to register their nickname "
-#| "with a password and login when connecting. <i>konvirocks</i> is the "
-#| "password for the nickname given in Identity. You may enter more than one "
-#| "command by separating them with semicolons.</qt>"
+#, kde-format
 msgid ""
 "<qt>Optional. This command will be sent to the server after connecting. "
 "Example: <b>/msg NickServ IDENTIFY <i>konvirocks</i></b>. This example is "
@@ -7544,12 +7508,11 @@ msgid ""
 "the nickname given in Identity. You may enter more than one command by "
 "separating them with semicolons.</qt>"
 msgstr ""
-"<qt>Опционо. Ова наредба ће бити послата серверу након повезивања. Пример: "
-"<tt>/msg NickServ IDENTIFY <i>nekalozinka</i></tt>. Ово је примјер за мрежу "
-"Фринод, која захтијева да корисници региструју свој надимак са лозинком и "
-"пријаве се при повезивању (<tt><i>nekalozinka</i></tt> је лозинка за надимак "
-"наведен у идентитету). Можете навести више наредби раздвајајући их тачка-"
-"запетом.</qt>"
+"<qt>Опционо. Ова наредба ће бити послата серверу након повезивања. Примјер: "
+"<b>/msg NickServ IDENTIFY <i>nekalozinka</i></b>. Ово је примјер за мрежу "
+"Libera, која захтијева да корисници региструју свој надимак са лозинком и "
+"пријаве се при повезивању. <i>nekalozinka</i> је лозинка за надимак наведен "
+"у идентитету. Можете навести више наредби раздвајајући их тачка-запетом.</qt>"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_nameEdit)
 #: src/irc/servergroupdialogui.ui:101
@@ -7749,14 +7712,7 @@ msgstr "&Обриши"
 # skip-rule: t-collection
 #. i18n: ectx: property (whatsThis), widget (ServerListView, m_serverList)
 #: src/irc/serverlistdialogui.ui:86
-#, fuzzy, kde-format
-#| msgid ""
-#| "This shows the list of configured IRC networks. An IRC network is a "
-#| "collection of cooperating servers. You need only connect to one of the "
-#| "servers in the network to be connected to the entire IRC network. Once "
-#| "connected, Konversation will automatically join the channels shown. When "
-#| "Konversation is started for the first time, the Freenode network and the "
-#| "<i>#kde</i> channel are already entered for you."
+#, kde-format
 msgid ""
 "This shows the list of configured IRC networks. An IRC network is a "
 "collection of cooperating servers. You need only connect to one of the "
@@ -7765,11 +7721,11 @@ msgid ""
 "Konversation is started for the first time, the Libera network and the "
 "<i>#kde</i> channel are already entered for you."
 msgstr ""
-"Овдје је приказана листа подешених ИРЦ мрежа. ИРЦ мрежа је скуп сервера који "
+"Овдје је приказан списак подешених ИРЦ мрежа. ИРЦ мрежа је скуп сервера који "
 "сарађују. Довољно је да се повежете само на један сервер у мрежи да бисте "
 "били повезани са цијелом ИРЦ мрежом. Када се повежете, Конверзација ће се "
 "аутоматски придружити приказаним каналима. Када се Конверзација покрене по "
-"први пут, биће већ унијета мрежа Фринод и канал <tt>#kde</tt>."
+"први пут, биће већ унијети мрежа Libera и канал <i>#kde</i>."
 
 # >> @title:column
 #. i18n: ectx: property (text), widget (ServerListView, m_serverList)
@@ -7844,10 +7800,9 @@ msgid "A user-friendly IRC client"
 msgstr "Предусретљиви ИРЦ клијент"
 
 #: src/main.cpp:31
-#, fuzzy, kde-format
-#| msgid "(C) 2002-2017 by the Konversation team"
+#, kde-format
 msgid "Copyright 2002-%1 by the Konversation team"
-msgstr "© 2002–2017, тим Конверзације"
+msgstr "© 2002–%1, тим Конверзације"
 
 #: src/main.cpp:32
 #, kde-format
@@ -8030,7 +7985,7 @@ msgstr "Микаел Маршан"
 #: src/main.cpp:52
 #, kde-format
 msgid "Konsole part view"
-msgstr "Приказ Конзолиног дела."
+msgstr "Приказ Конзолиног дијела."
 
 #: src/main.cpp:53
 #, kde-format
@@ -8396,7 +8351,7 @@ msgstr "&Идентитети..."
 #: src/mainwindow.cpp:178
 #, kde-format
 msgid "Manage your nick, away and other identity settings"
-msgstr "Наместите свој надимак, одсутност и друге поставке идентитета."
+msgstr "Намјестите свој надимак, одсутност и друге поставке идентитета."
 
 #: src/mainwindow.cpp:183
 #, kde-format
@@ -8477,7 +8432,7 @@ msgstr "&Затвори језичак"
 #: src/mainwindow.cpp:292
 #, kde-format
 msgid "Last Focused Tab"
-msgstr "Последњи фокусирани језичак"
+msgstr "Посљедњи фокусирани језичак"
 
 #: src/mainwindow.cpp:299
 #, kde-format
@@ -8575,13 +8530,12 @@ msgstr "Ресетуј величину фонта"
 #: src/mainwindow.cpp:442
 #, kde-format
 msgid "Reset the current font size to settings values"
-msgstr "Ресетуј тренутну величину фонта на вредност из поставки"
+msgstr "Ресетуј тренутну величину фонта на вриједност из поставки"
 
 #: src/mainwindow.cpp:447
-#, fuzzy, kde-format
-#| msgid "Enlarge Font Size"
+#, kde-format
 msgid "Shrink Font Size"
-msgstr "Повећај величину фонта"
+msgstr "Смањи величину фонта"
 
 #: src/mainwindow.cpp:451
 #, kde-format
@@ -8711,7 +8665,7 @@ msgid ""
 "application.</p>"
 msgstr ""
 "<p>Затварањем главног прозора, Конверзација ће наставити да ради у "
-"системској касети. Употребите <i>Напусти</i> из менија <b>Конверзације</b> "
+"системској касети. Употријебите <i>Напусти</i> из менија <b>Конверзације</b> "
 "да изађете из програма.</p>"
 
 # >> @title:window
@@ -9108,7 +9062,7 @@ msgid ""
 "If the IRC server requires a password, enter it here (most servers do not "
 "require a password.)"
 msgstr ""
-"Ако ИРЦ сервер захтева лозинку, унесите је овдје (већина сервера не "
+"Ако ИРЦ сервер захтијева лозинку, унесите је овдје (већина сервера не "
 "захтијева лозинку)."
 
 #: src/quickconnectdialog.cpp:79
@@ -9117,10 +9071,9 @@ msgid "&Use SSL"
 msgstr "&Користи ССЛ"
 
 #: src/statusbar.cpp:36 src/statusbar.cpp:72 src/statusbar.cpp:140
-#, fuzzy, kde-format
-#| msgid "Ready."
+#, kde-format
 msgid "Ready"
-msgstr "Спреман."
+msgstr "Спреман"
 
 #: src/statusbar.cpp:42
 #, kde-format
@@ -9313,7 +9266,7 @@ msgstr "Сачувај листу"
 #: src/urlcatcher.cpp:131
 #, kde-format
 msgid "Click to save the entire list to a file."
-msgstr "Кликните да сачувате целу листу у фајл."
+msgstr "Кликните да сачувате цијелу листу у фајл."
 
 #: src/urlcatcher.cpp:134
 #, kde-format
@@ -9329,7 +9282,7 @@ msgstr "Очисти листу"
 #: src/urlcatcher.cpp:137
 #, kde-format
 msgid "Click to erase the entire list."
-msgstr "Кликните да обришете целу листу."
+msgstr "Кликните да обришете цијелу листу."
 
 #: src/urlcatcher.cpp:155
 #, kde-format
@@ -9411,13 +9364,13 @@ msgstr "&Ево ме"
 #: src/viewer/awaylabel.cpp:22
 #, kde-format
 msgid "&Change away message..."
-msgstr "&Измени поруку одсутности..."
+msgstr "&Измијени поруку одсутности..."
 
 # >> @title:window
 #: src/viewer/awaylabel.cpp:33
 #, kde-format
 msgid "Change away message"
-msgstr "Измена поруке одсутности"
+msgstr "Измјена поруке одсутности"
 
 #: src/viewer/awaylabel.cpp:33
 #, kde-format
@@ -9473,7 +9426,8 @@ msgstr ""
 "<qt><p>Одређује <em>режим</em> канала, стога само оператер може ово "
 "промијенити.</p><p>Без порука споља (<tt>N</tt>) значи да корисници који "
 "нису на каналу не могу да шаљу поруке видљиве свима на каналу. Ово је "
-"постављено код скоро свих канала, ради спречавања непожељних порука.</p></qt>"
+"постављено код скоро свих канала, ради спрјечавања непожељних порука.</p></"
+"qt>"
 
 #: src/viewer/channeloptionsdialog.cpp:613
 #, kde-format
@@ -9716,7 +9670,7 @@ msgstr "Све мреже"
 #: src/viewer/editnotifydialog.cpp:78
 #, kde-format
 msgid "Change notify information"
-msgstr "Измени податке обавјештења"
+msgstr "Измијени податке обавјештења"
 
 #: src/viewer/ignorelistviewitem.cpp:41
 #, kde-format
@@ -10037,11 +9991,10 @@ msgid "Do you want to stop ignoring the selected users?"
 msgstr "Желите ли да обуставите игнорисање изабраних корисника?"
 
 #: src/viewer/irccontextmenus.cpp:776
-#, fuzzy, kde-format
-#| msgid "Query author"
+#, kde-format
 msgctxt "Opens a query (private message) window with the author of the topic"
 msgid "Query author"
-msgstr "Упит са аутором"
+msgstr "Отвори упит са аутором"
 
 #: src/viewer/ircinput.cpp:53
 #, kde-format
@@ -10061,15 +10014,15 @@ msgid ""
 msgstr ""
 "<qt><p>У улазној линији пишете поруке за слање на канал, упит или сервер. "
 "Поруку послату на канал виде сви на каналу, док се порука у упиту шаље само "
-"особи у упиту са вама.</p><p>Да бисте аутоматски довршили, надимак започните "
-"куцање и притисните Tab. Ако нисте започели куцање, употребиће се посљедњи "
+"особи у упиту са вама.</p><p>Да бисте аутоматски довршили надимак, започните "
+"куцање и притисните Tab. Ако нисте започели куцање, употријебиће се посљедњи "
 "довршени надимак.</p><p>Можете слати и специјалне наредбе:</"
 "p><table><tr><th><tt>/me <i>радња</i></tt></th><td>приказује се као радња у "
-"каналу или упиту. На примјер: <tt>/me пјева песму</tt> приказаће се у каналу "
-"као „(надимак) пјева песму“.</td> </tr><tr><th><tt>/whois <i>надимак</i></"
-"tt></th><td>приказује информације о тој особи, укључујући и на којим "
-"каналима учествује.</td></tr></table><p>За више наредби погледајте приручник "
-"Конверзације.</p><p>Порука не може садржати више редова.</p></qt>"
+"каналу или упиту. На примјер: <tt>/me пјева пјесму</tt> приказаће се у "
+"каналу као „(надимак) пјева пјесму“.</td> </tr><tr><th><tt>/whois "
+"<i>надимак</i></tt></th><td>приказује информације о тој особи, укључујући и "
+"на којим каналима учествује.</td></tr></table><p>За више наредби погледајте "
+"приручник Конверзације.</p><p>Порука не може садржати више редова.</p></qt>"
 
 #: src/viewer/ircinput.cpp:474
 #, kde-format
@@ -10111,7 +10064,7 @@ msgstr "Упозорење о великом наљепку"
 #: src/viewer/ircinput.cpp:485
 #, kde-format
 msgid "Paste"
-msgstr "Налепи"
+msgstr "Налијепи"
 
 #: src/viewer/ircview.cpp:2225
 #, kde-format
@@ -10279,7 +10232,7 @@ msgstr "&Претходно"
 #: src/viewer/searchbarbase.ui:110
 #, kde-format
 msgid "Modify search behavior"
-msgstr "Измени понашање претраге"
+msgstr "Измијени понашање претраге"
 
 #. i18n: ectx: property (text), widget (QToolButton, m_optionsButton)
 #: src/viewer/searchbarbase.ui:113
@@ -10365,20 +10318,20 @@ msgstr ""
 "Ово је списак свих тема које су биле постављане за овај канал док је његов "
 "језичак био отворен.\n"
 "\n"
-"За истоветне теме које су више пута постављане, приказује се само последње "
+"За истовјетне теме које су више пута постављане, приказује се само посљедње "
 "јављање.\n"
 "\n"
-"Када изаберете тему са списка, биће унета у поље за уређивање испод. Пошто "
-"почнете да мењате садржај поља, међутим, списак ће се пребацити из нормалног "
-"режима избора ставки у режим избора њиховог текста, тако да можете пренети "
-"нешто у нову тему. На режим избора ставки и синхронизовано поље за уређивање "
-"враћате се тако што опозовете до почетног текста или затворите па отворите "
-"дијалог."
+"Када изаберете тему са списка, биће унијета у поље за уређивање испод. Пошто "
+"почнете да мијењате садржај поља, међутим, списак ће се пребацити из "
+"нормалног режима избора ставки у режим избора њиховог текста, тако да можете "
+"пренијети нешто у нову тему. На режим избора ставки и синхронизовано поље за "
+"уређивање враћате се тако што опозовете до почетног текста или затворите па "
+"отворите дијалог."
 
 #: src/viewer/trayicon.cpp:23
 #, kde-format
 msgid "IRC Client"
-msgstr ""
+msgstr "ИРЦ клијент"
 
 #: src/viewer/viewcontainer.cpp:881
 #, kde-format
@@ -10467,15 +10420,3 @@ msgstr "Упозорење о листи канала"
 #, kde-format
 msgid "Watched Nicks"
 msgstr "Надгледани надимци"
-
-#~ msgid "Konversation Bookmarks Editor"
-#~ msgstr "Конверзацијин уређивач обиљеживача"
-
-#~ msgid "audio/x-wav audio/x-mp3 application/ogg audio/x-adpcm"
-#~ msgstr "audio/x-wav audio/x-mp3 application/ogg audio/x-adpcm"
-
-#~ msgid "*.pem"
-#~ msgstr "*.pem"
-
-#~ msgid "Konversation - IRC Client"
-#~ msgstr "Конверзација — ИРЦ клијент"
