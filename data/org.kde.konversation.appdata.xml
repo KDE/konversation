@@ -133,6 +133,10 @@
     <p xml:lang="sa">Konversation KDE द्वारा उपयोक्तृ-अनुकूलः Internet Relay Chat (IRC) क्लायन्ट् अस्ति । एतत् Libera इत्यादिषु मानक IRC संजालेषु सुलभं प्रवेशं प्रदाति, यत्र KDE IRC चैनल्स् द्रष्टुं शक्यन्ते ।</p>
     <p xml:lang="sk">Konversation je používateľsky priateľský klient pre IRC od KDE. Poskytuje ľahký prístup ku štandardným IRC sieťam ako Libera, KDE sa dajú nájsť KDE IRC kanály.</p>
     <p xml:lang="sl">Konversation je uporabniku prijazen odjemalec Internet Relay Chat (IRC), ki ga izdelal KDE. To omogoča enostaven dostop do standardnih omrežij IRC, kot je Libera, kjer najdete lahko IRC kanale za KDE.</p>
+    <p xml:lang="sr">Конверзација је предусретљив клијент за ћаскање преко ИРЦ‑а (Internet Relay Chat) из КДЕ‑а. Пружа лак приступ стандардним ИРЦ мрежама као што је Libera, где се налазе КДЕ ИРЦ канали.</p>
+    <p xml:lang="sr-Latn">Konverzacija je predusretljiv klijent za ćaskanje preko IRC‑a (Internet Relay Chat) iz KDE‑a. Pruža lak pristup standardnim IRC mrežama kao što je Libera, gde se nalaze KDE IRC kanali.</p>
+    <p xml:lang="sr-ijekavian">Конверзација је предусретљив клијент за ћаскање преко ИРЦ‑а (Internet Relay Chat) из КДЕ‑а. Пружа лак приступ стандардним ИРЦ мрежама као што је Libera, гдје се налазе КДЕ ИРЦ канали.</p>
+    <p xml:lang="sr-ijekavianlatin">Konverzacija je predusretljiv klijent za ćaskanje preko IRC‑a (Internet Relay Chat) iz KDE‑a. Pruža lak pristup standardnim IRC mrežama kao što je Libera, gdje se nalaze KDE IRC kanali.</p>
     <p xml:lang="sv">Konversation är en användarvänlig IRC-klient (Internet Relay Chat) av KDE. Det erbjuder enkel åtkomst till vanliga IRC-nätverk såsom Libera, där KDE:s IRC-kanal finns.</p>
     <p xml:lang="tr">Konversation, KDE tarafından yapılan, kullanıcı dostu bir IRC istemcisidir. KDE IRC kanallarının bulunduğu Libera gibi standart IRC ağlarına kolay erişim sağlar.</p>
     <p xml:lang="uk">Konversation — зручний для користування клієнт Internet Relay Chat (IRC) від KDE. Програма надає простий доступ до стандартних мереж IRC, зокрема Libera, де можна знайти канали IRC KDE.</p>
@@ -308,8 +312,8 @@
       <li xml:lang="sl">Podpora zaznamkom</li>
       <li xml:lang="sr">подршка за обележиваче</li>
       <li xml:lang="sr-Latn">podrška za obeleživače</li>
-      <li xml:lang="sr-ijekavian">подршка за обележиваче</li>
-      <li xml:lang="sr-ijekavianlatin">podrška za obeleživače</li>
+      <li xml:lang="sr-ijekavian">подршка за обиљеживаче</li>
+      <li xml:lang="sr-ijekavianlatin">podrška za obilježivače</li>
       <li xml:lang="sv">Stöd för bokmärken</li>
       <li xml:lang="tr">Yer imi desteği</li>
       <li xml:lang="uk">Підтримка роботи із закладками</li>
@@ -563,8 +567,8 @@
       <li xml:lang="sl">Prikaz na zaslonu za obvestila</li>
       <li xml:lang="sr">екрански приказ за обавештења</li>
       <li xml:lang="sr-Latn">ekranski prikaz za obaveštenja</li>
-      <li xml:lang="sr-ijekavian">екрански приказ за обавештења</li>
-      <li xml:lang="sr-ijekavianlatin">ekranski prikaz za obaveštenja</li>
+      <li xml:lang="sr-ijekavian">екрански приказ за обавјештења</li>
+      <li xml:lang="sr-ijekavianlatin">ekranski prikaz za obavještenja</li>
       <li xml:lang="sv">Visning av underrättelser på skärmen</li>
       <li xml:lang="tr">Bildirimler için Ekran Üzeri Görüntü</li>
       <li xml:lang="uk">Екранна панель для показу сповіщень</li>
