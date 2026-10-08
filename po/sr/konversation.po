@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-07-12 00:44+0000\n"
-"PO-Revision-Date: 2026-10-05 12:49+0200\n"
+"PO-Revision-Date: 2026-10-07 11:45+0200\n"
 "Last-Translator: Nemanja Hiršl <nemhirsl@gmail.com>\n"
 "Language-Team: Serbian <kde-i18n-sr@kde.org>\n"
 "Language: sr\n"
@@ -428,7 +428,7 @@ msgstr "&Редова: "
 #: src/config/chatwindowappearance_config.ui:114
 #, kde-format
 msgid "&Layout"
-msgstr "Распоред"
+msgstr "Расп&оред"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShowTopic)
 #: src/config/chatwindowappearance_config.ui:120
@@ -458,7 +458,7 @@ msgstr "&Маске домаћина у листи надимака"
 #: src/config/chatwindowappearance_config.ui:192
 #, kde-format
 msgid "Show real names in nickname list"
-msgstr "Права &имена у листи надимака"
+msgstr "Права имена у листи надимака"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShowQuickButtons)
 #: src/config/chatwindowappearance_config.ui:222
@@ -1830,7 +1830,7 @@ msgstr "&Активирај екрански приказ"
 #: src/config/osd_configui.ui:45
 #, kde-format
 msgid "On &Screen Display"
-msgstr "Екрански приказ"
+msgstr "Е&крански приказ"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_OSDDrawShadow)
 #: src/config/osd_configui.ui:54
@@ -1848,7 +1848,7 @@ msgstr "Фонт ОСД‑а:"
 #: src/config/osd_configui.ui:135
 #, kde-format
 msgid "Show &OSD Message"
-msgstr "Прикажи ОСД поруку"
+msgstr "П&рикажи ОСД поруку"
 
 # >> @option:check Show OSD Message...
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_OSDShowOwnNick)
@@ -1901,7 +1901,7 @@ msgstr "Боја &позадине:"
 #: src/config/osd_configui.ui:233
 #, kde-format
 msgid "O&ther Settings"
-msgstr "Остале поставке"
+msgstr "&Остале поставке"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1_2)
 #: src/config/osd_configui.ui:239
@@ -4299,7 +4299,7 @@ msgstr ""
 #: src/identitydialog.ui:440
 #, kde-format
 msgid "Automatically return on activity"
-msgstr "Аутоматско &враћање на активност"
+msgstr "Аутоматско враћање на активност"
 
 #. i18n: ectx: property (whatsThis), widget (QGroupBox, awayCommandsGroup)
 #: src/identitydialog.ui:456
