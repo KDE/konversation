@@ -20,7 +20,7 @@ msgstr ""
 "Project-Id-Version: extragear-network-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-07-12 00:44+0000\n"
-"PO-Revision-Date: 2026-07-28 21:27+0300\n"
+"PO-Revision-Date: 2026-10-12 10:43+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -28,7 +28,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 26.04.2\n"
+"X-Generator: Lokalize 26.08.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -7720,7 +7720,7 @@ msgstr "John Tapsell"
 #: src/main.cpp:42
 #, kde-format
 msgid "Refactoring, KAddressBook/Kontact integration"
-msgstr "Düzenleme, K Adres Defteri/Kontak tümleştirmesi"
+msgstr "Düzenleme, KAddressbook/Kontact tümleştirmesi"
 
 #: src/main.cpp:43
 #, kde-format
