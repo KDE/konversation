@@ -99,7 +99,7 @@ Do NOT change these in the translation. -->
 
 <abstract>
 <para
->&konversation; is een gebruiksvriendelijk &irc;-client gebouwd op &Qt; en &kf5-full;. </para>
+>&konversation; is een gebruiksvriendelijk &irc;-client gebouwd op &Qt; en &kde-frameworks;. </para>
 </abstract>
 
 <!-- This is a set of Keywords for indexing by search engines.
@@ -242,7 +242,7 @@ problems. Basically a long version of the abstract.  Don't include a
 revision history. (see installation appendix comment) -->
 
 <para
->&konversation; is een &irc;-programma gebouwd op &Qt; en &kf5-full;. Het biedt de volgende functies: </para>
+>&konversation; is een &irc;-programma gebouwd op &Qt; en &kde-frameworks;. Het biedt de volgende functies: </para>
 
 <para>
 <itemizedlist>
