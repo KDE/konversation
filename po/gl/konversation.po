@@ -5560,12 +5560,16 @@ msgid "%1 invited you to channel %2."
 msgstr "%1 convidouno á canle %2."
 
 #: src/irc/inputfilter.cpp:846
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt ""
+#| "We asked the server for available capabilities and got an empty list. "
+#| "This isn't an error, and isn't permanent"
+#| msgid "No configurable server capabilities are currently available."
 msgctxt ""
 "We asked the server for available capabilities and got an empty list. This "
 "isn't an error, and isn't permanent"
 msgid "No configurable server capabilities are currently available."
-msgstr ""
+msgstr "Non hai capacidades de servidor configurábeis dispoñíbeis."
 
 #: src/irc/inputfilter.cpp:847
 #, kde-format
