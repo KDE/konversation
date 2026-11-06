@@ -4020,8 +4020,7 @@ msgstr "Tunnuksissa ei saa olla välilyöntejä."
 msgid "NickServ may not function with auto join;  SASL is recommended."
 msgstr ""
 "NickServ ei välttämättä toimi automaattiyhdistämisen kanssa: SASLia "
-"suositellaan.NickServ ei välttämättä toimi automaattiyhdistämisen kanssa: "
-"SASLia suositellaan."
+"suositellaan."
 
 #: src/identitydialog.cpp:470
 #, kde-format
