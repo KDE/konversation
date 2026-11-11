@@ -127,7 +127,7 @@ Do NOT change these in the translation. -->
 
 <abstract>
 <para
->&konversation; est un client &irc; facile à utiliser, construit sur &Qt; et &kf5-full;. </para>
+>&konversation; est un client &irc; facile à utiliser, construit ) partir de &Qt; et de &kde-frameworks;. </para>
 </abstract>
 
 <!-- This is a set of Keywords for indexing by search engines.
@@ -270,7 +270,7 @@ problems. Basically a long version of the abstract.  Don't include a
 revision history. (see installation appendix comment) -->
 
 <para
->&konversation; est un client &irc; construit sur &Qt; et &kf5-full;. Il offre les fonctionnalités suivantes : </para>
+>&konversation; est un client &irc; construit à partir de &Qt; et de &kde-frameworks;. Il offre les fonctionnalités suivantes : </para>
 
 <para>
 <itemizedlist>
