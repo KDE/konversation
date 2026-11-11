@@ -127,7 +127,7 @@ Do NOT change these in the translation. -->
 
 <abstract>
 <para
->O &konversation; é um cliente de &irc; amigável baseado na plataforma &Qt; e &kf5-full;. </para>
+>O &konversation; é um cliente de &irc; amigável baseado na plataforma &Qt; e &kde-frameworks;. </para>
 </abstract>
 
 <!-- This is a set of Keywords for indexing by search engines.
@@ -270,7 +270,7 @@ problems. Basically a long version of the abstract.  Don't include a
 revision history. (see installation appendix comment) -->
 
 <para
->O &konversation; é um cliente de &irc; baseado na plataforma &Qt; e &kf5-full;. Ele oferece as seguintes funcionalidades: </para>
+>O &konversation; é um cliente de &irc; baseado na plataforma &Qt; e &kde-frameworks;. Ele oferece as seguintes funcionalidades: </para>
 
 <para>
 <itemizedlist>
@@ -316,7 +316,7 @@ revision history. (see installation appendix comment) -->
 ></listitem>
 <listitem
 ><para
->Visualização das mensagens na tela, mesmo quando está minimizado.</para
+>Indicador na tela das mensagens, mesmo quando está minimizado.</para
 ></listitem>
 <listitem
 ><para
@@ -2467,24 +2467,24 @@ part of the listing.
 
 <sect1 id="cfg-osd">
 <title
->Configurar a Visualização na Tela (&osd;)</title>
+>Configurando o Indicador na Tela (&osd;)</title>
 
 <para
->A <acronym
->Visualização na Tela</acronym
+>O <acronym
+>Indicador na Tela</acronym
 > (&osd;) é uma funcionalidade única do &konversation;. Com o &osd; ligado, as mensagens do canal irão aparecer na sua tela, mesmo que o &konversation; esteja minimizado. Aqui está um exemplo do &osd; em ação. A mensagem no canto superior esquerdo da tela é do &konversation;, que está rodando minimizado na área de notificação.</para>
 
 <para>
 <screenshot>
 <screeninfo
->Exemplo da Visualização na Tela</screeninfo>
+>Exemplo de Indicador na Tela</screeninfo>
 	<mediaobject>
 		<imageobject>
 			<imagedata fileref="osd_demo.png" format="PNG"/><!--new screenshot -->
 		</imageobject>
 		<textobject>
 			<phrase
->Exemplo da Visualização na Tela</phrase>
+>Exemplo de Indicador na Tela</phrase>
 		</textobject>
 	</mediaobject>
 </screenshot>
@@ -2506,7 +2506,7 @@ part of the listing.
 <para>
 <screenshot>
 <screeninfo
->A janela de Visualização na Tela.</screeninfo>
+>A janela do Indicador na Tela.</screeninfo>
 	<mediaobjectco>
 		<imageobjectco>
 			<areaspec units="calspair">
@@ -2523,7 +2523,7 @@ part of the listing.
 		</imageobjectco>
 		<textobject>
 			<phrase
->A janela de Visualização na Tela</phrase>
+>A janela do Indicador na Tela</phrase>
 		</textobject>
 	</mediaobjectco>
 </screenshot>
@@ -2542,7 +2542,7 @@ part of the listing.
 <callout arearefs="pt-osd-2"
 ><para
 >Clique aqui para selecionar a janela de <guilabel
->Visualização na Tela</guilabel
+>Indicador na Tela</guilabel
 >.</para
 ></callout>
 

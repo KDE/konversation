@@ -8463,12 +8463,12 @@ msgstr "Gjem menylinja"
 #: src/mainwindow.cpp:838
 #, kde-format
 msgid "Toggle Notifications"
-msgstr "Slå varslinger av/på"
+msgstr "Slå varslinger på/av"
 
 #: src/mainwindow.cpp:839
 #, kde-format
 msgid "Toggle Away Globally"
-msgstr "Slå Globalt borte av/på"
+msgstr "Slå Globalt borte på/av"
 
 #: src/mainwindow.cpp:840
 #, kde-format
