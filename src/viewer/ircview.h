@@ -272,7 +272,7 @@ class IRCView : public QTextBrowser
         /// Changes the ranges in <parm>urlRanges</parm>, that are found in
         /// <parm>strippedText</parm>, to match in <parm>richText</parm>.
         /// This is needed for cases were the url is tainted by ircrichtext chars
-        inline void adjustUrlRanges(QList< QPair< int, int > >& urlRanges, const QStringList& fixedUrls, QString& richtext, const QString& strippedText);
+        inline void adjustUrlRanges(QList< std::pair< int, int > >& urlRanges, const QStringList& fixedUrls, QString& richtext, const QString& strippedText);
 
         /// Parses the colors in <parm>text</parm> starting from <parm>start</parm>
         /// and returns them in the given fg and bg string, as well as information

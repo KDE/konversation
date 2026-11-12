@@ -130,7 +130,7 @@ class ViewContainer : public QAbstractItemModel
         int getViewIndex(QWidget* widget) const;
         ChatWindow* getViewAt(int index) const;
 
-        QList<QPair<QString,QString> > getChannelsURI() const;
+        QList<std::pair<QString,QString> > getChannelsURI() const;
 
     public Q_SLOTS:
         void updateAppearance();

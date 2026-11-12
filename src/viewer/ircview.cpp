@@ -1307,7 +1307,7 @@ QString IRCView::ircTextToHtml(const QString& text, bool parseURL, const QString
             if (doChannel)
             {
                 QString fixedChannel = channelData.fixedChannels.takeFirst();
-                const QPair<int, int>& range = channelData.channelRanges.takeFirst();
+                const std::pair<int, int>& range = channelData.channelRanges.takeFirst();
 
                 QString oldChannel = htmlText.mid(pos, range.second);
                 QString strippedChannel = removeIrcMarkup(oldChannel);
@@ -1324,7 +1324,7 @@ QString IRCView::ircTextToHtml(const QString& text, bool parseURL, const QString
             else
             {
                 QString fixedUrl = urlData.fixedUrls.takeFirst();
-                const QPair<int, int>& range = urlData.urlRanges.takeFirst();
+                const std::pair<int, int>& range = urlData.urlRanges.takeFirst();
 
                 QString oldUrl = htmlText.mid(pos, range.second);
                 QString strippedUrl = removeIrcMarkup(oldUrl);
@@ -1929,7 +1929,7 @@ void IRCView::defaultRemoveDuplicateHandling(TextHtmlData* data, const QString& 
     }
 }
 
-void IRCView::adjustUrlRanges(QList< QPair<int, int> >& urlRanges, const QStringList& fixedUrls,  QString& richtext, const QString& strippedText)
+void IRCView::adjustUrlRanges(QList< std::pair<int, int> >& urlRanges, const QStringList& fixedUrls,  QString& richtext, const QString& strippedText)
 {
     Q_UNUSED(fixedUrls)
 
@@ -1943,7 +1943,7 @@ void IRCView::adjustUrlRanges(QList< QPair<int, int> >& urlRanges, const QString
             i = urlRanges.first().first;
 
         j = 0;
-        const QPair<int, int>& range = urlRanges.at(x);
+        const std::pair<int, int>& range = urlRanges.at(x);
         url = strippedText.mid(range.first, range.second);
         for ( ; i < htmlTextLength; ++i)
         {

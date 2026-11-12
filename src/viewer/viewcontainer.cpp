@@ -2334,9 +2334,9 @@ ChatWindow* ViewContainer::getViewAt(int index) const
     return qobject_cast<ChatWindow*>(m_tabWidget->widget(index));
 }
 
-QList<QPair<QString,QString> > ViewContainer::getChannelsURI() const
+QList<std::pair<QString,QString> > ViewContainer::getChannelsURI() const
 {
-    QList<QPair<QString,QString> > URIList;
+    QList<std::pair<QString,QString> > URIList;
 
     for (int i = 0; i < m_tabWidget->count(); ++i)
     {
@@ -2347,7 +2347,7 @@ QList<QPair<QString,QString> > ViewContainer::getChannelsURI() const
             QString uri = view->getURI();
             QString name = QStringLiteral("%1 (%2)")
                 .arg(view->getName(), view->getServer()->getDisplayName());
-            URIList += QPair<QString,QString>(name,uri);
+            URIList += std::pair<QString,QString>(name,uri);
         }
     }
 

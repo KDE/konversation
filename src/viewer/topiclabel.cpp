@@ -339,7 +339,7 @@ namespace Konversation
 
         for (int i = channelData.channelRanges.count()-1; i >= 0 ; --i)
         {
-            const QPair <int, int>& range = channelData.channelRanges.at(i);
+            const std::pair <int, int>& range = channelData.channelRanges.at(i);
             original = htmlText.mid(range.first, range.second);
             htmlText.replace(range.first, range.second, link.arg(channelData.fixedChannels.at(i), original));
         }
@@ -348,7 +348,7 @@ namespace Konversation
         TextUrlData urlData = extractUrlData(htmlText);
         for (int i = urlData.urlRanges.count()-1; i >= 0 ; --i)
         {
-            const QPair <int, int>& range = urlData.urlRanges.at(i);
+            const std::pair <int, int>& range = urlData.urlRanges.at(i);
 
             int pos = range.first;
             // check if the matched text is already replaced as a channel

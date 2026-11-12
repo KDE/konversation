@@ -56,7 +56,7 @@ namespace Konversation
     {
         if (!Preferences::self()->disableExpansion())
         {
-            const QList<QPair<int, int>> urlRanges = getUrlRanges(text);
+            const QList<std::pair<int, int>> urlRanges = getUrlRanges(text);
 
             if (urlRanges.isEmpty())
                 return replaceFormattingCodes(text);
@@ -67,7 +67,7 @@ namespace Konversation
                 int startPos = 0;
                 int length = 0;
 
-                for (QPair<int, int> pair : urlRanges) {
+                for (std::pair<int, int> pair : urlRanges) {
                     length = pair.first - startPos;
 
                     line += replaceFormattingCodes(text.mid(startPos, length));
@@ -131,14 +131,14 @@ namespace Konversation
         return line;
     }
 
-    QList<QPair<int, int> > getUrlRanges(const QString& text)
+    QList<std::pair<int, int> > getUrlRanges(const QString& text)
     {
         TextUrlData data = extractUrlData(text, false);
 
         return data.urlRanges;
     }
 
-    QList< QPair< int, int > > getChannelRanges(const QString& text)
+    QList< std::pair< int, int > > getChannelRanges(const QString& text)
     {
         TextChannelData data = extractChannelData(text, false);
 
@@ -163,7 +163,7 @@ namespace Konversation
             urlLen = rmatch.capturedLength(0);
             href = htmlText.mid(pos, urlLen);
 
-            data.urlRanges << QPair<int, int>(pos, href.length());
+            data.urlRanges << std::pair<int, int>(pos, href.length());
             pos += href.length();
 
             if (doUrlFixup)
@@ -207,7 +207,7 @@ namespace Konversation
             // "#test", " #test" or " \"test", so the first Index is off by some chars
             pos = rmatch.capturedStart(2);
 
-            data.channelRanges << QPair<int, int>(pos, chanLen);
+            data.channelRanges << std::pair<int, int>(pos, chanLen);
             pos += chanLen;
 
             if (doChannelFixup)

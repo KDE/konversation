@@ -55,13 +55,13 @@ namespace Konversation
 
     struct TextUrlData
     {
-        QList<QPair<int, int> > urlRanges;
+        QList<std::pair<int, int> > urlRanges;
         QStringList fixedUrls;
     };
 
     struct TextChannelData
     {
-        QList<QPair<int, int> > channelRanges;
+        QList<std::pair<int, int> > channelRanges;
         QStringList fixedChannels;
     };
 
@@ -74,8 +74,8 @@ namespace Konversation
         return text.contains(ircMarkupsRegExp);
     }
 
-    QList<QPair<int, int> > getUrlRanges(const QString& text);
-    QList<QPair<int, int> > getChannelRanges(const QString& text);
+    QList<std::pair<int, int> > getUrlRanges(const QString& text);
+    QList<std::pair<int, int> > getChannelRanges(const QString& text);
     TextUrlData extractUrlData(const QString& string, bool doUrlFixup = true);
     TextChannelData extractChannelData(const QString& text, bool doChannelFixup = true);
     bool isUrl(const QString& text);

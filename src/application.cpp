@@ -1053,7 +1053,7 @@ NickInfoPtr Application::getNickInfo(const QString &ircnick, const QString &serv
 }
 
 // auto replace on input/output
-QPair<QString, int> Application::doAutoreplace(const QString& text, bool output, int cursorPos) const
+std::pair<QString, int> Application::doAutoreplace(const QString& text, bool output, int cursorPos) const
 {
     // get autoreplace list
     const QList<QStringList> autoreplaceList = Preferences::autoreplaceList();
@@ -1177,7 +1177,7 @@ QPair<QString, int> Application::doAutoreplace(const QString& text, bool output,
         }
     }
 
-    return QPair<QString, int>(line, cursorPos);
+    return std::pair<QString, int>(line, cursorPos);
 }
 
 void Application::doInlineAutoreplace(KTextEdit* textEdit) const
@@ -1185,7 +1185,7 @@ void Application::doInlineAutoreplace(KTextEdit* textEdit) const
     QTextCursor cursor(textEdit->document());
 
     cursor.beginEditBlock();
-    const QPair<QString, int>& replace = Application::instance()->doAutoreplace(textEdit->toPlainText(), true, textEdit->textCursor().position());
+    const std::pair<QString, int>& replace = Application::instance()->doAutoreplace(textEdit->toPlainText(), true, textEdit->textCursor().position());
     cursor.select(QTextCursor::Document);
     cursor.insertText(replace.first);
     cursor.setPosition(replace.second);
