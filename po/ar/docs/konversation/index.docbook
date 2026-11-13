@@ -1,0 +1,6075 @@
+<?xml version="1.0" ?>
+<!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
+  <!-- Define an entity for your application if it is not part of KDE
+       CVS -->
+  <!ENTITY irc "<acronym
+>IRC</acronym
+>">
+  <!ENTITY CTCP "<acronym
+>CTCP</acronym
+>">
+  <!ENTITY i18n-nickname "<acronym
+>اسم مستعار</acronym
+>">
+  <!ENTITY i18n-Nickname "<acronym
+>الاسم المستعار</acronym
+>">
+  <!ENTITY led "<acronym
+>LED</acronym
+>">
+  <!ENTITY osd "<acronym
+>OSD</acronym
+>">
+  <!ENTITY konviwebsite "https://konversation.kde.org">
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % Arabic "INCLUDE"
+> <!-- ONLY If you are writing non-English
+                                     original documentation, change
+                                     the language here -->
+
+  <!-- Do not define any other entities; instead, use the entities
+       from entities/general.entities and $LANG/user.entities. -->
+]>
+
+
+<!-- ................................................................ -->
+
+<!-- The language must NOT be changed here. -->
+<!-- If you are writing original documentation in a language other -->
+<!-- than English, change the language above ONLY, not here -->
+<book id="konversation" lang="&language;">
+
+<!-- This header contains all of the meta-information for the document such
+as Authors, publish date, the abstract, and Keywords -->
+
+<bookinfo>
+<title
+>دليل محادثك</title>
+
+<authorgroup>
+<author
+><personname
+> <firstname
+>Gary</firstname
+> <othername
+>R.</othername
+> <surname
+>Cramblitt</surname
+> </personname
+> <email
+>garycramblitt@comcast.net</email
+> </author>
+<othercredit role="translator"
+><firstname
+>زايد</firstname
+><surname
+>السعيدي</surname
+><affiliation
+><address
+><email
+>zayed.alsaidi@gmail.com</email
+></address
+></affiliation
+><contrib
+>التّرجمة العربيّة</contrib
+></othercredit
+> 
+</authorgroup>
+
+<!-- Note to Translators:
+	This document contains a number of screen images with callouts.  Because the stylesheets do not currently
+	support merging callout images with screen images, the "areaspec" elements herein are dummy entries
+	used to satisfy the "callout" elements.
+
+	-grc
+-->
+
+<copyright>
+<year
+>2003-2005</year>
+<holder
+>Gary R. Cramblitt</holder>
+</copyright>
+
+<!-- Translators: put here the copyright notice of the translation -->
+<!-- Put here the FDL notice.  Read the explanation in fdl-notice.docbook
+     and in the FDL itself on how to use it. -->
+<legalnotice
+>&FDLNotice;</legalnotice>
+
+<!-- Date and version information of the documentation
+Don't forget to include this last date and this last revision number, we
+need them for translation coordination !
+Please respect the format of the date (YYYY-MM-DD) and of the version
+(V.MM.LL), it could be used by automation scripts.
+Do NOT change these in the translation. -->
+
+<date
+>2016-11-29</date>
+<releaseinfo
+>محادثك 1.6</releaseinfo>
+
+<!-- Abstract about this handbook -->
+
+<abstract>
+<para
+>محادثك هو عميل &irc; سهل الاستخدام مبني على &Qt; و &kde-frameworks;. </para>
+</abstract>
+
+<!-- This is a set of Keywords for indexing by search engines.
+Please at least include KDE, the KDE package it is in, the name
+ of your application, and a few relevant keywords. -->
+
+<keywordset>
+<keyword
+>كيدي</keyword>
+<keyword
+>extragear</keyword>
+<keyword
+>محادثك</keyword>
+<keyword
+>irc</keyword>
+<keyword
+>بروتوكول الدردشة عبر الإنترنت</keyword>
+<keyword
+>الدردشة</keyword>
+<keyword
+>التّواصل</keyword>
+</keywordset>
+
+</bookinfo>
+
+<!-- The contents of the documentation begin here.  Label
+each chapter so with the id attribute. This is necessary for two reasons: it
+allows you to easily reference the chapter from other chapters of your
+document, and if there is no ID, the name of the generated HTML files will vary
+from time to time making it hard to manage for maintainers and for the CVS
+system. Any chapter labelled (OPTIONAL) may be left out at the author's
+discretion. Other chapters should not be left out in order to maintain a
+consistent documentation style across all KDE apps. -->
+
+<!-- CODE SNIPPETS
+The following are useful snippets for cross-referencing to sections of this document.
+If using the snippets plugin, copy them to your snippets.
+Please keep synced with id attributes.
+
+See <link linkend="irc-basics"
+>If you haven't used &irc; before...</link
+> for more information
+See <link linkend="identity"
+>Setting your identity</link
+> for more information
+See <link linkend="identity-away"
+>Setting your identity</link
+> for more information
+See <link linkend="identity-advanced"
+>Setting your identity</link
+> for more information
+See <link linkend="serverlist"
+>Defining new networks, servers and auto join channels</link
+> for more information
+See <link linkend="serverlist-addnetwork"
+>Defining new networks, servers and auto join channels</link
+> for more information
+See <link linkend="serverlist-addserver"
+>Defining new networks, servers and auto join channels</link
+> for more information
+See <link linkend="serverlist-addchannel"
+>Defining new networks, servers and auto join channels</link
+> for more information
+See <link linkend="list-channels"
+>Listing available channels</link
+> for more information
+See <link linkend="channel-screen-tour"
+>A tour of the main screen</link
+> for more information
+See <link linkend="quickconnect"
+>Quick Connect</link
+> for more information
+See <link linkend="irc-cmds"
+>Frequently-used &irc; commands</link
+> for more information
+See <link linkend="query"
+>Private conversations (queries)</link
+> for more information
+See <link linkend="cfg-notifications"
+>Setting notifications</link
+> for more information
+See <link linkend="nicksonline"
+>Monitoring who is online</link
+> for more information
+See <link linkend="highlighting"
+>Message highlighting</link
+> for more information
+See <link linkend="cfg-osd"
+>Configuring On Screen Display (&osd;)</link
+> for more information
+See <link linkend="color-msgs"
+>Sending colorful messages</link
+> for more information
+See <link linkend="nickthemes"
+>Configuring &i18n-nickname; themes</link
+> for more information.
+See <link linkend="quick-buttons"
+>Configuring Quick Buttons</link
+> for more information
+See <link linkend="dcc"
+>Sending and receiving files</link
+> for more information
+See <link linkend="urlcatcher"
+>Capturing &URL;s from messages.</link
+> for more information
+See <link linkend="webbrowser"
+>Setting your preferred web browser.</link
+> for more information
+See <link linkend="rememberlines"
+>Marking Channel and Query Logs</link
+> for more information
+See <link linkend="logging"
+>Logging</link
+> for more information
+See <link linkend="konvi-cmds"
+>&konversation; commands</link
+> for more information
+See <link linkend="scripting"
+>Scripting</link
+> for more information
+See <link linkend="kapp-mainwindow"
+>The main &konversation; window</link
+> for more information
+See <link linkend="getting-kapp"
+>How to obtain &konversation;</link
+> for more information
+See <link linkend="requirements"
+>Requirements</link
+> for more information
+
+-->
+
+<chapter id="introduction">
+<title
+>مقدمة</title>
+
+<!-- The introduction chapter contains a brief introduction for the
+application that explains what it does and where to report
+problems. Basically a long version of the abstract.  Don't include a
+revision history. (see installation appendix comment) -->
+
+<para
+>محادثك هو عميل &irc; مبني على &Qt; و &kde-frameworks;. يقدم الميزات التالية: </para>
+
+<para>
+<itemizedlist>
+<listitem
+><para
+>دعم SSL.</para
+></listitem>
+<listitem
+><para
+>واجهة مبوبة سهلة الاستخدام.</para
+></listitem>
+<listitem
+><para
+>أزرار سريعة قابلة للتخصيص للأوامر المستخدمة بكثرة.</para
+></listitem>
+<listitem
+><para
+>إعادة الاتصال والانضمام آلي.</para
+></listitem>
+<listitem
+><para
+>إرسال واستقبال DCC.</para
+></listitem>
+<listitem
+><para
+>قائمة مراقبة &i18n-Nickname;.</para
+></listitem>
+<listitem
+><para
+>إشعارات بصرية وسمعية لمجموعة واسعة من الأحداث، مثل الرسائل التي تحتوي على &i18n-nickname;، أو ألقابهم في قائمة مراقبتك عند اتصالهم أو انقطاعهم. </para
+></listitem>
+<listitem
+><para
+>تمييز قابل للتخصيص للرسائل حسب &i18n-Nickname; أو نمط تعبير نمطي.</para
+></listitem>
+<listitem
+><para
+>إكمال &i18n-Nickname;.</para
+></listitem>
+<listitem
+><para
+>التقاط وحفظ جميع &URL;ات الظاهرة في الرسائل.</para
+></listitem>
+<listitem
+><para
+>عرض الرسائل على الشاشة، حتى عند التصغير.</para
+></listitem>
+<listitem
+><para
+>قائمة تجاهل &i18n-Nickname;.</para
+></listitem>
+<listitem
+><para
+>تسجيل آلي وإدارة السجلات.</para
+></listitem>
+<listitem
+><para
+>وضع علامات على الأسطر في السجلات.</para
+></listitem>
+<listitem
+><para
+>البرمجة</para
+></listitem>
+</itemizedlist>
+</para>
+
+<para
+>موقع محادثك هو <ulink url="&konviwebsite;"
+>&konviwebsite;</ulink
+>. معلومات إضافية مثل الأسئلة الشائعة والنصائح والحيل تجدها في <ulink url="https://userbase.kde.org/Konversation"
+>صفحة محادثك على UserBase</ulink
+>. </para>
+
+<para
+>يمكن غالبًا الاتصال بمطوري محادثك عبر &irc; على <ulink url="irc://irc.libera.chat/konversation"
+>قناة #konversation على irc.libera.chat</ulink
+>. </para>
+
+</chapter>
+
+<chapter id="using-kapp">
+<title
+>استخدام محادثك</title>
+
+<!-- =================================================================== -->
+
+<sect1 id="irc-basics">
+<title
+>إذا لم تستخدم &irc; من قبل...</title>
+
+<para
+>ببساطة، &irc; هو بروتوكول محادثة، محدد بمعايير إنترنت رسمية، وقادر على سرقة ساعات طويلة من حياتك. لاستخدام &irc;، يجب عليك الاتصال بخادم، ثم الانضمام إلى قناة (ما يعادل غرفة محادثة) أو مجرد إجراء محادثات خاصة.</para>
+
+<para
+>للاتصال بخادم وقناة، افتح محادثك. تظهر شاشة <guilabel
+>قائمة الخوادم</guilabel
+>.</para>
+
+<para>
+<screenshot>
+<screeninfo
+>قائمة الخوادم</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-first-serverlist-1" coords="1 1"/>
+				<area id="pt-first-serverlist-2" coords="1 1"/>
+				<area id="pt-first-serverlist-3" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="first_serverlist_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>قائمة الخوادم</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+<callout arearefs="pt-first-serverlist-1"
+><para
+>قائمة شبكات &irc; المهيأة <guilabel
+>الشبكات</guilabel
+> مدرجة هنا. شبكة &irc; هي مجموعة من الخوادم المتعاونة. تحتاج فقط إلى الاتصال بأحد الخوادم في الشبكة لتكون متصلًا بشبكة &irc; بأكملها. بمجرد الاتصال، سينضم محادثك آلي إلى <guilabel
+>القنوات</guilabel
+> الظاهرة. عند تشغيل محادثك لأول مرة، تكون شبكة <userinput
+><replaceable
+>Libera</replaceable
+></userinput
+> وقناة <userinput
+><replaceable
+>#kde</replaceable
+></userinput
+> مدخلتين بالفعل. انقر على شبكة لتحديدها.</para
+></callout>
+<callout arearefs="pt-first-serverlist-2"
+><para
+>انقر هنا لتعريف <guilabel
+>شبكة</guilabel
+> جديدة، بما في ذلك الخادم للاتصال به، و<guilabel
+>القنوات</guilabel
+> للانضمام آلي بمجرد الاتصال. انظر <link linkend="serverlist"
+>تعريف شبكات وخوادم وقنوات انضمام آلي جديدة</link
+> لمزيد من المعلومات.</para
+></callout>
+<callout arearefs="pt-first-serverlist-3"
+><para
+>انقر هنا للاتصال شبكة IRC والقناة المحدّدتين.</para
+></callout>
+</calloutlist>
+</para>
+
+<note>
+<para
+>عند النقر على زر <guibutton
+>اتصال</guibutton
+> في أول مرة تفتح فيها محادثك، قد ترى الرسالة التالية، تخبرك أن <guilabel
+>هويتك</guilabel
+> المبدئية لم تُضبط بشكل صحيح.</para>
+
+<para>
+<screenshot>
+	<screeninfo
+>تحقق من الهويات</screeninfo>
+	<mediaobject>
+		<imageobject>
+			<imagedata fileref="checkidentities.png" format="PNG"/>
+		</imageobject>
+		<textobject>
+			<phrase
+>تحقق من الهويات</phrase>
+		</textobject>
+	</mediaobject>
+</screenshot>
+</para>
+
+<para
+>في أول مرة تفتح فيها محادثك يحصل على معلومات حول المستخدم الحالي من نظام التشغيل ويملأ المبدئيات للهوية. إذا كانت معلومات مستخدم نظام التشغيل غير كاملة، مثلًا، لم يُعرف الاسم الكامل، قد ترى الرسالة أعلاه. لتصحيح هذه المشكلة، انقر <guibutton
+>تحرير الهوية...</guibutton
+> وانظر <link linkend="identity"
+>ضبط هويتك</link
+> لمزيد من المعلومات.</para>
+</note>
+
+<para
+>ستُعرض شاشة <interface
+>الرئيسة</interface
+> تظهر الرسائل المرسلة من الخادم إلى العميل. (إذا لم يتصل محادثك بالخادم، انظر <link linkend="faq"
+>أسئلة وأجوبة</link
+>.) عندما تنتهي رسائل الخادم من التمرير، سينضم محادثك إلى القناة أو القنوات المختارة. </para>
+
+<para>
+<screenshot>
+<screeninfo
+>قناة.</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-first-channel-1" coords="1 1"/>
+				<area id="pt-first-channel-2" coords="1 1"/>
+				<area id="pt-first-channel-3" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="first_channel_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>القناة</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-first-channel-1"
+><para
+>يُسمى هذا <interface
+>سطر الإدخال</interface
+>. لإرسال رسالة للجميع في القناة، اكتب الرسالة هنا واضغط &Enter;. ستظهر رسالتك، بالإضافة إلى رسائل الآخرين، في تمرير القناة بالأعلى. كل رسالة يسبقها الوقت و&i18n-Nickname; الخاص بالمستخدم.</para
+></callout>
+
+<callout arearefs="pt-first-channel-2"
+><para
+>يمكنك الانضمام إلى خوادم وقنوات إضافية. يحصل كل خادم وقناة وقائمة قنوات وشاشة أخرى على لسان منفصل هنا. لعرض قائمة بالقنوات المتاحة، انظر <link linkend="list-channels"
+>سرد القنوات المتاحة</link
+>. للانضمام إلى قناة، اكتب: <userinput
+><command
+>/join</command
+> <replaceable
+>#اسم_القناة</replaceable
+></userinput
+> في سطر الإدخال. (<userinput
+>#</userinput
+> مطلوب.) يمكنك أيضًا كتابة <userinput
+><command
+>/j</command
+></userinput
+> كاختصار لـ <userinput
+><command
+>/join</command
+></userinput
+>. لمغادرة قناة، اكتب <userinput
+><command
+>/part</command
+></userinput
+>. للتبديل إلى خادم أو قناة مختلفة، انقر على اللسان المقابل. </para
+></callout>
+
+<callout arearefs="pt-first-channel-3"
+><para
+>يُسمى هذا <interface
+>لوحة الألقاب</interface
+>. يسرد &i18n-Nickname; لجميع المستخدمين الذين انضموا إلى القناة، بما فيهم أنت.</para
+></callout>
+
+</calloutlist>
+</para>
+
+<para
+>هذه هي الأساسيات، لمزيد من المعلومات التفصيلية، تابع القراءة...</para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="identity">
+<title
+>ضبط هويتك</title>
+
+<para
+>قبل البدء في استخدام محادثك بانتظام، يجب ضبط كيف ستُعرف على الشبكة.</para>
+
+<para
+>انقر <menuchoice
+> <guisubmenu
+>الإعدادات</guisubmenu
+> <guisubmenu
+>الهويات</guisubmenu
+> </menuchoice
+> في القائمة الرئيسة. <action
+>ستظهر شاشة <guilabel
+>الهويات</guilabel
+>. يمكنك أيضًا عرض شاشة <guilabel
+>الهويات</guilabel
+> بالنقر على زر <guibutton
+>تحرير</guibutton
+> في شاشة <guilabel
+>تحرير الشبكة</guilabel
+> أو <guilabel
+>شبكة جديدة</guilabel
+>.</action
+> </para>
+
+<para>
+<screenshot>
+<screeninfo
+>الهويات (اللسان العام)</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-identity-gen-1" coords="1 1"/>
+				<area id="pt-identity-gen-2" coords="1 1"/>
+				<area id="pt-identity-gen-3" coords="1 1"/>
+				<area id="pt-identity-gen-4" coords="1 1"/>
+				<area id="pt-identity-gen-5" coords="1 1"/>
+				<area id="pt-identity-gen-6" coords="1 1"/>
+				<area id="pt-identity-gen-7" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="identities_gen_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>الهويات (اللسان العام)</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+<callout arearefs="pt-identity-gen-1"
+><para
+>انقر هنا لاختيار <guilabel
+>هوية</guilabel
+> لتحريرها.</para
+></callout>
+<callout arearefs="pt-identity-gen-2"
+><para
+>استخدم هذه الأزرار لـ <guibutton
+>إضافة</guibutton
+> أو <guibutton
+>تكرار</guibutton
+> أو <guibutton
+>إعادة تسمية</guibutton
+> أو <guibutton
+>إزالة</guibutton
+> <guilabel
+>هوية</guilabel
+>.</para
+></callout>
+<callout arearefs="pt-identity-gen-3"
+><para
+>أدخِل اسمك الحقيقي هنا. لا يقصد IRC أن يبقيك مخفيًا عن أصدقائك أو أعدائك. تذكّر ذلك جيّدًا إن أُغريت لتسلك سلوكًا ضارّ. "الاسم الحقيقي" المزيّف قد يكون جيّدًا لوضع قناع على جنسك من كلّ المهووسين، لكن يمكن استخدام الحاسوب دائمًا لتتبّعك لذا لن تكون مجهولًا حقًّا.</para
+></callout>
+<callout arearefs="pt-identity-gen-4"
+><para
+>استخدم هذه الأزرار لـ <guibutton
+>أضف</guibutton
+> أو <guibutton
+>أزل </guibutton
+> &i18n-nickname;.</para
+></callout>
+<callout arearefs="pt-identity-gen-5"
+><para
+>هذه قائمة ألقابك. &i18n-Nickname; هو الاسم الذي سيعرفك به المستخدمون الآخرون. يمكنك استخدام أي اسم ترغب فيه. يجب أن يكون الحرف الأول حرفًا. الأحرف الأخرى يمكن أن تكون حروفًا أو أرقامًا أو الأحرف الخاصة <literal
+>-[]\`_^{}|</literal
+>.</para>
+
+<para
+>بما أن &i18n-Nickname; يجب أن تكون فريدة عبر شبكة &irc; بأكملها، قد يرفض الخادم اسمك المطلوب لأن شخصًا آخر يستخدم هذا &i18n-Nickname; بالفعل. أدخل ألقابًا بديلة لنفسك. إذا رُفض اختيارك الأول من قبل الخادم، سيحاول محادثك &i18n-Nickname; البديلة. </para>
+
+<para
+>وفقًا لـ RFC 2812، الحد الأقصى لطول &i18n-Nickname; هو 9، لكن هذا يُحدد فعليًا بواسطة الخادم. لتحديد الحد الأقصى لخادم، اتصل بالخادم. في لسان <interface
+>رسائل الخادم</interface
+>، ابحث عن رسالة <computeroutput
+>[دعم]</computeroutput
+>. على سبيل المثال:</para>
+
+<para>
+<computeroutput
+>[18:51] *Eisfuchs* [21:45] [دعم] Eisfuchs MODES=4 MAXCHANNELS=20 NICKLEN=16 USERLEN=10 HOSTLEN=63 TOPICLEN=450 KICKLEN=450 CHANNELLEN=30 KEYLEN=23 CHANTYPES=# PREFIX=@+ CASEMAPPING=ascii CAPAB IRCD=dancer </computeroutput>
+</para>
+
+<para
+>تحدد المعلمة <computeroutput
+>NICKLEN</computeroutput
+> الحد الأقصى لطول &i18n-Nickname;. </para>
+</callout>
+
+<callout arearefs="pt-identity-gen-6"
+><para
+>استخدم هذه الأزرار لتغيير ترتيب &i18n-Nickname;. يُحاول &i18n-Nickname; العلوي أولًا، ثم التالي، وهكذا.</para
+></callout>
+<callout arearefs="pt-identity-gen-7"
+><para
+>إذا سجلت &i18n-nickname; مع شبكة &irc;، أدخل الخدمة وكلمة المرور للاستيثاق من &i18n-nickname;. عندما يتصل محادثك، سيرسل آليًا <userinput
+><command
+>/msg</command
+> <replaceable
+>خدمة</replaceable
+> <command
+>IDENTIFY</command
+> <replaceable
+>كلمة_مرور</replaceable
+></userinput
+> إلى الخادم. إذا كنت لا تعرف ما هذا، اترك هذه المربعات فارغة.</para
+></callout>
+</calloutlist>
+</para>
+
+<anchor id="identity-away"/>
+
+<para
+>انقر على لسان <guilabel
+>الغياب</guilabel
+>.</para>
+
+<para>
+	<screenshot>
+		<screeninfo
+>الهويات (لسان الغياب)</screeninfo>
+		<mediaobjectco>
+			<imageobjectco>
+				<areaspec units="calspair">
+					<area id="pt-identity-away-1" coords="1 1"/>
+					<area id="pt-identity-away-2" coords="1 1"/>
+					<area id="pt-identity-away-3" coords="1 1"/>
+				</areaspec>
+				<imageobject>
+					<imagedata fileref="identities_away_co.png" format="PNG"/>
+				</imageobject>
+			</imageobjectco>
+			<textobject>
+				<phrase
+>الهويات (لسان الغياب)</phrase>
+			</textobject>
+		</mediaobjectco>
+	</screenshot>
+</para>
+<!-- Automatik Away group missing
+If you check this box, Konversation will automatically set all connections
+using this Identity away when the screensaver starts or after a period of
+user inactivity configured below.
+-->
+<para>
+<calloutlist>
+<callout arearefs="pt-identity-away-1"
+><para
+>أدخل لقبًا يشير إلى أنك غائب. كلما نفذت أمر <userinput
+><command
+>/away </command
+><replaceable
+>رسالة</replaceable
+></userinput
+> في أي قناة انضممت إليها بهذه <guilabel
+>الهوية</guilabel
+>، سيغير محادثك آليًا &i18n-nickname; إلى <guilabel
+>لقب الغياب</guilabel
+>. سيتمكن المستخدمون الآخرون من معرفة أنك غائب عن حاسوبك. كلما نفذت أمر <userinput
+><command
+>/away</command
+></userinput
+> في أي قناة كنت غائبًا فيها، سيغير محادثك آليًا &i18n-nickname; إلى الأصل. إذا كنت لا ترغب في تغيير &i18n-nickname; آليًا عند الغياب، اتركه فارغًا.</para
+></callout>
+<callout arearefs="pt-identity-away-2"
+><para
+>إن علّمت مربع التعليم، متى ما أجريت أمر <userinput
+><command
+>/away</command
+></userinput
+>، سيظهر خط أفقي في القناة ليُعلِّم النقطة التي كنت فيها قبل أن تغيب. مستخدمي IRC الآخرين لا يرون هذا الخط. </para
+></callout>
+<callout arearefs="pt-identity-away-3"
+><para
+>إذا حددت هذا المربع، سيرسل محادثك آليًا <guilabel
+>أمر الغياب</guilabel
+> إلى جميع القنوات المنضمة بهذه <guilabel
+>الهوية</guilabel
+>. يُستبدل <userinput
+><replaceable
+>%s</replaceable
+></userinput
+> بـ <userinput
+><replaceable
+>رسالة</replaceable
+></userinput
+>. كلما نفذت أمر <userinput
+><command
+>/away</command
+></userinput
+>، سيُعرض <guilabel
+>أمر العودة</guilabel
+> في جميع القنوات المنضمة بهذه <guilabel
+>الهوية</guilabel
+>.</para>
+
+<note
+><para
+>غالبًا ما تُعتبر رسائل الغياب مزعجة من قبل المستخدمين الآخرين. استخدم هذا الخيار بحذر، مع مراعاة زملائك من مستخدمي &irc;. </para
+></note>
+</callout>
+</calloutlist>
+</para>
+
+<anchor id="identity-advanced"/>
+
+<para
+>انقر على لسان <guilabel
+>متقدم</guilabel
+>.</para>
+
+<para>
+	<screenshot>
+		<screeninfo
+>الهويات (اللسان المتقدم)</screeninfo>
+		<mediaobjectco>
+			<imageobjectco>
+				<areaspec units="calspair">
+					<area id="pt-identity-adv-1" coords="1 1"/>
+					<area id="pt-identity-adv-2" coords="1 1"/>
+					<area id="pt-identity-adv-3" coords="1 1"/>
+					<area id="pt-identity-adv-4" coords="1 1"/>
+					<area id="pt-identity-adv-5" coords="1 1"/>
+					<area id="pt-identity-adv-6" coords="1 1"/>
+				</areaspec>
+				<imageobject>
+					<imagedata fileref="identities_adv_co.png" format="PNG"/>
+				</imageobject>
+			</imageobjectco>
+			<textobject>
+				<phrase
+>الهويات (اللسان المتقدم)</phrase>
+			</textobject>
+		</mediaobjectco>
+	</screenshot>
+</para>
+<!-- Quit reason missing Whenever you leave a server this message is shown to others-->
+<para>
+<calloutlist>
+<callout arearefs="pt-identity-adv-1"
+><para
+>يمكنك إدخال أمر هنا سيُنفذ قبل الاتصال بالخادم. إذا استُخدمت هذه الهوية لأكثر من خادم، سيُنفذ الأمر لكل خادم.</para
+></callout>
+<callout arearefs="pt-identity-adv-2"
+><para
+>يؤثر هذا الإعداد على كيفية ترميز الأحرف التي تكتبها لإرسالها إلى الخادم. كما يؤثر على كيفية عرض الرسائل. عند فتح محادثك لأول مرة، يسترجع هذا الإعداد آليًا من نظام التشغيل. إذا بدا أنك تواجه مشكلة في رؤية رسائل المستخدمين الآخرين بشكل صحيح، حاول تغيير هذا الإعداد.</para
+></callout>
+<callout arearefs="pt-identity-adv-3"
+><para
+>عند الاتصال، تستعلم العديد من الخوادم حاسوبك عن استجابة IDENT. إذا كان حاسوبك لا يشغل خادم IDENT، تُرسل هذه الاستجابة بواسطة محادثك. لا يُسمح بمسافات. يُقترح اسمك الأول.</para
+></callout>
+<callout arearefs="pt-identity-adv-4"
+><para
+>عند مغادرة القناة، تُرسل هذه الرسالة إلى القناة.</para
+></callout>
+<callout arearefs="pt-identity-adv-5"
+><para
+>عند طردك من قناة (عادة بواسطة مشغل IRC)، تُرسل هذه الرسالة إلى القناة.</para
+></callout>
+<callout arearefs="pt-identity-adv-6"
+><para
+>انقر لتطبيق تغييراتك. لكي تصبح جميع التغييرات سارية المفعول، يجب قطع الاتصال بالخادم وإعادة الاتصال. أسهل طريقة للقيام بذلك هي الخروج من محادثك وإعادة تشغيله.</para
+></callout>
+</calloutlist>
+</para>
+
+<!--
+<para
+>TODO:
+<itemizedlist>
+
+<listitem
+><para>
+The characters allowed in a nick given above comes from RFC 2812.  Any special Konversation considerations?
+</para
+></listitem>
+
+<listitem
+><para>
+Limits on Real Name and Ident?
+</para
+></listitem>
+
+</itemizedlist>
+</para>
+-->
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="serverlist">
+<title
+>تعريف شبكات وخوادم وقنوات انضمام آلي جديدة</title>
+
+<para
+>تظهر شاشة <guilabel
+>قائمة الخوادم</guilabel
+> عند فتح برنامج محادثك. كما تظهر عند اختيار <menuchoice
+> <guisubmenu
+>ملف</guisubmenu
+> <guisubmenu
+>قائمة الخوادم</guisubmenu
+> </menuchoice
+> في القائمة الرئيسة. <action
+>تسرد شاشة <guilabel
+>قائمة الخوادم</guilabel
+></action
+> شبكات &irc; <guilabel
+>شبكة</guilabel
+> المعرفة لديك، مصنفة حسب المجموعة. شبكة &irc; هي مجموعة من الخوادم المتعاونة. عندما تتصل بأي خادم في شبكة، يمكنك الوصول إلى جميع قنوات الشبكة. أمثلة على شبكات &irc; هي <userinput
+><replaceable
+>Libera</replaceable
+></userinput
+> و <userinput
+><replaceable
+>Undernet</replaceable
+></userinput
+>. </para>
+
+<para>
+<screenshot>
+	<screeninfo
+>قائمة الخوادم</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-serverlist-1" coords="1 1"/>
+				<area id="pt-serverlist-2" coords="1 1"/>
+				<area id="pt-serverlist-3" coords="1 1"/>
+				<area id="pt-serverlist-4" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="serverlist_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>قائمة الخوادم</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+<callout arearefs="pt-serverlist-1"
+><para
+>تُدرج هنا شبكاتك <guilabel
+>شبكة</guilabel
+> المعرفة الحالية مع <guilabel
+>الهوية</guilabel
+> المستخدمة للاتصال بالشبكة، و<guilabel
+>القنوات</guilabel
+> التي يُنضم إليها آليًا عند الاتصال. إذا حددت مجموعة لشبكاتك، تُدرج الشبكات بمسافة بادئة تحت المجموعة. انقر على شبكة لتحديدها. </para
+></callout>
+<callout arearefs="pt-serverlist-2"
+><para
+>استخدم هذه الأزرار لـ<guibutton
+>إضافة</guibutton
+> شبكة جديدة، أو <guibutton
+>تحرير</guibutton
+> شبكة محددة، أو <guibutton
+>حذف</guibutton
+> شبكة محددة. </para
+></callout>
+<callout arearefs="pt-serverlist-3"
+><para
+>انقر هذا الزر للاتصال بـ<guilabel
+>الشبكة</guilabel
+> المحددة وإغلاق شاشة <guilabel
+>قائمة الخوادم</guilabel
+>. يمكنك تحديد أكثر من شبكة إذا أردت، مما سيتصل بجميع الشبكات المحددة.</para
+></callout>
+<callout arearefs="pt-serverlist-4"
+><para
+>النقر على هذا الزر لا يتجاهل التغييرات التي أجريتها. يعني فقط أنك لا ترغب في الاتصال بأي شبكات في هذا الوقت.</para
+></callout>
+</calloutlist>
+</para>
+
+<anchor id="serverlist-addnetwork"/>
+
+<para
+>عند النقر على الزر <guibutton
+>جديد</guibutton
+>، تظهر شاشة <guilabel
+>شبكة جديدة</guilabel
+>.</para>
+
+<para>
+<screenshot>
+	<screeninfo
+>شبكة جديدة</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-addnetwork-1" coords="1 1"/>
+				<area id="pt-addnetwork-2" coords="1 1"/>
+				<area id="pt-addnetwork-3" coords="1 1"/>
+				<area id="pt-addnetwork-4" coords="1 1"/>
+				<area id="pt-addnetwork-5" coords="1 1"/>
+				<area id="pt-addnetwork-6" coords="1 1"/>
+				<area id="pt-addnetwork-7" coords="1 1"/>
+				<area id="pt-addnetwork-8" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="addnetwork_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>شبكة جديدة</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+<callout arearefs="pt-addnetwork-1"
+><para
+>أدخل <guilabel
+>اسم الشبكة</guilabel
+> هنا. يمكنك إنشاء أي عدد من الإدخالات في شاشة <guilabel
+>قائمة الخوادم</guilabel
+> بنفس <guilabel
+>الشبكة</guilabel
+> كما تشاء.</para
+></callout>
+<!--callout arearefs="pt-addnetwork-2"
+><para
+>Optional.  If you enter something
+here, all the <guilabel
+>Network</guilabel
+>s with the same
+<guilabel
+>Group</guilabel
+> will be listed together in the
+<guilabel
+>Server List</guilabel
+> screen.</para
+></callout-->
+<callout arearefs="pt-addnetwork-2"
+><para
+>اختر <guilabel
+>هوية</guilabel
+> موجودة أو انقر على الزر <guibutton
+>تحرير</guibutton
+> لإضافة هوية جديدة أو تحرير هوية موجودة. ستُعرفك <guilabel
+>الهوية</guilabel
+> وتحدد &i18n-nickname; عند الاتصال بالشبكة.</para
+></callout>
+<callout arearefs="pt-addnetwork-3"
+><para
+>اختياري. سيُرسل هذا الأمر إلى الخادم بعد الاتصال. مثال: <userinput
+>/msg NickServ IDENTIFY <replaceable
+>konvirocks</replaceable
+></userinput
+>. هذا المثال لشبكة Libera، التي تتطلب من المستخدمين تسجيل &i18n-nickname; بكلمة مرور وتسجيل الدخول عند الاتصال. <userinput
+><replaceable
+>konvirocks</replaceable
+></userinput
+> هي كلمة المرور لـ&i18n-nickname; المعطى في <guilabel
+>الهوية</guilabel
+>. يمكنك إدخال أكثر من أمر بفصلها بفواصل منقوطة.</para
+></callout>
+<callout arearefs="pt-addnetwork-4"
+><para
+>حدد هنا إذا كنت تريد أن يتصل محادثك آليًا بهذه الشبكة عند كل فتح للتطبيق.</para
+></callout>
+<callout arearefs="pt-addnetwork-5"
+><para
+>هذه قائمة <guilabel
+>بخوادم</guilabel
+> IRC في الشبكة. عند الاتصال بالشبكة، سيحاول محادثك الاتصال بالخادم الأول أولًا. إذا فشل هذا، فسيحاول الخادم الثاني. إذا فشل هذا، فسيحاول الثالث، وهكذا. يجب تحديد خادم واحد على الأقل. انقر على خادم لتمييزه.</para
+></callout>
+<callout arearefs="pt-addnetwork-6"
+><para
+>استخدم هذه الأزرار لـ<guibutton
+>إضافة</guibutton
+> خادم، أو <guibutton
+>تحرير</guibutton
+> خادم محدد، أو <guibutton
+>حذف</guibutton
+> خادم محدد. يمكنك أيضًا ضبط ترتيب قائمة الخوادم وبالتالي ترتيب محاولات الاتصال.</para
+></callout>
+<callout arearefs="pt-addnetwork-7"
+><para
+>اختياري. هذه قائمة بالقنوات التي ستنضم إليها آليًا بمجرد اتصال محادثك بخادم. يمكنك ترك هذا فارغًا إذا كنت لا ترغب في الانضمام آليًا إلى أي قنوات.</para
+></callout>
+<callout arearefs="pt-addnetwork-8"
+><para
+>استخدم هذه الأزرار لـ<guibutton
+>إضافة</guibutton
+> قناة، أو <guibutton
+>تحرير</guibutton
+> قناة محددة، أو <guibutton
+>حذف</guibutton
+> قناة محددة. يمكنك أيضًا تغيير ترتيب انضمام القنوات. </para
+></callout>
+</calloutlist>
+</para>
+
+<note
+><para
+>تجنب خلط الخوادم على شبكات &irc; مختلفة تحت نفس <guilabel
+>الشبكة</guilabel
+>. تجنب إدخال نفس الخادم تحت <guilabel
+>شبكة</guilabel
+>ين مختلفتين. وإلا، فلن يعمل <link linkend="nicksonline"
+>مراقبة &i18n-nickname; المتصلين</link
+> بشكل صحيح.</para>
+</note>
+
+<anchor id="serverlist-addserver"/>
+
+<para
+>عند النقر على الزر <guibutton
+>إضافة</guibutton
+> في إطار <guilabel
+>الخوادم</guilabel
+>، تظهر شاشة <guilabel
+>إضافة خادم</guilabel
+>.</para>
+
+<para>
+<screenshot>
+	<screeninfo
+>أضف خادمًا</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-addserver-1" coords="1 1"/>
+				<area id="pt-addserver-2" coords="1 1"/>
+				<area id="pt-addserver-3" coords="1 1"/>
+				<area id="pt-addserver-4" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="addserver_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>أضف خادمًا</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+<callout arearefs="pt-addserver-1"
+><para
+>اسم الخادم أو رقم IP. يحتفظ موقع irchelp.org <ulink url="https://www.irchelp.org/networks/"
+>قائمة</ulink
+> بالخوادم.</para
+></callout>
+<callout arearefs="pt-addserver-2"
+><para
+>أدخل رقم المنفذ المطلوب للاتصال بالخادم. بالنسبة لمعظم الخوادم، يجب أن يكون هذا <userinput
+>6667</userinput
+>.</para
+></callout>
+<callout arearefs="pt-addserver-3"
+><para
+>إذا كان الخادم يتطلب كلمة مرور للاتصال، أدخلها هنا، وإلا اتركها فارغة.</para
+></callout>
+<callout arearefs="pt-addserver-4"
+><para
+>حدد إذا كنت تريد استخدام بروتوكول طبقة المقابس الآمنة (SSL) للاتصال بالخادم. هذا يحمي خصوصية اتصالاتك بين حاسوبك وخادم &irc;. يجب أن يدعم الخادم بروتوكول SSL لكي يعمل هذا. في معظم الحالات، إذا كان الخادم لا يدعم SSL، ستفشل عملية الاتصال.</para
+></callout>
+</calloutlist>
+</para>
+
+<anchor id="serverlist-addchannel"/>
+
+<para
+>عند النقر على الزر <guibutton
+>إضافة</guibutton
+> في إطار <guilabel
+>قنوات الانضمام الآلي</guilabel
+>، تظهر شاشة <guilabel
+>إضافة قناة</guilabel
+>.</para>
+
+<para>
+<screenshot>
+	<screeninfo
+>أضف قناة</screeninfo>
+	<mediaobject>
+		<imageobject>
+			<imagedata fileref="addchannel.png" format="PNG"/>
+		</imageobject>
+		<textobject>
+			<phrase
+>أضف قناة</phrase>
+		</textobject>
+	</mediaobject>
+</screenshot>
+</para>
+
+<para
+>أدخل اسم قناة. لا تنسَ <userinput
+><replaceable
+>#</replaceable
+></userinput
+> البادئة. إذا كانت القناة تتطلب كلمة مرور للانضمام، أدخلها، وإلا اتركها فارغة. </para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="list-channels">
+<title
+>سرد القنوات المتاحة</title>
+
+<para
+>لعرض قائمة بالقنوات المتاحة، اختر <menuchoice
+> <guisubmenu
+>نافذة</guisubmenu
+> <guisubmenu
+>قائمة القنوات</guisubmenu
+> </menuchoice
+> في القائمة الرئيسة. <action
+>بعد شاشة تحذير، يُنشأ لسان جديد يُسمى <guilabel
+>قائمة القنوات</guilabel
+>.</action
+> </para>
+
+<para>
+<screenshot>
+<screeninfo
+>لسان قائمة القنوات.</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-channellist-1" coords="1 1"/>
+				<area id="pt-channellist-2" coords="1 1"/>
+				<area id="pt-channellist-3" coords="1 1"/>
+				<area id="pt-channellist-4" coords="1 1"/>
+				<area id="pt-channellist-5" coords="1 1"/>
+				<area id="pt-channellist-6" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="channellist_screen_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>لسان قائمة القنوات.</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-channellist-1"
+><para
+>أدخِل سلسلة ترشيح هنا.</para
+></callout>
+
+<callout arearefs="pt-channellist-2"
+><para
+>يمكنك تحديد قائمة القنوات لتلك التي تحتوي على حد أدنى أو أقصى لعدد المستخدمين هنا. اختيار <guilabel
+>بلا حد</guilabel
+> يعطل المعيار المعني.</para
+></callout>
+
+<callout arearefs="pt-channellist-3"
+><para
+>انقر هنا لاسترداد قائمة القنوات من الخادم وتطبيق المرشح.</para
+></callout>
+
+<callout arearefs="pt-channellist-4"
+><para
+>تُعرض قائمة القنوات المفلترة هنا. لاحظ أنه إذا لم تستخدم التعبيرات النمطية، يسرد محادثك أي قناة يحتوي اسمها على سلسلة المرشح التي أدخلتها. لا يجب أن يبدأ اسم القناة بالسلسلة التي أدخلتها.</para
+></callout>
+
+<callout arearefs="pt-channellist-5"
+><para
+>حدد قناة تريد الانضمام إليها بالنقر عليها. انقر بزر الفأرة الأيمن على القناة للحصول على قائمة بجميع عناوين الويب المذكورة في موضوع القناة.</para
+></callout>
+
+<callout arearefs="pt-channellist-6"
+><para
+>انقر هنا للانضمام إلى النقاة. سيُنشئ لسان جديد للقناة.</para
+></callout>
+
+</calloutlist>
+</para>
+<!--
+<para
+>You should avoid clicking the <guibutton
+>Refresh List</guibutton
+> button.  Most servers have thousands
+of channels, and performing this puts a high load on the server.  Besides, it can require several minutes to complete,
+depending upon your network bandwidth.  If your client is too slow, the server may even disconnect you.
+</para>
+-->
+<para
+>أحيانًا توجد قنوات "سرية" على الخوادم. لا تُدرج هذه القنوات في <guilabel
+>قائمة القنوات</guilabel
+>. لا يزال بإمكانك الانضمام إلى هذه القنوات إذا كنت تعرف اسمها. في أي <interface
+>سطر إدخال</interface
+>، اكتب: <userinput
+><command
+>/join</command
+> <replaceable
+>#channelname</replaceable
+></userinput
+>. (مطلوب <userinput
+>#</userinput
+>.) يُنشأ لسان جديد للقناة. إذا انضممت إلى قناة وسردت لوحة الأسماء المستعارة فقط &i18n-nickname;، فهذا يعني أن القناة لم تكن موجودة من قبل. أنشأ الخادم القناة وأنت المشغل. في هذه الحالة، ربما تريد إغلاق القناة بكتابة: <userinput
+><command
+>/part</command
+></userinput
+>. </para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="channel-screen-tour">
+<title
+>جولة في الشاشة الرئيسة</title>
+
+<para
+>دعنا نتعلم المزيد عن شاشة <interface
+>الرئيسة</interface
+>. تُعرض الشاشة أدناه مع تحديد لسان قناة.</para>
+
+<para>
+<screenshot>
+<screeninfo
+>الشاشة الرئيسة.</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-channeltour-1" coords="1 1"/>
+				<area id="pt-channeltour-2" coords="1 1"/>
+				<area id="pt-channeltour-3" coords="1 1"/>
+				<area id="pt-channeltour-4" coords="1 1"/>
+				<area id="pt-channeltour-5" coords="1 1"/>
+				<area id="pt-channeltour-6" coords="1 1"/>
+				<area id="pt-channeltour-7" coords="1 1"/>
+				<area id="pt-channeltour-8" coords="1 1"/>
+				<area id="pt-channeltour-9" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="channel_screen_tour_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>الشاشة الرئيسة</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-channeltour-1"
+><para
+>يُسمى هذا <interface
+>سطر الإدخال</interface
+>. يظهر فقط عندما تكون اللسان الحالي قناة. لإرسال رسالة إلى الجميع في القناة، اكتب الرسالة هنا واضغط &Enter;. تظهر رسالتك، بالإضافة إلى رسائل الآخرين، في تمرير القناة أعلاه. تسبق كل رسالة بالوقت و&i18n-nickname; المستخدم.</para>
+
+ <para
+>يمكنك أيضًا لصق نص من الحافظة. إذا كان النص الملصق يحتوي على أكثر من سطر (أسطر جديدة)، يظهر مربع حوار. حرر النص حسب الرغبة وانقر <guibutton
+>موافق</guibutton
+>. </para>
+
+ <para
+>إذا كان النص الملصق أطول من 256 حرفًا، أو يحتوي على أكثر من سطر واحد، تظهر رسالة تحذير تنصحك بأن الإرساليات الكبيرة قد تسبب إعادة اتصال وفيضًا. لا يزال بإمكانك متابعة الإدخال، لكن فعل ذلك فكرة سيئة، لأن الفيض سيزعج المستخدمين الآخرين في القناة، أو قد تُفصل من الخادم. من الأفضل إرسال الرسالة في أجزاء أقصر.</para>
+
+ <!-- Uncomment when this is implemented.
+ &konversation; will automatically split messages that exceed the 510 character RFC limit into multiple messages.
+ I this implemented now?
+ -->
+
+ <para
+>من العُرف المستخدم في العديد من القنوات هو تسبق الرسائل الموجهة لمستخدم واحد بـ&i18n-nickname; الخاص بهم. يوفر محادثك ميزة إكمال &i18n-nickname; ملائمة. ابدأ بكتابة &i18n-nickname; المستخدم، ثم اضغط &Tab;. سيكمل محادثك باقي &i18n-nickname; المستخدم متبوعًا بنقطتين رأسيتين. لتخصيص ميزة الإكمال، اختر <menuchoice
+> <guisubmenu
+>الإعدادات</guisubmenu
+> <guisubmenu
+>اضبط محادثك</guisubmenu
+> </menuchoice
+> من القائمة الرئيسة، وسّع <guilabel
+>السلوك</guilabel
+>، وانقر على <guilabel
+>عام</guilabel
+>، واختر <guilabel
+>وضع الإكمال</guilabel
+>. </para>
+
+ <para
+>يمكنك أيضًا إدخال أمر &irc; هنا بكتابة <userinput
+><command
+>/</command
+></userinput
+> أولًا متبوعًا بأمر &irc; صالح. انظر <link linkend="irc-cmds"
+>أوامر &irc; شائعة الاستخدام</link
+>. في بعض الخوادم، يمكنك كتابة <userinput
+><command
+>/help</command
+></userinput
+> للحصول على قائمة بالأوامر المتاحة، أو كتابة <userinput
+><command
+>/help </command
+><replaceable
+>command</replaceable
+></userinput
+> للحصول على مساعدة حول أمر معين. </para
+></callout>
+
+<callout arearefs="pt-channeltour-2">
+
+<para
+>يمكنك الانضمام إلى خوادم وقنوات إضافية. يحصل كل خادم وكل قناة على لسان منفصل هنا. لعرض قائمة بالقنوات المتاحة، انظر <link linkend="list-channels"
+>سرد القنوات المتاحة</link
+>. للانضمام إلى قناة، اكتب: <userinput
+><command
+>/join</command
+> <replaceable
+>#channelname</replaceable
+></userinput
+> في سطر الإدخال. (الرمز <userinput
+>#</userinput
+> مطلوب.) لمغادرة قناة، اكتب فقط <userinput
+><command
+>/part</command
+></userinput
+>. تظهر الألسنة هنا أيضًا إذا فتحت <link linkend="list-channels"
+>قائمة قنوات</link
+>، أو شاركت في <link linkend="query"
+>محادثة خاصة (استعلام)</link
+>، أو فتحت <link linkend="urlcatcher"
+>ملتقط &URL;</link
+>، أو فتحت واحدة أو أكثر من <guilabel
+>كونسول</guilabel
+>. لتبديل العرض إلى شاشة مختلفة، انقر على اللسان المقابل، أو استخدم عجلة الفأرة للتنقل بين الألسنة. </para>
+
+<para
+>لتعيين خيارات أخرى للألسنة، اختر <menuchoice
+> <guisubmenu
+>الإعدادات</guisubmenu
+> <guisubmenu
+>اضبط محادثك</guisubmenu
+> </menuchoice
+> من القائمة الرئيسة، وسّع <guilabel
+>الواجهة</guilabel
+>، وانقر على <guilabel
+>الألسنة</guilabel
+> أو وسّع <guilabel
+>الإشعارات</guilabel
+> وانقر على <guilabel
+>الألسنة</guilabel
+>. </para>
+
+</callout>
+<!--
+Settings->Configure Konversation->Notifications->Tabs->Use colored LEDs needs to be activated
+-->
+<callout arearefs="pt-channeltour-3"
+><para
+>تومض هذه &led;s عندما يكون هناك شيء لم تره في ذلك اللسان. يومض &led; ببطء أكثر عندما تكون الرسائل غير المرئية الوحيدة هي <command
+>join</command
+> أو <command
+>part</command
+> أو <command
+>quit</command
+> أو تغييرات &i18n-nickname;. تومض أسرع إذا كانت هناك رسائل عادية غير مرئية. الألوان كما يلي: <itemizedlist>
+<listitem>
+<para
+><inlinemediaobject
+><imageobject
+><imagedata fileref="led_green_on.png" format="PNG"/></imageobject
+></inlinemediaobject
+> القناة </para>
+</listitem>
+<listitem>
+<para
+><inlinemediaobject
+><imageobject
+><imagedata fileref="led_blue_on.png" format="PNG"/></imageobject
+></inlinemediaobject
+> <interface
+>رسائل الخادم</interface
+>، <link linkend="list-channels"
+>قائمة القنوات</link
+>، أو <link linkend="urlcatcher"
+>ملتقط &URL;</link
+>. </para>
+</listitem>
+<listitem>
+<para
+><inlinemediaobject
+><imageobject
+><imagedata fileref="led_yellow_on.png" format="PNG"/></imageobject
+></inlinemediaobject
+> <guilabel
+>كونسول</guilabel
+> أو <link linkend="dcc"
+>حالة DCC</link
+>. </para>
+</listitem>
+<listitem>
+<para
+><inlinemediaobject
+><imageobject
+><imagedata fileref="led_red_on.png" format="PNG"/></imageobject
+></inlinemediaobject
+> <link linkend="query"
+>رسالة خاصة (استعلام)</link
+>. </para>
+</listitem>
+</itemizedlist>
+</para
+></callout>
+
+<callout arearefs="pt-channeltour-4"
+><para
+>انقر هنا لإغلاق اللسان الحالي. سيؤدي إغلاق لسان <interface
+>قناة</interface
+> إلى مغادرة القناة. سيؤدي إغلاق لسان <interface
+>رسائل الخادم</interface
+> إلى مغادرة جميع القنوات التي انضممت إليها، وإغلاق جميع الاستعلامات المفتوحة في ذلك الخادم، والفصل من الخادم.</para
+></callout>
+
+<callout arearefs="pt-channeltour-5"
+><para
+>انقر على هذا الزر لتغيير &i18n-nickname; الخاص بك. يظهر فقط عندما يكون اللسان الحالي قناة. لإخفاء هذا الزر، اختر <menuchoice
+> <guisubmenu
+>الإعدادات</guisubmenu
+> <guisubmenu
+>اضبط محادثك</guisubmenu
+> </menuchoice
+> من القائمة الرئيسة، وسّع <guilabel
+>الواجهة</guilabel
+>، وانقر على <guilabel
+>نافذة الدردشة</guilabel
+>، وألغِ تحديد مربع <guilabel
+>أظهر مربع تغيير الاسم المستعار الخاص</guilabel
+>. </para
+></callout>
+
+<callout arearefs="pt-channeltour-6"
+><para
+>يُعرض موضوع القناة هنا. حرّك الفأرة فوق الموضوع لرؤية الموضوعات الطويلة. يمكنك تغيير الموضوع بالنقر على الزر إلى يسار الموضوع. لإخفاء موضوعات القناة، اختر <menuchoice
+> <guisubmenu
+>الإعدادات</guisubmenu
+> <guisubmenu
+>اضبط محادثك</guisubmenu
+> </menuchoice
+> من القائمة الرئيسة، وسّع <guilabel
+>الواجهة</guilabel
+>، وانقر على <guilabel
+>نافذة الدردشة</guilabel
+>، وألغِ تحديد مربع <guilabel
+>أظهر موضوع القناة</guilabel
+>. </para
+></callout>
+
+<callout arearefs="pt-channeltour-7"
+><para
+>تعرض هذه الأزرار الحالة الحالية لأوضاع القناة. يكون الزر مضغوطًا إذا كان الوضع قيد التشغيل. إذا كانت لديك الصلاحيات الصحيحة، يمكنك أيضًا تغيير أوضاع القناة بالنقر على هذه الأزرار، أو النقر على الزر إلى يسار الموضوع. لإخفاء أزرار وضع القناة، اختر <menuchoice
+> <guisubmenu
+>الإعدادات</guisubmenu
+> <guisubmenu
+>اضبط محادثك</guisubmenu
+> </menuchoice
+> من القائمة الرئيسة، وسّع <guilabel
+>الواجهة</guilabel
+>، وانقر على <guilabel
+>نافذة الدردشة</guilabel
+>، وألغِ تحديد مربع <guilabel
+>أظهر أزرار وضع القناة</guilabel
+>. </para
+></callout>
+
+<callout arearefs="pt-channeltour-8">
+<para
+>يُسمى هذا <interface
+>لوحة الأسماء المستعارة</interface
+>. يُعرض كلما كان اللسان الحالي قناة. يسرد &i18n-nickname;s لجميع المستخدمين الذين انضموا إلى القناة، بما فيهم أنت. حرّك مؤشر الفأرة فوق &i18n-nickname; لعرض معلومات إضافية عن المستخدم. يمكنك تغيير كيفية عرض الأيقونات بجانب كل &i18n-nickname; بتغيير سمة أيقونة &i18n-nickname;. انظر <link linkend="nickthemes"
+>ضبط سمات &i18n-nickname;</link
+> لمزيد من المعلومات. يستخدم <guilabel
+>السمة المبدئية</guilabel
+>، كما هو موضح في الشاشة أعلاه، الأيقونات التالية: <itemizedlist>
+<listitem>
+<para
+><inlinemediaobject
+><imageobject
+><imagedata fileref="irc_normal.png" format="PNG"/></imageobject
+></inlinemediaobject
+> مستخدم عادي </para>
+</listitem>
+
+<listitem>
+<para
+><inlinemediaobject
+><imageobject
+><imagedata fileref="irc_voice.png" format="PNG"/></imageobject
+></inlinemediaobject
+> مستخدم مُصوَّت. يمكن للمستخدم التحدث في قناة مُدارة. </para>
+</listitem>
+
+<listitem>
+<para
+><inlinemediaobject
+><imageobject
+><imagedata fileref="irc_halfop.png" format="PNG"/></imageobject
+></inlinemediaobject
+> نصف مشرف قناة </para>
+</listitem>
+
+<listitem>
+<para
+><inlinemediaobject
+><imageobject
+><imagedata fileref="irc_op.png" format="PNG"/></imageobject
+></inlinemediaobject
+> مشغل قناة </para>
+</listitem>
+
+<listitem>
+<para
+><inlinemediaobject
+><imageobject
+><imagedata fileref="irc_owner.png" format="PNG"/></imageobject
+></inlinemediaobject
+> مالك قناة </para>
+</listitem>
+
+<listitem>
+<para
+><inlinemediaobject
+><imageobject
+><imagedata fileref="irc_admin.png" format="PNG"/></imageobject
+></inlinemediaobject
+> مدير قناة </para>
+</listitem>
+
+</itemizedlist>
+</para>
+
+<para
+>بالإضافة إلى ذلك، إذا كان المستخدم غائبًا، سيُرسَم رمز ساعة صغير في زاوية الأيقونة. <inlinemediaobject
+><imageobject
+><imagedata fileref="irc_away.png" format="PNG"/></imageobject
+></inlinemediaobject
+></para>
+
+<para
+>انقر بـ&RMB; على أي &i18n-nickname; لعرض قائمة سياقية من العمليات التي يمكنك تنفيذها مع ذلك &i18n-nickname;. على سبيل المثال، يمكنك <link linkend="dcc"
+>إرسال ملف</link
+> إلى &i18n-nickname;. </para>
+
+<para
+>لإخفاء <interface
+>لوحة الأسماء المستعارة</interface
+>، اختر <menuchoice
+> <guisubmenu
+>الإعدادات</guisubmenu
+> <guisubmenu
+>أظهر قائمة الأسماء المستعارة</guisubmenu
+> </menuchoice
+> من القائمة الرئيسة. </para>
+
+</callout>
+
+<callout arearefs="pt-channeltour-9"
+><para
+>تُسمى هذه <interface
+>الأزرار السريعة</interface
+>. افتراضيًا، لا تظهر. لعرضها، انظر <link linkend="quick-buttons"
+>ضبط الأزرار السريعة</link
+>. يمكنك تخصيص تعريفاتها لأي أوامر ترغب فيها.</para
+></callout>
+
+</calloutlist>
+</para>
+
+<note>
+<para
+>يمكنك التحكم في كيفية عرض الرسائل في تمرير الرسائل لألسنة القناة والاستعلام. على سبيل المثال، يمكنك تغيير لون الرسائل، أو تشغيل صوت عند استلام رسالة تحتوي على سلسلة، أو الرد تلقائيًا على الرسائل. انظر <link linkend="highlighting"
+>تمييز الرسائل</link
+> لمزيد من المعلومات. </para>
+</note>
+
+<note>
+<para
+>تبدأ أسماء القنوات أحيانًا بـ<userinput
+>&amp;</userinput
+> أو <userinput
+>&plus;</userinput
+> أو <userinput
+>!</userinput
+>. يحدد الحرف الأول من اسم القناة نوع القناة (RFC 2811) كما يلي: <itemizedlist
+> <listitem
+><para
+> <userinput
+>#</userinput
+> - قنوات عادية. </para
+></listitem
+> <listitem
+><para
+> <userinput
+>!</userinput
+> - قنوات عادية. </para
+></listitem
+> <listitem
+><para
+> <userinput
+>&amp;</userinput
+> - محلية. قنوات يمكن الانضمام إليها فقط من الخادم المستضيف للقناة. يمكن الانضمام إلى جميع القنوات الأخرى من أي خادم في الشبكة. </para
+></listitem
+> <listitem
+><para
+> <userinput
+>&plus;</userinput
+> - قنوات لا تدعم أوضاع القناة. هذا يعني أن جميع الأوضاع غير مضبوطة، باستثناء علامة القناة 't' التي تكون مضبوطة. </para
+></listitem
+> </itemizedlist
+> أسماء القنوات يصل طولها إلى 50 حرفًا وقد تحتوي على أي أحرف باستثناء المسافة والفاصلة وCtrl-G (^G أو ASCII 7). </para>
+</note>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="quickconnect">
+<title
+>اتصال سريع</title>
+
+<para
+>أحيانًا تريد الاتصال بخادم دون عناء إنشاء خادم جديد في <link linkend="serverlist"
+>قائمة الخوادم</link
+>. </para>
+
+<para
+>اختر <menuchoice
+> <guisubmenu
+>ملف</guisubmenu
+> <guisubmenu
+>اتصال سريع</guisubmenu
+> </menuchoice
+> من القائمة الرئيسة. <action
+>ستظهر شاشة <guilabel
+>اتصال سريع</guilabel
+>.</action
+> </para>
+
+<para>
+<screenshot>
+<screeninfo
+>شاشة الاتصال السريع.</screeninfo>
+	<mediaobject>
+		<imageobject>
+			<imagedata fileref="quickconnect_screen.png" format="PNG"/>
+		</imageobject>
+		<textobject>
+			<phrase
+>شاشة الاتصال السريع</phrase>
+		</textobject>
+	</mediaobject>
+</screenshot>
+</para>
+
+<para
+>أدخل عنوان الخادم في مربع <guilabel
+>مضيف الخادم</guilabel
+>، وكنيتك &i18n-nickname; المرغوبة في مربع <guilabel
+>الكنية</guilabel
+>، ثم انقر زر <guibutton
+>اتصال</guibutton
+>. عندما يتصل محادثك بالخادم، أدخل الأمر <userinput
+><command
+>/join</command
+> <replaceable
+>#اسم_القناة</replaceable
+></userinput
+> للانضمام إلى قناة. </para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="irc-cmds">
+<title
+>أوامر &irc; شائعة الاستخدام</title>
+
+<para
+>فيما يلي قائمة قصيرة بأوامر &irc; شائعة الاستخدام. راجع <ulink url="http://www.faqs.org/rfcs/rfc2812.html"
+>RFC 2812</ulink
+> للحصول على قائمة كاملة بجميع الأوامر، أو زر <ulink url="https://www.irchelp.org/"
+>irchelp.org</ulink
+>. للحصول على قائمة بالأوامر التي يعالجها محادثك بشكل خاص، راجع <link linkend="konvi-cmds"
+>أوامر محادثك</link
+>. </para>
+
+<para>
+<variablelist>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/help</command
+></userinput
+></term>
+<listitem
+><para
+>يسرد الأوامر المتاحة على الخادم الحالي. غير مدعوم من جميع الخوادم.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/help </command
+><replaceable
+>cmd</replaceable
+></userinput
+></term>
+<listitem
+><para
+>يوفر تعليمات لـ <userinput
+><replaceable
+>cmd</replaceable
+></userinput
+>. غير مدعوم من جميع الخوادم.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/join <replaceable
+>#channel</replaceable
+></command
+></userinput
+></term>
+<listitem
+><para
+>ينضم إلى <userinput
+><replaceable
+>#قناة</replaceable
+></userinput
+>. إذا لم تكن القناة موجودة بالفعل، فتُنشأ وتكون مشغل القناة.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/part</command
+></userinput
+></term>
+<listitem
+><para
+>يغادر القناة الحالية ويغلق لسان <interface
+>القناة</interface
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/part </command
+> <replaceable
+>#قناة</replaceable
+></userinput
+></term>
+<listitem
+><para
+>يغادر <userinput
+><replaceable
+>#قناة</replaceable
+></userinput
+> ويغلق لسان <interface
+>القناة</interface
+> المقابل. مرادف لـ <userinput
+><command
+>/leave</command
+></userinput
+></para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/me </command
+><replaceable
+>رسالة</replaceable
+></userinput
+></term>
+<listitem
+><para
+>يرسل <userinput
+><replaceable
+>رسالة</replaceable
+></userinput
+> إلى القناة مسبوقة بكنيتك &i18n-nickname;. على سبيل المثال، إذا كانت كُنيتك &i18n-nickname; هي <userinput
+><replaceable
+>Tux</replaceable
+></userinput
+>، فكتابة <userinput
+><replaceable
+>/me يحضّر فنجان شاي.</replaceable
+></userinput
+> تعرض الرسالة <interface
+>Tux يحضّر فنجان شاي.</interface
+> ما لم يقم المستخدمون بتصفية هذه الأنواع من الرسائل، سيراها جميع المستخدمين. يُستخدم هذا النوع من الرسائل عادةً لنقل المعلومات غير اللفظية، مثل حالتك العاطفية الحالية، أو ما تفعله جسديًا. إذا كنت ستغادر محطة عملك لفترة قصيرة، استخدم الأمر <userinput
+><command
+>/away</command
+></userinput
+> بدلًا من ذلك.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/away </command
+> <replaceable
+>رسالة</replaceable
+></userinput
+></term>
+<listitem
+><para
+>إذا حاول أي شخص إرسال رسالة خاصة إليك أو دعوتك إلى قناة، فسيُخبر أنك بعيد عن محطة عملك مع <userinput
+><replaceable
+>رسالة</replaceable
+></userinput
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/away</command
+></userinput
+></term>
+<listitem
+><para
+>يلغي أمر <userinput
+><command
+>/away </command
+> <replaceable
+>رسالة</replaceable
+></userinput
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/query </command
+><replaceable
+>كنية</replaceable
+></userinput
+></term>
+<listitem
+><para
+>ينشئ لسانًا جديدًا بكُنية المستخدم <userinput
+><replaceable
+>كنية</replaceable
+></userinput
+> لمحادثة خاصة، يُعرف عادةً في &irc; باسم <link linkend="query"
+>استعلام</link
+>. كل ما يُكتب هنا لا يراه إلا أنت وشريكك في الاستعلام.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/msg </command
+><replaceable
+>كنية</replaceable
+> <replaceable
+>رسالة</replaceable
+></userinput
+></term>
+<listitem
+><para
+>يرسل <userinput
+><replaceable
+>رسالة</replaceable
+></userinput
+> إلى المستخدم ذي الكنية &i18n-nickname; <userinput
+><replaceable
+>كنية</replaceable
+></userinput
+>. فقط <userinput
+><replaceable
+>كنية</replaceable
+></userinput
+> يرى الرسالة. استخدم <userinput
+><command
+>/query</command
+></userinput
+> للمحادثات الأطول.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/invite </command
+><replaceable
+>كنية</replaceable
+></userinput
+></term>
+<listitem
+><para
+>يدعو المستخدم ذا الكنية &i18n-nickname; <userinput
+><replaceable
+>كنية</replaceable
+></userinput
+> للانضمام إلى قناة. هذا الأمر مفيد بشكل خاص إذا كانت القناة مخصصة للدعوة فقط.</para
+></listitem>
+</varlistentry>
+
+</variablelist>
+</para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="query">
+<title
+>المحادثات الخاصة (الاستعلامات)</title>
+
+<para
+>المحادثة الخاصة هي محادثة لا يراها إلا أنت وشخص آخر واحد. تُسمى المحادثات الخاصة "استعلامات" في محادثك. لبدء محادثة خاصة، اكتب <userinput
+><command
+>/query </command
+><replaceable
+>كنية</replaceable
+></userinput
+> في أي سطر إدخال، حيث <replaceable
+>كنية</replaceable
+> هي كنية &i18n-nickname; الشخص الذي تريد التحدث معه. يمكنك أيضًا النقر بزر الفأرة الأيمن &RMB; على كنية &i18n-nickname; الشخص في <interface
+>لوحة الكنى</interface
+> واختيار <menuchoice
+> <guisubmenu
+>فتح استعلام</guisubmenu
+> </menuchoice
+>. <action
+>سيُنشأ لسان جديد.</action
+> عرّف عن نفسك بإرسال رسالة. </para>
+
+<para
+>الاستعلامات تشبه القنوات تمامًا، باستثناء أنك أنت والشخص الآخر فقط يمكنهما المشاركة في القناة.</para>
+
+<para
+>لمغادرة الاستعلام، ما عليك سوى إغلاق اللسان. لاحظ مع ذلك، أنه إذا أرسل لك الشخص الآخر رسالة أخرى في الاستعلام، فسيفتح اللسان مرة أخرى.</para>
+
+<para
+>لمغادرة جميع الاستعلامات، اختر <menuchoice
+> <guisubmenu
+>نافذة</guisubmenu
+> <guisubmenu
+>إغلاق جميع الاستعلامات المفتوحة</guisubmenu
+> </menuchoice
+> من القائمة الرئيسة، أو اضغط على مفتاح <keycap
+>F11</keycap
+>.</para>
+
+<para
+>عندما يبدأ شخص آخر استعلامًا معك، ينشئ محادثك لسانًا جديدًا بكُنيته &i18n-nickname;. إذا كنت لا ترغب في التحدث مع الشخص، فأغلق اللسان. </para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="cfg-notifications">
+<title
+>ضبط الإشعارات</title>
+
+<para
+><guilabel
+>الإشعارات</guilabel
+> هي إجراءات سينفذها محادثك كلما وقع حدث. افترض أن محادثك قيد التشغيل لكنه مصغر أو مخفي خلف نوافذ تطبيقات أخرى على سطح مكتبك. إذا أراد أحد التواصل معك، أو انضم صديقك إلى قناة، فستود التنبيه. ستحقق الإشعارات ذلك. </para>
+
+<para
+>لضبط الإشعارات، اختر <menuchoice
+> <guisubmenu
+>الإعدادات</guisubmenu
+> <guisubmenu
+>اضبط الإشعارات</guisubmenu
+> </menuchoice
+> من القائمة الرئيسة. <action
+>ستظهر شاشة <guilabel
+>إعدادات الإشعارات</guilabel
+>.</action
+> </para>
+
+<para>
+<screenshot>
+<screeninfo
+>شاشة إعدادات الإشعارات.</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-notification-1" coords="1 1"/>
+				<area id="pt-notification-2" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="notification_screen_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>شاشة إعدادات الإشعارات</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-notification-1"
+><para
+>انقر هنا لاختيار حدث.</para
+></callout>
+
+<callout arearefs="pt-notification-2"
+><para
+>حدد أنواع الإشعارات التي تريد حدوثها عند وقوع الحدث. (<guilabel
+>علّق مدخل شريط المهام</guilabel
+> يتسبب في وميض المدخل في شريط المهام عند وقوع الحدث.)</para
+></callout>
+
+</calloutlist>
+</para>
+
+<para
+>كرر باختيار حدث آخر وتحديد الإشعارات المرغوبة. عندما تضبط جميع الإشعارات المطلوبة، انقر زر <guibutton
+>موافق</guibutton
+>.</para>
+
+<para
+>بمجرد ضبط إشعاراتك، يمكنك تمكين أو تعطيل جميع الإشعارات باستخدام <menuchoice
+> <guisubmenu
+>النافذة</guisubmenu
+> <guisubmenu
+>مكّن الإشعارات</guisubmenu
+> </menuchoice
+> من القائمة الرئيسة. </para>
+
+<tip
+><para
+>يمكنك أيضًا تنبيه نفسك عندما يذكر أحد &i18n-nickname; في رسالة باستخدام <link linkend="highlighting"
+>ميزة التمييز</link
+> في محادثك.</para
+></tip>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="nicksonline">
+<title
+>مراقبة من متصل</title>
+
+<para
+>سيبقيك محادثك على علم عندما يكون أصدقاؤك متصلين بشبكة &irc; أم لا. </para>
+
+<para
+>تُسجل شبكة &irc; لأن &i18n-nickname; فريد عبر شبكة &irc; واحدة. &i18n-nickname; في شبكتي &irc; مختلفتين ليس بالضرورة نفس الشخص، لكن نفس &i18n-nickname; على خادمين مختلفين ضمن نفس شبكة &irc; هو عادة نفس الشخص.</para>
+
+<note
+><para
+>لهذا من المهم استخدام نفس <guilabel
+>الشبكة</guilabel
+> لجميع الخوادم في نفس شبكة &irc;، عند <link linkend="serverlist"
+> تعريف الشبكات والخوادم وقنوات الانضمام الآلي</link
+>.</para
+></note>
+
+<para
+>لتفعيل ميزة مراقبة &i18n-nickname;، اختر <menuchoice
+> <guisubmenu
+>النافذة</guisubmenu
+> <guisubmenu
+>الأسماء المراقبة</guisubmenu
+> </menuchoice
+> من القائمة الرئيسة. <action
+>ستظهر شاشة <guilabel
+>الأسماء المراقبة</guilabel
+>.</action
+> </para>
+
+<para>
+<screenshot>
+	<screeninfo
+>الأسماء المستعارة المُراقَبة</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-nicksonline-1" coords="1 1"/>
+				<area id="pt-nicksonline-2" coords="1 1"/>
+				<area id="pt-nicksonline-3" coords="1 1"/>
+				<area id="pt-nicksonline-4" coords="1 1"/>
+				<area id="pt-nicksonline-5" coords="1 1"/>
+				<area id="pt-nicksonline-6" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="nicksonline_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>الأسماء المستعارة المُراقَبة</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+<callout arearefs="pt-nicksonline-1"
+><para
+>تُدرج &i18n-nickname; في قائمة مراقبتك هنا. تُدرج تحت شبكة &irc; المرتبطة بها. إذا لم تُدرج أي &i18n-nickname;، فإما أنك لم تحدد أي &i18n-nickname; للمراقبة، أو تحتاج إلى تفعيل ميزة مراقبة &i18n-nickname; (انظر أدناه). وسّع كل &i18n-nickname; متصل لرؤية قائمة القنوات التي انضم إليها &i18n-nickname;. الأيقونات بجانب كل قناة هي نفس الأيقونات التي تظهر في <interface
+>لوحة الأسماء</interface
+> في شاشات <link linkend="channel-screen-tour"
+>القناة</link
+>. </para
+></callout>
+<callout arearefs="pt-nicksonline-2"
+><para
+>تُعرض المعلومات المعروفة عن &i18n-nickname; هنا. عندما تُعرض شاشة <guilabel
+>الأسماء المراقبة</guilabel
+> لأول مرة، تكون هذه المعلومات ضئيلة. كل 20 ثانية، يُرسل أمر <userinput
+><command
+>WHOIS</command
+></userinput
+> واحد آلي إلى الخادم لطلب معلومات عن &i18n-nickname; التي لا تملك أي معلومات. يستمر هذا حتى تمتلك جميع &i18n-nickname; معلومات. </para
+></callout>
+<!--callout arearefs="pt-nicksonline-3"
+><para
+>Nicknames that are not connected to any
+of the &irc; networks you are connected to are listed in the <guilabel
+>Offline</guilabel>
+part of the listing.
+</para
+></callout-->
+</calloutlist>
+</para>
+
+<para
+>لإضافة &i18n-nickname; واحد للمراقبة، افتح القائمة السياقية في <guilabel
+>قائمة الأسماء</guilabel
+> بالنقر بالزر الأيمن على &i18n-nickname; واختر <guilabel
+>أضف إلى الأسماء المراقبة</guilabel
+>. إذا أردت إضافة عدة &i18n-nickname;، اختر <menuchoice
+> <guisubmenu
+>الإعدادات</guisubmenu
+> <guisubmenu
+>اضبط محادثك</guisubmenu
+> </menuchoice
+> من القائمة الرئيسة، وسّع <guilabel
+>الإشعارات</guilabel
+> وانقر على <guilabel
+>الأسماء المستعارة المراقبة</guilabel
+>. تظهر شاشة <guilabel
+>الأسماء المستعارة المراقبة</guilabel
+>. </para>
+
+<para>
+<screenshot>
+<screeninfo
+>الأسماء المستعارة المُراقَبة</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-notifylist-1" coords="1 1"/>
+				<area id="pt-notifylist-2" coords="1 1"/>
+				<area id="pt-notifylist-3" coords="1 1"/>
+				<area id="pt-notifylist-4" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="notifylist_screen_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>الأسماء المستعارة المُراقَبة</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-notifylist-1"
+><para
+>حدد هذا المربع لتفعيل ميزة مراقبة &i18n-nickname;.</para
+></callout>
+
+<callout arearefs="pt-notifylist-2"
+><para
+>إذا أردت أن تُعرض شاشة <guilabel
+>الأسماء المراقبة</guilabel
+> آلي عند فتح محادثك، حدد هذا المربع.</para
+></callout>
+
+<callout arearefs="pt-notifylist-3"
+><para
+>في شاشة <guilabel
+>الأسماء المراقبة</guilabel
+>، يمكنك النقر المزدوج على أي &i18n-nickname; وسيُرسل هذا الأمر إلى الخادم. <userinput
+><command
+>%u</command
+></userinput
+> سيُستبدل بـ &i18n-nickname;. <userinput
+><command
+>%n</command
+></userinput
+> مطلوب في نهاية الأمر.</para
+></callout>
+
+<callout arearefs="pt-notifylist-4"
+><para
+>تعمل ميزة <guilabel
+>الأسماء المراقبة</guilabel
+> بالاستعلام الدوري عن الخادم. يحدد هذا المربع عدد مرات حدوث ذلك. تجنب الأرقام الأقل من 20 ثانية لأنها تضع حملًا زائدًا على الخادم.</para
+></callout>
+
+</calloutlist>
+</para>
+
+<para
+>انقر زر <guibutton
+>موافق</guibutton
+> عندما تنتهي من إضافة أو إزالة &i18n-nickname;.</para>
+
+<para
+><emphasis
+>ملاحظة: </emphasis
+>كلما عرضت شاشة <guilabel
+>الأسماء المراقبة</guilabel
+>، قد يستغرق الأمر بعض الوقت قبل عرض أي &i18n-nickname; حتى يستعلم محادثك الخادم. عادة، تترك شاشة <guilabel
+>الأسماء المراقبة</guilabel
+> قيد التشغيل. </para>
+
+<para
+>يعرض محادثك أيضًا رسالة في جميع <link linkend="channel-screen-tour"
+>القنوات</link
+> كلما اتصل أو انفصل مستخدم في قائمة <guilabel
+>الأسماء المستعارة المراقبة</guilabel
+> عن الخادم. تبدو الرسالة هكذا: </para>
+
+<para
+><computeroutput
+>[17:52] [إشعار] psn متصل (irc.kde.org).</computeroutput
+></para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="highlighting">
+<title
+>تمييز الرسائل</title>
+
+<para
+>يمكنك التحكم في كيفية عرض الرسائل في شاشات القناة والاستعلام.</para>
+
+<para
+>لتفعيل ميزة التمييز، اختر <menuchoice
+> <guisubmenu
+>الإعدادات</guisubmenu
+> <guisubmenu
+>اضبط محادثك</guisubmenu
+> </menuchoice
+> من القائمة الرئيسة. <action
+>ستظهر شاشة <guilabel
+>الضبط</guilabel
+>.</action
+> </para>
+
+<para>
+<screenshot>
+<screeninfo
+>شاشة التمييز.</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-highlight-1" coords="1 1"/>
+				<area id="pt-highlight-2" coords="1 1"/>
+				<area id="pt-highlight-3" coords="1 1"/>
+				<area id="pt-highlight-4" coords="1 1"/>
+				<area id="pt-highlight-5" coords="1 1"/>
+				<area id="pt-highlight-6" coords="1 1"/>
+				<area id="pt-highlight-7" coords="1 1"/>
+				<area id="pt-highlight-8" coords="1 1"/>
+				<area id="pt-highlight-9" coords="1 1"/>
+				<area id="pt-highlight-10" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="highlighting_screen_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>شاشة التمييز</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-highlight-1"
+><para
+>انقر هنا لتحديد شاشة <guilabel
+>التمييز</guilabel
+>.</para
+></callout>
+<callout arearefs="pt-highlight-2"
+><para
+>انقر هنا لإضافة عنصر جديد إلى <guilabel
+>قائمة التمييز</guilabel
+>. عند تحديد عنصر في القائمة، يمكنك تحريره في اللوحة أدناه.</para
+></callout>
+<callout arearefs="pt-highlight-3"
+><para
+>أدخل نمط سلسلة هنا. أي رسالة تُستقبل تطابق هذا النمط، في أي مكان في الرسالة، ستنشط التمييز لتلك الرسالة. </para
+></callout>
+<callout arearefs="pt-highlight-4"
+><para
+>إذا وُجد النمط في رسالة، فستُعرض الرسالة بأكملها باللون الذي تحدده هنا.</para
+></callout>
+<callout arearefs="pt-highlight-5"
+><para
+>إذا أردت، سيشغل محادثك صوتًا عند مطابقة النمط. انقر الزر لاختيار ملف صوتي لتشغيله. انقر زر الاختبار لسماع الصوت.</para
+></callout>
+<callout arearefs="pt-highlight-6"
+><para
+>إذا أردت أن يرسل محادثك رسالة رد آلي عند مطابقة النمط، أدخل الرسالة هنا. استخدم هذه الميزة بحذر، فقد تزعج مستخدمي &irc; بكثرة الثرثرة إذا لم تكن حريصًا. يمكنك أيضًا إدخال أوامر &irc; أو محادثك هنا.</para
+></callout>
+<callout arearefs="pt-highlight-8"
+><para
+>إذا قمت بتهيئة أصوات لأي من تمييزاتك، يمكنك تعطيلها جميعًا بإلغاء تحديد هذا المربع.</para
+></callout>
+<callout arearefs="pt-highlight-7"
+><para
+>هذا الإبراز سيُبحَث عنه فقط في نوافذ المحادثة المسردة هنا باسمها، أو في كلّ نوافذ المحادثة إن أبقيت الحقل فارغًا. الأسماء المتعدّدة يجب فصلها بفواصل.</para
+></callout>
+<callout arearefs="pt-highlight-9"
+><para
+>إذا حددت هذا المربع، فكلما ذكر شخص ما &i18n-nickname; في رسالة، ستُعرض الرسالة باللون الذي تختاره على اليمين.</para
+></callout>
+<callout arearefs="pt-highlight-10"
+><para
+>عادةً، لا ينطبق التمييز على الرسائل التي تكتبها. إذا أردت تمييز الرسائل التي تكتبها، حدد هذا المربع واختر لونًا على اليمين.</para
+></callout>
+
+</calloutlist>
+</para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="cfg-osd">
+<title
+>تهيئة العرض على الشاشة (&osd;)</title>
+
+<para
+><acronym
+>العرض على الشاشة</acronym
+> (&osd;) هي ميزة فريدة في محادثك. مع تشغيل &osd;، ستظهر رسائل القناة على شاشة سطح المكتب لديك، حتى إذا كان محادثك مصغرًا. إليك مثال على &osd; أثناء العمل. الرسالة في الجزء العلوي الأيسر من الشاشة هي من محادثك، الذي يعمل مصغرًا في علبة النظام.</para>
+
+<para>
+<screenshot>
+<screeninfo
+>مثال على العرض على الشاشة</screeninfo>
+	<mediaobject>
+		<imageobject>
+			<imagedata fileref="osd_demo.png" format="PNG"/><!--new screenshot -->
+		</imageobject>
+		<textobject>
+			<phrase
+>مثال على العرض على الشاشة</phrase>
+		</textobject>
+	</mediaobject>
+</screenshot>
+</para>
+
+<para
+>لتفعيل &osd;، اختر <menuchoice
+> <guisubmenu
+>الإعدادات</guisubmenu
+> <guisubmenu
+>اضبط محادثك</guisubmenu
+> </menuchoice
+> في القائمة الرئيسية. <action
+>ستظهر شاشة <guilabel
+>الضبط</guilabel
+>.</action
+> </para>
+
+<para>
+<screenshot>
+<screeninfo
+>شاشة العرض على الشاشة.</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-osd-1" coords="1 1"/>
+				<area id="pt-osd-2" coords="1 1"/>
+				<area id="pt-osd-3" coords="1 1"/>
+				<area id="pt-osd-4" coords="1 1"/>
+				<area id="pt-osd-5" coords="1 1"/>
+				<area id="pt-osd-6" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="osd_screen_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>شاشة العرض على الشاشة</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-osd-1"
+><para
+>انقر هنا لتوسيع عنصر <guilabel
+>الإشعار</guilabel
+>.</para
+></callout>
+
+<callout arearefs="pt-osd-2"
+><para
+>انقر هنا لتحديد شاشة <guilabel
+>العرض على الشاشة</guilabel
+>.</para
+></callout>
+
+<callout arearefs="pt-osd-3"
+><para
+>حدد هذا المربع لتفعيل &osd;.</para
+></callout>
+
+<callout arearefs="pt-osd-4"
+><para
+>انقر هذا الزر لاختيار خط لـ &osd;. (<emphasis
+>ملاحظة: </emphasis
+> لا تعمل كل الخطوط. خطا Luxi Sans 22 و Impact 22 معروفان بالعمل.)</para
+></callout>
+
+<callout arearefs="pt-osd-5"
+><para
+>حدد المربعات هنا لاختيار أنواع الرسائل التي تريد ظهورها على الشاشة.</para
+></callout>
+
+<callout arearefs="pt-osd-6"
+><para
+>اسحب <interface
+>معاينة &osd;</interface
+> إلى الموضع الذي تريده، ثم انقر زر <guibutton
+>طبق</guibutton
+>.</para
+></callout>
+
+</calloutlist>
+</para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="color-msgs">
+<title
+>إرسال رسائل ملونة</title>
+
+<para
+>يمكنك إضافة لون إلى الرسائل التي ترسلها في أي قناة. في <interface
+>سطر الإدخال</interface
+> لأي قناة، ابدأ بكتابة رسالتك. انقر زر <inlinemediaobject
+> <imageobject
+> <imagedata fileref="format-text-color.png" format="PNG"/> </imageobject
+> <textobject
+> <phrase
+>زر إدراج لون &irc;</phrase
+> </textobject
+> </inlinemediaobject
+> <guibutton
+>لون &irc;</guibutton
+> أو اختر <menuchoice
+> <guisubmenu
+>إدراج</guisubmenu
+> <guisubmenu
+>لون &irc;</guisubmenu
+> </menuchoice
+> في القائمة الرئيسية. <action
+>ستظهر شاشة <guilabel
+>مختار لون &irc;</guilabel
+>.</action
+> </para>
+
+<para>
+<screenshot>
+<screeninfo
+>شاشة مختار لون &irc;.</screeninfo>
+	<mediaobject>
+		<imageobject>
+			<imagedata fileref="colorchooser_screen.png" format="PNG"/>
+		</imageobject>
+		<textobject>
+			<phrase
+>شاشة مختار لون &irc;</phrase>
+		</textobject>
+	</mediaobject>
+</screenshot>
+</para>
+
+<para
+>اختر لونًا وانقر <guibutton
+>موافق</guibutton
+>. استمر في كتابة رسالتك في <interface
+>سطر الإدخال</interface
+>. لتغيير اللون مرة أخرى، انقر زر <guibutton
+>لون &irc;</guibutton
+>. اختر لونًا مختلفًا وانقر <guibutton
+>موافق</guibutton
+>. </para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="nickthemes">
+<title
+>تهيئة سمات &i18n-nickname;</title>
+
+<para
+>يمكنك تغيير الأيقونات المعروضة بجانب &i18n-nickname; في <interface
+>لوحة الأسماء المستعارة</interface
+> لعلامات القناة. لتغيير سمة &i18n-nickname;، اختر <menuchoice
+> <guisubmenu
+>الإعدادات</guisubmenu
+> <guisubmenu
+>اضبط محادثك</guisubmenu
+> </menuchoice
+> في القائمة الرئيسية. <action
+>ستظهر شاشة <guilabel
+>الضبط</guilabel
+>.</action
+> انقر <guilabel
+>الواجهة</guilabel
+> لتوسيعها، ثم انقر <guilabel
+>سمات قائمة الأسماء المستعارة</guilabel
+> لعرض شاشة <guilabel
+>سمات قائمة الأسماء المستعارة</guilabel
+>. </para>
+
+<para>
+<screenshot>
+<screeninfo
+>شاشة السمات.</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-themes-1" coords="1 1"/>
+				<area id="pt-themes-2" coords="1 1"/>
+				<area id="pt-themes-3" coords="1 1"/>
+				<area id="pt-themes-4" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="nickthemes_screen_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>شاشة السمات</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-themes-1"
+><para
+>انقر هنا لاختيار شاشة <guilabel
+>سمات قائمة الألقاب</guilabel
+>.</para
+></callout>
+<callout arearefs="pt-themes-2"
+><para
+>اختر سمة.</para
+></callout>
+<callout arearefs="pt-themes-3"
+><para
+>تُعرض أيقونات نموذجية هنا في السمة المختارة.</para
+></callout>
+<callout arearefs="pt-themes-4"
+><para
+>إذا حمّلت سمة ألقاب من مكان آخر، فانقر لتثبيتها.</para
+></callout>
+
+</calloutlist>
+</para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="quick-buttons">
+<title
+>ضبط الأزرار السريعة</title>
+
+<para
+>يمكنك تفعيل ميزة لعرض <interface
+>الأزرار السريعة</interface
+> على الشاشة <link linkend="channel-screen-tour"
+>الرئيسة</link
+>، فتظهر ثمانية <interface
+>أزرار سريعة</interface
+>. لعرض الأزرار السريعة، اختر <menuchoice
+> <guisubmenu
+>الإعدادات</guisubmenu
+> <guisubmenu
+>اضبط محادثك</guisubmenu
+> </menuchoice
+> من القائمة الرئيسة. <action
+>ستظهر شاشة <guilabel
+>الضبط</guilabel
+>.</action
+> انقر <guilabel
+>الواجهة</guilabel
+> لتوسيعها، ثم انقر <guilabel
+>نافذة الدردشة</guilabel
+>. حدد مربع <guilabel
+>أظهر الأزرار السريعة</guilabel
+> وانقر <guibutton
+>موافق</guibutton
+>. </para>
+
+<para
+>يمكن تخصيص الأزرار حسب رغبتك لأداء أوامر &irc; المستخدمة بكثرة. لتخصيص <interface
+>الأزرار السريعة</interface
+>، اختر <menuchoice
+> <guisubmenu
+>الإعدادات</guisubmenu
+> <guisubmenu
+>اضبط محادثك</guisubmenu
+> </menuchoice
+> من القائمة الرئيسة. <action
+>ستظهر شاشة <guilabel
+>الضبط</guilabel
+>.</action
+> انقر <guilabel
+>الواجهة</guilabel
+> لتوسيعها، ثم انقر <guilabel
+>الأزرار السريعة</guilabel
+> لعرض شاشة <guilabel
+>الأزرار السريعة</guilabel
+>. </para>
+
+<para>
+<screenshot>
+<screeninfo
+>شاشة الأزرار السريعة</screeninfo>
+	<mediaobject>
+		<imageobject>
+			<imagedata fileref="quickbuttons_screen.png" format="PNG"/>
+		</imageobject>
+		<textobject>
+			<phrase
+>شاشة الأزرار السريعة</phrase>
+		</textobject>
+	</mediaobject>
+</screenshot>
+</para>
+
+<para
+>هناك 8 <interface
+>أزرار سريعة</interface
+> مبدئية. انقر على مدخل لتغييره أو استخدم الأزرار على الجانب الأيمن من القائمة لإضافة أو إزالة <interface
+>أزرار سريعة</interface
+>. عمود <guilabel
+>اسم الزر</guilabel
+> هو الاسم الذي سيظهر على الزر في الشاشة <link linkend="channel-screen-tour"
+>الرئيسة</link
+>. اجعل الأسماء قصيرة. عمود <guilabel
+>إجراء الزر</guilabel
+> هو الإجراء الذي سيُنفذ عند النقر على <interface
+>الزر السريع</interface
+>. تُعطى نصائح لإنشاء الإجراءات على الشاشة. </para>
+
+<para
+>انقر <guibutton
+>موافق</guibutton
+> لإكمال التغييرات. </para>
+
+<para
+>مثال:</para>
+
+<para>
+<variablelist>
+	<varlistentry>
+		<term
+><guilabel
+>اسم الزر</guilabel
+>: <userinput
+><replaceable
+>رسالة</replaceable
+></userinput
+> </term>
+		<listitem>
+			<para
+><guilabel
+>إجراء الزر</guilabel
+>: <userinput
+><replaceable
+>رسالة %u </replaceable
+></userinput
+> (هناك مسافة بعد <userinput
+><replaceable
+>%u</replaceable
+></userinput
+>) </para>
+		</listitem>
+	</varlistentry>
+</variablelist>
+</para>
+
+<para
+>لاستخدام هذا الزر في الشاشة <link linkend="channel-screen-tour"
+>الرئيسة</link
+>، انقر على &i18n-nickname; في <interface
+>لوحة الألقاب</interface
+>، ثم انقر الزر. سيظهر <computeroutput
+>/رسالة </computeroutput
+> في <interface
+>سطر الإدخال</interface
+> متبوعًا بـ &i18n-nickname; المختار. اكتب رسالة تريد إرسالها لذلك الشخص واضغط &Enter;. ستُرسل الرسالة إلى المستخدم. فقط ذلك المستخدم سيرى الرسالة. </para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="dcc">
+<title
+>إرسال واستقبال الملفات</title>
+
+<para
+>يمكنك إرسال ملفات عبر &irc; إلى مستخدمين آخرين متصلين، أو يمكنهم إرسال ملفات إليك. </para>
+
+<para>
+<emphasis
+>تحذير: لا تفتح أبدًا ملفًا يرسله إليك شخص ما إلا إذا كان مصدرًا موثوقًا. قد يكون فيروسًا.</emphasis>
+</para>
+
+<para
+>لإرسال ملف إلى شخص ما في قناة، انقر بزر الفأرة الأيمن على &i18n-nickname; لذلك الشخص في <interface
+>لوحة الألقاب</interface
+> من الشاشة <link linkend="channel-screen-tour"
+>الرئيسة</link
+>. اختر <menuchoice
+> <guisubmenu
+>أرسل ملفًا</guisubmenu
+> </menuchoice
+> <action
+>. يظهر حوار لتختار ملفًا لإرساله.</action
+> بعد ذلك، يظهر لسان <guilabel
+>حالة DCC</guilabel
+> جديد. </para>
+
+<para>
+<screenshot>
+<screeninfo
+>لسان حالة DCC</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-dccstatus-1" coords="1 1"/>
+				<area id="pt-dccstatus-2" coords="1 1"/>
+				<area id="pt-dccstatus-3" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="dccstatus_screen_co.png" format="PNG"/><!--new screenshot -->
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>لسان حالة DCC</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-dccstatus-1"
+><para
+>يظهر هنا &i18n-nickname; المستلم واسم الملف.</para
+></callout>
+
+<callout arearefs="pt-dccstatus-2">
+<para
+>يشير عمود <guilabel
+>الحالة</guilabel
+> إلى حالة إرسال أو استقبال الملف كما يلي:</para>
+
+<para>
+<variablelist>
+	<varlistentry>
+		<term>
+			<guilabel
+>يحضّر</guilabel>
+		</term>
+		<listitem>
+			<para
+>يتحقق نقل الاستقبال من وجود ملفات قابلة للاستئناف أو يكتسب نقل الإرسال البيانات لإرسالها. </para>
+		</listitem>
+	</varlistentry>
+	<varlistentry>
+		<term>
+			<guilabel
+>يتّصل</guilabel>
+		</term>
+		<listitem>
+			<para
+>يحاول محادثك إنشاء اتصال مع الطرف الآخر. </para>
+		</listitem>
+	</varlistentry>
+	<varlistentry>
+		<term>
+			<guilabel
+>الإرسال</guilabel>
+		</term>
+		<listitem>
+			<para
+>يرسل محادثك الملف إلى الطرف الآخر. </para>
+		</listitem>
+	</varlistentry>
+	<varlistentry>
+		<term>
+			<guilabel
+>الاستقبال</guilabel>
+		</term>
+		<listitem>
+			<para
+>يستقبل محادثك الملف من الطرف الآخر. </para>
+		</listitem>
+	</varlistentry>
+	<varlistentry>
+		<term>
+			<guilabel
+>تمّ</guilabel>
+		</term>
+		<listitem>
+			<para
+>نُقل الملف بنجاح. </para>
+		</listitem>
+	</varlistentry>
+	<varlistentry>
+		<term>
+			<guilabel
+>ينتظر</guilabel>
+		</term>
+		<listitem>
+			<para
+>ينتظر النقل قبول الطرف الآخر له أو رفضه. </para>
+		</listitem>
+	</varlistentry>
+	<varlistentry>
+		<term>
+			<guilabel
+>أُجهض</guilabel>
+		</term>
+		<listitem>
+			<para
+>إما أنك نقرت زر <guibutton
+>إجهاض</guibutton
+>، أو أجهض الشخص الآخر النقل. </para>
+		</listitem>
+	</varlistentry>
+	<varlistentry>
+		<term>
+			<guilabel
+>فشل</guilabel>
+		</term>
+		<listitem>
+			<para
+>حدث خطأ ولم تنجح عملية النقل. </para>
+		</listitem>
+	</varlistentry>
+	<varlistentry>
+		<term>
+			<guilabel
+>مصطفّ</guilabel>
+		</term>
+		<listitem>
+			<para
+>النقل ينتظر قبولك أو رفضه. </para>
+		</listitem>
+	</varlistentry>
+	<!--varlistentry>
+		<term>
+			<guilabel
+>Lookup</guilabel>
+		</term>
+		<listitem>
+			<para
+>&konversation; is trying to get the IP number of the sender.
+			</para>
+		</listitem>
+	</varlistentry-->
+	<varlistentry>
+		<term>
+			<guilabel
+>جارٍ الاستئناف</guilabel>
+		</term>
+		<listitem>
+			<para
+>عند بدء نقل ولكن الملف موجود مسبقًا على نظام المستخدم، سيُطلب من المستخدم <interface
+>الموجود بالفعل. هل تريد استئناف النقل؟</interface
+> تشير هذه الحالة إلى أن المستخدم استأنف النقل. </para>
+		</listitem>
+	</varlistentry>
+</variablelist>
+</para>
+
+</callout>
+
+<callout arearefs="pt-dccstatus-3">
+<para
+>عندما يريد شخص ما إرسال ملف إليك، سيُنشأ لسان <guilabel
+>حالة DCC</guilabel
+> (إن لم يكن منشأً مسبقًا). انقر على لسان <guilabel
+>حالة DCC</guilabel
+> لعرضه. انقر على الملف لتحديده، ثم انقر على هذا الزر لقبول الملف وسيبدأ النقل. <emphasis
+>ملاحظة: </emphasis
+>يمكنك ضبط محادثك لقبول الإرسال من الآخرين آليًا باختيار <menuchoice
+> <guisubmenu
+>الإعدادات</guisubmenu
+> <guisubmenu
+>اضبط محادثك</guisubmenu
+> </menuchoice
+> من القائمة الرئيسة. انقر على <guilabel
+>السلوك</guilabel
+> لتوسيعه، ثم انقر على <guilabel
+>DCC</guilabel
+> لعرض شاشة <guilabel
+>DCC</guilabel
+>. </para>
+</callout>
+
+</calloutlist>
+</para>
+
+<para
+>إذا واجهت مشكلة في إرسال أو استقبال الملفات، فقد يكون جدار الحماية أو الموجه يمنع منافذ DCC. انظر <link linkend="faq"
+>الأسئلة والأجوبة</link
+>. </para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="urlcatcher">
+<title
+>التقاط &URL;ات من الرسائل</title>
+
+<para
+>في أي <link linkend="channel-screen-tour"
+>قناة</link
+>، ينشر المستخدمون أحيانًا &URL;ات مواقع ويب مثيرة للاهتمام أو موارد أخرى على الويب. يمكنك النقر المزدوج على أي &URL; وسيشغل محادثك التطبيق المرتبط بذلك &URL;. يعتمد التطبيق المشغل على نوع &MIME; الخاص بـ &URL;. على سبيل المثال، &URL; يبدأ بـ <interface
+>https:</interface
+> سينشط متصفح الويب المبدئي ويعرض صفحة الويب. (يمكنك أيضًا تحديد <link linkend="webbrowser"
+>متصفح الويب</link
+> لاستخدامه.) إذا خرج &URL; عن الشاشة، قد تواجه صعوبة في العثور عليه مرة أخرى. يمكن لـ محادثك الاحتفاظ بقائمة ملائمة لجميع &URL;ات. لتفعيل هذه الميزة، اختر <menuchoice
+> <guisubmenu
+>النافذة</guisubmenu
+> <guisubmenu
+>ملتقط &URL;</guisubmenu
+> </menuchoice
+> من القائمة الرئيسة. <action
+>سيُنشأ لسان جديد يسمى <guilabel
+>ملتقط &URL;</guilabel
+>.</action
+> </para>
+
+<para>
+<screenshot>
+<screeninfo
+>لسان ملتقط &URL;.</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-urlcatcher-1" coords="1 1"/>
+				<area id="pt-urlcatcher-2" coords="1 1"/>
+				<area id="pt-urlcatcher-3" coords="1 1"/>
+				<area id="pt-urlcatcher-4" coords="1 1"/>
+				<area id="pt-urlcatcher-5" coords="1 1"/>
+				<area id="pt-urlcatcher-6" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="urlcatcher_screen_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>لسان ملتقط &URL;.</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-urlcatcher-1"
+><para
+>هذه قائمة &URL;ات التي شوهدت منذ بدء محادثك. عمود <guilabel
+>من</guilabel
+> هو &i18n-nickname; للشخص الذي نشر &URL; أو اسم القناة أو الخادم حيث نُشر &URL;. (&URL;ات التي تظهر في رسائل الانضمام والمغادرة لا تُدرج.) انقر على &URL; لتحديده.</para
+></callout>
+
+<callout arearefs="pt-urlcatcher-2"
+><para
+>انقر هنا لتفعيل التطبيق المرتبط بـ &URL; المحدد. يعتمد التطبيق المشغل على نوع &MIME; الخاص بـ &URL;. على سبيل المثال، &URL; يبدأ بـ <interface
+>https:</interface
+> سينشط متصفح الويب المبدئي ويعرض صفحة الويب. لصفحات الويب، يمكنك أيضًا تحديد <link linkend="webbrowser"
+>متصفح الويب</link
+> لاستخدامه.</para
+></callout>
+
+<callout arearefs="pt-urlcatcher-3"
+><para
+>انقر هنا لنسخ &URL; المحدد إلى الحافظة.</para
+></callout>
+
+<callout arearefs="pt-urlcatcher-4"
+><para
+>انقر هنا لحذف &URL; المحدد من القائمة.</para
+></callout>
+
+<callout arearefs="pt-urlcatcher-5"
+><para
+>انقر هنا لحفظ قائمة الروابط إلى ملف.</para
+></callout>
+
+<callout arearefs="pt-urlcatcher-6"
+><para
+>انقر هنا لمسح القائمة.</para
+></callout>
+
+</calloutlist>
+</para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="webbrowser">
+<title
+>ضبط متصفح الويب المفضل لديك</title>
+
+<para
+>عند النقر على &URL; مميز في أي مكان في محادثك، سيشغل التطبيق المبدئي المرتبط بنوع &MIME; الخاص بـ &URL;. على سبيل المثال، عند النقر على &URL; يبدأ بـ <interface
+>https</interface
+>، يُشغل &konqueror; لعرض صفحة الويب. يمكنك تحديد تطبيق مختلف عن وحدة <guilabel
+>التطبيقات المبدئية</guilabel
+> في &systemsettings;. على سبيل المثال، يمكنك استخدام <application
+>فايرفوكس</application
+> بدلًا من ذلك. </para>
+
+<para
+>لاختيار متصفح ويب مختلف من تطبيق محادثك، اختر <menuchoice
+> <guisubmenu
+>الإعدادات</guisubmenu
+> <guisubmenu
+>اضبط محادثك</guisubmenu
+> </menuchoice
+> من القائمة الرئيسة. <action
+>ستظهر شاشة <guilabel
+>الضبط</guilabel
+>.</action
+> </para>
+
+ <para>
+<screenshot>
+<screeninfo
+>شاشة العامة</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-webbrowser-1" coords="1 1"/>
+				<area id="pt-webbrowser-2" coords="1 1"/>
+				<area id="pt-webbrowser-3" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="webbrowser_screen_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>شاشة العامة</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-webbrowser-1"
+><para
+>انقر هنا لعرض شاشة <guilabel
+>العامة</guilabel
+>.</para
+></callout>
+
+<callout arearefs="pt-webbrowser-2"
+><para
+>انقر هنا لتحديد أنك تريد استخدام متصفح ويب مخصص.</para
+></callout>
+
+<callout arearefs="pt-webbrowser-3"
+><para
+>أدخل الأمر لتشغيل متصفح الويب الذي تريده. عند النقر على &URL;، سيُستبدل <userinput
+><replaceable
+>%u</replaceable
+></userinput
+> بـ &URL;.</para
+></callout>
+
+</calloutlist>
+</para>
+
+<para
+><emphasis
+>ملاحظة: </emphasis
+>إعداد متصفح الويب لا ينطبق على &URL;ات <interface
+>mailto:</interface
+>. &URL;ات <interface
+>mailto:</interface
+> تشغل دائمًا البريد المبدئي. </para>
+
+<para
+>انقر على <guibutton
+>طبق</guibutton
+> لحفظ تغييراتك. يجب إعادة الاتصال بكل خادم وقناة لتصبح التغييرات سارية المفعول. أسهل طريقة للقيام بذلك هي الخروج وإعادة تشغيل محادثك. </para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="rememberlines">
+<title
+>وضع علامات على سجلات القنوات والاستفسارات</title>
+
+<para
+>يمكنك إدراج علامة في شاشات <link linkend="channel-screen-tour"
+>القناة</link
+> و<link linkend="query"
+>الاستفسار</link
+> لمساعدتك في تحديد موقع المعلومات بسرعة. للقيام بذلك، اختر <menuchoice
+> <guisubmenu
+>إدراج</guisubmenu
+> <guisubmenu
+>خط العلامة</guisubmenu
+> </menuchoice
+> من القائمة الرئيسة، أو اضغط <keycombo action="simul"
+>&Ctrl;<keycap
+>R</keycap
+></keycombo
+>. <action
+>سيظهر خط في أسفل النص على الشاشة. سينتقل الخط مع بقية النص على الشاشة.</action
+> </para>
+
+<para
+>لجعل <interface
+>خط العلامة</interface
+> يُدرج في جميع القنوات والاستفسارات مرة واحدة، اختر <menuchoice
+> <guisubmenu
+>الإعدادات</guisubmenu
+> <guisubmenu
+>اضبط محادثك</guisubmenu
+> </menuchoice
+> من القائمة الرئيسة، وسّع <guilabel
+>السلوك</guilabel
+>، وانقر على <guilabel
+>نافذة الدردشة</guilabel
+>، وحدد مربع <guilabel
+>إظهار الخطوط المُدرجة يدويًا في جميع نوافذ الدردشة</guilabel
+>. </para>
+
+<para
+>لجعل محادثك يُدرج <interface
+>خط العلامة</interface
+> آليًا كلما نفذت أمر <userinput
+><command
+>/away</command
+> <replaceable
+>msg</replaceable
+></userinput
+>، انظر <link linkend="identity-away"
+>ضبط هويتك</link
+>. </para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="logging">
+<title
+>السجلّ</title>
+
+<para
+>إذا كان التسجيل مفعّلًا، يحتفظ محادثك بسجل لكل جلسة <interface
+>خادم</interface
+> و<link linkend="channel-screen-tour"
+>قناة</link
+> و<link linkend="query"
+>محادثة خاصة (استعلام)</link
+>. تُخزَّن كل جلسة في ملف سجل على القرص. عندما تفتح الجلسة نفسها مرة أخرى، يُلحق محادثك بالسجل. </para>
+
+<para
+>عندما تفتح جلسة مرة أخرى، تُقرأ آخر 1024 حرفًا تقريبًا من الجلسة السابقة من ذيل السجل وتُعرض على الشاشة. </para>
+
+<para
+>مع استمرار جلستك، تختفي الرسائل من أعلى الشاشة. يمكنك التمرير للخلف لعرض هذه الرسائل. في النهاية، للحفاظ على الذاكرة، تُتخلص من أقدم الرسائل من التمرير. يُسمى هذا <guilabel
+>حد التمرير العكسي</guilabel
+>. الرسائل التي تختفي من الشاشة بسبب <guilabel
+>حد التمرير العكسي</guilabel
+> لا تزال متوفرة في ملف السجل، إذا كان التسجيل مفعّلًا.</para>
+
+<para
+>لعرض ملف السجل لجلسة، انقر على لسان الجلسة لجعلها الجلسة الحالية واختر <menuchoice
+> <guisubmenu
+>نافذة</guisubmenu
+> <guisubmenu
+>افتح ملف السجل</guisubmenu
+> </menuchoice
+> من القائمة الرئيسة. <action
+>يظهر لسان جديد</action
+> يعرض ملف السجل. </para>
+
+<para>
+<screenshot>
+<screeninfo
+>ملفّ السجل</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-logviewer-1" coords="1 1"/>
+				<area id="pt-logviewer-2" coords="1 1"/>
+				<area id="pt-logviewer-3" coords="1 1"/>
+				<area id="pt-logviewer-4" coords="1 1"/>
+				<area id="pt-logviewer-5" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="logviewer_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>ملفّ السجل</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+<callout arearefs="pt-logviewer-1"
+><para
+>تظهر الرسائل في ملف السجلّ هنا. أقدم الرسائل في الأعلى وأحدثها في الأسفل.</para
+></callout>
+<callout arearefs="pt-logviewer-2"
+><para
+>انقر هذا الزر لحفظ ملف السجل إلى ملف آخر.</para
+></callout>
+<callout arearefs="pt-logviewer-3"
+><para
+>انقر لتحديث عرض ملف السجل. أثناء عرض ملف سجل، لا تُضاف الرسائل الأحدث في الجلسة المقابلة <emphasis
+>تلقائيًا</emphasis
+> إلى عرض ملف السجل. استخدم هذا الزر لعرض أحدث الرسائل.</para
+></callout>
+<callout arearefs="pt-logviewer-4"
+><para
+>انقر لمسح عرض ملف السجل وملف السجل على القرص.</para
+></callout>
+<callout arearefs="pt-logviewer-5"
+><para
+>استخدم هذا المربع لتعيين الحجم الأقصى للتمرير. يسري هذا الإعداد فقط على ألسنة السجل المفتوحة حديثًا. ستُستخدم آخر قيمة مغيرّة لحجم التمرير عند بدء محادثك التالي. قد يكون لكل ملف سجل إعداد منفصل.</para
+></callout>
+</calloutlist>
+</para>
+
+<para
+>يمكن تغيير <guilabel
+>حد التمرير العكسي</guilabel
+> باختيار <menuchoice
+> <guisubmenu
+>إعدادات</guisubmenu
+> <guisubmenu
+>اضبط محادثك</guisubmenu
+> </menuchoice
+> من القائمة الرئيسة، ثم وسّع <guilabel
+>سلوك</guilabel
+> وانقر على <guilabel
+>نافذة الدردشة</guilabel
+>. يظهر مربع <guilabel
+>حد التمرير العكسي</guilabel
+> على هذه الشاشة. إذا ضبطته على <guilabel
+>غير محدود</guilabel
+> (&ie; صفر)، لا تُتخلص الرسائل من التمرير. </para>
+
+<para
+>يمكنك تفعيل أو تعطيل التسجيل وضبط خيارات تسجيل أخرى، باختيار <menuchoice
+> <guisubmenu
+>إعدادات</guisubmenu
+> <guisubmenu
+>اضبط محادثك</guisubmenu
+> </menuchoice
+> من القائمة الرئيسة، ثم وسّع <guilabel
+>سلوك</guilabel
+> وانقر على <guilabel
+>تسجيل</guilabel
+>. </para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="konvi-cmds">
+<title
+>أوامر محادثك</title>
+<!--FIXME commands in src/irc/outputfilter.[h|cpp]-->
+<para
+>تُفسَّر الأوامر التالية بواسطة محادثك وقد تختلف عن أوامر &irc; القياسية. العناصر داخل الأقواس المربعة اختيارية. العناصر المفصولة بشريط (|) هي أشكال بديلة للأمر. الأوامر غير المدرجة هنا تُرسل إلى الخادم كما هي. </para>
+
+<para>
+<variablelist>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/me</command
+> <replaceable
+>رسالة</replaceable
+></userinput
+></term>
+<listitem
+><para
+>يرسل <userinput
+><replaceable
+>رسالة</replaceable
+></userinput
+> إلى القناة مسبوقة بكنيتك &i18n-nickname;. على سبيل المثال، إذا كانت كُنيتك &i18n-nickname; هي <userinput
+><replaceable
+>Tux</replaceable
+></userinput
+>، فكتابة <userinput
+><replaceable
+>/me يحضّر فنجان شاي.</replaceable
+></userinput
+> تعرض الرسالة <interface
+>Tux يحضّر فنجان شاي.</interface
+> ما لم يقم المستخدمون بتصفية هذه الأنواع من الرسائل، سيراها جميع المستخدمين. يُستخدم هذا النوع من الرسائل عادةً لنقل المعلومات غير اللفظية، مثل حالتك العاطفية الحالية، أو ما تفعله جسديًا. إذا كنت ستغادر محطة عملك لفترة قصيرة، استخدم الأمر <userinput
+><command
+>/away</command
+></userinput
+> بدلًا من ذلك.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/ame</command
+> <replaceable
+>رسالة</replaceable
+></userinput
+></term>
+<listitem
+><para
+>مثل الأمر <userinput
+><command
+>/me</command
+></userinput
+> أعلاه باستثناء أن الرسالة تُرسل إلى جميع القنوات والاستعلامات المفتوحة لديك على جميع الخوادم المتصل بها في محادثك.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/join</command
+> <replaceable
+>قناة</replaceable
+> <replaceable
+>[كلمة سر]</replaceable
+></userinput
+></term>
+<listitem
+><para
+>ينضم إلى <userinput
+><replaceable
+>قناة</replaceable
+></userinput
+>. إذا سمح الخادم بذلك، وإذا لم تكن القناة موجودة بالفعل، تُنشأ وتكون مشغل القناة. إذا كانت القناة تتطلب كلمة سر للانضمام، حددها كـ <userinput
+><replaceable
+>كلمة سر</replaceable
+></userinput
+>. تبدأ معظم أسماء القنوات بـ <userinput
+><replaceable
+>#</replaceable
+></userinput
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/j</command
+> <replaceable
+>قناة</replaceable
+> <replaceable
+>[كلمة سر]</replaceable
+></userinput
+></term>
+<listitem
+><para
+>نفس <userinput
+><command
+>/join</command
+></userinput
+> أعلاه.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/part</command
+> <replaceable
+>[قناة]</replaceable
+> <replaceable
+>[سبب]</replaceable
+></userinput
+></term>
+<listitem
+><para
+>يغادر <userinput
+><replaceable
+>قناة</replaceable
+></userinput
+> بـ <userinput
+><replaceable
+>سبب</replaceable
+></userinput
+> ويغلق لسان <interface
+>القناة</interface
+> المقابل. داخل لسان قناة أو استعلام محادثك، يمكنك فقط إدخال <userinput
+><command
+>/part</command
+></userinput
+> الذي يغلق تلك القناة أو الاستعلام بسببك المبدئي كما هو معطى في <link linkend="identity"
+>الإعدادات</link
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry
+><term
+><userinput
+><command
+>/leave</command
+> <replaceable
+>[قناة]</replaceable
+> <replaceable
+>[سبب]</replaceable
+></userinput
+></term>
+<listitem
+><para
+>نفس <userinput
+><command
+>/part</command
+></userinput
+> أعلاه.</para
+></listitem>
+</varlistentry>
+
+<varlistentry
+><term
+><userinput
+><command
+>/quit</command
+></userinput
+></term>
+<listitem
+><para
+>عند إدخاله في أي لسان قناة أو استعلام أو DCC، يفصل من الخادم المقابل ويغلق جميع ألسنة القنوات أو الاستعلامات أو DCC المفتوحة على ذلك الخادم.</para
+></listitem>
+</varlistentry>
+
+<varlistentry
+><term
+><userinput
+><command
+>/notice</command
+> <replaceable
+>كنية|قناة</replaceable
+> <replaceable
+>رسالة</replaceable
+></userinput
+></term>
+<listitem
+><para
+>يرسل <userinput
+><replaceable
+>رسالة</replaceable
+></userinput
+> إلى المستخدم ذي &i18n-nickname; <userinput
+><replaceable
+>كنية</replaceable
+></userinput
+> أو إلى الجميع في <userinput
+><replaceable
+>قناة</replaceable
+></userinput
+>. فيما يلي مثال لما يظهر لك في لسان القناة</para>
+
+<para
+><computeroutput
+>[17:14] [إشعار] إرسال إشعار "أعتقد أنني أفهم" إلى #konversation</computeroutput
+></para>
+
+<para
+>وهذا ما يراه المستلمون</para>
+
+<para
+><computeroutput
+>[17:15] [إشعار] -Eisfuchs- أعتقد أنني أفهم</computeroutput
+></para>
+
+</listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/query </command
+><replaceable
+>كنية</replaceable
+></userinput
+></term>
+<listitem
+><para
+>ينشئ لسانًا جديدًا بـ <userinput
+><replaceable
+>كنية</replaceable
+></userinput
+> المستخدم للمحادثة الخاصة، المعروفة عادة على &irc; باسم <link linkend="query"
+>استعلام</link
+>. كل ما يُكتب هنا مرئي فقط لك ولشريك الاستعلام. يمكنك إدخال أكثر من &i18n-nickname; مفصولة بمسافات وسيُفتح لسان استعلام لكل &i18n-nickname;. سيكون كل لسان استعلام خاصًا بينك وبين شريك الاستعلام.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/msg </command
+><replaceable
+>nick|قناة</replaceable
+></userinput
+> <userinput
+><replaceable
+>رسالة</replaceable
+></userinput
+></term>
+<listitem
+><para
+>يرسل رسالة خاصة إلى المستخدم ذي اللقب &i18n-nickname; <userinput
+><replaceable
+>nick</replaceable
+></userinput
+> أو إلى جميع المستخدمين في <userinput
+><replaceable
+>قناة</replaceable
+></userinput
+>. على عكس <userinput
+><command
+>/query</command
+></userinput
+>، لا يفتح لسانًا جديدًا. إذا بدأت <userinput
+><replaceable
+>رسالة</replaceable
+></userinput
+> بـ <userinput
+><command
+>/me </command
+></userinput
+>، تُنسق الرسالة بنفس أسلوب أمر <userinput
+><command
+>/me</command
+></userinput
+>.</para>
+
+<para
+>أمثلة</para>
+
+<para
+><userinput
+><replaceable
+>/msg Eisfuchs أحتاج مساعدة في أمر msg</replaceable
+></userinput
+></para>
+
+<para
+><userinput
+><replaceable
+>/msg #konversation الإصدار الجديد من Konvi متاح!</replaceable
+></userinput
+></para>
+
+<para
+><userinput
+><replaceable
+>/msg Eisfuchs /me يترجم الدليل الآن.</replaceable
+></userinput
+></para>
+
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/smsg </command
+><replaceable
+>nick|قناة</replaceable
+></userinput
+> <userinput
+><replaceable
+>رسالة</replaceable
+></userinput
+></term>
+<listitem
+><para
+>مثل <userinput
+><command
+>/msg</command
+></userinput
+> باستثناء أن الرسالة لا تُعرض على شاشتك. هذا مفيد لمنع كلمات المرور والمعلومات الحساسة الأخرى من البقاء مكشوفة على شاشتك أو من تسجيلها.</para>
+</listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/amsg </command
+><replaceable
+>nick|قناة</replaceable
+></userinput
+> <userinput
+><replaceable
+>رسالة</replaceable
+></userinput
+></term>
+<listitem
+><para
+>مثل أمر <userinput
+><command
+>/msg</command
+></userinput
+> أعلاه باستثناء أن الرسالة تُرسل إلى جميع القنوات والاستعلامات المفتوحة لديك على جميع الخوادم المتصل بها في محادثك.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/op </command
+> <replaceable
+>لقب</replaceable
+></userinput
+></term>
+<listitem
+><para
+>عند إدخاله في لسان قناة، يحاول منح <userinput
+><replaceable
+>لقب</replaceable
+></userinput
+> صلاحية مشغل للقناة. قد لا يعمل إذا كنت تفتقر إلى الصلاحية الكافية في القناة (يجب أن تكون مشغل قناة بنفسك). يمكنك إدخال أكثر من لقب &i18n-nickname; مفصولة بمسافات.</para>
+</listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/deop </command
+><replaceable
+>لقب</replaceable
+></userinput
+></term>
+<listitem
+><para
+>عند إدخاله في لسان قناة، يسحب صلاحية مشغل القناة من <userinput
+><replaceable
+>لقب</replaceable
+></userinput
+>. يمكنك إدخال أكثر من لقب &i18n-nickname; مفصولة بمسافات.</para>
+</listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/oper </command
+><replaceable
+>[لقب]</replaceable
+></userinput
+></term>
+<listitem
+><para
+>يمنح المستخدم ذا اللقب &i18n-nickname; <userinput
+><replaceable
+>لقب</replaceable
+></userinput
+> صلاحية مشغل &irc; (مسؤول). يعمل هذا فقط إذا كان اللقب &i18n-nickname; مدرجًا في سطر O: للخادم. يتمتع مشغلو &irc; بصلاحية <userinput
+><command
+>/kill</command
+></userinput
+> الألقاب &i18n-nickname;، و<userinput
+><command
+>/connect</command
+></userinput
+> الخوادم إلى شبكة &irc;، والمزيد. إذا لم يُدخل <userinput
+><replaceable
+>لقب</replaceable
+></userinput
+>، يحاول منح نفسك صلاحية مشغل &irc;. سيُطلب منك اسم المستخدم وكلمة المرور لمشغل &irc; في كلتا الحالتين.</para>
+</listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/voice </command
+> <replaceable
+>لقب</replaceable
+></userinput
+></term>
+<listitem
+><para
+>في قنوات معينة (بعلامة +m)، لا يمكن للمستخدمين إرسال رسائل ما لم يكن لديهم صلاحية صوت. يحاول هذا الأمر منح <userinput
+><replaceable
+>لقب</replaceable
+></userinput
+> صلاحية صوت. يجب أن تكون لديك صلاحية مشغل قناة لتنفيذ هذا الأمر. يُستخدم هذا الأمر غالبًا عندما تكون مشغلًا لقناة مراقبة.</para>
+</listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/unvoice </command
+> <replaceable
+>لقب</replaceable
+></userinput
+></term>
+<listitem
+><para
+>يسحب صلاحية الصوت من <userinput
+><replaceable
+>لقب</replaceable
+></userinput
+> في القناة.</para>
+</listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/topic </command
+><replaceable
+>[قناة]</replaceable
+> <replaceable
+>[رسالة]</replaceable
+></userinput
+></term>
+<listitem
+><para
+>يحاول تعيين موضوع <userinput
+><replaceable
+>قناة</replaceable
+></userinput
+> إلى <userinput
+><replaceable
+>رسالة</replaceable
+></userinput
+>. عند إدخاله في لسان قناة، يمكن حذف <userinput
+><replaceable
+>قناة</replaceable
+></userinput
+> ويُفترض أنها القناة النشطة في اللسان. إذا حُذفت <userinput
+><replaceable
+>رسالة</replaceable
+></userinput
+>، يُعرض الموضوع الحالي للقناة. قد يفشل تغيير موضوع القناة إذا كنت تفتقر إلى الصلاحية الكافية.</para>
+</listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/away </command
+> <replaceable
+>سبب</replaceable
+></userinput
+></term>
+<listitem
+><para
+>إذا حاول أي شخص إرسال رسالة خاصة إليك أو دعوتك إلى قناة، سيُخبر بأنك بعيد عن محطة عملك لـ <userinput
+><replaceable
+>سبب</replaceable
+></userinput
+>. لتغيير حالتك إلى الوضع الطبيعي، أدخل <userinput
+><command
+>/away</command
+></userinput
+> بدون <userinput
+><replaceable
+>سبب</replaceable
+></userinput
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/aaway </command
+><replaceable
+>سبب</replaceable
+></userinput
+></term>
+<listitem
+><para
+>مثل أمر <userinput
+><command
+>/away</command
+></userinput
+> أعلاه باستثناء أن الأمر يُرسل إلى جميع الخوادم المتصل بها في محادثك.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/invite </command
+><replaceable
+>لقب</replaceable
+> <replaceable
+>[قناة]</replaceable
+></userinput
+></term>
+<listitem
+><para
+>يدعو المستخدم ذا اللقب &i18n-nickname; <userinput
+><replaceable
+>لقب</replaceable
+></userinput
+> للانضمام إلى <userinput
+><replaceable
+>قناة</replaceable
+></userinput
+>. هذا الأمر مفيد بشكل خاص إذا كانت القناة مخصصة للدعوة فقط. عند إدخاله في لسان قناة، يمكن حذف <userinput
+><replaceable
+>قناة</replaceable
+></userinput
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/exec </command
+><replaceable
+>نص</replaceable
+> <replaceable
+>[وسائط]</replaceable
+></userinput
+></term>
+<listitem
+><para
+>ينفذ النص البرمجي للصدفة المتوافق مع محادثك المسمى <userinput
+><replaceable
+>نص</replaceable
+></userinput
+>، ويمرره <userinput
+><replaceable
+>وسائط</replaceable
+></userinput
+>. انظر <link linkend="scripting"
+>النصوص البرمجية</link
+> لمزيد من المعلومات حول استخدام وكتابة النصوص البرمجية.</para>
+<para
+>أمثلة:</para>
+
+<para
+><userinput
+><replaceable
+>/sayversion</replaceable
+></userinput
+></para>
+
+<para
+>يرسل أرقام إصدارات محادثك و&Qt; و&kde-frameworks; وبلازما في نظامك إلى القناة.</para>
+
+<para
+><userinput
+><replaceable
+>/exec cmd uname -a</replaceable
+></userinput
+></para>
+
+<para
+>يرسل سلسلة إصدار &Linux; لديك (مخرجات <quote
+>uname -a</quote
+>) إلى القناة.</para>
+
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/notify </command
+><replaceable
+>[nick]</replaceable
+></userinput
+></term>
+<listitem
+><para
+>يضيف أو يزيل <userinput
+><replaceable
+>nick</replaceable
+></userinput
+> من قائمة <link linkend="nicksonline"
+>الألقاب المراقبة</link
+>. إذا كان اللقب موجودًا بالفعل في القائمة، يُزال. إذا لم يكن موجودًا، يُضاف. إذا حُذف <userinput
+><replaceable
+>nick</replaceable
+></userinput
+>، تُعرض القائمة الحالية للألقاب المراقبة.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/kick </command
+><replaceable
+>nick</replaceable
+> <replaceable
+>reason</replaceable
+></userinput
+></term>
+<listitem
+><para
+>عند إدخاله في علامة تبويب قناة، يحاول طرد المستخدم ذي اللقب <userinput
+><replaceable
+>nick</replaceable
+></userinput
+> من القناة مع <userinput
+><replaceable
+>reason</replaceable
+></userinput
+>. إذا لم يُدخل <userinput
+><replaceable
+>reason</replaceable
+></userinput
+>، يُستخدم السبب المبدئي في <link linkend="identity"
+>الإعدادات</link
+>. يمكن استخدام هذا الأمر فقط في علامة تبويب قناة.</para>
+</listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/ban </command
+> [<command
+>-host</command
+>|<command
+>-domain</command
+>| <command
+>-userhost</command
+>|<command
+>-userdomain</command
+>] <replaceable
+>[channel]</replaceable
+> <replaceable
+>user</replaceable
+>|<replaceable
+>mask</replaceable
+></userinput
+></term>
+<listitem
+><para
+>يحاول حظر <userinput
+><replaceable
+>user</replaceable
+></userinput
+> أو <userinput
+><replaceable
+>mask</replaceable
+></userinput
+> من <userinput
+><replaceable
+>channel</replaceable
+></userinput
+>. عند إدخاله في علامة تبويب قناة، قد يُحذف <userinput
+><replaceable
+>channel</replaceable
+></userinput
+>. لمزيد من المعلومات عن المضيفين والنطاقات والأقنعة، راجع المستندات في <ulink url="https://www.irchelp.org/"
+>irchelp.org</ulink
+>. للحصول على قائمة الحظر الحالية لقناة، أدخل <userinput
+><command
+>/mode </command
+><replaceable
+>channel</replaceable
+> <command
+>b</command
+></userinput
+>. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/unban </command
+> <replaceable
+>[channel]</replaceable
+> <replaceable
+>pattern</replaceable
+></userinput
+></term>
+<listitem
+><para
+>يعكس حظرًا سابقًا من قناة. عند إدخاله في علامة تبويب قناة، قد يُحذف <userinput
+><replaceable
+>channel</replaceable
+></userinput
+>. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/ignore </command
+> [<command
+>-all</command
+>] <replaceable
+>nick</replaceable
+> </userinput
+></term>
+<listitem
+><para
+>يضيف <userinput
+><replaceable
+>nick</replaceable
+></userinput
+> إلى قائمة التجاهل لديك. يمكنك تحديد أكثر من لقب مفصولة بمسافات. لا تُعرض رسائل القناة من المستخدمين في قائمة التجاهل. بالإضافة إلى ذلك، إذا أدخلت <userinput
+><command
+>-all</command
+></userinput
+>، تُتجاهل جميع أنواع الرسائل (الاستعلامات والإشعارات و&CTCP; وDCC والاستثناءات) من المستخدم بالإضافة إلى رسائل القناة. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/quote </command
+> <replaceable
+>cmd</replaceable
+></userinput
+></term>
+<listitem
+><para
+>يرسل <userinput
+><replaceable
+>cmd</replaceable
+></userinput
+> إلى الخادم. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/say </command
+> <replaceable
+>msg</replaceable
+></userinput
+></term>
+<listitem
+><para
+>عند إدخاله في علامة تبويب قناة، يرسل <userinput
+><replaceable
+>msg</replaceable
+></userinput
+> إلى القناة. هذا مماثل لإدخال <userinput
+><replaceable
+>msg</replaceable
+></userinput
+> في <interface
+>سطر الإدخال</interface
+> للقناة. مفيد لإرسال أوامر &irc; عندما لا تريد تنفيذ الأمر. حرفا أمر مزدوجان (//) يفعلان نفس الشيء مثل <userinput
+><command
+>/say</command
+></userinput
+>. يُستخدم أيضًا بواسطة <link linkend="scripting"
+>النصوص البرمجية</link
+> لإرسال الرسائل. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/raw </command
+> [<command
+>open</command
+>|<command
+>close</command
+>]</userinput
+></term>
+<listitem
+><para
+>يضع سجل الخادم في الوضع الخام (<command
+>open</command
+>) أو يوقف الوضع الخام (<command
+>close</command
+>). إذا لم يُدخل <command
+>open</command
+> أو <command
+>close</command
+>، يُستخدم <command
+>open</command
+> مبدئيًا. في الوضع الخام، يعرض السجل كل رسالة تُستقبل من الخادم بصيغة &irc; الأصلية. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/konsole </command
+></userinput
+></term>
+<listitem
+><para
+>يفتح علامة تبويب جديدة تشغل &konsole;. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/server </command
+> <replaceable
+>[url]</replaceable
+> <replaceable
+>[pwd]</replaceable
+></userinput
+></term>
+<listitem
+><para
+>يتصل بالخادم على العنوان <userinput
+><replaceable
+>url</replaceable
+></userinput
+>. إذا حُذف <userinput
+><replaceable
+>url</replaceable
+></userinput
+>، يتصل بالخادم المرتبط بعلامة التبويب حيث أدخلت الأمر. هذا مفيد لإعادة الاتصال بخادم عند قطع الاتصال. إذا كان الخادم يتطلب كلمة مرور للاتصال به، أدخلها لـ <userinput
+><replaceable
+>pwd</replaceable
+></userinput
+>. إذا كان الخادم يتطلب رقم منفذ غير المبدئي (6667)، أدخل <userinput
+><replaceable
+>url</replaceable
+></userinput
+> هكذا: <replaceable
+>irc.kde.org:6665</replaceable
+>. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/dcc </command
+> <command
+>SEND </command
+><replaceable
+>nick</replaceable
+> <replaceable
+>[filename]</replaceable
+></userinput
+></term>
+<listitem
+><para
+>يرسل <userinput
+><replaceable
+>filename</replaceable
+></userinput
+> إلى المستخدم ذي اللقب <userinput
+><replaceable
+>nick</replaceable
+></userinput
+>. إذا حُذف <userinput
+><replaceable
+>filename</replaceable
+></userinput
+>، يظهر حوار لاختيار ملف. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/dcc </command
+></userinput
+></term>
+<listitem
+><para
+>يفتح علامة تبويب <guilabel
+>حالة DCC</guilabel
+>. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/ctcp </command
+><replaceable
+>nick|channel</replaceable
+> <command
+>ping</command
+></userinput
+></term>
+<listitem
+><para
+>يرسل رسالة PING إلى <userinput
+><replaceable
+>nick</replaceable
+></userinput
+> أو <userinput
+><replaceable
+>channel</replaceable
+></userinput
+>. هذا مفيد لتحديد ما إذا كان الشخص الذي تتحدث معه يعاني من تأخر شبكة عالٍ، أو (عند إرساله إلى قناة) إذا كان نظامك يعاني من تأخر عالٍ. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/ctcp </command
+><replaceable
+>nick|channel</replaceable
+> <replaceable
+>msg</replaceable
+></userinput
+></term>
+<listitem
+><para
+>يرسل رسالة إلى <userinput
+><replaceable
+>nick</replaceable
+></userinput
+> أو جميع المستخدمين في <userinput
+><replaceable
+>channel</replaceable
+></userinput
+>. هذا مشابه لأمر <userinput
+><command
+>/msg</command
+></userinput
+> أعلاه، باستثناء أن الرسالة تُرسل باستخدام بروتوكول &CTCP;. يعتمد الرد على الطرف الآخر على برنامج &irc; العميل الذي يستخدمه المستخدم. على سبيل المثال، عند التحدث مع مستخدم محادثك آخر، سيعيد <userinput
+><replaceable
+>/ctcp Eisfuchs TIME</replaceable
+></userinput
+> وقت النظام على حاسوب Eisfuch. سيعيد <userinput
+><replaceable
+>/ctcp Eisfuchs VERSION</replaceable
+></userinput
+> رقم إصدار محادثك من حاسوب Eisfuch. </para
+></listitem>
+</varlistentry>
+
+</variablelist>
+</para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="scripting">
+<title
+>البرمجة</title>
+
+<para
+>يأتي محادثك مع بعض النصوص البرمجية المفيدة التي يمكنك تشغيلها من البرنامج. لتشغيل نص برمجي، في علامة تبويب قناة أو استعلام أو DCC أو خادم، اكتب أمرًا بالصيغة</para>
+
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>سكريبت</replaceable
+> [<replaceable
+>وسائط</replaceable
+>]</userinput
+></para>
+
+<para
+>الذي ينفذ السكريبت المسمى <userinput
+><replaceable
+>سكريبت</replaceable
+></userinput
+> ويمرر له (اختياريًا) <userinput
+><replaceable
+>وسائط</replaceable
+></userinput
+>.</para>
+
+<para
+>مثال: اكتب الأمر التالي في لسان قناة</para>
+
+<para
+><userinput
+><replaceable
+>/sayversion</replaceable
+></userinput
+></para>
+
+<para
+>لإرسال أرقام إصدارات محادثك و&Qt; و&kde-frameworks; وبلازما إلى القناة.</para>
+
+<para
+><userinput
+><replaceable
+>/exec cmd uname -a</replaceable
+></userinput
+></para>
+
+<para
+>ينفذ سكريبت <userinput
+><replaceable
+>cmd</replaceable
+></userinput
+>، ويمرر له <userinput
+><replaceable
+>uname -a</replaceable
+></userinput
+>. هذا يرسل سلسلة إصدار &Linux; الخاصة بك إلى القناة.</para>
+
+<para
+>لمعرفة المزيد عن السكريبتات المثبتة مع محادثك، يُرجى الاطلاع على <link linkend="scripts_ref"
+>دليل مرجع السكريبتات</link
+></para>
+
+<para
+>للحصول على قائمة بجميع السكريبتات المتاحة، اكتب الأمر التالي في شاشة محادثك.</para>
+
+<para
+><userinput
+>/exec --showpath media</userinput
+></para>
+
+<para
+>ثم تصفح المجلد من المخرجات لرؤية القائمة.</para>
+
+<para
+>يمكنك كتابة سكريبتاتك الخاصة. السكريبتات هي سكريبتات صدفة ويمكن كتابتها بأي لغة صدفة، مثل bash أو perl أو python. عندما يشغل محادثك سكريبتًا، فإن أول وسيطين يُرسلان إلى السكريبت هما:</para>
+
+<itemizedlist>
+
+<listitem
+><para
+>عنوان الخادم.</para
+></listitem>
+
+<listitem
+><para
+>اسم القناة.</para
+></listitem>
+
+</itemizedlist>
+
+<para
+>هذا نموذج لسكريبت صدفة (cmd).</para>
+
+<para>
+<programlisting
+>#!/bin/sh
+</programlisting>
+</para>
+
+<para
+>لاحظ أن السكريبت يستخدم qdbus للتواصل مع محادثك. أمر <computeroutput
+>say</computeroutput
+> يتسبب في إرسال المخرجات إلى القناة كرسالة عادية. لعرض شيء في اللسان دون إرساله إلى المستخدمين الآخرين، استخدم <computeroutput
+>info</computeroutput
+> بدلًا من ذلك. اطّلع على ملفات السكريبتات الموجودة لمزيد من الأمثلة عن كتابة السكريبتات.</para>
+
+<para
+>لتتمكن من تشغيل سكريبت كتبته، يجب تثبيته بنسخه إلى <filename class="directory"
+>$(qtpaths --paths GenericDataLocation)/konversation/scripts</filename
+>. يجب أيضًا منح الملف صلاحية التنفيذ، على سبيل المثال <userinput
+><replaceable
+>chmod a+x myscript</replaceable
+></userinput
+>.</para>
+
+</sect1>
+
+<sect1 id="scripts_ref">
+<title
+>دليل مرجع السكريبتات</title>
+
+<para
+>يأتي محادثك مع عدة سكريبتات مثبتة مبدئيًا، يُرجى الرجوع إلى هذا الدليل لتعلم كيفية استخدامها.</para>
+<!--FIXME in data/scripts-->
+<variablelist>
+<varlistentry>
+<term
+><userinput
+><command
+>/exec </command
+> <replaceable
+>bug</replaceable
+> [<replaceable
+>رقم الخلل|سلسلة بحث</replaceable
+>]</userinput
+></term>
+<listitem>
+  <para
+>يُستخدم هذا السكريبت لفتح متصفحك للبحث عن السلسلة أو رقم الخلل المُعطى على <ulink url="https://bugs.kde.org/"
+>&kde;'s Bugzilla</ulink
+>.</para>
+<para
+>مثال: لفتح متصفحك للبحث عن الخلل 123456</para>
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>bug 123456</replaceable
+></userinput
+></para>
+<para
+>إجراء نموذجي: يجب أن يفتح المتصفح المبدئي في &systemsettings; إلى <replaceable
+>https://bugs.kde.org/show_bug.cgi?id=123456</replaceable
+></para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/exec </command
+> <replaceable
+>cmd</replaceable
+> [<replaceable
+>وسائط سطر الأوامر</replaceable
+>]</userinput>
+</term>
+<listitem>
+<para
+>يُستخدم هذا السكريبت لجعل مخرجات وسائط سطر الأوامر تُكتب إلى قناتك الحالية.</para>
+<para
+>مثال: لإظهار إصدار محادثك المثبت لديك لكل من في قناتك الحالية.</para>
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>cmd konversation --version</replaceable
+></userinput
+></para>
+<para
+>مخرجات نموذجية: <replaceable
+>Konversation: 1.6</replaceable
+></para>
+<para
+>تحذير! مخرجات الأمر بأكمله تُنشر لكل من في لسان القناة الحالية! يُرجى الاستخدام بحذر.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/exec </command
+> <replaceable
+>fortune</replaceable
+></userinput>
+</term>
+<listitem>
+<para
+>هذا السكريبت عند تشغيله سيُخرج حكمة عشوائية.</para>
+<para
+>مثال: لإخراج حكمة عشوائية إلى لسان القناة الحالي.</para>
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>fortune</replaceable
+></userinput
+></para>
+<para
+>مخرج نموذجي: <replaceable
+>حكمة عشوائية: لا ترتكب أي أخطاء أبدًا. -- مجهول، في نقاش بريدي حول تقرير علة في النواة</replaceable
+></para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/exec </command
+> <replaceable
+>gauge</replaceable
+> [<replaceable
+>النسبة المئوية</replaceable
+>]</userinput>
+</term>
+<listitem>
+<para
+>هذا السكريبت يعرض شريط تقدم نصي بسيط للنسبة المئوية المعطاة.</para>
+<para
+>مثال: لإخراج شريط تقدم بنسبة إنجاز 50% إلى لسان القناة الحالي.</para>
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>gauge 50</replaceable
+></userinput
+></para>
+<para
+>مخرج نموذجي: <replaceable
+>تحميل البيرة [ | ] 50%</replaceable
+></para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><userinput
+><command
+>/exec </command
+> <replaceable
+>media</replaceable
+> [<replaceable
+>audio|video|{player}</replaceable
+>]</userinput>
+</term>
+<listitem>
+<para
+>هذا سكريبت 'يُشغل الآن' لمشغلات وسائط متنوعة. كما يتضمن طريقة لعرض معلومات 'يُشغل الآن' لمشغلات الصوت فقط، أو مشغلات الفيديو فقط عبر وسائط الأمر الاختيارية <replaceable
+>audio</replaceable
+> و <replaceable
+>video</replaceable
+>. بالإضافة إلى ذلك، يمكن تحديد مشغل الوسائط الذي ترغب في الاستعلام عنه.</para>
+<para
+>مشغلات الوسائط التالية مدعومة: Amarok (صوت)، JuK (صوت)، Kaffeine (فيديو، صوت)، KMPlayer (فيديو، صوت)، KPlayer (فيديو، صوت)، kdetv (فيديو)، Yammi (صوت)، Audacious (صوت)، MPD (صوت).</para>
+<para
+>مثال: لإخراج الأغنية التي تُشغلها حاليًا في Amarok.</para>
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>media amarok</replaceable
+></userinput
+></para>
+<para
+>مخرج نموذجي: <replaceable
+>* المستخدم يستمع إلى You Give Love A Bad Name من Bon Jovi على Slippery When Wet [Amarok]</replaceable
+></para>
+</listitem>
+</varlistentry>
+<!--FIXME Error: Unable to retrieve clipboard contents from Klipper.
+<varlistentry>
+<term
+><userinput
+><command
+>/exec </command
+> <replaceable
+>sayclip</replaceable
+> [<replaceable
+>Optional Delay</replaceable
+>]</userinput>
+</term>
+<listitem>
+<para
+>This script outputs the contents of klipper to the current channel tab with a delay to provide flood protection.</para>
+<para
+>Example: To output the contents of klipper with a 1 second delay.</para>
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>sayclip 1s</replaceable
+></userinput
+></para>
+<para
+>Sample output: <replaceable
+>Konversation sure is awesome!</replaceable
+></para>
+</listitem>
+</varlistentry>
+-->
+<varlistentry>
+<term
+><userinput
+><command
+>/exec </command
+> <replaceable
+>sysinfo</replaceable
+></userinput>
+</term>
+<listitem>
+<para
+>هذا السكريبت يُخرج بعض المعلومات التفصيلية عن نظامك من خلال دمج مخرجات عدة أوامر وتنسيقها بشكل مناسب.</para>
+<para
+>مثال: لإخراج بعض المعلومات عن نظامك إلى لسان القناة الحالي.</para>
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>sysinfo</replaceable
+></userinput
+></para>
+<para
+>مخرج نموذجي: <replaceable
+>معلومات النظام لـ 'user-desktop': يعمل داخل كيدي بلازما 5.6.5 على أوبونتو 16.04.1 LTS (Xenial Xerus) مدعوم بنواة لينكس 4.4.0-47-generic، المعالج: Intel(R) Core(TM) i7-4910MQ CPU @ 2.90GHz بسرعة 2996-3338/3900 MHz، الذاكرة: 15795/15967 MB، التخزين: 1591/2281 GB، 406 عملية، مدة تشغيل 47.59 ساعة</replaceable
+></para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/exec </command
+> <replaceable
+>tinyurl</replaceable
+> [<replaceable
+>رابط</replaceable
+>]</userinput>
+</term>
+<listitem>
+<para
+>هذا السكريبت يستخدم واجهة برمجة تطبيقات Tinyurl لتحويل الرابط المعطى إلى رابط قصير يُرسل بعد ذلك إلى لسان القناة الحالي.</para>
+<para
+>مثال: لإعطاء شخص رابطًا قصيرًا إلى https://konversation.kde.org</para>
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>tinyurl https://konversation.kde.org</replaceable
+></userinput
+></para>
+<para
+>مخرج نموذجي: <replaceable
+>https://tinyurl.com/y4rk8wa3</replaceable
+></para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/exec </command
+> <replaceable
+>uptime</replaceable
+></userinput>
+</term>
+<listitem>
+<para
+>هذا السكريبت يُخرج نتيجة الأمر "uptime" ويُنسقها بشكل مناسب.</para>
+<para
+>مثال: للتباهي بمدة تشغيل نظامك الصلبة البالغة 98 يومًا.</para>
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>uptime</replaceable
+></userinput
+></para>
+<para
+>مخرج نموذجي: <replaceable
+>مدة التشغيل: 98 يومًا و15 ساعة ودقيقتين</replaceable
+></para>
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+<para
+>كل هذه السكريبتات لها أسماء مستعارة لأوامر محددة مسبقًا. في حوار إعدادات محادثك اختر <menuchoice
+><guimenu
+>السلوك</guimenu
+> <guimenuitem
+>الأسماء المستعارة للأوامر</guimenuitem
+></menuchoice
+> لعرض أو إضافة أو إزالة أو تحرير الأسماء المستعارة للأوامر. </para>
+
+<para
+>لمزيد من المعلومات حول كتابة السكريبتات، يُرجى قراءة <ulink url="https://userbase.kde.org/Konversation/Scripts/Scripting_guide"
+>دليل كتابة السكريبتات في Userbase</ulink
+> </para>
+
+</sect1>
+
+</chapter>
+
+<!-- =================================================================== -->
+
+<chapter id="commands">
+<title
+>مرجع الأوامر</title>
+
+<!-- (OPTIONAL, BUT RECOMMENDED) This chapter should list all of the
+application windows and their menubar and toolbar commands for easy reference.
+Also include any keys that have a special function but have no equivalent in the
+menus or toolbars. This may not be necessary for small apps or apps with no tool
+or menu bars. -->
+
+<!-- =================================================================== -->
+
+<sect1 id="kapp-mainwindow">
+<title
+>نافذة محادثك الرئيسة</title>
+
+<sect2>
+<title
+>قائمة ملف</title>
+<para>
+<variablelist>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycap
+>F2</keycap
+> </shortcut
+> <guimenu
+>ملف</guimenu
+> <guimenuitem
+>قائمة الخوادم</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para
+><action
+>يعرض <link linkend="irc-basics"
+>قائمة الخوادم والقنوات</link
+>. </action
+></para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycap
+>F7</keycap
+> </shortcut
+> <guimenu
+>ملف</guimenu
+> <guimenuitem
+>اتصال سريع</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para
+><action
+>يعرض شاشة <link linkend="quickconnect"
+>الاتصال السريع</link
+> للاتصال بخادم. </action
+></para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><guimenu
+>ملف</guimenu
+> <guimenuitem
+>قطع الاتصال</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para
+><action
+>يقطع الاتصال بجميع الخوادم. </action
+></para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><guimenu
+>ملف</guimenu
+> <guimenuitem
+>إعادة الاتصال</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para
+><action
+>يعيد الاتصال بجميع الخوادم التي قُطع اتصالها بسبب خطأ في الشبكة أو مشكلة أخرى. </action
+></para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>J</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>ملف</guimenu
+> <guimenuitem
+>انضم إلى قناة</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para
+><action
+>يعرض حوارًا لإدخال اسم القناة للانضمام إليها. يفعل نفس الشيء كإدخال <command
+>/join <userinput
+>#اسم_القناة</userinput
+></command
+> في علامة تبويب قناة أو خادم.</action
+></para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl; &Shift;<keycap
+>A</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>ملف</guimenu
+> <guimenuitem
+>غياب عام</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para
+><action
+>يغير حالة اسمك المستعار &i18n-nickname; إلى غائب في جميع القنوات. </action
+></para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>Q</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>ملف</guimenu
+> <guimenuitem
+>أنهِ</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para
+><action
+>يُنهي</action
+> محادثك.</para
+></listitem>
+	</varlistentry>
+</variablelist>
+</para>
+</sect2>
+
+<sect2>
+<title
+>قائمة حرر</title>
+<para>
+<variablelist>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>F</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>تحرير</guimenu
+> <guimenuitem
+>ابحث عن نص...</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>يبحث عن سلاسل نصية في الشاشة الحالية.</action>
+			</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+><keycap
+>F3</keycap
+></shortcut
+> <guimenu
+>حرر</guimenu
+><guimenuitem
+>ابحث عن التالي</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>يبحث مرة أخرى عن سلاسل نصية في الشاشة الحالية باستخدام سلسلة البحث السابقة.</action>
+			</para
+></listitem>
+	</varlistentry>
+<!-- missing
+Find Previous Shift F3
+Clear Marker Lines Ctrl Shift R
+Enlarge Font Size Ctrl++
+Shrink Font Size Ctrl+-
+Reset Font Size Ctrl+O
+-->
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>L</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>تحرير</guimenu
+> <guimenuitem
+>امسح النافذة</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>يمسح الشاشة الحالية.</action>
+			</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl; &Shift;<keycap
+>L</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>تحرير</guimenu
+> <guimenuitem
+>امسح جميع النوافذ</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>يمسح جميع الشاشات.</action>
+			</para
+></listitem>
+	</varlistentry>
+</variablelist>
+</para>
+</sect2>
+
+<sect2>
+<title
+>قائمة الإدراج</title>
+<para>
+<variablelist>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>K</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>إدراج</guimenu
+> <guimenuitem
+>لون &irc;...</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+			<action
+>انظر <link linkend="color-msgs"
+>إرسال رسائل ملونة</link
+>.</action>
+		</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>R</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>إدراج</guimenu
+> <guimenuitem
+>خط علامة</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>انظر <link linkend="rememberlines"
+>وضع علامات على سجلات القنوات والاستعلامات</link
+>.</action>
+			</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Alt; &Shift;<keycap
+>C</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>إدراج</guimenu
+> <guimenuitem
+>حرف خاص...</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>يُستخدم لإدخال أحرف خاصة، مثل الأحرف الأجنبية.</action>
+			</para
+></listitem>
+	</varlistentry>
+</variablelist>
+</para>
+</sect2>
+
+<sect2>
+<title
+>قائمة العلامات</title
+><!--FIXME Copy to fundamentals + link?-->
+<para>
+<variablelist>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl; <keycap
+>B</keycap
+></keycombo
+></shortcut
+> <guimenu
+>العلامات</guimenu
+> <guimenuitem
+>أضف علامة</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+		    <action
+>يُعلّم الشبكة والقناة الحالية كمرجع.</action>
+		</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><guimenu
+>العلامات</guimenu
+><guimenuitem
+>…ضع الألسنة في مجلد علامات</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para
+><action
+>يُضيف</action
+> جميع القنوات إلى عنصر قائمة جديد في نهاية قائمة المراجع. </para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><guimenu
+>العلامات</guimenu
+><guimenuitem
+>…مجلد علامات جديد</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>ينشئ مجلد مراجع جديد.</action>
+			</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><guimenu
+>العلامات</guimenu
+> <guimenuitem
+>حرر العلامات…</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>يفتح محرر العلامات.</action>
+			</para
+></listitem>
+	</varlistentry>
+</variablelist>
+</para>
+</sect2>
+
+<sect2>
+<title
+>قائمة الإعدادات</title>
+<para>
+<variablelist>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>H</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>الإعدادات</guimenu
+> <guimenuitem
+>أظهر قائمة الأسماء المستعارة</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>يخفي (أو يعرض) لوحة &i18n-nickname;s في ألسنة القنوات. </action>
+			</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+><keycap
+>F8</keycap
+></shortcut
+> <guimenu
+>الإعدادات</guimenu
+> <guimenuitem
+>الهويات...</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para
+><action
+>يعرض شاشة <link linkend="identity"
+>الهويات</link
+> لضبط معلومات هويتك. </action
+></para
+></listitem>
+	</varlistentry>
+</variablelist>
+</para>
+</sect2>
+
+<sect2>
+<title
+>قائمة  النافذة</title>
+<para>
+<variablelist>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>,</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>النافذة</guimenu
+> <guimenuitem
+>اللسان السابق</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>يعرض الشاشة المقابلة للسان السابق.</action>
+			</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>.</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>النافذة</guimenu
+> <guimenuitem
+>اللسان التالي</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>يعرض الشاشة المقابلة للسان التالي.</action>
+			</para
+></listitem>
+	</varlistentry>
+<!--
+Next Active Tab Ctrl Alt Space
+Move Tab Left Alt Shift Left
+Move Tab Right Alt Shift Right
+  -->
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>W</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>النافذة</guimenu
+> <guimenuitem
+>أغلق اللسان</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>يغلق الشاشة الحالية. إذا كان الإغلاق لقناة، يغادر القناة. إذا كان الإغلاق لسان <interface
+>رسائل الخادم</interface
+>، يغلق جميع القنوات المفتوحة على ذلك الخادم ويقطع الاتصال بالخادم. </action>
+			</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycap
+>F11</keycap
+> </shortcut
+> <guimenu
+>النافذة</guimenu
+> <guimenuitem
+>أغلق جميع المحادثات الخاصة المفتوحة</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>يغلق جميع <link linkend="query"
+>المحادثات الخاصة (الاستعلامات)</link
+>. </action>
+			</para
+></listitem>
+	</varlistentry>
+<!--
+Enable Notifications
+Set Encoding
+  -->
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycap
+>F4</keycap
+> </shortcut
+> <guimenu
+>النافذة</guimenu
+> <guimenuitem
+>الأسماء المستعارة المراقبة</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+			<action
+>يعرض شاشة <guilabel
+>الأسماء المستعارة المراقبة</guilabel
+>. انظر <link linkend="nicksonline"
+>مراقبة من هو متصل</link
+>.</action>
+		</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycap
+>F6</keycap
+> </shortcut
+> <guimenu
+>النافذة</guimenu
+> <guimenuitem
+>ملتقط &URL;</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+			<action
+>يعرض شاشة <link linkend="urlcatcher"
+>ملتقط &URL;</link
+>.</action>
+		</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycap
+>F9</keycap
+> </shortcut
+> <guimenu
+>النافذة</guimenu
+> <guimenuitem
+>حالة DCC</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+			<action
+>يعرض لسان <link linkend="dcc"
+>حالة DCC</link
+> بمعلومات عن نقل الملفات.</action>
+		</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><guimenu
+>النافذة</guimenu
+> <guimenuitem
+>كونسول جديد</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+			<action
+>يعرض شاشة طرفية. يمكنك فتح عدد تريده من ألسنة <guilabel
+>كونسول</guilabel
+>.</action>
+		</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycap
+>F5</keycap
+> </shortcut
+> <guimenu
+>النافذة</guimenu
+> <guimenuitem
+>قائمة القنوات لـ</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+			<action
+>يعرض <link linkend="list-channels"
+>قائمة بالقنوات</link
+> المتاحة على الخادم.</action>
+		</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>O</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>النافذة</guimenu
+> <guimenuitem
+>افتح ملف السجل لـ</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+			<action
+>يعرض شاشة بسجل الرسائل من اللسان الحالي. يعمل فقط لألسنة <interface
+>القناة</interface
+> و<interface
+>رسائل الخادم</interface
+> و<interface
+>الاستعلام</interface
+>. يجب تمكين التسجيل في <menuchoice
+> <guisubmenu
+>الإعدادات</guisubmenu
+> <guisubmenu
+>اضبط محادثك</guisubmenu
+> <guisubmenu
+>السلوك</guisubmenu
+> <guisubmenu
+>التسجيل</guisubmenu
+> </menuchoice
+> في القائمة الرئيسة. </action>
+		</para
+></listitem>
+	</varlistentry>
+<!-- Channel Settings -->
+</variablelist>
+</para>
+</sect2>
+
+<sect2>
+<title
+>قائمة مساعدة</title>
+
+<para
+>محادثك يحتوي على عنصر القائمة <guimenu
+>المساعدة</guimenu
+> الشائع في &kde;، لمزيد من المعلومات اقرأ القسم عن <ulink url="help:/fundamentals/menus.html#menus-help"
+>قائمة المساعدة</ulink
+> من أساسيات &kde;. </para>
+
+</sect2>
+
+</sect1>
+</chapter>
+
+<!-- =================================================================== -->
+
+<chapter id="faq">
+<title
+>أسئلة وأجوبة</title>
+
+<!-- (OPTIONAL but recommended) This chapter should include all of the silly
+(and not-so-silly) newbie questions that fill up your mailbox. This chapter
+should be reserved for BRIEF questions and answers! If one question uses more
+than a page or so then it should probably be part of the
+"Using this Application" chapter instead. You should use links to
+cross-reference questions to the parts of your documentation that answer them.
+This is also a great place to provide pointers to other FAQ's if your users
+must do some complicated configuration on other programs in order for your
+application work. -->
+
+<qandaset id="faqlist">
+    <!--FIXME https://userbase.kde.org/Konversation/FAQ -->
+<qandaentry>
+<question>
+<para
+>عندما أبدأ محادثك، أود الاتصال بخادم دون الانضمام إلى أي قنوات. كيف أفعل ذلك؟</para>
+</question>
+<answer>
+<para
+>في شاشة <link linkend="serverlist-addnetwork"
+>تحرير الخادم</link
+>، اترك إطار <guilabel
+>القنوات</guilabel
+> فارغًا.</para>
+</answer>
+</qandaentry>
+
+<qandaentry>
+<question>
+<para
+>محادثك لا يتصل بأي خوادم. ما المشكلة؟</para>
+</question>
+<answer>
+<para
+>هناك عدة أمور قد تكون خاطئة.</para>
+<orderedlist>
+<listitem>
+<para
+>تأكد من أنك أدخلت <guilabel
+>اسم الخادم</guilabel
+> الصحيح و<guilabel
+>المنفذ</guilabel
+> الصحيح في شاشة <link linkend="serverlist-addserver"
+>إضافة خادم</link
+>. </para>
+</listitem>
+<listitem>
+<para
+>افحص المخرجات في شاشة <link linkend="channel-screen-tour"
+>رسائل الخادم</link
+> بحثًا عن أي رسائل خطأ. هل رفض الخادم الاتصال بسبب كلمة مرور خاطئة؟ هل رفض الخادم الاتصال لأنه يتطلب <acronym
+>IDENTD</acronym
+> ولم يستجب حاسوبك لطلب <acronym
+>IDENT</acronym
+>؟ هل حددت مربع بروتوكول SSL ولكن الخادم لا يدعم SSL؟ </para>
+</listitem>
+<listitem>
+<para
+>إذا كنت خلف جدار ناري، فتأكد من تمكين المنافذ الصحيحة. يحتاج محادثك إلى تمكين المنافذ التالية: </para>
+
+<para>
+<itemizedlist>
+<listitem
+><para
+>TCP صادر 6667 (أو منفذ الخادم الذي تتصل به)</para
+></listitem>
+<listitem
+><para
+>TCP وارد 113 (إذا كان الخادم يتطلب IDENTD)</para
+></listitem>
+<!-- <listitem
+><para
+>TODO (Incoming port numbers?)</para
+></listitem
+> -->
+</itemizedlist>
+</para>
+
+<para
+>لمزيد من المعلومات حول مشاكل اتصال &irc;، انظر <ulink url="https://github.com/irchelp/wio/blob/gh-pages/networks/connectprob.md"
+>irchelp.org</ulink
+>. </para>
+
+</listitem>
+
+</orderedlist>
+</answer>
+</qandaentry>
+
+<qandaentry>
+<question>
+<para
+>عندما أذهب إلى <menuchoice
+> <guimenu
+>نافذة</guimenu
+> <guisubmenu
+>قائمة القنوات</guisubmenu
+> </menuchoice
+>، لا أستطيع تحديده. لماذا؟</para>
+</question>
+<answer>
+<para
+>سيكون إدخال القائمة <menuchoice
+> <guimenu
+>نافذة</guimenu
+> <guisubmenu
+>قائمة القنوات</guisubmenu
+> </menuchoice
+> معطّلًا إذا كان لسان غير قناة، مثل <guilabel
+>الأسماء المراقبة</guilabel
+>، يُعرض حاليًا. لجعله قابلًا للتحديد مرة أخرى، ارجع إلى لسان قناة أو لسان خادم. </para>
+</answer>
+</qandaentry>
+
+<qandaentry>
+<question
+><para
+>كيف أجعل محادثك يعلّمني آليًا كغائب بعد فترة من الخمول؟ </para>
+</question>
+<answer
+><para
+>تُضبط رسائل الغياب الآلي على أساس كل هوية. لتمكين الغياب الآلي، اختر <menuchoice
+><guimenu
+>إعدادات</guimenu
+><guimenuitem
+>هويات</guimenuitem
+></menuchoice
+>. اختر الهوية التي تريد تمكين الغياب الآلي لها من القائمة المنسدلة في أعلى الحوار واذهب إلى لسان <guilabel
+>الغياب</guilabel
+>. حدد خيار <guilabel
+>الغياب الآلي</guilabel
+>. </para
+></answer>
+</qandaentry>
+
+<qandaentry>
+<question>
+<para
+>كيف أتجنب ميزة <guilabel
+>الاستبدال الآلي</guilabel
+> في <interface
+>سطر الإدخال</interface
+>؟</para>
+</question>
+<answer
+><para
+>استخدم <keycombo action="simul"
+>&Ctrl;&Enter;</keycombo
+> بدلًا من &Enter; فقط لتجنب تحليل واستبدال النص آليًا في <interface
+>سطر الإدخال</interface
+> وفقًا للخيارات في صفحة حوار الإعدادات <menuchoice
+><guimenu
+>السلوك</guimenu
+> <guimenuitem
+>الاستبدال الآلي</guimenuitem
+></menuchoice
+>. </para
+></answer>
+</qandaentry>
+
+<qandaentry>
+<question>
+<para
+>أين أجد النصوص البرمجية المضمنة مع محادثك؟</para>
+</question>
+<answer>
+<para
+>شغّل هذا الأمر في سطر إدخال محادثك (باستخدام النص البرمجي media كمثال، لأنه يأتي مع أي تثبيت لـ محادثك): </para>
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>--showpath media</replaceable
+></userinput
+></para>
+<para
+>مخرجات نموذجية: <replaceable
+>وُجد ملف النص البرمجي 'media' في: /usr/share/konversation/scripts/media</replaceable
+></para>
+</answer>
+</qandaentry>
+
+<qandaentry>
+<question>
+<para
+>كيف أجعل نصي عريضًا/مائلًا/مسطرًا؟</para>
+</question>
+<answer>
+<para
+>مثال: <userinput
+>هذا نصي %Bالعريض%B.</userinput
+></para>
+<para
+>الخرج: <inlinemediaobject
+> <imageobject
+><imagedata fileref="bold-text.png" format="PNG"/></imageobject>
+</inlinemediaobject>
+</para>
+<para
+>مثال: <userinput
+>هذا نصي %Iالمائل%I.</userinput
+></para>
+<para
+>الخرج: <inlinemediaobject
+> <imageobject
+><imagedata fileref="italic-text.png" format="PNG"/></imageobject>
+</inlinemediaobject>
+</para>
+<para
+>مثال: <userinput
+>هذا نصي %Uالمسطر%U.</userinput
+></para>
+<para
+>الخرج: <inlinemediaobject
+> <imageobject
+><imagedata fileref="underline-text.png" format="PNG"/></imageobject>
+</inlinemediaobject>
+</para>
+<para
+>مثال: <userinput
+>هذا نصي %Sالمشطوب%S.</userinput
+></para>
+<para
+>الخرج: <inlinemediaobject
+> <imageobject
+><imagedata fileref="struck-out-text.png" format="PNG"/></imageobject>
+</inlinemediaobject>
+</para>
+<para
+>مثال: <userinput
+>هذا نصي %Mأحادي المسافة%M.</userinput
+></para>
+<para
+>الخرج: <inlinemediaobject
+> <imageobject
+><imagedata fileref="monospace-text.png" format="PNG"/></imageobject>
+</inlinemediaobject>
+</para>
+</answer>
+</qandaentry>
+
+</qandaset>
+</chapter>
+
+<chapter id="credits">
+
+<!-- Include credits for the programmers, documentation writers, and
+contributors here. The license for your software should then be included below
+the credits with a reference to the appropriate license file included in the KDE
+distribution. -->
+
+<title
+>الحقوق والترخيص</title>
+
+<para
+>محادثك </para>
+<para
+>حقوق نشر البرنامج 2002-2005 من قبل فريق محادثك. </para>
+<para
+><ulink url="&konviwebsite;"
+>&konviwebsite;</ulink>
+</para>
+<para
+>المساهمون: <itemizedlist>
+<listitem
+><para
+>Dario Abatianni <email
+>eisfuchs@tigress.com</email
+></para
+></listitem>
+<listitem
+><para
+>Peter Simonsson <email
+>psn@linux.se</email
+></para
+></listitem>
+<listitem
+><para
+>Christian Muehlhaeuser <email
+>chris@chris.de</email
+></para
+></listitem>
+<listitem
+><para
+>John Tapsel <email
+>john@geola.geo.uk</email
+></para
+></listitem>
+<listitem
+><para
+>Ismail Donmez <email
+>ismail.donmez@boun.edu.tr</email
+></para
+></listitem>
+<listitem
+><para
+>شينتارو ماتسوكا <email
+>shin@shoegazed.org</email
+></para
+></listitem>
+<listitem
+><para
+>غاري كرامبليت <email
+>garycramblitt@comcast.net</email
+></para
+></listitem>
+<listitem
+><para
+>ماتياس غيرلينغز <email
+>gismore@users.sourceforge.net</email
+></para
+></listitem>
+<listitem
+><para
+>أليكس زيبيدا <email
+>garbanzo@hooked.net</email
+></para
+></listitem>
+<listitem
+><para
+>ستانيسلاف كارتشبني <email
+>berkus@users.sourceforge.net</email
+></para
+></listitem>
+<listitem
+><para
+>ميكائيل مارشان <email
+>marchand@kde.org</email
+></para
+></listitem>
+</itemizedlist>
+</para>
+
+<para
+>شكرًا لـ: <itemizedlist>
+<listitem
+><para
+>ميخائيل غوتشه <email
+>michael.goettsche@kdemail.net</email
+></para
+></listitem>
+<listitem
+><para
+>بنجامين ماير <email
+>ben+konversation@kdemail.net</email
+></para
+></listitem>
+<listitem
+><para
+>ياكوب ستاخوفسكي <email
+>qbast@go2.pl</email
+></para
+></listitem>
+<listitem
+><para
+>سيباستيان سارييغو <email
+>segfault@kde.cl</email
+></para
+></listitem>
+<listitem
+><para
+>أوليفييه بيدار <email
+>www.konversation.org hosting</email
+></para
+></listitem>
+<listitem
+><para
+>فراوكه أوستر <email
+>frauke@frsv.de</email
+></para
+></listitem>
+<listitem
+><para
+>لوسيان بوش <email
+>lucijan@kde.org</email
+></para
+></listitem>
+<listitem
+><para
+>ساسشا كونز <email
+>mail@sacu.de</email
+></para
+></listitem>
+<listitem
+><para
+>ستيف وولكيند <email
+>steve@njord.org</email
+></para
+></listitem>
+<listitem
+><para
+>توماس ناجي <email
+>thomas.nagy@eleve.emn.fr</email
+></para
+></listitem>
+<listitem
+><para
+>توبياس أولري <email
+>tobias.olry@web.de</email
+></para
+></listitem>
+<listitem
+><para
+>رود نابن <email
+>r.nabben@gawab.com</email
+></para
+></listitem>
+</itemizedlist>
+</para>
+
+<para
+>حقوق نشر التوثيق &copy; 2003-2005 غاري ر. كرامبليت <email
+>garycramblitt@comcast.net</email
+> </para>
+
+<para
+>الترجمة: زايد السعيدي <email
+>zayed.alsaidi@gmail.com</email
+></para
+> &underFDL; &underGPL; </chapter>
+
+&documentation.index;
+</book>
+
+<!--
+Local Variables:
+mode: xml
+sgml-minimize-attributes:nil
+sgml-general-insert-case:lower
+sgml-indent-step:0
+sgml-indent-data:nil
+End:
+
+vim:tabstop=2:shiftwidth=2:expandtab
+-->
