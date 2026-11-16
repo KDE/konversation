@@ -20,7 +20,7 @@ msgstr ""
 "Project-Id-Version: extragear-network-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-11-08 02:57+0000\n"
-"PO-Revision-Date: 2026-10-12 10:43+0300\n"
+"PO-Revision-Date: 2026-11-15 20:10+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -28,7 +28,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 26.08.0\n"
+"X-Generator: Lokalize 26.08.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1209,13 +1209,13 @@ msgstr "Sekme çubuğu:"
 #: src/config/fontappearance_config.ui:76
 #, kde-format
 msgid "Show MOTD (Message Of The Day) message in fixed font"
-msgstr "Günün iletisini eş aralıklı yazıtipinde göster"
+msgstr "Günün iletisini eş aralıklı yazı tipinde göster"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_FixedMOTD)
 #: src/config/fontappearance_config.ui:79
 #, kde-format
 msgid "Enable fi&xed font for MOTD messages"
-msgstr "Günün iletileri için eş aralıklı yazıtipi k&ullan"
+msgstr "Günün iletileri için eş aralıklı yazı tipi k&ullan"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_UseBoldNicks)
 #: src/config/fontappearance_config.ui:86
@@ -1830,7 +1830,7 @@ msgstr "Gölgeleri &çiz"
 #: src/config/osd_configui.ui:67
 #, kde-format
 msgid "OSD font:"
-msgstr "Ekran üzeri görüntü yazıtipi:"
+msgstr "Ekran üzeri görüntü yazı tipi:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox3)
 #: src/config/osd_configui.ui:135
@@ -2013,7 +2013,7 @@ msgstr "Renkler"
 #: src/config/settingsdialog.cpp:86
 #, kde-format
 msgid "Fonts"
-msgstr "Yazıtipleri"
+msgstr "Yazı Tipleri"
 
 #: src/config/settingsdialog.cpp:90 src/viewer/irccontextmenus.cpp:87
 #, kde-format
@@ -3647,7 +3647,7 @@ msgstr "Sütunlar"
 #: src/dcc/whiteboardfontchooserui.ui:14
 #, kde-format
 msgid "Whiteboard Font Chooser"
-msgstr "Beyaz Tahta Yazıtipi Seçicisi"
+msgstr "Beyaz Tahta Yazı Tipi Seçicisi"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, m_fontPointComboBox)
 #: src/dcc/whiteboardfontchooserui.ui:55
@@ -8343,32 +8343,32 @@ msgstr "Geçerli sekmedeki imleyici çizgileri temizle"
 #: src/mainwindow.cpp:428
 #, kde-format
 msgid "Enlarge Font Size"
-msgstr "Yazıtipi Puntosunu Büyüt"
+msgstr "Yazı Tipi Puntosunu Büyüt"
 
 #: src/mainwindow.cpp:432
 #, kde-format
 msgid "Increase the current font size"
-msgstr "Geçerli yazıtipi puntosunu artır"
+msgstr "Geçerli yazı tipi puntosunu artır"
 
 #: src/mainwindow.cpp:437
 #, kde-format
 msgid "Reset Font Size"
-msgstr "Yazıtipi Puntosunu Sıfırla"
+msgstr "Yazı Tipi Puntosunu Sıfırla"
 
 #: src/mainwindow.cpp:441
 #, kde-format
 msgid "Reset the current font size to settings values"
-msgstr "Geçerli yazıtipi puntosunu ayar değerlerine sıfırla"
+msgstr "Geçerli yazı tipi puntosunu ayar değerlerine sıfırla"
 
 #: src/mainwindow.cpp:446
 #, kde-format
 msgid "Shrink Font Size"
-msgstr "Yazıtipi Puntosunu Küçült"
+msgstr "Yazı Tipi Puntosunu Küçült"
 
 #: src/mainwindow.cpp:450
 #, kde-format
 msgid "Decrease the current font size"
-msgstr "Geçerli yazıtipi puntosunu azalt"
+msgstr "Geçerli yazı tipi puntosunu azalt"
 
 #: src/mainwindow.cpp:455
 #, kde-format
