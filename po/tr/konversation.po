@@ -20,7 +20,7 @@ msgstr ""
 "Project-Id-Version: extragear-network-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-11-08 02:57+0000\n"
-"PO-Revision-Date: 2026-11-15 20:10+0300\n"
+"PO-Revision-Date: 2026-11-16 19:22+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -2325,7 +2325,7 @@ msgstr "Sahip ayrıcalıkları olanlar simgesi"
 #: src/config/theme_configui.ui:209
 #, kde-format
 msgid "Preview:"
-msgstr "Önizleme:"
+msgstr "Ön izleme:"
 
 #: src/config/warnings_config.cpp:142
 #, kde-format
@@ -9514,8 +9514,8 @@ msgid ""
 "ignore your color changes.</b>\n"
 "</qt>"
 msgstr ""
-"<qt>Bu renkleri seçerseniz okuyucularınızın nasıl göreceğini belirten "
-"önizleme.<br>\n"
+"<qt>Bu renkleri seçerseniz okuyucularınızın nasıl göreceğini belirten ön "
+"izleme.<br>\n"
 "<b>Not: Bazı istemciler bunu desteklemedikleri gibi bazı kullanıcılar Sizin "
 "renk değişiklerinizi yok sayabilir</b>\n"
 "</qt>"
@@ -9524,7 +9524,7 @@ msgstr ""
 #: src/viewer/irccolorchooserui.ui:31
 #, kde-format
 msgid "Preview"
-msgstr "Önizleme"
+msgstr "Ön izleme"
 
 #. i18n: ectx: property (toolTip), widget (KComboBox, m_fgColorCBox)
 #. i18n: ectx: property (toolTip), widget (QLabel, m_fgColorLbl)
@@ -9948,7 +9948,7 @@ msgstr "Hedef Klasör Seç"
 #, kde-format
 msgid "OSD Preview - drag to reposition"
 msgstr ""
-"Ekran Üzeri Görüntü Önizlemesi — yeniden konumlandırmak için fareyle "
+"Ekran Üzeri Görüntü Ön İzlemesi — yeniden konumlandırmak için fareyle "
 "sürükleyin"
 
 #: src/viewer/pasteeditor.cpp:23
