@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-11-08 02:57+0000\n"
-"PO-Revision-Date: 2026-11-13 14:28+0200\n"
+"PO-Revision-Date: 2026-11-20 10:56+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <kde-l10n-he@kde.org>\n"
 "Language: he\n"
@@ -2123,31 +2123,31 @@ msgstr "שמאל"
 #: src/config/tabs_configui.ui:81
 #, kde-format
 msgid "Show &close button on tabs"
-msgstr "הצג &כפתורי סגירה על הכרטיסיות"
+msgstr "הצגת כפתורי &סגירה על הלשוניות"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShowTabBarCloseButton)
 #: src/config/tabs_configui.ui:88
 #, kde-format
 msgid "Show a close button on the &right side of the tab bar"
-msgstr "מקם את כפתור הסגירה בצד &ימין של תצוגת הכרטיסיות"
+msgstr "הצבת כפתור הסגירה בצד &שמאל של תצוגת הלשוניות"
 
 #. i18n: ectx: property (title), widget (QGroupBox, focusGBox)
 #: src/config/tabs_configui.ui:98
 #, kde-format
 msgid "Focus"
-msgstr "מקוד"
+msgstr "מיקוד"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_BringToFront)
 #: src/config/tabs_configui.ui:104
 #, kde-format
 msgid "&Focus new tabs"
-msgstr "העבר &התמקדות אל כרטיסיות חדשות"
+msgstr "העברת המי&קוד ללשוניות חדשות"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_FocusNewQueries)
 #: src/config/tabs_configui.ui:111
 #, kde-format
 msgid "Focus new &queries"
-msgstr "העבר התמקדות אל &שאילתות חדשות"
+msgstr "העברת המיקוד לשאילתות &חדשות"
 
 #. i18n: ectx: property (title), widget (QGroupBox, mouseGBox)
 #: src/config/tabs_configui.ui:121
@@ -2159,12 +2159,12 @@ msgstr "עכבר"
 #: src/config/tabs_configui.ui:127
 #, kde-format
 msgid "&Middle-click on a tab to close it"
-msgstr "לחיצה א&מצעית כדי לסגור כרטיסייה"
+msgstr "לחיצה א&מצעית סוגרת לשונית"
 
 #: src/config/theme_config.cpp:179
 #, kde-format
 msgid "Select Theme Package"
-msgstr "בחר חבילת ערכת נושא"
+msgstr "בחירת חבילת ערכת נושא"
 
 #: src/config/theme_config.cpp:180
 #, kde-format
@@ -2184,22 +2184,22 @@ msgstr "הורדת הערכה נכשלה"
 #: src/config/theme_config.cpp:235 src/config/theme_config.cpp:265
 #, kde-format
 msgid "Theme archive is invalid."
-msgstr "ארכיב הערכה לא תקין."
+msgstr "ארכיון הערכה שגוי."
 
 #: src/config/theme_config.cpp:236 src/config/theme_config.cpp:266
 #, kde-format
 msgid "Cannot Install Theme"
-msgstr "אין אפשרות להתקין את הערכה"
+msgstr "אי אפשר להתקין את הערכה"
 
 #: src/config/theme_config.cpp:290
 #, kde-format
 msgid "Do you want to remove %1?"
-msgstr "האם ברצונך להסיר את %1?"
+msgstr "להסיר את %1?"
 
 #: src/config/theme_config.cpp:291
 #, kde-format
 msgid "Remove Theme"
-msgstr "הסר ערכה"
+msgstr "הסרת ערכה"
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, Theme_ConfigUI)
 #: src/config/theme_configui.ui:14
@@ -2223,49 +2223,49 @@ msgstr "ה&תקנה מקובץ…"
 #: src/config/theme_configui.ui:45
 #, kde-format
 msgid "&Remove Theme"
-msgstr "&הסר ערכה"
+msgstr "ה&סרת ערכה"
 
 #. i18n: ectx: property (toolTip), widget (QLabel, previewLabel1)
 #: src/config/theme_configui.ui:85
 #, kde-format
 msgid "Icon for normal users"
-msgstr "סמל עבור משתמשים רגילים"
+msgstr "סמל למשתמשים רגילים"
 
 #. i18n: ectx: property (toolTip), widget (QLabel, previewLabel2)
 #: src/config/theme_configui.ui:104
 #, kde-format
 msgid "Icon for away users"
-msgstr "סמל עבור משתמשים \"מרוחקים\""
+msgstr "סמל למשתמשים „מרוחקים”"
 
 #. i18n: ectx: property (toolTip), widget (QLabel, previewLabel3)
 #: src/config/theme_configui.ui:120
 #, kde-format
 msgid "Icon for users with voice"
-msgstr "סמל עבור אנשים עם קול"
+msgstr "סמל לאנשים עם קול"
 
 #. i18n: ectx: property (toolTip), widget (QLabel, previewLabel4)
 #: src/config/theme_configui.ui:136
 #, kde-format
 msgid "Icon for users with half-operator privileges"
-msgstr "סמל עבור משתמשים עם הרשאות אופ למחצה"
+msgstr "סמל למשתמשים עם הרשאות אופ למחצה"
 
 #. i18n: ectx: property (toolTip), widget (QLabel, previewLabel5)
 #: src/config/theme_configui.ui:152
 #, kde-format
 msgid "Icon for users with operator privileges"
-msgstr "סמל עבור משתמשים עם הרשאות OP"
+msgstr "סמל למשתמשים עם הרשאות אופ"
 
 #. i18n: ectx: property (toolTip), widget (QLabel, previewLabel6)
 #: src/config/theme_configui.ui:168
 #, kde-format
 msgid "Icon for users with admin privileges"
-msgstr "סמל עבור משתמשים עם הרשאות ניהול"
+msgstr "סמל למשתמשים עם הרשאות ניהול"
 
 #. i18n: ectx: property (toolTip), widget (QLabel, previewLabel7)
 #: src/config/theme_configui.ui:184
 #, kde-format
 msgid "Icon for users with owner privileges"
-msgstr "סמל עבור משתמשים עם הרשאות בעלות"
+msgstr "סמל למשתמשים עם הרשאות בעלות"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel2)
 #: src/config/theme_configui.ui:209
@@ -2279,7 +2279,7 @@ msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
 "concludes sentence \"Show a warning dialog when...\""
 msgid "... a channel invitation is received"
-msgstr "... התקבלה הזמנה אל ערוץ"
+msgstr "… התקבלה הזמנה לערוץ"
 
 #: src/config/warnings_config.cpp:145
 #, kde-format
@@ -2287,7 +2287,7 @@ msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
 "concludes sentence \"Show a warning dialog when...\""
 msgid "... saving a log file would save only the visible portion"
-msgstr "... שמירת את היומן תשמור רק את החלק הנראה"
+msgstr "… שמירת היומן תשמור רק את החלק הגלוי"
 
 #: src/config/warnings_config.cpp:148
 #, kde-format
@@ -2295,7 +2295,7 @@ msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
 "concludes sentence \"Show a warning dialog when...\""
 msgid "... a log file is about to be deleted"
-msgstr "... יומן הולך להימחק"
+msgstr "… קובץ יומן עומד להימחק"
 
 #: src/config/warnings_config.cpp:151
 #, kde-format
@@ -2619,7 +2619,7 @@ msgstr ""
 #: src/connectionmanager.cpp:534
 #, kde-format
 msgid "Switch Server"
-msgstr "החלף שרת"
+msgstr "החלפת שרת"
 
 #: src/connectionmanager.cpp:577
 #, kde-format
