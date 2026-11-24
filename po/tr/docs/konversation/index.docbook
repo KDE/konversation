@@ -431,7 +431,7 @@ revision history. (see installation appendix comment) -->
 <para
 >&konversation;’u ilk kez açıp <guibutton
 >Bağlan</guibutton
-> düğmesine tıkladığınızda, öntanımlı <guilabel
+> düğmesine tıkladığınızda, varsayılan <guilabel
 >kimliğinizin</guilabel
 > doğru ayarlanmadığını gösteren bir iletiyle karşılaşabilirsiniz.</para>
 
@@ -452,7 +452,7 @@ revision history. (see installation appendix comment) -->
 </para>
 
 <para
->&konversation;’u ilk kez açtığınızda, işletim sisteminizden geçerli kullanıcı hakkında bilgiler toplar ve kimliğiniz için olacak öntanımlıları doldurur. Sistem kullanıcısı hakkında işletim sisteminde yeterli bilgi yoksa; örneğin, tam adınız belirtilmemişse yukarıdaki iletiyi görebilirsiniz. Bu sorunu düzeltmek için <guibutton
+>&konversation;’u ilk kez açtığınızda, işletim sisteminizden geçerli kullanıcı hakkında bilgiler toplar ve kimliğiniz için olacak varsayılanları doldurur. Sistem kullanıcısı hakkında işletim sisteminde yeterli bilgi yoksa; örneğin, tam adınız belirtilmemişse yukarıdaki iletiyi görebilirsiniz. Bu sorunu düzeltmek için <guibutton
 >Kimliği Düzenle…</guibutton
 > düğmesine tıklayın ve daha fazla bilgi için <link linkend="identity"
 >Kimliğinizi ayarlamak</link
@@ -1562,7 +1562,7 @@ Settings->Configure Konversation->Notifications->Tabs->Use colored LEDs needs to
 > adı verilir. Geçerli sekme bir kanal olduğunda görüntülenir. Kendiniz de içerilmek üzere kanala katılan tüm kullanıcıların takma adlarını listeler. Kullanıcı hakkında ek bilgi görüntülemek için fare imlecini bir takma adın üzerine getirin. Takma ad simgesi temasını değiştirerek her takma adın yanında simgelerin nasıl görüntüleneceğini değiştirebilirsiniz. Daha fazla bilgi için <link linkend="nickthemes"
 >Takma ad temalarını yapılandırmak</link
 > bölümüne bakın. Yukarıdaki ekranda gösterildiği gibi <guilabel
->Öntanımlı tema</guilabel
+>Varsayılan tema</guilabel
 >, aşağıdaki simgeleri kullanır: <itemizedlist>
 <listitem>
 <para
@@ -1650,7 +1650,7 @@ Settings->Configure Konversation->Notifications->Tabs->Use colored LEDs needs to
 ><para
 >Bunlar, <interface
 >Tez Düğmeler</interface
-> olarak adlandırılır. Öntanımlı olarak gösterilmezler. Bunları görüntülemek için <link linkend="quick-buttons"
+> olarak adlandırılır. Varsayılan olarak gösterilmezler. Bunları görüntülemek için <link linkend="quick-buttons"
 >Tez düğmeleri yapılandırmak</link
 > bölümüne bakın. Tanımlarını istediğiniz komutlara göre özelleştirebilirsiniz.</para
 ></callout>
@@ -2548,9 +2548,9 @@ part of the listing.
 
 <callout arearefs="pt-osd-4"
 ><para
->&osd; için bir yazıtipi seçmek üzere bu düğmeye tıklayın (<emphasis
+>&osd; için bir yazı tipi seçmek üzere bu düğmeye tıklayın (<emphasis
 >Not: </emphasis
-> Tüm yazıtipleri çalışmaz. Luxi Sans 22 ve Impact 22 çalıştığı bilinen yazıtiplerindendir).</para
+> Tüm yazı tipleri çalışmaz. Luxi Sans 22 ve Impact 22 çalıştığı bilinen yazı tiplerindendir).</para
 ></callout>
 
 <callout arearefs="pt-osd-5"
@@ -2561,7 +2561,7 @@ part of the listing.
 <callout arearefs="pt-osd-6"
 ><para
 ><interface
->Ekran Üzeri Görüntü Önizlemesi</interface
+>Ekran Üzeri Görüntü Ön İzlemesi</interface
 > ögesini arzu ettiğiniz konuma sürükleyin, sonrasında <guibutton
 >Uygula</guibutton
 > düğmesine tıklayın.</para
@@ -2781,7 +2781,7 @@ part of the listing.
 </para>
 
 <para
->Öntanımlı olarak sekiz adet <interface
+>Varsayılan olarak sekiz adet <interface
 >Tez Düğme</interface
 > vardır. Onu değiştirmek için bir girdiye tıklayın veya <interface
 >Tez Düğme</interface
@@ -3077,7 +3077,7 @@ part of the listing.
 >kanalda</link
 >, kullanıcılar web üzerindeki ilginç web sitelerinin veya başka özkaynakların &URL;’lerini gönderirler. Herhangi bir &URL;’nın üzerine çift tıklayın ve &konversation; &URL; ile ilişkilendirilmiş uygulamayı açacaktır. Başlatılacak uygulama, &URL;’nin &MIME; türü ile doğrudan ilişkilidir. Örneğin, <interface
 >https:</interface
-> ile başlayan bir &URL;, öntanımlı web tarayıcısını etkinleştirir ve web sayfasını görüntüler (Ayrıca, kullanılacak <link linkend="webbrowser"
+> ile başlayan bir &URL;, varsayılan web tarayıcısını etkinleştirir ve web sayfasını görüntüler (Ayrıca, kullanılacak <link linkend="webbrowser"
 >web tarayıcısını</link
 > da belirtebilirsiniz). &URL; ekranın dışına çıkarsa onu bulmada zorluk çekebilirsiniz. &konversation; sizin için gönderilen tüm &URL;’lerin bir listesini tutar. Bu özelliği etkinleştirmek için ana menüden <menuchoice
 ><guisubmenu
@@ -3131,7 +3131,7 @@ part of the listing.
 ><para
 >Seçili &URL; ile ilişkili uygulamayı etkinleştirmek için buraya tıklayın. Başlatılan uygulama &URL;’nin &MIME; türüne bağlıdır. Örneğin, <interface
 >https:</interface
-> ile başlayan bir &URL;, öntanımlı web tarayıcınızı etkinleştirecek ve web sayfasını görüntüleyecektir. Web sayfaları için kullanılacak <link linkend="webbrowser"
+> ile başlayan bir &URL;, varsayılan web tarayıcınızı etkinleştirecek ve web sayfasını görüntüleyecektir. Web sayfaları için kullanılacak <link linkend="webbrowser"
 >web tarayıcısını</link
 > da belirtebilirsiniz.</para
 ></callout>
@@ -3168,10 +3168,10 @@ part of the listing.
 >Tercih edilen web tarayıcısını ayarlamak</title>
 
 <para
->&konversation;’da herhangi bir yerde vurgulanmış bir &URL;’ye tıkladığınızda, &URL;’nin &MIME; türüyle ilişkili öntanımlı uygulama başlatılacaktır. Örneğin, <interface
+>&konversation;’da herhangi bir yerde vurgulanmış bir &URL;’ye tıkladığınızda, &URL;’nin &MIME; türüyle ilişkili varsayılan uygulama başlatılacaktır. Örneğin, <interface
 >https</interface
 > ile başlayan bir &URL;’ye tıklandığında, web sayfasını görüntülemek için &konqueror; açılır. &systemsettings;’nın <guilabel
->Öntanımlı Uygulamalar</guilabel
+>Varsayılan Uygulamalar</guilabel
 > modülünde tanımlı uygulamadan bir başkasını belirtebilirsiniz. Örneğin, bunların yerine <application
 >Firefox</application
 > kullanabilirsiniz. </para>
@@ -3246,7 +3246,7 @@ part of the listing.
 >mailto:</interface
 > &URL;’leri için geçerli değildir. <interface
 >mailto:</interface
-> &URL;’leri, her zaman öntanımlı postalayıcı ile açılır. </para>
+> &URL;’leri, her zaman varsayılan postalayıcı ile açılır. </para>
 
 <para
 >Değişikliklerinizi kaydetmek için <guibutton
@@ -3575,7 +3575,7 @@ part of the listing.
 ></userinput
 > girerseniz o sekme, <link linkend="identity"
 >Ayarlar</link
->’da belirlediğiniz öntanımlı gerekçe ile kapatılır.</para
+>’da belirlediğiniz varsayılan gerekçe ile kapatılır.</para
 ></listitem>
 </varlistentry>
 
@@ -3923,7 +3923,7 @@ part of the listing.
 ><replaceable
 >kanal</replaceable
 ></userinput
-> girilmesi gerekmez ve sekmede etkin olan kanal öntanımlı olarak kullanılır. <userinput
+> girilmesi gerekmez ve sekmede etkin olan kanal varsayılan olarak kullanılır. <userinput
 ><replaceable
 >İleti</replaceable
 ></userinput
@@ -4110,7 +4110,7 @@ part of the listing.
 ></userinput
 > girilmemişse <link linkend="identity"
 >Ayarlar</link
->’da belirlediğiniz öntanımlı gerekçe kullanılır. Bu komut yalnızca bir kanal sekmesinde kullanılabilir.</para>
+>’da belirlediğiniz varsayılan gerekçe kullanılır. Bu komut yalnızca bir kanal sekmesinde kullanılabilir.</para>
 </listitem
 ></varlistentry>
 
@@ -4328,7 +4328,7 @@ part of the listing.
 ><replaceable
 >parola</replaceable
 ></userinput
-> yerine girin. Sunucu öntanımlıdan farklı bir kapı numarası gerektiriyorsa <userinput
+> yerine girin. Sunucu varsayılandan farklı bir kapı numarası gerektiriyorsa <userinput
 ><replaceable
 >url</replaceable
 ></userinput
@@ -4586,7 +4586,7 @@ $@ | while read line; do qdbus org.kde.konversation /irc say $SERVER "$TARGET" "
 >Betik başvuru kılavuzu</title>
 
 <para
->&konversation; birkaç betik öntanımlı olarak kurulu halde gelir. Onları kullanmayı öğrenmek için bu kılavuzu okumayı sürdürün.</para>
+>&konversation; birkaç betik varsayılan olarak kurulu halde gelir. Onları kullanmayı öğrenmek için bu kılavuzu okumayı sürdürün.</para>
 <!--FIXME in data/scripts-->
 <variablelist>
 <varlistentry>
@@ -4616,7 +4616,7 @@ $@ | while read line; do qdbus org.kde.konversation /irc say $SERVER "$TARGET" "
 ></userinput
 ></para>
 <para
->Örnek eylem: &systemsettings;’nızdaki öntanımlı tarayıcı, <replaceable
+>Örnek eylem: &systemsettings;’nızdaki varsayılan tarayıcı, <replaceable
 >https://bugs.kde.org/show_bug.cgi?id=123456</replaceable
 > URL’sini açmalıdır.</para>
 </listitem>
@@ -5886,7 +5886,7 @@ application work. -->
 </para>
 <para
 >Örnek: <userinput
-> Bu %Msözcüğün%M yazıtipi eş aralıklı.</userinput
+> Bu %Msözcüğün%M yazı tipi eş aralıklı.</userinput
 ></para>
 <para
 >Çıktı: <inlinemediaobject

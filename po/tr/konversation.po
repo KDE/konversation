@@ -20,7 +20,7 @@ msgstr ""
 "Project-Id-Version: extragear-network-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-11-08 02:57+0000\n"
-"PO-Revision-Date: 2026-11-16 19:22+0300\n"
+"PO-Revision-Date: 2026-11-23 18:14+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -941,7 +941,7 @@ msgstr "Şifreleme"
 #: src/config/connectionbehavior_config.ui:109
 #, kde-format
 msgid "Default encryption type:"
-msgstr "Öntanımlı şifreleme türü:"
+msgstr "Varsayılan şifreleme türü:"
 
 #. i18n: ectx: property (whatsThis), widget (QComboBox, kcfg_EncryptionType)
 #: src/config/connectionbehavior_config.ui:118
@@ -1908,7 +1908,7 @@ msgstr " ms"
 #: src/config/preferences.cpp:56
 #, kde-format
 msgid "Default Identity"
-msgstr "Öntanımlı kimlik"
+msgstr "Varsayılan kimlik"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox3)
 #: src/config/quickbuttons_configui.ui:20
@@ -2917,7 +2917,7 @@ msgstr "Kendi kendinize konuşuyorsunuz"
 #, kde-format
 msgctxt "%1=Encoding"
 msgid "Default ( %1 )"
-msgstr "Öntanımlı (%1)"
+msgstr "Varsayılan (%1)"
 
 #: src/dcc/chatcontainer.cpp:251 src/irc/outputfilter.cpp:2002
 #, kde-format
@@ -2994,7 +2994,7 @@ msgstr "Ye&ni Ad Öner"
 #: src/dcc/resumedialog.cpp:111
 #, kde-format
 msgid "Use as new default download folder"
-msgstr "Öntanımlı indirme klasörü olarak kullan"
+msgstr "Varsayılan indirme klasörü olarak kullan"
 
 #: src/dcc/resumedialog.cpp:122
 #, kde-format
@@ -3927,7 +3927,7 @@ msgid ""
 "fall back to the default identity. Should it be deleted anyway?"
 msgstr ""
 "Bu kimlik kullanımda, eğer kaldırırsanız onu kullanan ağ yapılandırması "
-"öntanımlı kimliğe düşecektir. Yine de kaldırmak istiyor musunuz?"
+"varsayılan kimliğe düşecektir. Yine de kaldırmak istiyor musunuz?"
 
 #: src/identitydialog.cpp:321
 #, kde-format
@@ -4119,7 +4119,7 @@ msgstr "Uzakta olurken sohbet pencerelerindeki son konumu imle"
 #: src/identitydialog.ui:343
 #, kde-format
 msgid "Default away message:"
-msgstr "Öntanımlı uzaktayım iletisi:"
+msgstr "Varsayılan uzaktayım iletisi:"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_awayMessageEdit)
 #: src/identitydialog.ui:353
@@ -5191,7 +5191,7 @@ msgstr "Ayrıl"
 #: src/viewer/statuspanel.cpp:302
 #, kde-format
 msgid "Identity Default ( %1 )"
-msgstr "Öntanımlı Kimlik (%1)"
+msgstr "Varsayılan Kimlik (%1)"
 
 #. i18n: ectx: property (text), widget (QLabel, passwordLbl)
 #: src/irc/channeldialogui.ui:31 src/irc/serverdialogui.ui:78
@@ -6674,9 +6674,10 @@ msgstr ""
 "şifreleme anahtarını ayarlar. %1setkey <anahtar> bir kanal veya sorgu "
 "sekmesi için anahtarı ayarlar. Anahtar alanı işlemin blok şifreleme kipini "
 "ayarlayabilmek için “cbc:” ve “ecb:” öneklerini tanır. Bir önek "
-"girilmediğindeki öntanımlı kipi Davranış → Bağlantı → Şifreleme → Öntanımlı "
-"Şifreleme Türü altındaki yapılandırma penceresinden değiştirilebilir, bu "
-"alan için öntanımlı değer Electronic Codebook (ECB)’tur."
+"girilmediğindeki varsayılan kipi Davranış → Bağlantı → Şifreleme → "
+"Varsayılan Şifreleme Türü altındaki yapılandırma penceresinden "
+"değiştirilebilir, bu alan için varsayılan değer Electronic Codebook "
+"(ECB)’tur."
 
 #: src/irc/outputfilter.cpp:1692
 #, kde-format
@@ -8318,7 +8319,7 @@ msgstr "Açılışta Bağlan"
 #: src/mainwindow.cpp:399
 #, kde-format
 msgid "Default"
-msgstr "Öntanımlı"
+msgstr "Varsayılan"
 
 #: src/mainwindow.cpp:404
 #, kde-format
@@ -8693,7 +8694,7 @@ msgstr "Sıfırla…"
 msgid ""
 "This cannot be undone, are you sure you wish to reset to default values?"
 msgstr ""
-"Bu işlemin geri alınamayacağını bildiğiniz halde öntanımlı ayarlara geri "
+"Bu işlemin geri alınamayacağını bildiğiniz halde varsayılan ayarlara geri "
 "dönmek istiyor musunuz?"
 
 #: src/queuetuner.cpp:231
@@ -9585,7 +9586,7 @@ msgstr ""
 "Eğer bir rengi seçer ve Tamam’a tıklarsanız bu renk girdi satırına "
 "eklenecektir.\n"
 "Yeniden değiştirene kadar, yazdıklarınız bu renkte görüntülenecektir.<br>\n"
-"Öntanımlı <i>Yok</i>’u seçerseniz iletinizin arka plan rengi değişmeyecek, "
+"Varsayılan <i>Yok</i>’u seçerseniz iletinizin arka plan rengi değişmeyecek, "
 "okuyucularınız kendi normal metin arka plan renginde göreceklerdir.<br>\n"
 "<b>Not: Tüm istemciler bunu desteklemediği gibi tüm kullanıcılar bunu görme "
 "özelliği açmamış olabilirler.</b></qt>"
@@ -10161,7 +10162,7 @@ msgstr "Yeni sekmenin adını girin:"
 #, kde-format
 msgctxt "Default encoding"
 msgid "Default ( %1 )"
-msgstr "Öntanımlı (%1)"
+msgstr "Varsayılan (%1)"
 
 #: src/viewer/viewcontainer.cpp:2224
 #, kde-format
