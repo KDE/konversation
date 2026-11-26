@@ -12,14 +12,14 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-11-08 00:13+0000\n"
-"PO-Revision-Date: 2026-08-23 08:56+0200\n"
+"PO-Revision-Date: 2026-11-20 16:44+0100\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca@valencia\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 26.08.0\n"
+"X-Generator: Lokalize 25.04.0\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Accelerator-Marker: &\n"
 
@@ -3476,7 +3476,7 @@ msgstr "L'administrador ha restringit el dret a rebre fitxers"
 #: src/dcc/transferrecv.cpp:204
 #, kde-format
 msgid "Invalid sender address (%1)"
-msgstr "Adreça d'enviament invalida (%1)"
+msgstr "Adreça d'enviament no vàlida (%1)"
 
 #: src/dcc/transferrecv.cpp:211
 #, kde-format
@@ -8530,7 +8530,7 @@ msgstr "Mostra la llista de sobrenoms"
 #: src/mainwindow.cpp:549
 #, kde-format
 msgid "Show/Hide Konversation"
-msgstr "Mostra/Oculta Konversation"
+msgstr "Mostra o oculta Konversation"
 
 #: src/mainwindow.cpp:560
 #, kde-format
