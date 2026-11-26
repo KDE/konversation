@@ -5444,7 +5444,7 @@ msgstr ""
 "du canal n'a pas besoin de commencer par la chaine que vous avez saisie.</"
 "p><p>Veuillez sélectionner le canal que vous souhaitez rejoindre en cliquant "
 "dessus. Un clic droit sur un canal vous permettra d'obtenir une liste de "
-"toutes les adresses Internet mentionnées dans le sujet du canal."
+"toutes les adresses Internet mentionnées dans le sujet du canal.</p>"
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_channelBox)
 #: src/irc/channellistpanelui.ui:92
